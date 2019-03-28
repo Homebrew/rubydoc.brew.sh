@@ -2,6 +2,8 @@
 
 [Homebrew RubyDoc](https://rubydoc.brew.sh) is an online Ruby documentation browser for [Homebrew/brew](https://github.com/Homebrew/brew).
 
+A [GitHub Action in Homebrew/brew](https://github.com/Homebrew/brew/blob/master/.github/main.workflow) is run on each commit, which deploys the site to GitHub Pages.
+
 ## Usage
 
 Open <https://rubydoc.brew.sh> in your web browser.
