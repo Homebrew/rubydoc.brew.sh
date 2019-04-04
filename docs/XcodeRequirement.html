@@ -324,12 +324,12 @@
       <pre class="lines">
 
 
-38
-39
-40</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/requirements/xcode_requirement.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/requirements/xcode_requirement.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> version=</span><span class='embexpr_beg'>#{</span><span class='ivar'>@version</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -354,7 +354,6 @@
       <pre class="lines">
 
 
-20
 21
 22
 23
@@ -370,25 +369,42 @@
 33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/requirements/xcode_requirement.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/requirements/xcode_requirement.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message'>message</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='ivar'>@version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@version</span>
   <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    A full installation of Xcode.app</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is required to compile this software.
-</span><span class='tstring_content'>    Installing just the Command Line Tools is not sufficient.
+<span class='tstring_content'>    A full installation of Xcode.app</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is required to compile
+</span><span class='tstring_content'>    this software. Installing just the Command Line Tools is not sufficient.
 </span><span class='heredoc_end'>  EOS
-</span>  <span class='kw'>if</span> <span class='ivar'>@version</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_latest_version'>latest_version</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@version</span><span class='rparen'>)</span>
+</span>  <span class='kw'>unless</span> <span class='id identifier rubyid_xcode_swift_compatability?'>xcode_swift_compatability?</span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>+=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>
+</span><span class='tstring_content'>      Xcode &gt;=10.2 requires macOS &gt;=10.14.4 to build many formulae.
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='ivar'>@version</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_latest_version'>latest_version</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@version</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_message'>message</span> <span class='op'>+</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      Xcode</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> cannot be installed on macOS </span><span class='embexpr_beg'>#{</span><span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
+<span class='tstring_content'>
+</span><span class='tstring_content'>      Xcode</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> cannot be installed on macOS </span><span class='embexpr_beg'>#{</span><span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
 </span><span class='tstring_content'>      You must upgrade your version of macOS.
 </span><span class='heredoc_end'>    EOS
 </span>  <span class='kw'>else</span>
     <span class='id identifier rubyid_message'>message</span> <span class='op'>+</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      Xcode can be installed from the App Store.
+<span class='tstring_content'>
+</span><span class='tstring_content'>      Xcode can be installed from the App Store.
 </span><span class='heredoc_end'>    EOS
 </span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -417,7 +433,8 @@
 15
 16
 17
-18</pre>
+18
+19</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/requirements/xcode_requirement.rb', line 13</span>
@@ -425,6 +442,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_xcode_installed_version'>xcode_installed_version</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='ivar'>@version</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_xcode_swift_compatability?'>xcode_swift_compatability?</span>
 
   <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='ivar'>@version</span>
 <span class='kw'>end</span></pre>
