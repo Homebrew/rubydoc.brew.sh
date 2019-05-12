@@ -1141,9 +1141,7 @@
 149
 150
 151
-152
-153
-154</pre>
+152</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 82</span>
@@ -1168,7 +1166,7 @@
 </span><span class='tstring_content'>    &lt;% if mode == :cmake %&gt;
 </span><span class='tstring_content'>      depends_on &quot;cmake&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
-</span><span class='tstring_content'>      depends_on &quot;meson-internal&quot; =&gt; :build
+</span><span class='tstring_content'>      depends_on &quot;meson&quot; =&gt; :build
 </span><span class='tstring_content'>      depends_on &quot;ninja&quot; =&gt; :build
 </span><span class='tstring_content'>      depends_on &quot;python&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% elsif mode.nil? %&gt;
@@ -1186,12 +1184,10 @@
 </span><span class='tstring_content'>                              &quot;--disable-silent-rules&quot;,
 </span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
-</span><span class='tstring_content'>        ENV.refurbish_args
-</span><span class='tstring_content'>
 </span><span class='tstring_content'>        mkdir &quot;build&quot; do
 </span><span class='tstring_content'>          system &quot;meson&quot;, &quot;--prefix=\#{prefix}&quot;, &quot;..&quot;
-</span><span class='tstring_content'>          system &quot;ninja&quot;
-</span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;install&quot;
+</span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;-v&quot;
+</span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;install&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>        end
 </span><span class='tstring_content'>    &lt;% else %&gt;
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
