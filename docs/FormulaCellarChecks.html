@@ -147,29 +147,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#check_accelerate_framework_links-instance_method" title="#check_accelerate_framework_links (instance method)">#<strong>check_accelerate_framework_links</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#check_easy_install_pth-instance_method" title="#check_easy_install_pth (instance method)">#<strong>check_easy_install_pth</strong>(lib)  &#x21d2; Object </a>
     
 
@@ -622,72 +599,6 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="check_accelerate_framework_links-instance_method">
-  
-    #<strong>check_accelerate_framework_links</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 51</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_check_accelerate_framework_links'>check_accelerate_framework_links</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>veclibfort</span><span class='tstring_end'>&quot;</span></span> <span class='comment'># veclibfort exists to wrap accelerate
-</span>
-  <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_system_accelerate'>system_accelerate</span> <span class='op'>=</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>|</span>
-    <span class='id identifier rubyid_dlls'>dlls</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_dynamically_linked_libraries'>dynamically_linked_libraries</span>
-    <span class='id identifier rubyid_dlls'>dlls</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dll'>dll</span><span class='op'>|</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^/System/Library/Frameworks/Accelerate.framework</span><span class='regexp_end'>}</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span> <span class='id identifier rubyid_dll'>dll</span> <span class='rbrace'>}</span>
-  <span class='kw'>end</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_system_accelerate'>system_accelerate</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-
-  <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    object files were linked against system Accelerate
-</span><span class='tstring_content'>    These object files were linked against the outdated system Accelerate framework.
-</span><span class='tstring_content'>    Core tap formulae should link against OpenBLAS instead.
-</span><span class='tstring_content'>    Removing `depends_on &quot;veclibfort&quot; and/or adding `depends_on &quot;openblas&quot;` to the
-</span><span class='tstring_content'>    formula may help.
-</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_system_accelerate'>system_accelerate</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>  EOS
-</span><span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="check_easy_install_pth-instance_method">
   
     #<strong>check_easy_install_pth</strong>(lib)  &#x21d2; <tt>Object</tt> 
@@ -1082,34 +993,34 @@
       <pre class="lines">
 
 
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
 90
 91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114</pre>
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_linkage'>check_linkage</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -1366,25 +1277,25 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88</pre>
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_python_framework_links'>check_python_framework_links</span><span class='lparen'>(</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_python_modules'>python_modules</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span> <span class='id identifier rubyid_lib'>lib</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python*/site-packages/**/*.so</span><span class='tstring_end'>&quot;</span></span>
