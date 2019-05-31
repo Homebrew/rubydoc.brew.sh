@@ -116,7 +116,7 @@
   
   <h3 class="inherited">Constants included
      from <span class='object_link'><a href="Metadata.html" title="Cask::Metadata (module)">Metadata</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Metadata.html#METADATA_SUBDIR-constant" title="Cask::Metadata::METADATA_SUBDIR (constant)">Metadata::METADATA_SUBDIR</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Metadata.html#METADATA_SUBDIR-constant" title="Cask::Metadata::METADATA_SUBDIR (constant)">Metadata::METADATA_SUBDIR</a></span>, <span class='object_link'><a href="Metadata.html#TIMESTAMP_FORMAT-constant" title="Cask::Metadata::TIMESTAMP_FORMAT (constant)">Metadata::TIMESTAMP_FORMAT</a></span></p>
 
 
   <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
@@ -386,6 +386,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>A new instance of Cask.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#install_time-instance_method" title="#install_time (instance method)">#<strong>install_time</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -881,12 +904,12 @@
       <pre class="lines">
 
 
-92
-93
-94</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caskroom_path'>caskroom_path</span>
   <span class='ivar'>@caskroom_path</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_path'><span class='object_link'><a href="Caskroom.html#path-class_method" title="Cask::Caskroom.path (method)">path</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
@@ -911,12 +934,12 @@
       <pre class="lines">
 
 
-88
-89
-90</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_path'>config_path</span>
   <span class='id identifier rubyid_metadata_master_container_path'>metadata_master_container_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config.json</span><span class='tstring_end'>&quot;</span></span>
@@ -968,12 +991,12 @@
       <pre class="lines">
 
 
-128
-129
-130</pre>
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_token'>token</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span>
@@ -1034,15 +1057,51 @@
       <pre class="lines">
 
 
-124
-125
-126</pre>
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="install_time-instance_method">
+  
+    #<strong>install_time</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 83</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_install_time'>install_time</span>
+  <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span> <span class='op'>=</span> <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_time'>time</span>
+
+  <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_strptime'>strptime</span><span class='lparen'>(</span><span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Metadata.html" title="Cask::Metadata (module)">Metadata</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Metadata.html#TIMESTAMP_FORMAT-constant" title="Cask::Metadata::TIMESTAMP_FORMAT (constant)">TIMESTAMP_FORMAT</a></span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1117,13 +1176,13 @@
       <pre class="lines">
 
 
-83
-84
-85
-86</pre>
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed_caskfile'>installed_caskfile</span>
   <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>=</span> <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -1172,12 +1231,12 @@
       <pre class="lines">
 
 
-96
-97
-98</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated?'>outdated?</span><span class='lparen'>(</span><span class='id identifier rubyid_greedy'>greedy</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_outdated_versions'>outdated_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_greedy'>greedy</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1202,13 +1261,6 @@
       <pre class="lines">
 
 
-100
-101
-102
-103
-104
-105
-106
 107
 108
 109
@@ -1220,10 +1272,17 @@
 115
 116
 117
-118</pre>
+118
+119
+120
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated_versions'>outdated_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_greedy'>greedy</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='comment'># special case: tap version is not available
@@ -1334,13 +1393,6 @@
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139
 140
 141
 142
@@ -1349,10 +1401,17 @@
 145
 146
 147
-148</pre>
+148
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
   <span class='lbrace'>{</span>
@@ -1390,12 +1449,12 @@
       <pre class="lines">
 
 
-120
-121
-122</pre>
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cask.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='ivar'>@token</span>
