@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: RuboCop::Cop::FormulaAudit::Text
+  Class: RuboCop::Cop::FormulaAudit::MpiCheck
   
     &mdash; Homebrew Ruby API
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "RuboCop::Cop::FormulaAudit::Text";
+  pathId = "RuboCop::Cop::FormulaAudit::MpiCheck";
   relpath = '../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../_index.html">Index (T)</a> &raquo;
+    <a href="../../../_index.html">Index (M)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Cop.html" title="RuboCop::Cop (module)">Cop</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../FormulaAudit.html" title="RuboCop::Cop::FormulaAudit (module)">FormulaAudit</a></span></span>
      &raquo; 
-    <span class="title">Text</span>
+    <span class="title">MpiCheck</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: RuboCop::Cop::FormulaAudit::Text
+      <div id="content"><h1>Class: RuboCop::Cop::FormulaAudit::MpiCheck
   
   
   
@@ -78,7 +78,7 @@
           
             <li class="next"><span class='object_link'><a href="../FormulaCop.html" title="RuboCop::Cop::FormulaCop (class)">RuboCop::Cop::FormulaCop</a></span></li>
           
-            <li class="next">RuboCop::Cop::FormulaAudit::Text</li>
+            <li class="next">RuboCop::Cop::FormulaAudit::MpiCheck</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -98,7 +98,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>brew/Library/Homebrew/rubocops/text.rb</dd>
+    <dd>brew/Library/Homebrew/rubocops/lines.rb</dd>
   </dl>
   
 </div>
@@ -127,6 +127,29 @@
   <span class="summary_signature">
     
       <a href="#audit_formula-instance_method" title="#audit_formula (instance method)">#<strong>audit_formula</strong>(_node, _class_node, _parent_class_node, body_node)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#autocorrect-instance_method" title="#autocorrect (instance method)">#<strong>autocorrect</strong>(node)  &#x21d2; Object </a>
     
 
     
@@ -188,120 +211,60 @@
       <pre class="lines">
 
 
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64</pre>
+161
+162
+163
+164
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/text.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/lines.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_find_node_method_by_name'>find_node_method_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:plist_options</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
-     <span class='id identifier rubyid_find_method_def'>find_method_def</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:plist</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please set plist_options when using a formula-defined plist.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># Enforce use of OpenMPI for MPI dependency in core
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula_tap'>formula_tap</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew-core</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:depends_on</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mpich</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use &#39;depends_on \&quot;open-mpi\&quot;&#39; instead of &#39;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@offensive_node</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="autocorrect-instance_method">
+  
+    #<strong>autocorrect</strong>(node)  &#x21d2; <tt>Object</tt> 
+  
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libressl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not depend on both OpenSSL and LibreSSL (even optionally).</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+  
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_formula_tap'>formula_tap</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew-core</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>veclibfort</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lapack</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should use OpenBLAS as the default serial linear algebra library.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_method_called_ever?'>method_called_ever?</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:virtualenv_create</span><span class='rparen'>)</span> <span class='op'>||</span>
-     <span class='id identifier rubyid_method_called_ever?'>method_called_ever?</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:virtualenv_install_with_resources</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:resource</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setuptools</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae using virtualenvs do not need a `setuptools` resource.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_method_called_ever?'>method_called_ever?</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:go_resource</span><span class='rparen'>)</span>
-    <span class='comment'># processed_source.ast is passed instead of body_node because `require` would be outside body_node
-</span>    <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_ast'>ast</span><span class='comma'>,</span> <span class='symbol'>:require</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>language/go</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>require \&quot;language/go\&quot; is unnecessary unless using `go_resource`s</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+170
+171
+172
+173
+174
+175</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/lines.rb', line 170</span>
 
-  <span class='id identifier rubyid_find_instance_method_call'>find_instance_method_call</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:factory</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\&quot;Formula.factory(name)\&quot; is deprecated in favor of \&quot;Formula[name]\&quot;</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:xcodebuild</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_parameters_passed?'>parameters_passed?</span><span class='lparen'>(</span><span class='id identifier rubyid_m'>m</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>SYMROOT=</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xcodebuild should be passed an explicit &quot;SYMROOT&quot;</span><span class='tstring_end'>&#39;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:system</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xcodebuild</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>%q(</span><span class='tstring_content'>use &quot;xcodebuild *args&quot; instead of &quot;system &#39;xcodebuild&#39;, *args&quot;</span><span class='tstring_end'>)</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:system</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>go</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use `go get`. Please ask upstream to implement Go vendoring</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:system</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dep</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ensure</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_parameters_passed?'>parameters_passed?</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>vendor-only</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use \&quot;dep\&quot;, \&quot;ensure\&quot;, \&quot;-vendor-only\&quot;</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:system</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cargo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>build</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use \&quot;cargo\&quot;, \&quot;install\&quot;, \&quot;--root\&quot;, prefix, \&quot;--path\&quot;, \&quot;.\&quot;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_autocorrect'>autocorrect</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='comment'># The dependency nodes may need to be re-sorted because of this
+</span>  <span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
+    <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on \&quot;open-mpi\&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
