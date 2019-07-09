@@ -470,17 +470,17 @@
       <pre class="lines">
 
 
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+70
+71
+72
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>env:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>explicit:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@default</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_canonicalize'>canonicalize</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_default'>default</span>
@@ -527,12 +527,12 @@
       <pre class="lines">
 
 
-60
-61
-62</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_explicit'>explicit</span>
   <span class='ivar'>@explicit</span>
@@ -566,13 +566,29 @@
 
 56
 57
-58</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_canonicalize'>canonicalize</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+    <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+
+    <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#DEFAULT_DIRS-constant" title="Cask::Config::DEFAULT_DIRS (constant)">DEFAULT_DIRS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -748,12 +764,12 @@
       <pre class="lines">
 
 
-84
-85
-86</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_binarydir'>binarydir</span>
   <span class='ivar'>@binarydir</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bin</span><span class='tstring_end'>&quot;</span></span>
@@ -778,12 +794,12 @@
       <pre class="lines">
 
 
-71
-72
-73</pre>
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default'>default</span>
   <span class='ivar'>@default</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_canonicalize'>canonicalize</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#DEFAULT_DIRS-constant" title="Cask::Config::DEFAULT_DIRS (constant)">DEFAULT_DIRS</a></span></span><span class='rparen'>)</span>
@@ -808,17 +824,17 @@
       <pre class="lines">
 
 
-75
-76
-77
-78
-79
-80
-81
-82</pre>
+83
+84
+85
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env'><span class='object_link'><a href="../HomebrewArgvExtension.html#env-instance_method" title="HomebrewArgvExtension#env (method)">env</a></span></span>
   <span class='ivar'>@env</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_canonicalize'>canonicalize</span><span class='lparen'>(</span>
@@ -848,12 +864,12 @@
       <pre class="lines">
 
 
-98
-99
-100</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_explicit'>explicit</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_explicit'>explicit</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -878,16 +894,16 @@
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
-108</pre>
+110
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/config.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='lbrace'>{</span>
