@@ -147,6 +147,52 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#sensitive%3F-instance_method" title="#sensitive? (instance method)">#<strong>sensitive?</strong>(key)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sensitive_environment-instance_method" title="#sensitive_environment (instance method)">#<strong>sensitive_environment</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#with_build_environment-instance_method" title="#with_build_environment (instance method)">#<strong>with_build_environment</strong>  &#x21d2; Object </a>
     
 
@@ -229,23 +275,98 @@
       <pre class="lines">
 
 
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_clear_sensitive_environment!'>clear_sensitive_environment!</span>
+  <span class='id identifier rubyid_each_key'>each_key</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_key'>key</span> <span class='kw'>if</span> <span class='id identifier rubyid_sensitive?'><span class='object_link'><a href="#sensitive%3F-instance_method" title="EnvActivation#sensitive? (method)">sensitive?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sensitive?-instance_method">
+  
+    #<strong>sensitive?</strong>(key)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 32
 33
-34
-35
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sensitive?'>sensitive?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(cookie|key|token|password)</span><span class='regexp_end'>/i</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_key'>key</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sensitive_environment-instance_method">
+  
+    #<strong>sensitive_environment</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 36
 37
 38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV.rb', line 36</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_clear_sensitive_environment!'>clear_sensitive_environment!</span>
-  <span class='id identifier rubyid_each_key'>each_key</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(cookie|key|token|password)</span><span class='regexp_end'>/i</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_key'>key</span>
-
-    <span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_key'>key</span>
-  <span class='kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_sensitive_environment'>sensitive_environment</span>
+  <span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='op'>|</span> <span class='id identifier rubyid_sensitive?'><span class='object_link'><a href="#sensitive%3F-instance_method" title="EnvActivation#sensitive? (method)">sensitive?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
