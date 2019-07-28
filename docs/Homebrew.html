@@ -22870,7 +22870,11 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 27
 28
 29
-30</pre>
+30
+31
+32
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/ruby.rb', line 23</span>
@@ -22878,10 +22882,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_ruby'>ruby</span>
   <span class='id identifier rubyid_ruby_args'>ruby_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='id identifier rubyid_safe_system'><span class='object_link'><a href="top-level-namespace.html#safe_system-instance_method" title="#safe_system (method)">safe_system</a></span></span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_RUBY_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
-              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-I</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$LOAD_PATH</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>PATH_SEPARATOR</span><span class='rparen'>)</span><span class='comma'>,</span>
-              <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rglobal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rdev-cmd/irb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-              <span class='op'>*</span><span class='const'>ARGV</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_safe_system'><span class='object_link'><a href="top-level-namespace.html#safe_system-instance_method" title="#safe_system (method)">safe_system</a></span></span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_RUBY_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-I</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$LOAD_PATH</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>PATH_SEPARATOR</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rglobal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rdev-cmd/irb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                <span class='op'>*</span><span class='const'>ARGV</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='id identifier rubyid_exit'>exit</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
