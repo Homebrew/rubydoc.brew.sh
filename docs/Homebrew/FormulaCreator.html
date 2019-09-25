@@ -1145,7 +1145,23 @@
 153
 154
 155
-156</pre>
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 82</span>
@@ -1156,6 +1172,10 @@
 </span><span class='tstring_content'>    #                https://rubydoc.brew.sh/Formula
 </span><span class='tstring_content'>    # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 </span><span class='tstring_content'>    class </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_class_s'><span class='object_link'><a href="../Formulary.html#class_s-class_method" title="Formulary.class_s (method)">class_s</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt; Formula
+</span><span class='tstring_content'>    &lt;% if mode == :python %&gt;
+</span><span class='tstring_content'>      include Language::Python::Virtualenv
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      desc &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_desc'>desc</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
 </span><span class='tstring_content'>      homepage &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_homepage'>homepage</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
 </span><span class='tstring_content'>    &lt;% if head? %&gt;
@@ -1175,10 +1195,20 @@
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
 </span><span class='tstring_content'>      depends_on &quot;meson&quot; =&gt; :build
 </span><span class='tstring_content'>      depends_on &quot;ninja&quot; =&gt; :build
+</span><span class='tstring_content'>    &lt;% elsif mode == :python %&gt;
+</span><span class='tstring_content'>      depends_on &quot;python&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode.nil? %&gt;
 </span><span class='tstring_content'>      # depends_on &quot;cmake&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>
+</span><span class='tstring_content'>    &lt;% if mode == :python %&gt;
+</span><span class='tstring_content'>      # Additional Python dependency
+</span><span class='tstring_content'>      # resource &quot;&quot; do
+</span><span class='tstring_content'>      #   url &quot;&quot;
+</span><span class='tstring_content'>      #   sha256 &quot;&quot;
+</span><span class='tstring_content'>      # end
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      def install
 </span><span class='tstring_content'>        # ENV.deparallelize  # if your formula fails when building in parallel
 </span><span class='tstring_content'>    &lt;% if mode == :cmake %&gt;
@@ -1197,6 +1227,8 @@
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;install&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>        end
+</span><span class='tstring_content'>    &lt;% elsif mode == :python %&gt;
+</span><span class='tstring_content'>        virtualenv_install_with_resources
 </span><span class='tstring_content'>    &lt;% else %&gt;
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
 </span><span class='tstring_content'>        system &quot;./configure&quot;, &quot;--disable-debug&quot;,
@@ -1205,7 +1237,7 @@
 </span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
 </span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% end %&gt;
-</span><span class='tstring_content'>    &lt;% if mode != :meson and mode != :go %&gt;
+</span><span class='tstring_content'>    &lt;% if mode == :autotools or mode == :cmake %&gt;
 </span><span class='tstring_content'>        system &quot;make&quot;, &quot;install&quot; # if this fails, try separate make/make install steps
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      end
