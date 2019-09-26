@@ -1165,7 +1165,29 @@
 173
 174
 175
-176</pre>
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 82</span>
@@ -1199,6 +1221,8 @@
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
 </span><span class='tstring_content'>      depends_on &quot;meson&quot; =&gt; :build
 </span><span class='tstring_content'>      depends_on &quot;ninja&quot; =&gt; :build
+</span><span class='tstring_content'>    &lt;% elsif mode == :perl %&gt;
+</span><span class='tstring_content'>      uses_from_macos &quot;perl&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :python %&gt;
 </span><span class='tstring_content'>      depends_on &quot;python&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :rust %&gt;
@@ -1207,8 +1231,8 @@
 </span><span class='tstring_content'>      # depends_on &quot;cmake&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>
-</span><span class='tstring_content'>    &lt;% if mode == :python %&gt;
-</span><span class='tstring_content'>      # Additional Python dependency
+</span><span class='tstring_content'>    &lt;% if mode == :perl || mode == :python %&gt;
+</span><span class='tstring_content'>      # Additional dependency
 </span><span class='tstring_content'>      # resource &quot;&quot; do
 </span><span class='tstring_content'>      #   url &quot;&quot;
 </span><span class='tstring_content'>      #   sha256 &quot;&quot;
@@ -1233,6 +1257,26 @@
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;install&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>        end
+</span><span class='tstring_content'>    &lt;% elsif mode == :perl %&gt;
+</span><span class='tstring_content'>        ENV.prepend_create_path &quot;PERL5LIB&quot;, libexec/&quot;lib/perl5&quot;
+</span><span class='tstring_content'>        ENV.prepend_path &quot;PERL5LIB&quot;, libexec/&quot;lib&quot;
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>        # Stage additional dependency (Makefile.PL style)
+</span><span class='tstring_content'>        # resource(&quot;&quot;).stage do
+</span><span class='tstring_content'>        #   system &quot;perl&quot;, &quot;Makefile.PL&quot;, &quot;INSTALL_BASE=\#{libexec}&quot;
+</span><span class='tstring_content'>        #   system &quot;make&quot;
+</span><span class='tstring_content'>        #   system &quot;make&quot;, &quot;install&quot;
+</span><span class='tstring_content'>        # end
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>        # Stage additional dependency (Build.PL style)
+</span><span class='tstring_content'>        # resource(&quot;&quot;).stage do
+</span><span class='tstring_content'>        #   system &quot;perl&quot;, &quot;Build.PL&quot;, &quot;--install_base&quot;, libexec
+</span><span class='tstring_content'>        #   system &quot;./Build&quot;
+</span><span class='tstring_content'>        #   system &quot;./Build&quot;, &quot;install&quot;
+</span><span class='tstring_content'>        # end
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>        bin.install name
+</span><span class='tstring_content'>        bin.env_script_all_files(libexec/&quot;bin&quot;, :PERL5LIB =&gt; ENV[&quot;PERL5LIB&quot;])
 </span><span class='tstring_content'>    &lt;% elsif mode == :python %&gt;
 </span><span class='tstring_content'>        virtualenv_install_with_resources
 </span><span class='tstring_content'>    &lt;% elsif mode == :rust %&gt;
@@ -1245,7 +1289,7 @@
 </span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
 </span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% end %&gt;
-</span><span class='tstring_content'>    &lt;% if mode == :autotools or mode == :cmake %&gt;
+</span><span class='tstring_content'>    &lt;% if mode == :autotools || mode == :cmake %&gt;
 </span><span class='tstring_content'>        system &quot;make&quot;, &quot;install&quot; # if this fails, try separate make/make install steps
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      end
