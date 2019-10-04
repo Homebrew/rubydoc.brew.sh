@@ -314,6 +314,29 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test_cask_paths-instance_method" title="#test_cask_paths (instance method)">#<strong>test_cask_paths</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -413,12 +436,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/style.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/style.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_autocorrect_args'>autocorrect_args</span>
   <span class='id identifier rubyid_default_args'>default_args</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--auto-correct</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -458,7 +481,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_paths'>cask_paths</span>
   <span class='ivar'>@cask_paths</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask_dir</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask_dir</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_test_cask_paths'>test_cask_paths</span><span class='rparen'>)</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
@@ -565,12 +588,12 @@
       <pre class="lines">
 
 
-54
-55
-56</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/style.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/style.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_normal_args'>normal_args</span>
   <span class='id identifier rubyid_default_args'>default_args</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--parallel</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -669,6 +692,42 @@
     <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='id identifier rubyid_cache_env'>cache_env</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_hide_warnings'>hide_warnings</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rubocop</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_rubocop_args'>rubocop_args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_cask_paths'>cask_paths</span><span class='comma'>,</span> <span class='label'>chdir:</span> <span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../CaskError.html" title="Cask::CaskError (class)">CaskError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>style check failed</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="test_cask_paths-instance_method">
+  
+    #<strong>test_cask_paths</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/style.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_test_cask_paths'>test_cask_paths</span>
+  <span class='lbracket'>[</span>
+    <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/Homebrew/test/support/fixtures/cask/Casks</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/Homebrew/test/support/fixtures/third-party/Casks</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
