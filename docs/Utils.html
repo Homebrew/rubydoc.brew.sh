@@ -1060,9 +1060,7 @@
 88
 89
 90
-91
-92
-93</pre>
+91</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/fork.rb', line 29</span>
@@ -1073,31 +1071,29 @@
       <span class='id identifier rubyid_read'>read</span><span class='comma'>,</span> <span class='id identifier rubyid_write'>write</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="IO.html" title="IO (class)">IO</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pipe'>pipe</span>
 
       <span class='id identifier rubyid_pid'>pid</span> <span class='op'>=</span> <span class='id identifier rubyid_fork'>fork</span> <span class='kw'>do</span>
-        <span class='kw'>begin</span>
-          <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_ERROR_PIPE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
-          <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-          <span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-          <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_fcntl'>fcntl</span><span class='lparen'>(</span><span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>F_SETFD</span><span class='comma'>,</span> <span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>FD_CLOEXEC</span><span class='rparen'>)</span>
-          <span class='kw'>yield</span>
-        <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
-</span>          <span class='id identifier rubyid_error_hash'>error_hash</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+        <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_ERROR_PIPE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+        <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+        <span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+        <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_fcntl'>fcntl</span><span class='lparen'>(</span><span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>F_SETFD</span><span class='comma'>,</span> <span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>FD_CLOEXEC</span><span class='rparen'>)</span>
+        <span class='kw'>yield</span>
+      <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
+</span>        <span class='id identifier rubyid_error_hash'>error_hash</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
 
-          <span class='comment'># Special case: We need to recreate ErrorDuringExecutions
-</span>          <span class='comment'># for proper error messages and because other code expects
-</span>          <span class='comment'># to rescue them further down.
-</span>          <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span><span class='rparen'>)</span>
-            <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmd</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_cmd'>cmd</span>
-            <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>
-            <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>output</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span>
-          <span class='kw'>end</span>
-
-          <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_error_hash'>error_hash</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
-          <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-
-          <span class='id identifier rubyid_exit!'>exit!</span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_exit!'>exit!</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span>
+        <span class='comment'># Special case: We need to recreate ErrorDuringExecutions
+</span>        <span class='comment'># for proper error messages and because other code expects
+</span>        <span class='comment'># to rescue them further down.
+</span>        <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmd</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_cmd'>cmd</span>
+          <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>
+          <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>output</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span>
         <span class='kw'>end</span>
+
+        <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_error_hash'>error_hash</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+        <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
+
+        <span class='id identifier rubyid_exit!'>exit!</span>
+      <span class='kw'>else</span> <span class='comment'># rubocop:disable Lint/ElseAlignment
+</span>        <span class='id identifier rubyid_exit!'>exit!</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_ignore_interrupts'>ignore_interrupts</span><span class='lparen'>(</span><span class='symbol'>:quietly</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='comment'># the child will receive the interrupt and marshal it back
