@@ -251,29 +251,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#cask_dependencies-instance_method" title="#cask_dependencies (instance method)">#<strong>cask_dependencies</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#caveats-instance_method" title="#caveats (instance method)">#<strong>caveats</strong>  &#x21d2; Object </a>
     
 
@@ -412,7 +389,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#formula_dependencies-instance_method" title="#formula_dependencies (instance method)">#<strong>formula_dependencies</strong>  &#x21d2; Object </a>
+      <a href="#formula_and_cask_dependencies-instance_method" title="#formula_and_cask_dependencies (instance method)">#<strong>formula_and_cask_dependencies</strong>  &#x21d2; Object </a>
     
 
     
@@ -436,6 +413,29 @@
   <span class="summary_signature">
     
       <a href="#gain_permissions_remove-instance_method" title="#gain_permissions_remove (instance method)">#<strong>gain_permissions_remove</strong>(path)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#graph_dependencies-instance_method" title="#graph_dependencies (instance method)">#<strong>graph_dependencies</strong>(cask_or_formula, acc = TopologicalHash.new)  &#x21d2; Object </a>
     
 
     
@@ -943,29 +943,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unpack_dependencies-instance_method" title="#unpack_dependencies (instance method)">#<strong>unpack_dependencies</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#verify-instance_method" title="#verify (instance method)">#<strong>verify</strong>  &#x21d2; Object </a>
     
 
@@ -1246,6 +1223,10 @@
       <pre class="lines">
 
 
+262
+263
+264
+265
 266
 267
 268
@@ -1255,14 +1236,10 @@
 272
 273
 274
-275
-276
-277
-278
-279</pre>
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 266</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_arch_dependencies'>arch_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1298,13 +1275,13 @@
       <pre class="lines">
 
 
-399
-400
-401
-402</pre>
+405
+406
+407
+408</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 405</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup'>backup</span>
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='period'>.</span><span class='id identifier rubyid_rename'>rename</span> <span class='id identifier rubyid_backup_path'>backup_path</span>
@@ -1330,14 +1307,14 @@
       <pre class="lines">
 
 
-472
-473
-474
-475
-476</pre>
+478
+479
+480
+481
+482</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 472</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_metadata_path'>backup_metadata_path</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_metadata_versioned_path'>metadata_versioned_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1364,87 +1341,19 @@
       <pre class="lines">
 
 
-466
-467
-468
-469
-470</pre>
+472
+473
+474
+475
+476</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 466</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 472</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_path'>backup_path</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>.upgrading</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="cask_dependencies-instance_method">
-  
-    #<strong>cask_dependencies</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 311</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_cask_dependencies'>cask_dependencies</span>
-  <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="CaskDependencies.html" title="Cask::CaskDependencies (class)">CaskDependencies</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskDependencies.html#initialize-instance_method" title="Cask::CaskDependencies#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:installed?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>All Cask dependencies satisfied.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_not_installed'>not_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:installed?</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing Cask dependencies: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_not_installed'>not_installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_not_installed'>not_installed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-      <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span>
-      <span class='label'>binaries:</span>                <span class='id identifier rubyid_binaries?'>binaries?</span><span class='comma'>,</span>
-      <span class='label'>verbose:</span>                 <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span><span class='comma'>,</span>
-      <span class='label'>installed_as_dependency:</span> <span class='kw'>true</span><span class='comma'>,</span>
-      <span class='label'>force:</span>                   <span class='kw'>false</span><span class='comma'>,</span>
-    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_install'><span class='object_link'><a href="#install-instance_method" title="Cask::Installer#install (method)">install</a></span></span>
-  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1466,12 +1375,12 @@
       <pre class="lines">
 
 
-363
-364
-365</pre>
+369
+370
+371</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caveats'>caveats</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_caveats'>caveats</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span>
@@ -1496,6 +1405,8 @@
       <pre class="lines">
 
 
+115
+116
 117
 118
 119
@@ -1503,12 +1414,10 @@
 121
 122
 123
-124
-125
-126</pre>
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_conflicts'>check_conflicts</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_conflicts_with'>conflicts_with</span>
@@ -1540,15 +1449,15 @@
       <pre class="lines">
 
 
+150
+151
 152
 153
 154
-155
-156
-157</pre>
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Downloading</span><span class='tstring_end'>&quot;</span></span>
@@ -1576,6 +1485,8 @@
       <pre class="lines">
 
 
+174
+175
 176
 177
 178
@@ -1599,12 +1510,10 @@
 196
 197
 198
-199
-200
-201</pre>
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_primary_container'>extract_primary_container</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Extracting primary container</span><span class='tstring_end'>&quot;</span></span>
@@ -1668,11 +1577,11 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#fetch</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_satisfy_dependencies'>satisfy_dependencies</span>
-
   <span class='id identifier rubyid_verify_has_sha'>verify_has_sha</span> <span class='kw'>if</span> <span class='id identifier rubyid_require_sha?'>require_sha?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force?'><span class='object_link'><a href="../HomebrewArgvExtension.html#force%3F-instance_method" title="HomebrewArgvExtension#force? (method)">force?</a></span></span>
   <span class='id identifier rubyid_download'>download</span>
   <span class='id identifier rubyid_verify'>verify</span>
+
+  <span class='id identifier rubyid_satisfy_dependencies'>satisfy_dependencies</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1694,16 +1603,16 @@
       <pre class="lines">
 
 
-420
-421
-422
-423
-424
-425
-426</pre>
+426
+427
+428
+429
+430
+431
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finalize_upgrade'>finalize_upgrade</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging files for version </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1718,69 +1627,164 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="formula_dependencies-instance_method">
+  <h3 class="signature " id="formula_and_cask_dependencies-instance_method">
   
-    #<strong>formula_dependencies</strong>  &#x21d2; <tt>Object</tt> 
-  
-
+    #<strong>formula_and_cask_dependencies</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="CaskSelfReferencingDependencyError.html" title="Cask::CaskSelfReferencingDependencyError (class)">CaskSelfReferencingDependencyError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
 308
-309</pre>
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 308</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_formula_dependencies'>formula_dependencies</span>
-  <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_formula_and_cask_dependencies'>formula_and_cask_dependencies</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_installed_as_dependency?'>installed_as_dependency?</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_graph'>graph</span> <span class='op'>=</span> <span class='id identifier rubyid_graph_dependencies'>graph_dependencies</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="CaskSelfReferencingDependencyError.html" title="Cask::CaskSelfReferencingDependencyError (class)">CaskSelfReferencingDependencyError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span> <span class='kw'>if</span> <span class='id identifier rubyid_graph'>graph</span><span class='lbracket'>[</span><span class='ivar'>@cask</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
+    <span class='id identifier rubyid_graph_dependencies'>graph_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='id identifier rubyid_graph'>graph</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_formulae_and_casks'>formulae_and_casks</span> <span class='op'>=</span> <span class='kw'>begin</span>
+    <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_tsort'>tsort</span> <span class='op'>-</span> <span class='lbracket'>[</span><span class='ivar'>@cask</span><span class='rbracket'>]</span>
+  <span class='kw'>rescue</span> <span class='const'>TSort</span><span class='op'>::</span><span class='const'>Cyclic</span>
+    <span class='id identifier rubyid_strongly_connected_components'>strongly_connected_components</span> <span class='op'>=</span> <span class='id identifier rubyid_graph'>graph</span><span class='period'>.</span><span class='id identifier rubyid_strongly_connected_components'>strongly_connected_components</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:count</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_cyclic_dependencies'>cyclic_dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_strongly_connected_components'>strongly_connected_components</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>-</span> <span class='lbracket'>[</span><span class='ivar'>@cask</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="CaskCyclicDependencyError.html" title="Cask::CaskCyclicDependencyError (class)">CaskCyclicDependencyError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AbstractCaskErrorWithToken.html#initialize-instance_method" title="Cask::AbstractCaskErrorWithToken#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='id identifier rubyid_cyclic_dependencies'>cyclic_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formulae_and_casks'>formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_not_installed_formulae_and_casks'>not_installed_formulae_and_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae_and_casks'>formulae_and_casks</span>
+                                     <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='op'>|</span>
+    <span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:installed?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span><span class='rparen'>)</span> <span class='op'>||</span>
+      <span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_not_installed_formulae_and_casks'>not_installed_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>All Formula dependencies satisfied.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_not_installed'>not_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing dependencies: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_not_installed_formulae_and_casks'>not_installed_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_not_installed_formulae_and_casks'>not_installed_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_skip_cask_deps?'>skip_cask_deps?</span>
+        <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--skip-cask-deps` is set; skipping installation of </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>next</span>
+      <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing Formula dependencies: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_not_installed'>not_installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_not_installed'>not_installed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fi'>fi</span><span class='op'>|</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_as_dependency'>installed_as_dependency</span> <span class='op'>=</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_on_request'>installed_on_request</span> <span class='op'>=</span> <span class='kw'>false</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_show_header'>show_header</span> <span class='op'>=</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_verbose'>verbose</span> <span class='op'>=</span> <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_prelude'>prelude</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
+      <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+        <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='comma'>,</span>
+        <span class='label'>binaries:</span>                <span class='id identifier rubyid_binaries?'>binaries?</span><span class='comma'>,</span>
+        <span class='label'>verbose:</span>                 <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span><span class='comma'>,</span>
+        <span class='label'>installed_as_dependency:</span> <span class='kw'>true</span><span class='comma'>,</span>
+        <span class='label'>force:</span>                   <span class='kw'>false</span><span class='comma'>,</span>
+      <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_install'><span class='object_link'><a href="#install-instance_method" title="Cask::Installer#install (method)">install</a></span></span>
+    <span class='kw'>else</span>
+      <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_yield_self'>yield_self</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fi'>fi</span><span class='op'>|</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_as_dependency'>installed_as_dependency</span> <span class='op'>=</span> <span class='kw'>true</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_on_request'>installed_on_request</span> <span class='op'>=</span> <span class='kw'>false</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_show_header'>show_header</span> <span class='op'>=</span> <span class='kw'>true</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_verbose'>verbose</span> <span class='op'>=</span> <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_prelude'>prelude</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
+        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1804,15 +1808,89 @@
       <pre class="lines">
 
 
-478
-479
-480</pre>
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 484</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_gain_permissions_remove'>gain_permissions_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Cask::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_gain_permissions_remove'><span class='object_link'><a href="Utils.html#gain_permissions_remove-class_method" title="Cask::Utils.gain_permissions_remove (method)">gain_permissions_remove</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>command:</span> <span class='ivar'>@command</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="graph_dependencies-instance_method">
+  
+    #<strong>graph_dependencies</strong>(cask_or_formula, acc = TopologicalHash.new)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 282</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_graph_dependencies'>graph_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='comma'>,</span> <span class='id identifier rubyid_acc'>acc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="TopologicalHash.html" title="Cask::TopologicalHash (class)">TopologicalHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_acc'>acc</span> <span class='kw'>if</span> <span class='id identifier rubyid_acc'>acc</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_formula_deps'>formula_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_cask_deps'>cask_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='const'><span class='object_link'><a href="CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_public_method'>public_method</span><span class='lparen'>(</span><span class='symbol'>:load</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_formula_deps'>formula_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:build?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_cask_deps'>cask_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_requirements'>requirements</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='const'><span class='object_link'><a href="CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_public_method'>public_method</span><span class='lparen'>(</span><span class='symbol'>:load</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_acc'>acc</span><span class='lbracket'>[</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_acc'>acc</span><span class='lbracket'>[</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='id identifier rubyid_formula_deps'>formula_deps</span>
+  <span class='id identifier rubyid_acc'>acc</span><span class='lbracket'>[</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='id identifier rubyid_cask_deps'>cask_deps</span>
+
+  <span class='id identifier rubyid_formula_deps'>formula_deps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+    <span class='id identifier rubyid_graph_dependencies'>graph_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_acc'>acc</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_cask_deps'>cask_deps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
+    <span class='id identifier rubyid_graph_dependencies'>graph_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_acc'>acc</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_acc'>acc</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1834,6 +1912,8 @@
       <pre class="lines">
 
 
+82
+83
 84
 85
 86
@@ -1863,12 +1943,10 @@
 110
 111
 112
-113
-114
-115</pre>
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#install</span><span class='tstring_end'>&quot;</span></span>
@@ -1922,6 +2000,8 @@
       <pre class="lines">
 
 
+201
+202
 203
 204
 205
@@ -1960,12 +2040,10 @@
 238
 239
 240
-241
-242
-243</pre>
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_artifacts'>install_artifacts</span>
   <span class='id identifier rubyid_already_installed_artifacts'>already_installed_artifacts</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2051,15 +2129,15 @@
       <pre class="lines">
 
 
+255
+256
+257
+258
 259
-260
-261
-262
-263
-264</pre>
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_macos_dependencies'>macos_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span>
@@ -2087,14 +2165,14 @@
       <pre class="lines">
 
 
+168
+169
 170
 171
-172
-173
-174</pre>
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_primary_container'>primary_container</span>
   <span class='ivar'>@primary_container</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -2121,21 +2199,21 @@
       <pre class="lines">
 
 
-482
-483
-484
-485
-486
-487
 488
 489
 490
 491
 492
-493</pre>
+493
+494
+495
+496
+497
+498
+499</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 482</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_backed_up_versioned_files'>purge_backed_up_versioned_files</span>
   <span class='comment'># versioned staged distribution
@@ -2169,13 +2247,13 @@
       <pre class="lines">
 
 
-515
-516
-517
-518</pre>
+521
+522
+523
+524</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 515</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 521</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_caskroom_path'>purge_caskroom_path</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging all staged versions of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2201,12 +2279,6 @@
       <pre class="lines">
 
 
-495
-496
-497
-498
-499
-500
 501
 502
 503
@@ -2219,10 +2291,16 @@
 510
 511
 512
-513</pre>
+513
+514
+515
+516
+517
+518
+519</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 495</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 501</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_versioned_files'>purge_versioned_files</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging files for version </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2263,14 +2341,14 @@
       <pre class="lines">
 
 
+126
+127
 128
 129
-130
-131
-132</pre>
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reinstall'>reinstall</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#reinstall</span><span class='tstring_end'>&quot;</span></span>
@@ -2297,13 +2375,13 @@
       <pre class="lines">
 
 
-389
-390
-391
-392</pre>
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_config_file'>remove_config_file</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config_path'>config_path</span>
@@ -2329,18 +2407,18 @@
       <pre class="lines">
 
 
-404
-405
-406
-407
-408
-409
 410
 411
-412</pre>
+412
+413
+414
+415
+416
+417
+418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 410</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restore_backup'>restore_backup</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_backup_path'>backup_path</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_backup_metadata_path'>backup_metadata_path</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2371,14 +2449,14 @@
       <pre class="lines">
 
 
-414
-415
-416
-417
-418</pre>
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_revert_upgrade'>revert_upgrade</span>
   <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reverting upgrade for Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2417,29 +2495,25 @@
       <pre class="lines">
 
 
+246
+247
 248
 249
 250
 251
 252
-253
-254
-255
-256
-257</pre>
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfy_dependencies'>satisfy_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span>
 
-  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Satisfying dependencies</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_macos_dependencies'>macos_dependencies</span>
   <span class='id identifier rubyid_arch_dependencies'>arch_dependencies</span>
   <span class='id identifier rubyid_x11_dependencies'>x11_dependencies</span>
-  <span class='id identifier rubyid_formula_dependencies'>formula_dependencies</span>
-  <span class='id identifier rubyid_cask_dependencies'>cask_dependencies</span> <span class='kw'>unless</span> <span class='id identifier rubyid_skip_cask_deps?'>skip_cask_deps?</span> <span class='op'>||</span> <span class='id identifier rubyid_installed_as_dependency?'>installed_as_dependency?</span>
+  <span class='id identifier rubyid_formula_and_cask_dependencies'>formula_and_cask_dependencies</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2461,18 +2535,18 @@
       <pre class="lines">
 
 
-367
-368
-369
-370
-371
-372
 373
 374
-375</pre>
+375
+376
+377
+378
+379
+380
+381</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 367</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_caskfile'>save_caskfile</span>
   <span class='id identifier rubyid_old_savedir'>old_savedir</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_metadata_timestamped_path'>metadata_timestamped_path</span>
@@ -2503,12 +2577,12 @@
       <pre class="lines">
 
 
-377
-378
-379</pre>
+383
+384
+385</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 377</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 383</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_config_file'>save_config_file</span>
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config_path'>config_path</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
@@ -2543,9 +2617,7 @@
 77
 78
 79
-80
-81
-82</pre>
+80</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 70</span>
@@ -2554,8 +2626,6 @@
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#stage</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='const'><span class='object_link'><a href="Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_ensure_caskroom_exists'><span class='object_link'><a href="Caskroom.html#ensure_caskroom_exists-class_method" title="Cask::Caskroom.ensure_caskroom_exists (method)">ensure_caskroom_exists</a></span></span>
-
-  <span class='id identifier rubyid_unpack_dependencies'>unpack_dependencies</span>
 
   <span class='id identifier rubyid_extract_primary_container'>extract_primary_container</span>
   <span class='id identifier rubyid_save_caskfile'>save_caskfile</span>
@@ -2583,13 +2653,13 @@
       <pre class="lines">
 
 
-394
-395
-396
-397</pre>
+400
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 394</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 400</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_upgrade'>start_upgrade</span>
   <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span>
@@ -2615,15 +2685,15 @@
       <pre class="lines">
 
 
+143
+144
 145
 146
 147
-148
-149
-150</pre>
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summary'>summary</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -2651,16 +2721,16 @@
       <pre class="lines">
 
 
-381
-382
-383
-384
-385
-386
-387</pre>
+387
+388
+389
+390
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 381</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 387</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall'>uninstall</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Uninstalling Cask </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="../Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2689,12 +2759,6 @@
       <pre class="lines">
 
 
-428
-429
-430
-431
-432
-433
 434
 435
 436
@@ -2710,10 +2774,16 @@
 446
 447
 448
-449</pre>
+449
+450
+451
+452
+453
+454
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 428</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 434</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>clear:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Uninstalling artifacts</span><span class='tstring_end'>&quot;</span></span>
@@ -2757,6 +2827,8 @@
       <pre class="lines">
 
 
+132
+133
 134
 135
 136
@@ -2764,12 +2836,10 @@
 138
 139
 140
-141
-142
-143</pre>
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall_existing_cask'>uninstall_existing_cask</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -2780,86 +2850,6 @@
 
   <span class='comment'># Always force uninstallation, ignore method parameter
 </span>  <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_installed_cask'>installed_cask</span><span class='comma'>,</span> <span class='label'>binaries:</span> <span class='id identifier rubyid_binaries?'>binaries?</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>upgrade:</span> <span class='id identifier rubyid_upgrade?'>upgrade?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'><span class='object_link'><a href="#uninstall-instance_method" title="Cask::Installer#uninstall (method)">uninstall</a></span></span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="unpack_dependencies-instance_method">
-  
-    #<strong>unpack_dependencies</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 334</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_unpack_dependencies'>unpack_dependencies</span>
-  <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-                           <span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='const'><span class='object_link'><a href="CaskDependencies.html" title="Cask::CaskDependencies (class)">CaskDependencies</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskDependencies.html#initialize-instance_method" title="Cask::CaskDependencies#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_cask'>cask</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-
-  <span class='id identifier rubyid_not_installed_formulae'>not_installed_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'><span class='object_link'><a href="../HomebrewArgvExtension.html#formulae-instance_method" title="HomebrewArgvExtension#formulae (method)">formulae</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_not_installed_casks'>not_installed_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'><span class='object_link'><a href="../HomebrewArgvExtension.html#casks-instance_method" title="HomebrewArgvExtension#casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:installed?</span><span class='rparen'>)</span>
-
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_not_installed_formulae'>not_installed_formulae</span> <span class='op'>+</span> <span class='id identifier rubyid_not_installed_casks'>not_installed_casks</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-
-  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Satisfying unpack dependencies</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='id identifier rubyid_not_installed_formulae'>not_installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fi'>fi</span><span class='op'>|</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_as_dependency'>installed_as_dependency</span> <span class='op'>=</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_installed_on_request'>installed_on_request</span> <span class='op'>=</span> <span class='kw'>false</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_show_header'>show_header</span> <span class='op'>=</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_verbose'>verbose</span> <span class='op'>=</span> <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_prelude'>prelude</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
-      <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_not_installed_casks'>not_installed_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'><span class='object_link'><a href="../HomebrewArgvExtension.html#verbose%3F-instance_method" title="HomebrewArgvExtension#verbose? (method)">verbose?</a></span></span><span class='comma'>,</span> <span class='label'>installed_as_dependency:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_install'><span class='object_link'><a href="#install-instance_method" title="Cask::Installer#install (method)">install</a></span></span>
-  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2881,12 +2871,12 @@
       <pre class="lines">
 
 
-166
-167
-168</pre>
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify'>verify</span>
   <span class='const'><span class='object_link'><a href="Verify.html" title="Cask::Verify (module)">Verify</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="Verify.html#all-class_method" title="Cask::Verify.all (method)">all</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='comma'>,</span> <span class='ivar'>@downloaded_path</span><span class='rparen'>)</span>
@@ -2934,15 +2924,15 @@
       <pre class="lines">
 
 
+157
+158
 159
 160
 161
-162
-163
-164</pre>
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify_has_sha'>verify_has_sha</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking cask has checksum</span><span class='tstring_end'>&quot;</span></span>
@@ -2993,13 +2983,13 @@
       <pre class="lines">
 
 
-281
-282
-283
-284</pre>
+277
+278
+279
+280</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_x11_dependencies'>x11_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_x11'>x11</span>
@@ -3025,12 +3015,6 @@
       <pre class="lines">
 
 
-451
-452
-453
-454
-455
-456
 457
 458
 459
@@ -3038,10 +3022,16 @@
 461
 462
 463
-464</pre>
+464
+465
+466
+467
+468
+469
+470</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/installer.rb', line 457</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_zap'>zap</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>%Q(</span><span class='tstring_content'>Implied &quot;brew cask uninstall </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>)</span></span>
