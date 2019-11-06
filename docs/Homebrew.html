@@ -10625,7 +10625,13 @@
 316
 317
 318
-319</pre>
+319
+320
+321
+322
+323
+324
+325</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 223</span>
@@ -10633,10 +10639,13 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_check_dependents'>check_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking dependents for outdated formulae</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
+  <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking for dependents of upgraded formulae...</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span>
     <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:runtime_installed_formula_dependents</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No dependents found!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_upgradeable_dependents'>upgradeable_dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span>
                                      <span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='op'>|</span> <span class='id identifier rubyid_depends_on'>depends_on</span><span class='lparen'>(</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -10653,7 +10662,7 @@
 
   <span class='comment'># Print the upgradable dependents.
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_upgradeable_dependents'>upgradeable_dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No dependents to upgrade</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No outdated dependents to upgrade!</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_plural'>plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependent</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_upgradeable_dependents'>upgradeable_dependents</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upgrading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_upgradable'>upgradable</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural'>plural</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span>
@@ -10671,7 +10680,7 @@
   <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_upgradeable_dependents'>upgradeable_dependents</span><span class='rparen'>)</span>
 
   <span class='comment'># Assess the dependents tree again now we&#39;ve upgraded.
-</span>  <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking dependents for broken library links</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
+</span>  <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking for dependents&#39; broken linkage from upgraded formulae...</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_broken_dependents'>broken_dependents</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:linkage</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
     <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:runtime_installed_formula_dependents</span><span class='rparen'>)</span>
                        <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:opt_or_installed_prefix_keg</span><span class='rparen'>)</span>
@@ -10681,7 +10690,10 @@
                     <span class='period'>.</span><span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_broken_dependents'>broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_broken_dependents'>broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No broken dependents found!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span> <span class='op'>=</span>
     <span class='id identifier rubyid_broken_dependents'>broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span>
@@ -10701,8 +10713,8 @@
   <span class='kw'>end</span>
 
   <span class='comment'># Print the broken dependents.
-</span>  <span class='kw'>if</span> <span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No broken dependents to reinstall</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No broken dependents to reinstall!</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
     <span class='id identifier rubyid_plural'>plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependent</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
