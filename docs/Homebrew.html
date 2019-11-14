@@ -7812,12 +7812,36 @@
 315
 316
 317
-318</pre>
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 233</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_analytics_table'>analytics_table</span><span class='lparen'>(</span><span class='id identifier rubyid_category'>category</span><span class='comma'>,</span> <span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='label'>os_version:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>cask_install:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_valid_days'>valid_days</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>30</span><span class='words_sep'> </span><span class='tstring_content'>90</span><span class='words_sep'> </span><span class='tstring_content'>365</span><span class='tstring_end'>]</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>day must be one of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_valid_days'>valid_days</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_days'>valid_days</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_valid_categories'>valid_categories</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>install</span><span class='words_sep'> </span><span class='tstring_content'>install-on-request</span><span class='words_sep'> </span><span class='tstring_content'>cask-install</span><span class='words_sep'> </span><span class='tstring_content'>build-error</span><span class='words_sep'> </span><span class='tstring_content'>os-version</span><span class='tstring_end'>]</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_category'>category</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_valid_categories'>valid_categories</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_category'>category</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>category must be one of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_valid_categories'>valid_categories</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_category'>category</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_days'>days</span><span class='embexpr_end'>}</span><span class='tstring_content'> days)</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_total_count'>total_count</span> <span class='op'>=</span> <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formatted_total_count'>formatted_total_count</span> <span class='op'>=</span> <span class='id identifier rubyid_format_count'>format_count</span><span class='lparen'>(</span><span class='id identifier rubyid_total_count'>total_count</span><span class='rparen'>)</span>
@@ -12126,19 +12150,19 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392</pre>
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate_dependencies'>decorate_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_dependencies'>dependencies</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_deps_status'>deps_status</span> <span class='op'>=</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
@@ -12170,16 +12194,16 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-394
-395
-396
-397
-398
-399
-400</pre>
+414
+415
+416
+417
+418
+419
+420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 394</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate_requirements'>decorate_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_requirements'>requirements</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_req_status'>req_status</span> <span class='op'>=</span> <span class='id identifier rubyid_requirements'>requirements</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_req'>req</span><span class='op'>|</span>
@@ -12333,14 +12357,14 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-402
-403
-404
-405
-406</pre>
+422
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 422</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dep_display_s'>dep_display_s</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_option_tags'>option_tags</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -14685,12 +14709,12 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-408
-409
-410</pre>
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 408</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 428</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_count'>format_count</span><span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_count'>count</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(\d{3})(?=\d)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\\1,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
@@ -14745,12 +14769,12 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-412
-413
-414</pre>
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_percent'>format_percent</span><span class='lparen'>(</span><span class='id identifier rubyid_percent'>percent</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%&lt;percent&gt;.2f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>percent:</span> <span class='id identifier rubyid_percent'>percent</span><span class='rparen'>)</span>
@@ -20079,18 +20103,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
 332
 333
 334
@@ -20116,10 +20128,22 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 354
 355
 356
-357</pre>
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 332</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_output_analytics'>output_analytics</span><span class='lparen'>(</span><span class='label'>filter:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_days'>days</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>30</span><span class='tstring_end'>&quot;</span></span>
@@ -20179,18 +20203,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
 371
 372
 373
@@ -20201,10 +20213,30 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 378
 379
 380
-381</pre>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 359</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/info.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_output_formula_analytics'>output_formula_analytics</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae_api_json'>formulae_api_json</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'>.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -20219,6 +20251,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
     <span class='id identifier rubyid_value'><span class='object_link'><a href="HomebrewArgvExtension.html#value-instance_method" title="HomebrewArgvExtension#value (method)">value</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='op'>|</span>
       <span class='id identifier rubyid_days'>days</span> <span class='op'>=</span> <span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_full_analytics'>full_analytics</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+          <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_days'>days</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>!=</span> <span class='id identifier rubyid_days'>days</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_category'>category</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+          <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_category'>category</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='id identifier rubyid_category'>category</span>
+        <span class='kw'>end</span>
+
         <span class='id identifier rubyid_analytics_table'>analytics_table</span><span class='lparen'>(</span><span class='id identifier rubyid_category'>category</span><span class='comma'>,</span> <span class='id identifier rubyid_days'>days</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_total_count'>total_count</span> <span class='op'>=</span> <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
