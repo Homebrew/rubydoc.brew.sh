@@ -17592,15 +17592,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 25
 26
 27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre>
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/leaves.rb', line 21</span>
@@ -17609,16 +17601,8 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
   <span class='id identifier rubyid_leaves_args'>leaves_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
-
-  <span class='id identifier rubyid_deps_of_installed'>deps_of_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-    <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
-      <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
-    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span>
-      <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_leaves'>leaves</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:full_name</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_deps_of_installed'>deps_of_installed</span>
+  <span class='id identifier rubyid_deps_of_installed'>deps_of_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:runtime_formula_dependencies</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_leaves'>leaves</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:full_name</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_deps_of_installed'>deps_of_installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:full_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_leaves'>leaves</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:puts</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
