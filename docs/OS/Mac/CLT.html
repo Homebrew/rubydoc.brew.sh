@@ -127,16 +127,6 @@
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Library/Developer/CommandLineTools</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="HEADER_PKG_PATH-constant" class="">HEADER_PKG_PATH =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_:macos_version.pkg</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
-        <dt id="HEADER_PKG_ID-constant" class="">HEADER_PKG_ID =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>com.apple.pkg.macOS_SDK_headers_for_macOS_10.14</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
     </dl>
   
 
@@ -226,7 +216,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#headers_installed%3F-class_method" title="headers_installed? (class method)">.<strong>headers_installed?</strong>  &#x21d2; Boolean </a>
+      <a href="#detect_version_from_clang_version-class_method" title="detect_version_from_clang_version (class method)">.<strong>detect_version_from_clang_version</strong>  &#x21d2; Object </a>
     
 
     
@@ -241,29 +231,6 @@
 
   
     <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#headers_version-class_method" title="headers_version (class method)">.<strong>headers_version</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Version string of the header package, which is a separate package as of macOS 10.14.</p>
 </div></span>
   
 </li>
@@ -295,7 +262,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#latest_version-class_method" title="latest_version (class method)">.<strong>latest_version</strong>  &#x21d2; Object </a>
+      <a href="#latest_clang_version-class_method" title="latest_clang_version (class method)">.<strong>latest_clang_version</strong>  &#x21d2; Object </a>
     
 
     
@@ -546,14 +513,14 @@
       <pre class="lines">
 
 
-270
-271
-272
-273
-274</pre>
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_below_minimum_version?'>below_minimum_version?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -580,19 +547,19 @@
       <pre class="lines">
 
 
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292</pre>
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_clang_version'>detect_clang_version</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:mavericks</span>
@@ -624,20 +591,20 @@
       <pre class="lines">
 
 
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328</pre>
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_version'>detect_version</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -648,7 +615,7 @@
     <span class='kw'>return</span> <span class='id identifier rubyid_version'>version</span> <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_detect_clang_version'>detect_clang_version</span>
+  <span class='id identifier rubyid_detect_version_from_clang_version'>detect_version_from_clang_version</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -656,115 +623,29 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="headers_installed?-class_method">
+  <h3 class="signature " id="detect_version_from_clang_version-class_method">
   
-    .<strong>headers_installed?</strong>  &#x21d2; <tt>Boolean</tt> 
-  
-
+    .<strong>detect_version_from_clang_version</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
 
-
-  </div>
-</div>
-<div class="tags">
   
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-213
-214
-215
-216
-217
-218
-219</pre>
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 283</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_headers_installed?'>headers_installed?</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_separate_header_package?'>separate_header_package?</span>
-    <span class='id identifier rubyid_installed?'>installed?</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_headers_version'>headers_version</span> <span class='op'>==</span> <span class='id identifier rubyid_version'>version</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="headers_version-class_method">
-  
-    .<strong>headers_version</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Version string of the header package, which is a
-separate package as of macOS 10.14.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 307</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_headers_version'>headers_version</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_separate_header_package?'>separate_header_package?</span>
-    <span class='id identifier rubyid_version'>version</span>
-  <span class='kw'>else</span>
-    <span class='ivar'>@header_version</span> <span class='op'>||=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_pkgutil_info'>pkgutil_info</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#HEADER_PKG_ID-constant" title="OS::Mac::CLT::HEADER_PKG_ID (constant)">HEADER_PKG_ID</a></span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>version: (.+)$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-    <span class='kw'>return</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html#NULL-constant" title="Version::NULL (constant)">NULL</a></span></span> <span class='kw'>unless</span> <span class='ivar'>@header_version</span>
-
-    <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@header_version</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_detect_version_from_clang_version'>detect_version_from_clang_version</span>
+  <span class='id identifier rubyid_detect_clang_version'>detect_clang_version</span><span class='op'>&amp;.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\d+)00\.</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -809,12 +690,12 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-201
-202
-203</pre>
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed?'>installed?</span>
   <span class='op'>!</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_null?'>null?</span>
@@ -825,9 +706,9 @@ separate package as of macOS 10.14.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="latest_version-class_method">
+  <h3 class="signature " id="latest_clang_version-class_method">
   
-    .<strong>latest_version</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>latest_clang_version</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -839,30 +720,30 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
 245
 246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258</pre>
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 234</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_latest_version'>latest_version</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_latest_clang_version'>latest_clang_version</span>
   <span class='comment'># As of Xcode 8 CLT releases are no longer in sync with Xcode releases
 </span>  <span class='comment'># on the older supported platform for that Xcode release, i.e there&#39;s no
 </span>  <span class='comment'># CLT package for 10.11 that contains the Clang version from Xcode 8.
 </span>  <span class='kw'>case</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.15</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1100.0.33.12</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.15</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1100.0.33.16</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.14</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1001.0.46.4</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.13</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1000.10.44.2</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.12</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>900.0.39.2</span><span class='tstring_end'>&quot;</span></span>
@@ -891,18 +772,18 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-260
-261
-262
-263
-264
-265
-266
-267
-268</pre>
+249
+250
+251
+252
+253
+254
+255
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span>
   <span class='kw'>case</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
@@ -956,21 +837,21 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-276
-277
-278
-279
-280
-281</pre>
+265
+266
+267
+268
+269
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated?'>outdated?</span>
   <span class='id identifier rubyid_clang_version'>clang_version</span> <span class='op'>=</span> <span class='id identifier rubyid_detect_clang_version'>detect_clang_version</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_clang_version'>clang_version</span>
 
-  <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_clang_version'>clang_version</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_latest_version'>latest_version</span>
+  <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_clang_version'>clang_version</span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_latest_clang_version'>latest_clang_version</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1015,12 +896,12 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-209
-210
-211</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_provides_sdk?'>provides_sdk?</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>8</span><span class='tstring_end'>&quot;</span></span>
@@ -1045,14 +926,14 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-221
-222
-223
-224
-225</pre>
+210
+211
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@locator</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="CLTSDKLocator.html" title="OS::Mac::CLTSDKLocator (class)">CLTSDKLocator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1079,12 +960,12 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-227
-228
-229</pre>
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sdk_path'>sdk_path</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_path'>path</span>
@@ -1132,12 +1013,12 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
-205
-206
-207</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 205</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_separate_header_package?'>separate_header_package?</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10</span><span class='tstring_end'>&quot;</span></span>
@@ -1162,22 +1043,22 @@ separate package as of macOS 10.14.</p>
       <pre class="lines">
 
 
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
 231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243</pre>
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_instructions'>update_instructions</span>
   <span class='kw'>if</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10.14</span><span class='tstring_end'>&quot;</span></span>
@@ -1224,16 +1105,16 @@ version numbers.</p>
       <pre class="lines">
 
 
-297
-298
-299
-300
-301
-302
-303</pre>
+290
+291
+292
+293
+294
+295
+296</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/xcode.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
   <span class='kw'>if</span> <span class='ivar'>@version</span> <span class='op'>||=</span> <span class='id identifier rubyid_detect_version'>detect_version</span>
