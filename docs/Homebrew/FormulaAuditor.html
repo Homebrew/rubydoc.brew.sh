@@ -951,7 +951,7 @@
   <span class='ivar'>@except</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:except</span><span class='rbracket'>]</span>
   <span class='comment'># Accept precomputed style offense results, for efficiency
 </span>  <span class='ivar'>@style_offenses</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:style_offenses</span><span class='rbracket'>]</span>
-  <span class='comment'># Allow the formula tap to be set as `core`, for testing purposes
+  <span class='comment'># Allow the formula tap to be set as homebrew/core, for testing purposes
 </span>  <span class='ivar'>@core_tap</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_core_tap?'>core_tap?</span> <span class='op'>||</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:core_tap</span><span class='rbracket'>]</span>
   <span class='ivar'>@problems</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@new_formula_problems</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1196,7 +1196,6 @@
       <pre class="lines">
 
 
-989
 990
 991
 992
@@ -1209,10 +1208,11 @@
 999
 1000
 1001
-1002</pre>
+1002
+1003</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 989</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 990</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -1248,7 +1248,6 @@
       <pre class="lines">
 
 
-602
 603
 604
 605
@@ -1282,10 +1281,11 @@
 633
 634
 635
-636</pre>
+636
+637</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 602</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 603</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_bitbucket_repository'>audit_bitbucket_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://bitbucket\.org/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
@@ -1342,7 +1342,6 @@
       <pre class="lines">
 
 
-548
 549
 550
 551
@@ -1351,10 +1350,11 @@
 554
 555
 556
-557</pre>
+557
+558</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 548</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 549</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_bottle_disabled'>audit_bottle_disabled</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_disabled?'>bottle_disabled?</span>
@@ -1364,7 +1364,7 @@
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
 
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not use `bottle :disabled`</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not use `bottle :disabled`</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1386,7 +1386,6 @@
       <pre class="lines">
 
 
-536
 537
 538
 539
@@ -1396,10 +1395,11 @@
 543
 544
 545
-546</pre>
+546
+547</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 536</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 537</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_bottle_spec'>audit_bottle_spec</span>
   <span class='comment'># special case: new versioned formulae should be audited
@@ -1410,7 +1410,7 @@
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_defined?'>bottle_defined?</span>
 
-  <span class='id identifier rubyid_new_formula_problem'>new_formula_problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New formulae should not have a `bottle do` block</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_new_formula_problem'>new_formula_problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New formulae in homebrew/core should not have a `bottle do` block</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1432,7 +1432,6 @@
       <pre class="lines">
 
 
-429
 430
 431
 432
@@ -1443,10 +1442,11 @@
 437
 438
 439
-440</pre>
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 429</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 430</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_conflicts'>audit_conflicts</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_conflicts'>conflicts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
@@ -1551,7 +1551,8 @@
 424
 425
 426
-427</pre>
+427
+428</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 356</span>
@@ -1583,7 +1584,8 @@
 
       <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
          <span class='lparen'>(</span><span class='id identifier rubyid_dep_f'>dep_f</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_dep_f'>dep_f</span><span class='period'>.</span><span class='id identifier rubyid_versioned_formula?'>versioned_formula?</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dependency &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is an alias; use the canonical name &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dependency &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; from homebrew/core is an alias; </span><span class='tstring_end'>&quot;</span></span> \
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use the canonical name &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='ivar'>@new_formula</span> <span class='op'>&amp;&amp;</span>
@@ -1617,14 +1619,14 @@
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:recommended</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:optional</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not have optional or recommended dependencies</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not have optional or recommended dependencies</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
 
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_requirements'>requirements</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:recommended?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>||</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_requirements'>requirements</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:optional?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not have optional or recommended requirements</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not have optional or recommended requirements</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1869,15 +1871,15 @@
 
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is blacklisted.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="MissingFormula.html" title="Homebrew::MissingFormula (module)">MissingFormula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blacklisted_reason'><span class='object_link'><a href="MissingFormula.html#blacklisted_reason-class_method" title="Homebrew::MissingFormula.blacklisted_reason (method)">blacklisted_reason</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is blacklisted from homebrew/core.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="MissingFormula.html" title="Homebrew::MissingFormula (module)">MissingFormula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blacklisted_reason'><span class='object_link'><a href="MissingFormula.html#blacklisted_reason-class_method" title="Homebrew::MissingFormula.blacklisted_reason (method)">blacklisted_reason</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_name'>name</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula name conflicts with existing aliases.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula name conflicts with existing aliases in homebrew/core.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_oldname'>oldname</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="../CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_renames'>formula_renames</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is reserved as the old name of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_oldname'>oldname</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; is reserved as the old name of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_oldname'>oldname</span><span class='embexpr_end'>}</span><span class='tstring_content'> in homebrew/core.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
@@ -1906,7 +1908,6 @@
       <pre class="lines">
 
 
-559
 560
 561
 562
@@ -1927,10 +1928,11 @@
 577
 578
 579
-580</pre>
+580
+581</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 559</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 560</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_github_repository'>audit_github_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://github\.com/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
@@ -1974,7 +1976,6 @@
       <pre class="lines">
 
 
-582
 583
 584
 585
@@ -1992,10 +1993,11 @@
 597
 598
 599
-600</pre>
+600
+601</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 582</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 583</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_gitlab_repository'>audit_gitlab_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://gitlab\.com/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
@@ -2036,7 +2038,6 @@
       <pre class="lines">
 
 
-519
 520
 521
 522
@@ -2051,10 +2052,11 @@
 531
 532
 533
-534</pre>
+534
+535</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 519</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 520</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_homepage'>audit_homepage</span>
   <span class='id identifier rubyid_homepage'>homepage</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_homepage'>homepage</span>
@@ -2092,7 +2094,6 @@
       <pre class="lines">
 
 
-442
 443
 444
 445
@@ -2122,10 +2123,11 @@
 469
 470
 471
-472</pre>
+472
+473</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 442</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 443</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_keg_only_style'>audit_keg_only_style</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -2178,14 +2180,14 @@
       <pre class="lines">
 
 
-893
 894
 895
 896
-897</pre>
+897
+898</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 893</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 894</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_lines'>audit_lines</span>
   <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_without_patch'>without_patch</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='id identifier rubyid_lineno'>lineno</span><span class='op'>|</span>
@@ -2212,7 +2214,6 @@
       <pre class="lines">
 
 
-474
 475
 476
 477
@@ -2229,10 +2230,11 @@
 488
 489
 490
-491</pre>
+491
+492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 474</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 475</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_postgresql'>audit_postgresql</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>postgresql</span><span class='tstring_end'>&quot;</span></span>
@@ -2248,7 +2250,7 @@
   <span class='kw'>begin</span>
     <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_previous_formula_name'>previous_formula_name</span><span class='rbracket'>]</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Versioned </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_previous_formula_name'>previous_formula_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> must be created for </span><span class='tstring_end'>&quot;</span></span> \
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Versioned </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_previous_formula_name'>previous_formula_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> in homebrew/core must be created for </span><span class='tstring_end'>&quot;</span></span> \
             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew-postgresql-upgrade-database` and `pg_upgrade` to work.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -2272,7 +2274,6 @@
       <pre class="lines">
 
 
-970
 971
 972
 973
@@ -2281,10 +2282,11 @@
 976
 977
 978
-979</pre>
+979
+980</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 970</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 971</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_prefix_has_contents'>audit_prefix_has_contents</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2316,7 +2318,6 @@
       <pre class="lines">
 
 
-957
 958
 959
 960
@@ -2327,10 +2328,11 @@
 965
 966
 967
-968</pre>
+968
+969</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 957</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 958</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_reverse_migration'>audit_reverse_migration</span>
   <span class='comment'># Only enforce for new formula being re-added to core
@@ -2364,7 +2366,6 @@
       <pre class="lines">
 
 
-791
 792
 793
 794
@@ -2446,10 +2447,11 @@
 870
 871
 872
-873</pre>
+873
+874</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 791</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 792</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_revision_and_version_scheme'>audit_revision_and_version_scheme</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='comment'># skip formula not from core or any taps
@@ -2554,7 +2556,6 @@
       <pre class="lines">
 
 
-652
 653
 654
 655
@@ -2691,10 +2692,11 @@
 786
 787
 788
-789</pre>
+789
+790</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 652</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 653</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_specs'>audit_specs</span>
   <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Head-only (no stable download)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_head_only?'>head_only?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
@@ -2745,7 +2747,7 @@
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
 
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not have a `devel` spec</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_devel'>devel</span>
+  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not have a `devel` spec</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_devel'>devel</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@versioned_formula</span>
     <span class='id identifier rubyid_head_spec_message'>head_spec_message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not have a `HEAD` spec</span><span class='tstring_end'>&quot;</span></span>
@@ -2904,7 +2906,6 @@
       <pre class="lines">
 
 
-875
 876
 877
 878
@@ -2920,10 +2921,11 @@
 888
 889
 890
-891</pre>
+891
+892</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 875</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 876</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_text'>audit_text</span>
   <span class='id identifier rubyid_bin_names'>bin_names</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -2962,7 +2964,6 @@
       <pre class="lines">
 
 
-493
 494
 495
 496
@@ -2986,10 +2987,11 @@
 514
 515
 516
-517</pre>
+517
+518</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 493</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 494</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_versioned_keg_only'>audit_versioned_keg_only</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@versioned_formula</span>
@@ -3014,7 +3016,7 @@
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_keg_only_whitelist'>keg_only_whitelist</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gcc@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Versioned formulae should use `keg_only :versioned_formula`</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Versioned formulae in homebrew/core should use `keg_only :versioned_formula`</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3036,7 +3038,6 @@
       <pre class="lines">
 
 
-638
 639
 640
 641
@@ -3048,10 +3049,11 @@
 647
 648
 649
-650</pre>
+650
+651</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 638</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 639</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
@@ -3086,7 +3088,6 @@
       <pre class="lines">
 
 
-899
 900
 901
 902
@@ -3142,10 +3143,11 @@
 952
 953
 954
-955</pre>
+955
+956</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 899</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 900</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_line_problems'>line_problems</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='id identifier rubyid__lineno'>_lineno</span><span class='rparen'>)</span>
   <span class='comment'># Check for string interpolation of single values.
@@ -3202,7 +3204,7 @@
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
 
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`env :std` in `core` formulae is deprecated</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>env :std</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`env :std` in homebrew/core formulae is deprecated</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>env :std</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3224,12 +3226,12 @@
       <pre class="lines">
 
 
-985
 986
-987</pre>
+987
+988</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 985</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 986</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span>
@@ -3254,12 +3256,12 @@
       <pre class="lines">
 
 
-981
 982
-983</pre>
+983
+984</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 981</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 982</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quote_dep'>quote_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
