@@ -683,9 +683,9 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_elisp_dirname'>check_elisp_dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-  <span class='comment'># Emacs itself can do what it wants
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>  <span class='comment'># Emacs itself can do what it wants
+</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_bad_dir_name'>bad_dir_name</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_child'>child</span><span class='op'>|</span>
     <span class='id identifier rubyid_child'>child</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_child'>child</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>!=</span> <span class='id identifier rubyid_name'>name</span>
@@ -742,9 +742,9 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_elisp_root'>check_elisp_root</span><span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-  <span class='comment'># Emacs itself can do what it wants
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>  <span class='comment'># Emacs itself can do what it wants
+</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_elisps'>elisps</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_share'>share</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>.el</span><span class='words_sep'> </span><span class='tstring_content'>.elc</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span> <span class='rbrace'>}</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_elisps'>elisps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -907,9 +907,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 34</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_infopages'>check_infopages</span>
-  <span class='comment'># Check for info pages that aren&#39;t in share/info
-</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>info</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_infopages'>check_infopages</span>  <span class='comment'># Check for info pages that aren&#39;t in share/info
+</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>info</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    A top-level &quot;info&quot; directory was found
@@ -1081,9 +1081,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_manpages'>check_manpages</span>
-  <span class='comment'># Check for man pages that aren&#39;t in share/man
-</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>man</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_manpages'>check_manpages</span>  <span class='comment'># Check for man pages that aren&#39;t in share/man
+</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>man</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    A top-level &quot;man&quot; directory was found
