@@ -11021,14 +11021,14 @@
       <pre class="lines">
 
 
+106
 107
 108
 109
-110
-111</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_condense_requirements'>condense_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_deps'>deps</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_deps'>deps</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_requirements?'>include_requirements?</span>
@@ -11866,6 +11866,7 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
+112
 113
 114
 115
@@ -11888,11 +11889,10 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 132
 133
 134
-135
-136</pre>
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dep_display_name'>dep_display_name</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span>
@@ -12017,8 +12017,7 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 101
 102
 103
-104
-105</pre>
+104</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 59</span>
@@ -12029,6 +12028,13 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
   <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_enable_factory_cache!'><span class='object_link'><a href="Formulary.html#enable_factory_cache!-class_method" title="Formulary.enable_factory_cache! (method)">enable_factory_cache!</a></span></span>
 
   <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>||</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:opt_or_installed_prefix_keg</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@use_runtime_dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>&amp;&amp;</span>
+                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_build?'>include_build?</span> <span class='op'>&amp;&amp;</span>
+                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_test?'>include_test?</span> <span class='op'>&amp;&amp;</span>
+                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_optional?'>include_optional?</span> <span class='op'>&amp;&amp;</span>
+                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_skip_recommended?'>skip_recommended?</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tree?'>tree?</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -12046,14 +12052,6 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
     <span class='id identifier rubyid_puts_deps'>puts_deps</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>||</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:opt_or_installed_prefix_keg</span><span class='rparen'>)</span>
-
-  <span class='ivar'>@use_runtime_dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_build?'>include_build?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_test?'>include_test?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_optional?'>include_optional?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_skip_recommended?'>skip_recommended?</span>
 
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_remaining'>remaining</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FormulaUnspecifiedError.html" title="FormulaUnspecifiedError (class)">FormulaUnspecifiedError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -12210,6 +12208,7 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
+137
 138
 139
 140
@@ -12223,11 +12222,10 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 148
 149
 150
-151
-152</pre>
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deps_for_formula'>deps_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_includes'>includes</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span> <span class='op'>=</span> <span class='id identifier rubyid_argv_includes_ignores'>argv_includes_ignores</span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='rparen'>)</span>
@@ -12264,12 +12262,12 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
+153
 154
-155
-156</pre>
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deps_for_formulae'>deps_for_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_deps_for_formula'>deps_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -20949,6 +20947,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+157
 158
 159
 160
@@ -20956,11 +20955,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 162
 163
 164
-165
-166</pre>
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
@@ -20991,17 +20989,17 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+167
 168
 169
 170
 171
 172
 173
-174
-175</pre>
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_puts_deps_tree'>puts_deps_tree</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
@@ -21302,6 +21300,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+176
 177
 178
 179
@@ -21339,11 +21338,12 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/deps.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_deps_tree'>recursive_deps_tree</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_recursive'>recursive</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_includes'>includes</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span> <span class='op'>=</span> <span class='id identifier rubyid_argv_includes_ignores'>argv_includes_ignores</span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_reject_ignores'>reject_ignores</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='comma'>,</span> <span class='id identifier rubyid_includes'>includes</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_dependables'>dependables</span> <span class='op'>=</span> <span class='ivar'>@use_runtime_dependencies</span> <span class='op'>?</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span> <span class='op'>:</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span>
+  <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_reject_ignores'>reject_ignores</span><span class='lparen'>(</span><span class='id identifier rubyid_dependables'>dependables</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='comma'>,</span> <span class='id identifier rubyid_includes'>includes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_reqs'>reqs</span> <span class='op'>=</span> <span class='id identifier rubyid_reject_ignores'>reject_ignores</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_requirements'>requirements</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='comma'>,</span> <span class='id identifier rubyid_includes'>includes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dependables'>dependables</span> <span class='op'>=</span> <span class='id identifier rubyid_reqs'>reqs</span> <span class='op'>+</span> <span class='id identifier rubyid_deps'>deps</span>
 
