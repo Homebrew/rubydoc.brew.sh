@@ -7373,7 +7373,6 @@
       <pre class="lines">
 
 
-480
 481
 482
 483
@@ -7383,10 +7382,11 @@
 487
 488
 489
-490</pre>
+490
+491</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 480</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 481</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_update_pair'>alias_update_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_versioned_alias'>versioned_alias</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*@\d+(\.\d+)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -9246,7 +9246,8 @@
 389
 390
 391
-392</pre>
+392
+393</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 108</span>
@@ -9402,10 +9403,11 @@
     <span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># When bumping a linux-only formula,
-</span>  <span class='comment'># one needs to also delete the sha256 linux bottle line.
-</span>  <span class='comment'># That&#39;s because of running test-bot with --keep-old option in linuxbrew-core.
-</span>  <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on :linux</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># When bumping a linux-only formula, one needs to also delete the
+</span>  <span class='comment'># sha256 linux bottle line if it exists. That&#39;s because of running
+</span>  <span class='comment'># test-bot with --keep-old option in linuxbrew-core.
+</span>  <span class='id identifier rubyid_formula_contents'>formula_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on :linux</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=&gt; :x86_64_linux</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
       <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^    sha256 &quot;.+&quot; =&gt; :x86_64_linux\n</span><span class='regexp_end'>/m</span></span><span class='comma'>,</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -10464,7 +10466,6 @@
       <pre class="lines">
 
 
-458
 459
 460
 461
@@ -10484,10 +10485,11 @@
 475
 476
 477
-478</pre>
+478
+479</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 458</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_duplicate_pull_requests'>check_for_duplicate_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pull_requests'>pull_requests</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
@@ -13907,7 +13909,6 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-448
 449
 450
 451
@@ -13915,10 +13916,11 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 453
 454
 455
-456</pre>
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 448</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 449</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_issues_for_formula'><span class='object_link'><a href="GitHub.html#issues_for_formula-class_method" title="GitHub.issues_for_formula (method)">issues_for_formula</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
@@ -14226,7 +14228,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-394
 395
 396
 397
@@ -14241,10 +14242,11 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 406
 407
 408
-409</pre>
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 394</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_forked_repo_info'>forked_repo_info</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_backup_file'>backup_file</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_fork'><span class='object_link'><a href="GitHub.html#create_fork-class_method" title="GitHub.create_fork (method)">create_fork</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
@@ -14509,7 +14511,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-438
 439
 440
 441
@@ -14517,10 +14518,11 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 443
 444
 445
-446</pre>
+446
+447</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 439</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_version'>formula_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -15746,7 +15748,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-411
 412
 413
 414
@@ -15771,10 +15772,11 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 433
 434
 435
-436</pre>
+436
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 411</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 412</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inreplace_pairs'>inreplace_pairs</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -22310,7 +22312,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-492
 493
 494
 495
@@ -22337,10 +22338,11 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 516
 517
 518
-519</pre>
+519
+520</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 492</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 493</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_audit'>run_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_alias_rename'>alias_rename</span><span class='comma'>,</span> <span class='id identifier rubyid_backup_file'>backup_file</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
