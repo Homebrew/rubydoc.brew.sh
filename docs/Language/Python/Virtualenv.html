@@ -243,14 +243,14 @@ corresponding depends_on statement.</p>
       <pre class="lines">
 
 
+155
 156
 157
 158
-159
-160</pre>
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_needs_python?'>needs_python?</span><span class='lparen'>(</span><span class='id identifier rubyid_python'>python</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_build'>build</span><span class='period'>.</span><span class='id identifier rubyid_with?'>with?</span><span class='lparen'>(</span><span class='id identifier rubyid_python'>python</span><span class='rparen'>)</span>
@@ -361,6 +361,7 @@ or “python2”)</p>
       <pre class="lines">
 
 
+126
 127
 128
 129
@@ -380,11 +381,10 @@ or “python2”)</p>
 143
 144
 145
-146
-147</pre>
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_virtualenv_create'>virtualenv_create</span><span class='lparen'>(</span><span class='id identifier rubyid_venv_root'>venv_root</span><span class='comma'>,</span> <span class='id identifier rubyid_python'>python</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='kw'>self</span><span class='rparen'>)</span>
   <span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_refurbish_args'>refurbish_args</span>
@@ -427,8 +427,8 @@ or “python2”)</p>
 Creates a virtualenv in <code>libexec</code>, installs all <code>resource</code>s defined
 on the formula, and then installs the formula. An options hash may be
 passed (e.g., <code>:using =&gt; "python"</code>) to override the default, guessed
-formula preference for python or python2, or to resolve an ambiguous
-case where it’s not clear whether python or python2 should be the
+formula preference for python or python@x.y, or to resolve an ambiguous
+case where it’s not clear whether python or python@x.y should be the
 default guess.</p>
 
 
@@ -443,6 +443,7 @@ default guess.</p>
       <pre class="lines">
 
 
+168
 169
 170
 171
@@ -455,21 +456,18 @@ default guess.</p>
 178
 179
 180
-181
-182
-183</pre>
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/python.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_virtualenv_install_with_resources'>virtualenv_install_with_resources</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_python'>python</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:using</span><span class='rbracket'>]</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_python'>python</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-    <span class='id identifier rubyid_pythons'>pythons</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>python</span><span class='words_sep'> </span><span class='tstring_content'>python@2</span><span class='words_sep'> </span><span class='tstring_content'>python2</span><span class='words_sep'> </span><span class='tstring_content'>python3</span><span class='words_sep'> </span><span class='tstring_content'>python@3</span><span class='words_sep'> </span><span class='tstring_content'>python@3.8</span><span class='words_sep'> </span><span class='tstring_content'>pypy</span><span class='words_sep'> </span><span class='tstring_content'>pypy3</span><span class='tstring_end'>]</span></span>
+    <span class='id identifier rubyid_pythons'>pythons</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>python</span><span class='words_sep'> </span><span class='tstring_content'>python3</span><span class='words_sep'> </span><span class='tstring_content'>python@3</span><span class='words_sep'> </span><span class='tstring_content'>python@3.8</span><span class='words_sep'> </span><span class='tstring_content'>pypy</span><span class='words_sep'> </span><span class='tstring_content'>pypy3</span><span class='tstring_end'>]</span></span>
     <span class='id identifier rubyid_wanted'>wanted</span> <span class='op'>=</span> <span class='id identifier rubyid_pythons'>pythons</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_py'>py</span><span class='op'>|</span> <span class='id identifier rubyid_needs_python?'>needs_python?</span><span class='lparen'>(</span><span class='id identifier rubyid_py'>py</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../FormulaAmbiguousPythonError.html" title="FormulaAmbiguousPythonError (class)">FormulaAmbiguousPythonError</a></span></span><span class='comma'>,</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_wanted'>wanted</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
 
-    <span class='id identifier rubyid_python'>python</span> <span class='op'>=</span> <span class='id identifier rubyid_wanted'>wanted</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python2.7</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_python'>python</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python3</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_python'>python</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_venv'>venv</span> <span class='op'>=</span> <span class='id identifier rubyid_virtualenv_create'>virtualenv_create</span><span class='lparen'>(</span><span class='id identifier rubyid_libexec'>libexec</span><span class='comma'>,</span> <span class='id identifier rubyid_python'>python</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
