@@ -1787,10 +1787,10 @@ TODO: Add case where key of hash is an array</p>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/extend/formula.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_depends_on_name_type?'>depends_on_name_type?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:required</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span>
-    <span class='id identifier rubyid_name_match'>name_match</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_name_match'>name_match</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span>
+    <span class='kw'>false</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_name_match'>name_match</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='comment'># Match only by type when name is nil
+    <span class='kw'>true</span> <span class='comment'># Match only by type when name is nil
 </span>  <span class='kw'>end</span>
 
   <span class='kw'>case</span> <span class='id identifier rubyid_type'>type</span>
@@ -3487,10 +3487,10 @@ sets the appropriate instance variables to report the match</p>
 
   <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>=</span> <span class='id identifier rubyid_start_column'>start_column</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span> <span class='op'>=</span> <span class='id identifier rubyid_line_start_column'>line_start_column</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>==</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span>
-    <span class='ivar'>@column</span> <span class='op'>=</span> <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>+</span> <span class='id identifier rubyid_match_object'>match_object</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span>
+  <span class='ivar'>@column</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>==</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span>
+    <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>+</span> <span class='id identifier rubyid_match_object'>match_object</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span>
   <span class='kw'>else</span>
-    <span class='ivar'>@column</span> <span class='op'>=</span> <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>+</span> <span class='id identifier rubyid_match_object'>match_object</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span> <span class='op'>+</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_node_begin_pos'>node_begin_pos</span> <span class='op'>+</span> <span class='id identifier rubyid_match_object'>match_object</span><span class='period'>.</span><span class='id identifier rubyid_begin'>begin</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_line_begin_pos'>line_begin_pos</span> <span class='op'>+</span> <span class='int'>1</span>
   <span class='kw'>end</span>
   <span class='ivar'>@length</span> <span class='op'>=</span> <span class='id identifier rubyid_match_object'>match_object</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
   <span class='ivar'>@line_no</span> <span class='op'>=</span> <span class='id identifier rubyid_line_number'>line_number</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
