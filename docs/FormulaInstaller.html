@@ -3822,16 +3822,16 @@ being installed.</p>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> dependency: </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
-<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="FormulaInstallationAlreadyAttemptedError.html" title="FormulaInstallationAlreadyAttemptedError (class)">FormulaInstallationAlreadyAttemptedError</a></span></span>  <span class='comment'># We already attempted to install f as part of the dependency tree of
-</span>  <span class='comment'># another formula. In that case, don&#39;t generate an error, just move on.
-</span>
-  <span class='kw'>nil</span>
-<span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='comment'># rubocop:disable Lint/RescueException
+<span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
 </span>  <span class='id identifier rubyid_ignore_interrupts'>ignore_interrupts</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_tmp_keg'>tmp_keg</span><span class='period'>.</span><span class='id identifier rubyid_rename'>rename</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_keg'>installed_keg</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_tmp_keg'>tmp_keg</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_installed_keg'>installed_keg</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
     <span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_link'>link</span> <span class='kw'>if</span> <span class='id identifier rubyid_keg_was_linked'>keg_was_linked</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_raise'>raise</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="FormulaInstallationAlreadyAttemptedError.html" title="FormulaInstallationAlreadyAttemptedError (class)">FormulaInstallationAlreadyAttemptedError</a></span></span>
+
+  <span class='comment'># We already attempted to install f as part of another formula&#39;s
+</span>  <span class='comment'># dependency tree. In that case, don&#39;t generate an error, just move on.
+</span>  <span class='kw'>nil</span>
 <span class='kw'>else</span>
   <span class='id identifier rubyid_ignore_interrupts'>ignore_interrupts</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_tmp_keg'>tmp_keg</span><span class='period'>.</span><span class='id identifier rubyid_rmtree'>rmtree</span> <span class='kw'>if</span> <span class='id identifier rubyid_tmp_keg'>tmp_keg</span><span class='op'>&amp;.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
