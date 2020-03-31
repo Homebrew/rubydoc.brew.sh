@@ -396,6 +396,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -417,7 +430,9 @@
 27
 28
 29
-30</pre>
+30
+31
+32</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 16</span>
@@ -433,9 +448,11 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Must set a Bintray organisation!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@bintray_org</span>
+
   <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_FORCE_HOMEBREW_ON_LINUX</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@bintray_org</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span>
 
-  <span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_clear_sensitive_environment!'>clear_sensitive_environment!</span> <span class='kw'>if</span> <span class='id identifier rubyid_clear'>clear</span>
+  <span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_BINTRAY_KEY</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_clear'>clear</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -464,16 +481,16 @@
       <pre class="lines">
 
 
-56
-57
 58
 59
 60
 61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_package'>create_package</span><span class='lparen'>(</span><span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>package:</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_extra_data_args'>extra_data_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="Bintray::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/packages/</span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -525,8 +542,6 @@
       <pre class="lines">
 
 
-69
-70
 71
 72
 73
@@ -539,10 +554,12 @@
 80
 81
 82
-83</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_file_published?'>file_published?</span><span class='lparen'>(</span><span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>remote_file:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://dl.bintray.com/</span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -632,12 +649,12 @@
       <pre class="lines">
 
 
-52
-53
-54</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_official_org?'>official_org?</span><span class='lparen'>(</span><span class='label'>org:</span> <span class='ivar'>@bintray_org</span><span class='rparen'>)</span>
   <span class='qwords_beg'>%w[</span><span class='tstring_content'>homebrew</span><span class='words_sep'> </span><span class='tstring_content'>linuxbrew</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_org'>org</span>
@@ -662,16 +679,16 @@
       <pre class="lines">
 
 
-32
-33
 34
 35
 36
 37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_extra_curl_args'>extra_curl_args</span><span class='comma'>,</span> <span class='label'>auth:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_extra_curl_args'>extra_curl_args</span>
@@ -723,13 +740,13 @@
       <pre class="lines">
 
 
-64
-65
 66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_package_exists?'>package_exists?</span><span class='lparen'>(</span><span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>package:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="Bintray::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/packages/</span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -755,13 +772,13 @@
       <pre class="lines">
 
 
-47
-48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_publish'>publish</span><span class='lparen'>(</span><span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>package:</span><span class='comma'>,</span> <span class='label'>version:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="Bintray::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/content/</span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>/publish</span><span class='tstring_end'>&quot;</span></span>
@@ -787,15 +804,15 @@
       <pre class="lines">
 
 
-40
-41
 42
 43
 44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='comma'>,</span> <span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>package:</span><span class='comma'>,</span> <span class='label'>version:</span><span class='comma'>,</span> <span class='label'>remote_file:</span><span class='comma'>,</span> <span class='label'>sha256:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="Bintray::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/content/</span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -823,8 +840,6 @@
       <pre class="lines">
 
 
-85
-86
 87
 88
 89
@@ -864,10 +879,18 @@
 123
 124
 125
-126</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/bintray.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload_bottle_json'>upload_bottle_json</span><span class='lparen'>(</span><span class='id identifier rubyid_json_files'>json_files</span><span class='comma'>,</span> <span class='label'>publish_package:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_json_file'>json_file</span><span class='op'>|</span>
@@ -885,6 +908,7 @@
       <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='id identifier rubyid_sha256'>sha256</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 
+      <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking remote file </span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filename'>filename</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>if</span> <span class='id identifier rubyid_file_published?'>file_published?</span> <span class='label'>repo:</span> <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span> <span class='label'>remote_file:</span> <span class='id identifier rubyid_filename'>filename</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Bintray/Error.html" title="Bintray::Error (class)">Error</a></span></span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filename'>filename</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already published.
@@ -897,10 +921,12 @@
 </span>      <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_formula_packaged'>formula_packaged</span><span class='lbracket'>[</span><span class='id identifier rubyid_formula_name'>formula_name</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_package_exists?'>package_exists?</span><span class='lparen'>(</span><span class='label'>repo:</span> <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span> <span class='label'>package:</span> <span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Creating package </span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_create_package'>create_package</span> <span class='label'>repo:</span> <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span> <span class='label'>package:</span> <span class='id identifier rubyid_bintray_package'>bintray_package</span>
         <span class='id identifier rubyid_formula_packaged'>formula_packaged</span><span class='lbracket'>[</span><span class='id identifier rubyid_formula_name'>formula_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
       <span class='kw'>end</span>
 
+      <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Uploading </span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>local_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_upload'>upload</span><span class='lparen'>(</span><span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>local_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
              <span class='label'>repo:</span>        <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span>
              <span class='label'>package:</span>     <span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='comma'>,</span>
@@ -908,7 +934,10 @@
              <span class='label'>remote_file:</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span>
              <span class='label'>sha256:</span>      <span class='id identifier rubyid_sha256'>sha256</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_publish'>publish</span> <span class='label'>repo:</span> <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span> <span class='label'>package:</span> <span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span> <span class='kw'>if</span> <span class='id identifier rubyid_publish_package'>publish_package</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_publish_package'>publish_package</span>
+      <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Publishing </span><span class='embexpr_beg'>#{</span><span class='ivar'>@bintray_org</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_publish'>publish</span> <span class='label'>repo:</span> <span class='id identifier rubyid_bintray_repo'>bintray_repo</span><span class='comma'>,</span> <span class='label'>package:</span> <span class='id identifier rubyid_bintray_package'>bintray_package</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
