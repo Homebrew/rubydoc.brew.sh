@@ -14517,13 +14517,13 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-67
-68
-69
-70</pre>
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/tap.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/tap.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_force_auto_update?'>force_auto_update?</span>  <span class='comment'># if no relevant flag is present, return nil, meaning &quot;no change&quot;
 </span>
@@ -24080,8 +24080,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-44
-45
 46
 47
 48
@@ -24101,10 +24099,21 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 62
 63
 64
-65</pre>
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/tap.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/tap.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tap'>tap</span>
   <span class='id identifier rubyid_tap_args'>tap_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -24116,11 +24125,20 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_names'><span class='object_link'><a href="Tap.html#names-class_method" title="Tap.names (method)">names</a></span></span>
   <span class='kw'>else</span>
+    <span class='id identifier rubyid_full_clone'>full_clone</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_full?'>full?</span>
+      <span class='kw'>true</span>
+    <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_shallow?'>shallow?</span>
+      <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='kw'>else</span>
+      <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_shallow?'>shallow?</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tapping as </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_full_clone'>full_clone</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>full</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shallow</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'> clone</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span> <span class='label'>clone_target:</span>      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_second'>second</span><span class='comma'>,</span>
                   <span class='label'>force_auto_update:</span> <span class='id identifier rubyid_force_auto_update?'>force_auto_update?</span><span class='comma'>,</span>
-                  <span class='label'>quiet:</span>             <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
+                  <span class='label'>quiet:</span>             <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span><span class='comma'>,</span>
+                  <span class='label'>full_clone:</span>        <span class='id identifier rubyid_full_clone'>full_clone</span>
     <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="TapRemoteMismatchError.html" title="TapRemoteMismatchError (class)">TapRemoteMismatchError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='id identifier rubyid_odie'>odie</span> <span class='id identifier rubyid_e'>e</span>
     <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="TapAlreadyTappedError.html" title="TapAlreadyTappedError (class)">TapAlreadyTappedError</a></span></span>
@@ -24182,7 +24200,9 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 39
 40
 41
-42</pre>
+42
+43
+44</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/tap.rb', line 8</span>
@@ -24207,8 +24227,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 </span><span class='tstring_content'>      using protocols other than HTTPS, e.g. SSH, git, HTTP, FTP(S), rsync.
 </span><span class='heredoc_end'>    EOS
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--full</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Convert a shallow clone to a full clone without untapping. By default, taps are no </span><span class='tstring_end'>&quot;</span></span>\
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>longer cloned as shallow clones.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Convert a shallow clone to a full clone without untapping. Taps are only cloned as </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shallow clones on continuous integration, or if `--shallow` was originally passed.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--shallow</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetch tap as a shallow clone rather than a full clone. Useful for continuous integration.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-auto-update</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auto-update tap even if it is not hosted on GitHub. By default, only taps </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hosted on GitHub are auto-updated (for performance reasons).</span><span class='tstring_end'>&quot;</span></span>
