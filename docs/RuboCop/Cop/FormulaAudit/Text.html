@@ -243,7 +243,11 @@
 61
 62
 63
-64</pre>
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/text.rb', line 9</span>
@@ -254,7 +258,7 @@
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please set plist_options when using a formula-defined plist.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libressl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl@1.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libressl</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae should not depend on both OpenSSL and LibreSSL (even optionally).</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
@@ -302,6 +306,10 @@
 
   <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:system</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cargo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>build</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use \&quot;cargo\&quot;, \&quot;install\&quot;, \&quot;--root\&quot;, prefix, \&quot;--path\&quot;, \&quot;.\&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:go_resource</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`go_resource`s are deprecated. Please ask upstream to implement Go vendoring</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
