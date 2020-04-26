@@ -10053,7 +10053,18 @@
 77
 78
 79
-80</pre>
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-revision.rb', line 29</span>
@@ -10074,7 +10085,14 @@
       <span class='lbracket'>[</span><span class='id identifier rubyid_checksum'>checksum</span><span class='period'>.</span><span class='id identifier rubyid_hash_type'>hash_type</span><span class='comma'>,</span> <span class='id identifier rubyid_checksum'>checksum</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span><span class='rbracket'>]</span>
     <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_old'>old</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_hash_type'>hash_type</span>      <span class='comment'># insert replacement revision after hash
+    <span class='id identifier rubyid_stable_block_given'>stable_block_given</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  stable do</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_old'>old</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_stable_block_given'>stable_block_given</span>      <span class='comment'># insert replacement revision before stable block
+</span>
+      <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>        stable do
+</span><span class='heredoc_end'>      EOS
+</span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_hash_type'>hash_type</span>      <span class='comment'># insert replacement revision after hash
 </span>
       <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash_type'>hash_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_hash'>old_hash</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
@@ -10085,8 +10103,12 @@
 <span class='tstring_content'>        :revision =&gt; &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbeg'>:</span><span class='id identifier rubyid_revision'>revision</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>end</span>
-    <span class='id identifier rubyid_replacement'>replacement</span> <span class='op'>=</span> <span class='id identifier rubyid_old'>old</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  revision 1\n</span><span class='tstring_end'>&quot;</span></span>
 
+    <span class='id identifier rubyid_replacement'>replacement</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_stable_block_given'>stable_block_given</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>revision 1\n  </span><span class='tstring_end'>&quot;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_old'>old</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_old'>old</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  revision 1\n</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_old'>old</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>revision </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_revision'>current_revision</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_replacement'>replacement</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>revision </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_revision'>current_revision</span><span class='op'>+</span><span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
