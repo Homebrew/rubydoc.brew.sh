@@ -1052,7 +1052,7 @@ Make sure you check with <code>brew search</code> that the name is free!</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Deprecates a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> so a warning is shown on each installation.</p>
+    <span class="summary_desc"><div class='inline'><p>Deprecates a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> (on a given date, if provided) so a warning is shown on each installation.</p>
 </div></span>
   
 </li>
@@ -1098,7 +1098,7 @@ Make sure you check with <code>brew search</code> that the name is free!</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Disables a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> so it cannot be installed.</p>
+    <span class="summary_desc"><div class='inline'><p>Disables a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span>  (on a given date, if provided) so it cannot be installed.</p>
 </div></span>
   
 </li>
@@ -5376,7 +5376,9 @@ deciding if to use the system provided version or not.)</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Deprecates a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> so a warning is shown on each installation.</p>
+    <p>Deprecates a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> (on a given date, if provided) so a warning is
+shown on each installation. If the date has not yet passed the formula
+will not be deprecated.</p>
 
 
   </div>
@@ -5390,14 +5392,14 @@ deciding if to use the system provided version or not.)</p>
       <pre class="lines">
 
 
-2641
-2642
 2643
 2644
-2645</pre>
+2645
+2646
+2647</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2641</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2643</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprecate!'>deprecate!</span><span class='lparen'>(</span><span class='label'>date:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_date'>date</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span>
@@ -5448,12 +5450,12 @@ Defaults to false.</p>
       <pre class="lines">
 
 
-2650
-2651
-2652</pre>
+2652
+2653
+2654</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2650</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2652</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprecated?'>deprecated?</span>
   <span class='ivar'>@deprecated</span> <span class='op'>==</span> <span class='kw'>true</span>
@@ -5474,7 +5476,9 @@ Defaults to false.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Disables a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> so it cannot be installed.</p>
+    <p>Disables a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span>  (on a given date, if provided) so it cannot be
+installed. If the date has not yet passed the formula
+will be deprecated instead of disabled.</p>
 
 
   </div>
@@ -5488,17 +5492,23 @@ Defaults to false.</p>
       <pre class="lines">
 
 
-2655
-2656
-2657
-2658
-2659</pre>
+2659
+2660
+2661
+2662
+2663
+2664
+2665
+2666</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2655</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2659</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_disable!'>disable!</span><span class='lparen'>(</span><span class='label'>date:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_date'>date</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_date'>date</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_date'>date</span><span class='rparen'>)</span> <span class='op'>&gt;</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span>
+    <span class='ivar'>@deprecated</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
 
   <span class='ivar'>@disabled</span> <span class='op'>=</span> <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -5546,12 +5556,12 @@ Defaults to false.</p>
       <pre class="lines">
 
 
-2664
-2665
-2666</pre>
+2671
+2672
+2673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2664</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula.rb', line 2671</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_disabled?'>disabled?</span>
   <span class='ivar'>@disabled</span> <span class='op'>==</span> <span class='kw'>true</span>
