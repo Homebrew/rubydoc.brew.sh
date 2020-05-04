@@ -2277,9 +2277,9 @@
 
   <span class='id identifier rubyid_require'>require</span> <span class='id identifier rubyid_path'>path</span>
   <span class='kw'>true</span>
-<span class='kw'>rescue</span> <span class='const'>LoadError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>  <span class='comment'># we should raise on syntax errors but not if the file doesn&#39;t exist.
-</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>LoadError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='comment'># we should raise on syntax errors but not if the file doesn&#39;t exist.
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2606,10 +2606,10 @@ shortfall or overrun may vary.</p>
   <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_pcmd'>pcmd</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span> <span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
-    <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>      <span class='comment'># File.expand_path will raise an ArgumentError if the path is malformed.
+    <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>
+      <span class='comment'># File.expand_path will raise an ArgumentError if the path is malformed.
 </span>      <span class='comment'># See https://github.com/Homebrew/legacy-homebrew/issues/32789
-</span>
-      <span class='kw'>next</span>
+</span>      <span class='kw'>next</span>
     <span class='kw'>end</span>
     <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_executable?'>executable?</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -2655,10 +2655,10 @@ shortfall or overrun may vary.</p>
   <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_pcmd'>pcmd</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd'>cmd</span><span class='comma'>,</span> <span class='id identifier rubyid_p'>p</span><span class='rparen'>)</span>
-    <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>      <span class='comment'># File.expand_path will raise an ArgumentError if the path is malformed.
+    <span class='kw'>rescue</span> <span class='const'>ArgumentError</span>
+      <span class='comment'># File.expand_path will raise an ArgumentError if the path is malformed.
 </span>      <span class='comment'># See https://github.com/Homebrew/legacy-homebrew/issues/32789
-</span>
-      <span class='kw'>next</span>
+</span>      <span class='kw'>next</span>
     <span class='kw'>end</span>
     <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_executable?'>executable?</span><span class='lparen'>(</span><span class='id identifier rubyid_pcmd'>pcmd</span><span class='rparen'>)</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>

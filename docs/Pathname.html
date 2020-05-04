@@ -733,16 +733,16 @@
     <span class='comment'># Set correct permissions on new file
 </span>    <span class='id identifier rubyid_chown'>chown</span><span class='lparen'>(</span><span class='id identifier rubyid_old_stat'>old_stat</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_chown'>chown</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_old_stat'>old_stat</span><span class='period'>.</span><span class='id identifier rubyid_gid'>gid</span><span class='rparen'>)</span>
-  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EPERM</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span>    <span class='comment'># Changing file ownership failed, moving on.
-</span>
-    <span class='kw'>nil</span>
+  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EPERM</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span>
+    <span class='comment'># Changing file ownership failed, moving on.
+</span>    <span class='kw'>nil</span>
   <span class='kw'>end</span>
   <span class='kw'>begin</span>
     <span class='comment'># This operation will affect filesystem ACL&#39;s
 </span>    <span class='id identifier rubyid_chmod'>chmod</span><span class='lparen'>(</span><span class='id identifier rubyid_old_stat'>old_stat</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span>
-  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EPERM</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span>    <span class='comment'># Changing file permissions failed, moving on.
-</span>
-    <span class='kw'>nil</span>
+  <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EPERM</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span>
+    <span class='comment'># Changing file permissions failed, moving on.
+</span>    <span class='kw'>nil</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1177,10 +1177,10 @@
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Metafiles.html" title="Metafiles (module)">Metafiles</a></span></span><span class='period'>.</span><span class='id identifier rubyid_copy?'><span class='object_link'><a href="Metafiles.html#copy%3F-class_method" title="Metafiles.copy? (method)">copy?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
 
     <span class='comment'># Some software symlinks these files (see help2man.rb)
-</span>    <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span>    <span class='comment'># Some software links metafiles together, so by the time we iterate to one of them
+</span>    <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span>
+    <span class='comment'># Some software links metafiles together, so by the time we iterate to one of them
 </span>    <span class='comment'># we may have already moved it. libxml2&#39;s COPYING and Copyright are affected by this.
-</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+</span>    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
 
     <span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_chmod'>chmod</span> <span class='int'>0644</span>
     <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>

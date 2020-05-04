@@ -2199,10 +2199,10 @@ in the passed kegs are other kegs in the array.</p>
 </span>    <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span>
     <span class='id identifier rubyid_keg_formulae'>keg_formulae</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_f'>f</span>
     <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='rbracket'>]</span>
-  <span class='kw'>rescue</span>    <span class='comment'># If the formula for the keg can&#39;t be found,
+  <span class='kw'>rescue</span>
+    <span class='comment'># If the formula for the keg can&#39;t be found,
 </span>    <span class='comment'># fall back to the information in the tab.
-</span>
-    <span class='lbracket'>[</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='rbracket'>]</span>
+</span>    <span class='lbracket'>[</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_all_required_kegs'>all_required_kegs</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3241,9 +3241,9 @@ for instance between Apple libstdc++ and GNU libstdc++</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span>
   <span class='id identifier rubyid_symlink_files'>symlink_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
-    <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_readlink'>readlink</span>    <span class='comment'># Don&#39;t fix relative symlinks
-</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_absolute?'>absolute?</span>
+    <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_readlink'>readlink</span>
+    <span class='comment'># Don&#39;t fix relative symlinks
+</span>    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_absolute?'>absolute?</span>
 
     <span class='id identifier rubyid_link_starts_cellar'>link_starts_cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_link_starts_prefix'>link_starts_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -3390,10 +3390,10 @@ expensive recursive search if possible.</p>
   <span class='kw'>when</span> <span class='symbol'>:fish</span>
     <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share/fish/vendor_functions.d</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-  <span class='kw'>when</span> <span class='symbol'>:zsh</span>    <span class='comment'># Check for non completion functions (i.e. files not started with an underscore),
+  <span class='kw'>when</span> <span class='symbol'>:zsh</span>
+    <span class='comment'># Check for non completion functions (i.e. files not started with an underscore),
 </span>    <span class='comment'># since those can be checked separately
-</span>
-    <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share/zsh/site-functions</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share/zsh/site-functions</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -3438,9 +3438,9 @@ expensive recursive search if possible.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span>
   <span class='id identifier rubyid_symlink_files'>symlink_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
-    <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_readlink'>readlink</span>    <span class='comment'># Don&#39;t fix relative symlinks
-</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_absolute?'>absolute?</span>
+    <span class='id identifier rubyid_link'>link</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_readlink'>readlink</span>
+    <span class='comment'># Don&#39;t fix relative symlinks
+</span>    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_absolute?'>absolute?</span>
 
     <span class='id identifier rubyid_link_starts_cellar'>link_starts_cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_link_starts_prefix'>link_starts_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_link'>link</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -3479,9 +3479,9 @@ expensive recursive search if possible.</p>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg_relocate.rb', line 101</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>  <span class='comment'># for GNU grep; overridden for BSD grep on OS X
-</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-lr</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>
+  <span class='comment'># for GNU grep; overridden for BSD grep on OS X
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-lr</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3707,13 +3707,13 @@ expensive recursive search if possible.</p>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>locale/locale.alias</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:skip_file</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#INFOFILE_RX-constant" title="Keg::INFOFILE_RX (constant)">INFOFILE_RX</a></span></span> <span class='kw'>then</span> <span class='symbol'>:info</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="#LOCALEDIR_RX-constant" title="Keg::LOCALEDIR_RX (constant)">LOCALEDIR_RX</a></span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^icons/.*/icon-theme\.cache$</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:skip_file</span>    <span class='comment'># all icons subfolders should also mkpath
-</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^icons/</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^icons/.*/icon-theme\.cache$</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:skip_file</span>
+    <span class='comment'># all icons subfolders should also mkpath
+</span>    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^icons/</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^zsh</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^fish</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>    <span class='comment'># Lua, Lua51, Lua53 all need the same handling.
-</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^lua/</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^fish</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='comment'># Lua, Lua51, Lua53 all need the same handling.
+</span>    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^lua/</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^guile/</span><span class='regexp_end'>}</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='op'>*</span><span class='const'><span class='object_link'><a href="#SHARE_PATHS-constant" title="Keg::SHARE_PATHS (constant)">SHARE_PATHS</a></span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>else</span> <span class='symbol'>:link</span>
@@ -3722,13 +3722,13 @@ expensive recursive search if possible.</p>
 
   <span class='id identifier rubyid_link_dir'>link_dir</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_relative_path'>relative_path</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_relative_path'>relative_path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>charset.alias</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:skip_file</span>    <span class='comment'># pkg-config database gets explicitly created
-</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pkgconfig</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>    <span class='comment'># cmake database gets explicitly created
-</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmake</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>    <span class='comment'># lib/language folders also get explicitly created
-</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dtrace</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>charset.alias</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:skip_file</span>
+    <span class='comment'># pkg-config database gets explicitly created
+</span>    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pkgconfig</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='comment'># cmake database gets explicitly created
+</span>    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmake</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='comment'># lib/language folders also get explicitly created
+</span>    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dtrace</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^gdk-pixbuf</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ghc</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^gio</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
@@ -3740,9 +3740,9 @@ expensive recursive search if possible.</p>
     <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>php</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^python[23]\.\d</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
     <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^R</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ruby</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>    <span class='comment'># Everything else is symlinked to the cellar
-</span>
-    <span class='kw'>else</span> <span class='symbol'>:link</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ruby</span><span class='regexp_end'>/</span></span> <span class='kw'>then</span> <span class='symbol'>:mkpath</span>
+    <span class='comment'># Everything else is symlinked to the cellar
+</span>    <span class='kw'>else</span> <span class='symbol'>:link</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
@@ -3908,10 +3908,10 @@ expensive recursive search if possible.</p>
   <span class='id identifier rubyid_mach_o_files'>mach_o_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pn'>pn</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>||</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span> <span class='op'>||</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_bundle?'>mach_o_bundle?</span> <span class='op'>||</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_executable?'>mach_o_executable?</span>    <span class='comment'># if we&#39;ve already processed a file, ignore its hardlinks (which have the same dev ID and inode)
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span> <span class='op'>||</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_bundle?'>mach_o_bundle?</span> <span class='op'>||</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_executable?'>mach_o_executable?</span>
+    <span class='comment'># if we&#39;ve already processed a file, ignore its hardlinks (which have the same dev ID and inode)
 </span>    <span class='comment'># this prevents relocations from being performed on a binary more than once
-</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hardlinks'>hardlinks</span><span class='period'>.</span><span class='id identifier rubyid_add?'>add?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_dev'>dev</span><span class='comma'>,</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_ino'>ino</span><span class='rbracket'>]</span>
+</span>    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_hardlinks'>hardlinks</span><span class='period'>.</span><span class='id identifier rubyid_add?'>add?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_dev'>dev</span><span class='comma'>,</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_stat'>stat</span><span class='period'>.</span><span class='id identifier rubyid_ino'>ino</span><span class='rbracket'>]</span>
 
     <span class='id identifier rubyid_mach_o_files'>mach_o_files</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_pn'>pn</span>
   <span class='kw'>end</span>
@@ -4278,9 +4278,9 @@ expensive recursive search if possible.</p>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg_relocate.rb', line 97</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>  <span class='comment'># for GNU grep; overridden for BSD grep on OS X
-</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-lr</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>
+  <span class='comment'># for GNU grep; overridden for BSD grep on OS X
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-lr</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4412,9 +4412,9 @@ expensive recursive search if possible.</p>
 
   <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='kw'>begin</span>
     <span class='id identifier rubyid_to_formula'>to_formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span>
-  <span class='kw'>rescue</span>    <span class='comment'># If the formula can&#39;t be found, just ignore aliases for now.
-</span>
-    <span class='kw'>nil</span>
+  <span class='kw'>rescue</span>
+    <span class='comment'># If the formula can&#39;t be found, just ignore aliases for now.
+</span>    <span class='kw'>nil</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span>
@@ -4942,16 +4942,16 @@ expensive recursive search if possible.</p>
       <span class='kw'>false</span>
     <span class='rbrace'>}</span>
     <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid__status'>_status</span> <span class='op'>=</span> <span class='const'>Open3</span><span class='period'>.</span><span class='id identifier rubyid_capture2'>capture2</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xargs -0 file --no-dereference --print0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                                     <span class='label'>stdin_data:</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>    <span class='comment'># `file` output sometimes contains data from the file, which may include
+                                     <span class='label'>stdin_data:</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='comment'># `file` output sometimes contains data from the file, which may include
 </span>    <span class='comment'># invalid UTF-8 entities, so tell Ruby this is just a bytestring
-</span>
-    <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>ASCII_8BIT</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_force_encoding'>force_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>ASCII_8BIT</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_each_line'>each_line</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span>
-      <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>      <span class='comment'># `file` sometimes prints more than one line of output per file;
+      <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+      <span class='comment'># `file` sometimes prints more than one line of output per file;
 </span>      <span class='comment'># subsequent lines do not contain a null-byte separator, so `info`
 </span>      <span class='comment'># will be `nil` for those lines
-</span>
-      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_info'>info</span>
+</span>      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_info'>info</span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>text</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
       <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>

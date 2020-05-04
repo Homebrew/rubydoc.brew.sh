@@ -251,9 +251,9 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/node.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_local_npm_install_args'>local_npm_install_args</span>
-  <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>  <span class='comment'># npm install args for local style module format
-</span>
-  <span class='words_beg'>%W[</span><span class='words_sep'>
+  <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
+  <span class='comment'># npm install args for local style module format
+</span>  <span class='words_beg'>%W[</span><span class='words_sep'>
     </span><span class='tstring_content'>-ddd</span><span class='words_sep'>
     </span><span class='tstring_content'>--build-from-source</span><span class='words_sep'>
     </span><span class='tstring_content'>--</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_npm_cache_config'>npm_cache_config</span><span class='embexpr_end'>}</span><span class='words_sep'>
@@ -324,13 +324,13 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/node.rb', line 9</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_for_installation'>pack_for_installation</span>  <span class='comment'># Homebrew assumes the buildpath/testpath will always be disposable
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_for_installation'>pack_for_installation</span>
+  <span class='comment'># Homebrew assumes the buildpath/testpath will always be disposable
 </span>  <span class='comment'># and from npm 5.0.0 the logic changed so that when a directory is
 </span>  <span class='comment'># fed to `npm install` only symlinks are created linking back to that
 </span>  <span class='comment'># directory, consequently breaking that assumption. We require a tarball
 </span>  <span class='comment'># because npm install creates a &quot;real&quot; installation when fed a tarball.
-</span>
-  <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>npm pack --ignore-scripts</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>npm pack --ignore-scripts</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>npm failed to pack </span><span class='embexpr_beg'>#{</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span> <span class='op'>||</span> <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
@@ -372,14 +372,14 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/node.rb', line 21</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>  <span class='comment'># guard that this is only run once
-</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@env_set</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
+  <span class='comment'># guard that this is only run once
+</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@env_set</span>
 
-  <span class='ivar'>@env_set</span> <span class='op'>=</span> <span class='kw'>true</span>  <span class='comment'># explicitly use our npm and node-gyp executables instead of the user
+  <span class='ivar'>@env_set</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='comment'># explicitly use our npm and node-gyp executables instead of the user
 </span>  <span class='comment'># managed ones in HOMEBREW_PREFIX/lib/node_modules which might be broken
-</span>
-  <span class='kw'>begin</span>
+</span>  <span class='kw'>begin</span>
     <span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_prepend_path'>prepend_path</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>node</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_opt_libexec'>opt_libexec</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bin</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span>
     <span class='kw'>nil</span>
@@ -432,10 +432,10 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/language/node.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_std_npm_install_args'>std_npm_install_args</span><span class='lparen'>(</span><span class='id identifier rubyid_libexec'>libexec</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>  <span class='comment'># tell npm to not install .brew_home by adding it to the .npmignore file
+  <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
+  <span class='comment'># tell npm to not install .brew_home by adding it to the .npmignore file
 </span>  <span class='comment'># (or creating a new one if no .npmignore file already exists)
-</span>
-  <span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.npmignore</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n.brew_home\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>  <span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.npmignore</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n.brew_home\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_pack'>pack</span> <span class='op'>=</span> <span class='id identifier rubyid_pack_for_installation'>pack_for_installation</span>
 
