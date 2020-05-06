@@ -6722,7 +6722,7 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/global.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
-  <span class='ivar'>@args</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Args.html" title="Homebrew::CLI::Args (class)">Args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Args.html#initialize-instance_method" title="Homebrew::CLI::Args#initialize (method)">new</a></span></span>
+  <span class='ivar'>@args</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Args.html" title="Homebrew::CLI::Args (class)">Args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Args.html#initialize-instance_method" title="Homebrew::CLI::Args#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>set_default_args:</span> <span class='kw'>true</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -16483,7 +16483,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
     <span class='kw'>end</span>
 
     <span class='comment'># --HEAD, fail with no head defined
-</span>    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No head is defined for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+</span>    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No head is defined for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
     <span class='comment'># --devel, fail with no devel defined
 </span>    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No devel block is defined for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_devel?'>devel?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_devel'>devel</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -17240,7 +17240,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-35
 36
 37
 38
@@ -17274,11 +17273,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/irb.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/irb.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_irb'>irb</span>
-  <span class='comment'># work around IRB modifying ARGV.
-</span>  <span class='id identifier rubyid_irb_args'>irb_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_irb_args'>irb_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_examples?'>examples?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;v8&#39;.f # =&gt; instance of the v8 formula</span><span class='tstring_end'>&quot;</span></span>
@@ -17341,13 +17339,15 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 30
 31
 32
-33</pre>
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/irb.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_irb_args'>irb_args</span>
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
+  <span class='comment'># work around IRB modifying ARGV.
+</span>  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_usage_banner'>usage_banner</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>      `irb` [&lt;options&gt;]
 </span><span class='tstring_content'>
@@ -22396,7 +22396,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 
   <span class='id identifier rubyid_fi'>fi</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>              <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span>
-  <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_build_bottle'>build_bottle</span>         <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build_bottle'>build_bottle</span>
+  <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_build_bottle'>build_bottle</span>         <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_interactive'>interactive</span>          <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_interactive?'>interactive?</span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_git'>git</span>                  <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
   <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_link_keg'>link_keg</span>           <span class='op'>||=</span> <span class='id identifier rubyid_keg_was_linked'>keg_was_linked</span> <span class='kw'>if</span> <span class='id identifier rubyid_keg_had_linked_opt'>keg_had_linked_opt</span>
