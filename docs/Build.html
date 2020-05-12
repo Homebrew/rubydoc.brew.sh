@@ -606,18 +606,18 @@
       <pre class="lines">
 
 
-160
-161
 162
 163
 164
 165
 166
 167
-168</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_stdlibs'>detect_stdlibs</span><span class='lparen'>(</span><span class='id identifier rubyid_compiler'>compiler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
@@ -774,8 +774,6 @@
       <pre class="lines">
 
 
-170
-171
 172
 173
 174
@@ -787,10 +785,12 @@
 180
 181
 182
-183</pre>
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fixopt'>fixopt</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
@@ -912,7 +912,9 @@
 155
 156
 157
-158</pre>
+158
+159
+160</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 72</span>
@@ -962,7 +964,9 @@
   <span class='id identifier rubyid_with_env'>with_env</span><span class='lparen'>(</span><span class='id identifier rubyid_new_env'>new_env</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Debrew.html" title="Debrew (module)">Debrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Debrew/Formula.html" title="Debrew::Formula (module)">Formula</a></span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_debug?'>debug?</span>
 
-    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_brew'>brew</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__formula'>_formula</span><span class='comma'>,</span> <span class='id identifier rubyid_staging'>staging</span><span class='op'>|</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_update_head_version'>update_head_version</span>
+
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_brew'>brew</span><span class='lparen'>(</span><span class='label'>fetch:</span> <span class='kw'>false</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__formula'>_formula</span><span class='comma'>,</span> <span class='id identifier rubyid_staging'>staging</span><span class='op'>|</span>
       <span class='comment'># For head builds, HOMEBREW_FORMULA_PREFIX should include the commit,
 </span>      <span class='comment'># which is not known until after the formula has been staged.
 </span>      <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_FORMULA_PREFIX</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span>

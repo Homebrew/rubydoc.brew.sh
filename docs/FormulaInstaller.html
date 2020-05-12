@@ -1832,12 +1832,12 @@
       <pre class="lines">
 
 
-1038
-1039
-1040</pre>
+1043
+1044
+1045</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1038</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1043</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_locked'>locked</span>
   <span class='ivar'>@locked</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1979,16 +1979,16 @@ can proceed. Only invoked when the user has no developer tools.</p>
       <pre class="lines">
 
 
-1030
-1031
-1032
-1033
-1034
 1035
-1036</pre>
+1036
+1037
+1038
+1039
+1040
+1041</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1030</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1035</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -2947,18 +2947,18 @@ being installed.</p>
       <pre class="lines">
 
 
-983
-984
-985
-986
-987
 988
 989
 990
-991</pre>
+991
+992
+993
+994
+995
+996</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 983</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 988</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_path'>bottle_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='rparen'>)</span>
@@ -2966,7 +2966,7 @@ being installed.</p>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle'>bottle</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_downloader'>downloader</span>
+    <span class='id identifier rubyid_formula'>formula</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3241,7 +3241,12 @@ being installed.</p>
 978
 979
 980
-981</pre>
+981
+982
+983
+984
+985
+986</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 975</span>
@@ -3250,6 +3255,11 @@ being installed.</p>
   <span class='id identifier rubyid_fetch_dependencies'>fetch_dependencies</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_only_deps?'>only_deps?</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_patches'>fetch_patches</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:fetch</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
 <span class='kw'>end</span></pre>
@@ -4473,11 +4483,6 @@ being installed.</p>
       <pre class="lines">
 
 
-993
-994
-995
-996
-997
 998
 999
 1000
@@ -4501,10 +4506,15 @@ being installed.</p>
 1018
 1019
 1020
-1021</pre>
+1021
+1022
+1023
+1024
+1025
+1026</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 993</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 998</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour'>pour</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -4704,15 +4714,15 @@ being installed.</p>
       <pre class="lines">
 
 
-1023
-1024
-1025
-1026
-1027
-1028</pre>
+1028
+1029
+1030
+1031
+1032
+1033</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1023</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1028</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_output'>output</span>
