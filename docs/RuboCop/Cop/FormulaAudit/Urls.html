@@ -140,11 +140,12 @@
   </span><span class='tstring_content'>https://downloads.sourceforge.net/project/bittwist/</span><span class='words_sep'>
   </span><span class='tstring_content'>https://downloads.sourceforge.net/project/launch4j/</span><span class='words_sep'>
   </span><span class='tstring_content'>https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard/archive/</span><span class='words_sep'>
-  </span><span class='tstring_content'>https://github.com/obihann/archey-osx/archive/</span><span class='words_sep'>
+  </span><span class='tstring_content'>https://github.com/obihann/archey-osx</span><span class='words_sep'>
   </span><span class='tstring_content'>https://github.com/sindresorhus/macos-wallpaper/archive/</span><span class='words_sep'>
   </span><span class='tstring_content'>https://raw.githubusercontent.com/liyanage/macosx-shell-scripts/</span><span class='words_sep'>
   </span><span class='tstring_content'>https://osxbook.com/book/bonus/chapter8/core/download/gcore</span><span class='words_sep'>
   </span><span class='tstring_content'>https://naif.jpl.nasa.gov/pub/naif/toolkit/C/MacIntel_OSX_AppleC_64bit/packages/</span><span class='words_sep'>
+  </span><span class='tstring_content'>https://artifacts.videolan.org/x264/release-macos/</span><span class='words_sep'>
 </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="BINARY_BOOTSTRAP_FORMULA_URLS_WHITELIST-constant" class="">BINARY_BOOTSTRAP_FORMULA_URLS_WHITELIST =
@@ -270,7 +271,6 @@
       <pre class="lines">
 
 
-47
 48
 49
 50
@@ -498,14 +498,29 @@
 272
 273
 274
-275</pre>
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/urls.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/urls.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_urls'>urls</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_func_call_by_name'>find_every_func_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mirrors'>mirrors</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_func_call_by_name'>find_every_func_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:mirror</span><span class='rparen'>)</span>
+
+  <span class='comment'># Identify livecheck urls, to skip some checks for them
+</span>  <span class='id identifier rubyid_livecheck_url'>livecheck_url</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_livecheck'>livecheck</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_func_call_by_name'>find_every_func_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:livecheck</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+                     <span class='lparen'>(</span><span class='id identifier rubyid_livecheck_url'>livecheck_url</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_func_call_by_name'>find_every_func_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_livecheck'>livecheck</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='symbol'>:url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_string_content'>string_content</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='lparen'>(</span><span class='id identifier rubyid_livecheck_url'>livecheck_url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='comment'># GNU urls; doesn&#39;t apply to mirrors
 </span>  <span class='id identifier rubyid_gnu_pattern'>gnu_pattern</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^(?:https?|ftp)://ftpmirror.gnu.org/(.*)</span><span class='regexp_end'>}</span></span>
@@ -522,6 +537,8 @@
 
   <span class='id identifier rubyid_apache_pattern'>apache_pattern</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^https?://(?:[^/]*\.)?apache\.org/(?:dyn/closer\.cgi\?path=/?|dist/)(.*)</span><span class='regexp_end'>}i</span></span>
   <span class='id identifier rubyid_audit_urls'>audit_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_urls'>urls</span><span class='comma'>,</span> <span class='id identifier rubyid_apache_pattern'>apache_pattern</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>==</span> <span class='id identifier rubyid_livecheck_url'>livecheck_url</span>
+
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> should be `https://www.apache.org/dyn/closer.lua?path=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
@@ -617,7 +634,7 @@
 
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Don&#39;t use /download in SourceForge urls (url is </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'>).</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/download</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-    <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^https?://sourceforge\.</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^https?://sourceforge\.</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>!=</span> <span class='id identifier rubyid_livecheck_url'>livecheck_url</span>
       <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use https://downloads.sourceforge.net to get geolocation (url is </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'>).</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
 
