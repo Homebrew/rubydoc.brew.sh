@@ -144,19 +144,10 @@
 </li>
 
       
-    </ul>
-  
-    <h2>
-      Instance Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#audit-instance_method" title="#audit (instance method)">#<strong>audit</strong>(cask)  &#x21d2; Object </a>
+      <a href="#usage-class_method" title="usage (class method)">.<strong>usage</strong>  &#x21d2; Object </a>
     
 
     
@@ -175,6 +166,15 @@
   
 </li>
 
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
       
         <li class="public ">
   <span class="summary_signature">
@@ -262,16 +262,78 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_help'>help</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>verifies installability of Casks</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="usage-class_method">
+  
+    .<strong>usage</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_usage'>usage</span>
+  <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>    `cask audit` [&lt;options&gt;] [&lt;cask&gt;]
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    --strict          - Run additional, stricter style checks.
+</span><span class='tstring_content'>    --online          - Run additional, slower style checks that require a network connection.
+</span><span class='tstring_content'>    --new-cask        - Run various additional style checks to determine if a new cask is eligible
+</span><span class='tstring_content'>                        for Homebrew. This should be used when creating new casks and implies
+</span><span class='tstring_content'>                        `--strict` and `--online`.
+</span><span class='tstring_content'>    --download        - Audit the downloaded file
+</span><span class='tstring_content'>    --appcast         - Audit the appcast
+</span><span class='tstring_content'>    --token-conflicts - Audit for token conflicts
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    Check &lt;cask&gt; for Homebrew coding style violations. This should be run before
+</span><span class='tstring_content'>    submitting a new cask. If no &lt;casks&gt; are provided, check all locally
+</span><span class='tstring_content'>    available casks. Will exit with a non-zero status if any errors are
+</span><span class='tstring_content'>    found, which can be useful for implementing pre-commit hooks.
+</span><span class='heredoc_end'>  EOS
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -284,45 +346,7 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="audit-instance_method">
-  
-    #<strong>audit</strong>(cask)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-23
-24
-25
-26
-27
-28
-29</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 23</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing Cask </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='const'><span class='object_link'><a href="../Auditor.html" title="Cask::Auditor (class)">Auditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit'><span class='object_link'><a href="../Auditor.html#audit-class_method" title="Cask::Auditor.audit (method)">audit</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>audit_download:</span>        <span class='id identifier rubyid_download?'>download?</span><span class='comma'>,</span>
-                      <span class='label'>audit_appcast:</span>         <span class='id identifier rubyid_appcast?'>appcast?</span><span class='comma'>,</span>
-                      <span class='label'>check_token_conflicts:</span> <span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span><span class='comma'>,</span>
-                      <span class='label'>quarantine:</span>            <span class='id identifier rubyid_quarantine?'>quarantine?</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="run-instance_method">
+  <h3 class="signature first" id="run-instance_method">
   
     #<strong>run</strong>  &#x21d2; <tt>Object</tt> 
   
@@ -359,21 +383,55 @@
       <pre class="lines">
 
 
-14
-15
-16
-17
-18
-19
-20
-21</pre>
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
+  <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_auditing'>auditing</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_strict'>strict</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask_arg?'>new_cask_arg?</span> <span class='op'>||</span> <span class='id identifier rubyid_strict_arg?'>strict_arg?</span>
+  <span class='id identifier rubyid_token_conflicts'>token_conflicts</span> <span class='op'>=</span> <span class='id identifier rubyid_strict'>strict</span> <span class='op'>||</span> <span class='id identifier rubyid_token_conflicts_arg?'>token_conflicts_arg?</span>
+
+  <span class='id identifier rubyid_online'>online</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask_arg?'>new_cask_arg?</span> <span class='op'>||</span> <span class='id identifier rubyid_online_arg?'>online_arg?</span>
+  <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span> <span class='op'>||</span> <span class='id identifier rubyid_download_arg?'>download_arg?</span>
+  <span class='id identifier rubyid_appcast'>appcast</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span> <span class='op'>||</span> <span class='id identifier rubyid_appcast_arg?'>appcast_arg?</span>
+
   <span class='id identifier rubyid_failed_casks'>failed_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='lparen'>(</span><span class='label'>alternative:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='const'><span class='object_link'><a href="../Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span> <span class='id identifier rubyid_audit'>audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+                 <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
+    <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing Cask </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='const'><span class='object_link'><a href="../Auditor.html" title="Cask::Auditor (class)">Auditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit'><span class='object_link'><a href="../Auditor.html#audit-class_method" title="Cask::Auditor.audit (method)">audit</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>audit_download:</span>        <span class='id identifier rubyid_download'>download</span><span class='comma'>,</span>
+                        <span class='label'>audit_appcast:</span>         <span class='id identifier rubyid_appcast'>appcast</span><span class='comma'>,</span>
+                        <span class='label'>audit_online:</span>          <span class='id identifier rubyid_online'>online</span><span class='comma'>,</span>
+                        <span class='label'>audit_strict:</span>          <span class='id identifier rubyid_strict'>strict</span><span class='comma'>,</span>
+                        <span class='label'>audit_new_cask:</span>        <span class='id identifier rubyid_new_cask_arg?'>new_cask_arg?</span><span class='comma'>,</span>
+                        <span class='label'>audit_token_conflicts:</span> <span class='id identifier rubyid_token_conflicts'>token_conflicts</span><span class='comma'>,</span>
+                        <span class='label'>quarantine:</span>            <span class='id identifier rubyid_quarantine?'>quarantine?</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_failed_casks'>failed_casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
