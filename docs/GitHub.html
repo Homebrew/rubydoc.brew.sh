@@ -1040,13 +1040,13 @@
       <pre class="lines">
 
 
-478
 479
 480
-481</pre>
+481
+482</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 479</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_api_errors'>api_errors</span>
   <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/AuthenticationFailedError.html" title="GitHub::AuthenticationFailedError (class)">AuthenticationFailedError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/HTTPNotFoundError.html" title="GitHub::HTTPNotFoundError (class)">HTTPNotFoundError</a></span></span><span class='comma'>,</span>
@@ -1384,7 +1384,8 @@
 445
 446
 447
-448</pre>
+448
+449</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 404</span>
@@ -1395,8 +1396,9 @@
   <span class='id identifier rubyid_pr_payload'>pr_payload</span> <span class='op'>=</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_url'>base_url</span><span class='embexpr_end'>}</span><span class='tstring_content'>/pulls/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr'>pr</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pr_sha'>pr_sha</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_payload'>pr_payload</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_pr_branch'>pr_branch</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_encode_www_form_component'>encode_www_form_component</span><span class='lparen'>(</span><span class='id identifier rubyid_pr_payload'>pr_payload</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>event=pull_request&amp;branch=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr_branch'>pr_branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>=</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_url'>base_url</span><span class='embexpr_end'>}</span><span class='tstring_content'>/actions/workflows/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_workflow_id'>workflow_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/runs?branch=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr_branch'>pr_branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>=</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_url'>base_url</span><span class='embexpr_end'>}</span><span class='tstring_content'>/actions/workflows/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_workflow_id'>workflow_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/runs?</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_parameters'>parameters</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_workflow_run'>workflow_run</span> <span class='op'>=</span> <span class='id identifier rubyid_workflow'>workflow</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>workflow_runs</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_run'>run</span><span class='op'>|</span>
     <span class='id identifier rubyid_run'>run</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head_sha</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_pr_sha'>pr_sha</span>
   <span class='kw'>end</span>
@@ -2179,7 +2181,6 @@
       <pre class="lines">
 
 
-450
 451
 452
 453
@@ -2205,10 +2206,11 @@
 473
 474
 475
-476</pre>
+476
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 450</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 451</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sponsors_by_tier'>sponsors_by_tier</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.github.com/graphql</span><span class='tstring_end'>&quot;</span></span>
