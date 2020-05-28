@@ -2589,7 +2589,9 @@ in the passed kegs are other kegs in the array.</p>
 52
 53
 54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 18</span>
@@ -2598,6 +2600,8 @@ in the passed kegs are other kegs in the array.</p>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_elf?'>elf?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamic_elf?'>dynamic_elf?</span>
 
   <span class='id identifier rubyid_patchelf'>patchelf</span> <span class='op'>=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_locate'>locate</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>patchelf</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Could not locate patchelf, please: brew install patchelf.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_patchelf'>patchelf</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
   <span class='id identifier rubyid_cmd_rpath'>cmd_rpath</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_patchelf'>patchelf</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--print-rpath</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_old_rpath'>old_rpath</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_cmd_rpath'>cmd_rpath</span><span class='comma'>,</span> <span class='label'>err:</span> <span class='symbol'>:out</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
 
@@ -2916,8 +2920,6 @@ for instance between Apple libstdc++ and GNU libstdc++</p>
       <pre class="lines">
 
 
-71
-72
 73
 74
 75
@@ -2931,10 +2933,12 @@ for instance between Apple libstdc++ and GNU libstdc++</p>
 83
 84
 85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_elf_files'>elf_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
