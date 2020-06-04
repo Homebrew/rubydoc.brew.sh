@@ -14350,14 +14350,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+86
+87
 88
 89
-90
-91
-92</pre>
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_in_path'>find_in_path</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
   <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
@@ -16712,6 +16712,8 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+92
+93
 94
 95
 96
@@ -16719,12 +16721,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 98
 99
 100
-101
-102
-103</pre>
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rubygems</span><span class='tstring_end'>&quot;</span></span>
@@ -16790,6 +16790,8 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+103
+104
 105
 106
 107
@@ -16810,12 +16812,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 122
 123
 124
-125
-126
-127</pre>
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bundler_gems!'>install_bundler_gems!</span>
   <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
@@ -17029,9 +17029,7 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 71
 72
 73
-74
-75
-76</pre>
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 65</span>
@@ -17040,12 +17038,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
   <span class='id identifier rubyid_setup_gem_environment!'>setup_gem_environment!</span> <span class='kw'>if</span> <span class='id identifier rubyid_setup_gem_environment'>setup_gem_environment</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Specification</span><span class='period'>.</span><span class='id identifier rubyid_find_all_by_name'>find_all_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='comment'># Shell out to `gem` to avoid RubyGems requires for e.g. loading JSON.
-</span>  <span class='id identifier rubyid_ohai_if_defined'>ohai_if_defined</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; gem</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_install_args'>install_args</span> <span class='op'>=</span> <span class='words_beg'>%W[</span><span class='tstring_content'>--no-document</span><span class='words_sep'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>]</span></span>
-  <span class='id identifier rubyid_install_args'>install_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--version</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_version'>version</span> <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ruby_bindir'>ruby_bindir</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gem</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_install_args'>install_args</span>
-
+  <span class='id identifier rubyid_ohai_if_defined'>ohai_if_defined</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; gem</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># document: [] , is equivalent to --no-document
+</span>  <span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='label'>document:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>UnsatisfiableDependencyError</span>
   <span class='id identifier rubyid_odie_if_defined'>odie_if_defined</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>failed to install the &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; gem.</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
@@ -17068,18 +17064,18 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+76
+77
 78
 79
 80
 81
 82
 83
-84
-85
-86</pre>
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/gems.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_gem_setup_path!'>install_gem_setup_path!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>executable:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>setup_gem_environment:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_install_gem!'>install_gem!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='label'>setup_gem_environment:</span> <span class='id identifier rubyid_setup_gem_environment'>setup_gem_environment</span><span class='rparen'>)</span>
