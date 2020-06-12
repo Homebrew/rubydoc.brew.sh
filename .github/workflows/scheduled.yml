@@ -1,10 +1,11 @@
-name: GitHub Actions CI
+name: Scheduled regeneration
 on:
-  push:
-    branches: master
-  pull_request: []
+  schedule:
+    # Once every other hour
+    - cron:  '30 */2 * * *'
 jobs:
-  tests:
+  generate:
+    if: startsWith( github.repository, 'Homebrew/' )
     runs-on: ubuntu-latest
     steps:
     - name: Set up Git repository
@@ -24,3 +25,12 @@ jobs:
       run: |
         git clone --depth=1 https://github.com/Homebrew/brew
         bundle exec rake yard build
+
+        # commit and push generated files
+        git add docs
+
+        if ! git diff --no-patch --exit-code HEAD -- docs; then
+          git commit -m "docs: updates from Homebrew/brew" docs
+          git pull --rebase origin master
+          git push
+        fi
