@@ -1,8 +1,8 @@
 name: Scheduled regeneration
 on:
   schedule:
-    # Once every other hour
-    - cron:  '30 */2 * * *'
+    # Once every hour
+    - cron:  '30 * * * *'
 jobs:
   generate:
     if: startsWith( github.repository, 'Homebrew/' )
@@ -30,6 +30,8 @@ jobs:
         git add docs
 
         if ! git diff --no-patch --exit-code HEAD -- docs; then
+          git config --global user.name "BrewTestBot"
+          git config --global user.email "homebrew-test-bot@lists.sfconservancy.org"
           git commit -m "docs: updates from Homebrew/brew" docs
           git pull --rebase origin master
           git push
