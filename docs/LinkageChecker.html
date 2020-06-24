@@ -364,7 +364,6 @@
       <pre class="lines">
 
 
-10
 11
 12
 13
@@ -382,10 +381,11 @@
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>cache_db:</span><span class='comma'>,</span> <span class='label'>rebuild_cache:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@keg</span> <span class='op'>=</span> <span class='id identifier rubyid_keg'>keg</span>
@@ -443,12 +443,12 @@
       <pre class="lines">
 
 
-8
 9
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_undeclared_deps'>undeclared_deps</span>
   <span class='ivar'>@undeclared_deps</span>
@@ -503,15 +503,15 @@
       <pre class="lines">
 
 
-64
 65
 66
 67
 68
-69</pre>
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span>
   <span class='op'>!</span><span class='ivar'>@broken_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span>
@@ -539,7 +539,6 @@
       <pre class="lines">
 
 
-80
 81
 82
 83
@@ -610,10 +609,16 @@
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_dylibs'>check_dylibs</span><span class='lparen'>(</span><span class='label'>rebuild_cache:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -663,6 +668,11 @@
 
         <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span> <span class='op'>=</span> <span class='id identifier rubyid_dylib_to_dep'>dylib_to_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span><span class='rparen'>)</span>
           <span class='ivar'>@broken_deps</span><span class='lbracket'>[</span><span class='id identifier rubyid_dep'>dep</span><span class='rbracket'>]</span> <span class='op'>|=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rbracket'>]</span>
+        <span class='kw'>elsif</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:big_sur</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dylib_found_via_dlopen'>dylib_found_via_dlopen</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span>
+          <span class='comment'># If we cannot associate the dylib with a dependency, then it may be a system library.
+</span>          <span class='comment'># In macOS Big Sur and later, system libraries do not exist on-disk and instead exist in a cache.
+</span>          <span class='comment'># If dlopen finds the dylib, then the linkage is not broken.
+</span>          <span class='ivar'>@system_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
         <span class='kw'>else</span>
           <span class='ivar'>@broken_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
         <span class='kw'>end</span>
@@ -707,7 +717,6 @@
       <pre class="lines">
 
 
-30
 31
 32
 33
@@ -717,10 +726,11 @@
 37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_normal_output'>display_normal_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>System libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@system_dylibs</span>
@@ -753,7 +763,6 @@
       <pre class="lines">
 
 
-42
 43
 44
 45
@@ -765,10 +774,11 @@
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_reverse_output'>display_reverse_output</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@reverse_links</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -803,16 +813,16 @@
       <pre class="lines">
 
 
-56
 57
 58
 59
 60
 61
-62</pre>
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_test_output'>display_test_output</span><span class='lparen'>(</span><span class='label'>puts_output:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@broken_dylibs</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
