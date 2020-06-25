@@ -7047,9 +7047,9 @@
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show the cache file used when pouring a bottle.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show cache files for only formulae</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only show cache files for formulae.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show cache files for only casks</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only show cache files for casks.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -7300,13 +7300,13 @@
       <pre class="lines">
 
 
-131
-132
-133
-134</pre>
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/create.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/create.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid___gets'>__gets</span>
   <span class='id identifier rubyid_gots'>gots</span> <span class='op'>=</span> <span class='gvar'>$stdin</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
@@ -11683,8 +11683,6 @@
       <pre class="lines">
 
 
-59
-60
 61
 62
 63
@@ -11753,10 +11751,14 @@
 126
 127
 128
-129</pre>
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/create.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/create.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_create_args'>create_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -11784,6 +11786,8 @@
     <span class='symbol'>:autotools</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_meson?'>meson?</span>
     <span class='symbol'>:meson</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_crystal?'>crystal?</span>
+    <span class='symbol'>:crystal</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_go?'>go?</span>
     <span class='symbol'>:go</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_perl?'>perl?</span>
@@ -11894,7 +11898,9 @@
 53
 54
 55
-56</pre>
+56
+57
+58</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/create.rb', line 11</span>
@@ -11914,6 +11920,8 @@
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a basic template for an Autotools-style build.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cmake</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a basic template for a CMake-style build.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--crystal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a basic template for a Crystal build.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--go</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Create a basic template for a Go build.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--meson</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -11941,7 +11949,7 @@
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:force</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:verbose</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:debug</span>
-    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autotools</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cmake</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--go</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--meson</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--perl</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--python</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--rust</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autotools</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cmake</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--crystal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--go</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--meson</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--perl</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--python</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--rust</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_named'>named</span> <span class='int'>1</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -19316,10 +19324,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>      Reupload the stable URL of a formula to Bintray for use as a mirror.
 </span><span class='heredoc_end'>    EOS
-</span>    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-org=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: homebrew).</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-repo=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray repository (default: mirror).</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-org=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: `homebrew`).</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-repo=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray repository (default: `mirror`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-publish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to Bintray, but don&#39;t publish.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:verbose</span>
@@ -20591,18 +20599,18 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When a patch fails to apply, leave in progress and allow user to resolve, </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>instead of aborting.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--workflow=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Retrieve artifacts from the specified workflow (default: tests.yml).</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Retrieve artifacts from the specified workflow (default: `tests.yml`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--artifact=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download artifacts with the specified name (default: bottles).</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download artifacts with the specified name (default: `bottles`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-org=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: homebrew).</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: `homebrew`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tap=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Target tap repository (default: homebrew/core).</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Target tap repository (default: `homebrew/core`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--root-url=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use the specified &lt;URL&gt; as the root of the bottle&#39;s URL instead of Homebrew&#39;s default.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-mirror=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use the specified Bintray repository to automatically mirror stable URLs </span><span class='tstring_end'>&quot;</span></span>\
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>defined in the formulae (default: mirror)</span><span class='tstring_end'>&quot;</span></span>
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>defined in the formulae (default: `mirror`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:verbose</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:debug</span>
     <span class='id identifier rubyid_min_named'>min_named</span> <span class='int'>1</span>
@@ -20734,12 +20742,12 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 </span><span class='heredoc_end'>    EOS
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-publish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Apply the bottle commit and upload the bottles, but don&#39;t publish them.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--dry-run</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--dry-run</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print what would be done rather than doing it.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-org=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: homebrew).</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--root-url=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use the specified &lt;URL&gt; as the root of the bottle&#39;s URL instead of Homebrew&#39;s default.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bintray-org=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Upload to the specified Bintray organisation (default: `homebrew`).</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--root-url=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use the specified &lt;URL&gt; as the root of the bottle&#39;s URL instead of Homebrew&#39;s default.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:verbose</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='symbol'>:debug</span>
   <span class='kw'>end</span>

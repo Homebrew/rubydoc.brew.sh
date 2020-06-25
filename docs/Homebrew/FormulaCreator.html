@@ -1195,7 +1195,12 @@
 203
 204
 205
-206</pre>
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 82</span>
@@ -1224,6 +1229,8 @@
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    &lt;% if mode == :cmake %&gt;
 </span><span class='tstring_content'>      depends_on &quot;cmake&quot; =&gt; :build
+</span><span class='tstring_content'>    &lt;% elsif mode == :crystal %&gt;
+</span><span class='tstring_content'>      depends_on &quot;crystal&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% elsif mode == :go %&gt;
 </span><span class='tstring_content'>      depends_on &quot;go&quot; =&gt; :build
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
@@ -1259,6 +1266,9 @@
 </span><span class='tstring_content'>                              &quot;--disable-dependency-tracking&quot;,
 </span><span class='tstring_content'>                              &quot;--disable-silent-rules&quot;,
 </span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
+</span><span class='tstring_content'>    &lt;% elsif mode == :crystal %&gt;
+</span><span class='tstring_content'>        system &quot;shards&quot;, &quot;build&quot;, &quot;--release&quot;
+</span><span class='tstring_content'>        bin.install &quot;bin/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :go %&gt;
 </span><span class='tstring_content'>        system &quot;go&quot;, &quot;build&quot;, *std_go_args
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
