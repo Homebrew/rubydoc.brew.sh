@@ -208,13 +208,23 @@
 
 18
 19
-20</pre>
+20
+21
+22
+23
+24
+25</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/user.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span>
-  <span class='ivar'>@current</span> <span class='op'>||=</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Etc</span><span class='period'>.</span><span class='id identifier rubyid_getpwuid'>getpwuid</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='ivar'>@current</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@current</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_pwuid'>pwuid</span> <span class='op'>=</span> <span class='const'>Etc</span><span class='period'>.</span><span class='id identifier rubyid_getpwuid'>getpwuid</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_pwuid'>pwuid</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='ivar'>@current</span> <span class='op'>=</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_pwuid'>pwuid</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
