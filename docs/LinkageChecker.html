@@ -280,6 +280,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#broken_dylibs_with_expectations-instance_method" title="#broken_dylibs_with_expectations (instance method)">#<strong>broken_dylibs_with_expectations</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#broken_library_linkage%3F-instance_method" title="#broken_library_linkage? (instance method)">#<strong>broken_library_linkage?</strong>  &#x21d2; Boolean </a>
     
 
@@ -412,6 +435,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>A new instance of LinkageChecker.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unexpected_broken_libs-instance_method" title="#unexpected_broken_libs (instance method)">#<strong>unexpected_broken_libs</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -676,7 +722,45 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="broken_library_linkage?-instance_method">
+  <h3 class="signature first" id="broken_dylibs_with_expectations-instance_method">
+  
+    #<strong>broken_dylibs_with_expectations</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84
+85
+86
+87</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 81</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_broken_dylibs_with_expectations'>broken_dylibs_with_expectations</span>
+  <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@broken_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_lib'>lib</span><span class='op'>|</span>
+    <span class='id identifier rubyid_output'>output</span><span class='lbracket'>[</span><span class='id identifier rubyid_lib'>lib</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_unexpected_broken_libs'>unexpected_broken_libs</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unexpected</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>expected</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_output'>output</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="broken_library_linkage?-instance_method">
   
     #<strong>broken_library_linkage?</strong>  &#x21d2; <tt>Boolean</tt> 
   
@@ -713,21 +797,17 @@
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70</pre>
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span>
-  <span class='op'>!</span><span class='ivar'>@broken_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span>
-    <span class='op'>!</span><span class='ivar'>@broken_deps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span>
-    <span class='op'>!</span><span class='ivar'>@unwanted_system_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span>
-    <span class='op'>!</span><span class='ivar'>@version_conflict_deps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_issues'>issues</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='ivar'>@broken_deps</span><span class='comma'>,</span> <span class='ivar'>@unwanted_system_dylibs</span><span class='comma'>,</span> <span class='ivar'>@version_conflict_deps</span><span class='rbracket'>]</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_issues'>issues</span><span class='comma'>,</span> <span class='id identifier rubyid_unexpected_broken_libs'>unexpected_broken_libs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:present?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -749,23 +829,6 @@
       <pre class="lines">
 
 
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
 96
 97
 98
@@ -825,10 +888,27 @@
 152
 153
 154
-155</pre>
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_dylibs'>check_dylibs</span><span class='lparen'>(</span><span class='label'>rebuild_cache:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -1029,17 +1109,61 @@
 60
 61
 62
-63</pre>
+63
+64
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_test_output'>display_test_output</span><span class='lparen'>(</span><span class='label'>puts_output:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@broken_dylibs</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
+  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_broken_dylibs_with_expectations'>broken_dylibs_with_expectations</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Broken dependencies</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@broken_deps</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unwanted system libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@unwanted_system_dylibs</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Conflicting libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@version_conflict_deps</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No broken library linkage</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span>
+
+  <span class='kw'>if</span> <span class='ivar'>@broken_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No broken library linkage detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_unexpected_broken_libs'>unexpected_broken_libs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No unexpected broken library linkage detected.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Broken library linkage detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unexpected_broken_libs-instance_method">
+  
+    #<strong>unexpected_broken_libs</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 77</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_unexpected_broken_libs'>unexpected_broken_libs</span>
+  <span class='ivar'>@broken_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_lib'>lib</span><span class='op'>|</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_allowed_missing_lib?'>allowed_missing_lib?</span> <span class='id identifier rubyid_lib'>lib</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
