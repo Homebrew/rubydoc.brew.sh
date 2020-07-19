@@ -1270,7 +1270,16 @@
 210
 211
 212
-213</pre>
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 82</span>
@@ -1280,6 +1289,10 @@
 <span class='tstring_content'>    # Documentation: https://docs.brew.sh/Formula-Cookbook
 </span><span class='tstring_content'>    #                https://rubydoc.brew.sh/Formula
 </span><span class='tstring_content'>    # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
+</span><span class='tstring_content'>    &lt;% if mode == :node %&gt;
+</span><span class='tstring_content'>    require &quot;language/node&quot;
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>    class </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_class_s'><span class='object_link'><a href="../Formulary.html#class_s-class_method" title="Formulary.class_s (method)">class_s</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt; Formula
 </span><span class='tstring_content'>    &lt;% if mode == :python %&gt;
 </span><span class='tstring_content'>      include Language::Python::Virtualenv
@@ -1308,6 +1321,8 @@
 </span><span class='tstring_content'>    &lt;% elsif mode == :meson %&gt;
 </span><span class='tstring_content'>      depends_on &quot;meson&quot; =&gt; :build
 </span><span class='tstring_content'>      depends_on &quot;ninja&quot; =&gt; :build
+</span><span class='tstring_content'>    &lt;% elsif mode == :node %&gt;
+</span><span class='tstring_content'>      depends_on &quot;node&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :perl %&gt;
 </span><span class='tstring_content'>      uses_from_macos &quot;perl&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :python %&gt;
@@ -1349,6 +1364,9 @@
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>          system &quot;ninja&quot;, &quot;install&quot;, &quot;-v&quot;
 </span><span class='tstring_content'>        end
+</span><span class='tstring_content'>    &lt;% elsif mode == :node %&gt;
+</span><span class='tstring_content'>        system &quot;npm&quot;, &quot;install&quot;, *Language::Node.std_npm_install_args(libexec)
+</span><span class='tstring_content'>        bin.install_symlink Dir[&quot;\#{libexec}/bin/*&quot;]
 </span><span class='tstring_content'>    &lt;% elsif mode == :perl %&gt;
 </span><span class='tstring_content'>        ENV.prepend_create_path &quot;PERL5LIB&quot;, libexec/&quot;lib/perl5&quot;
 </span><span class='tstring_content'>        ENV.prepend_path &quot;PERL5LIB&quot;, libexec/&quot;lib&quot;
