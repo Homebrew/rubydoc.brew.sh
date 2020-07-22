@@ -13512,7 +13512,6 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-30
 31
 32
 33
@@ -13561,21 +13560,23 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 76
 77
 78
-79</pre>
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/doctor.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/doctor.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_doctor'>doctor</span>
   <span class='id identifier rubyid_doctor_args'>doctor_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='id identifier rubyid_inject_dump_stats!'>inject_dump_stats!</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Homebrew/Diagnostic.html" title="Homebrew::Diagnostic (module)">Diagnostic</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Diagnostic/Checks.html" title="Homebrew::Diagnostic::Checks (class)">Checks</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^check_*</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_audit_debug?'>audit_debug?</span>
 
-  <span class='id identifier rubyid_checks'>checks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Diagnostic.html" title="Homebrew::Diagnostic (module)">Diagnostic</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Diagnostic/Checks.html" title="Homebrew::Diagnostic::Checks (class)">Checks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_checks'>checks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Diagnostic.html" title="Homebrew::Diagnostic (module)">Diagnostic</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Diagnostic/Checks.html" title="Homebrew::Diagnostic::Checks (class)">Checks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/Diagnostic/Checks.html#initialize-instance_method" title="Homebrew::Diagnostic::Checks#initialize (method)">new</a></span></span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_list_checks?'>list_checks?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_checks'>checks</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
-    <span class='id identifier rubyid_exit'>exit</span>
+    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
@@ -13584,6 +13585,7 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       </span><span class='tstring_content'>check_missing_deps</span><span class='words_sep'>
     </span><span class='tstring_end'>]</span></span>
     <span class='id identifier rubyid_methods'>methods</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_checks'>checks</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span> <span class='op'>-</span> <span class='id identifier rubyid_slow_checks'>slow_checks</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_slow_checks'>slow_checks</span>
+    <span class='id identifier rubyid_methods'>methods</span> <span class='op'>-=</span> <span class='id identifier rubyid_checks'>checks</span><span class='period'>.</span><span class='id identifier rubyid_cask_checks'>cask_checks</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_methods'>methods</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span>
   <span class='kw'>end</span>
@@ -13636,7 +13638,6 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-9
 10
 11
 12
@@ -13655,10 +13656,11 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/doctor.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/doctor.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_doctor_args'>doctor_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
