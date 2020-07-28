@@ -1171,9 +1171,7 @@
 185
 186
 187
-188
-189
-190</pre>
+188</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 111</span>
@@ -1196,8 +1194,6 @@
 
     <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
-
-  <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> permanently redirects to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:permanent_redirect</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>!=</span> <span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:permanent_redirect</span><span class='rbracket'>]</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_http_status_ok?'><span class='object_link'><a href="#http_status_ok%3F-instance_method" title="#http_status_ok? (method)">http_status_ok?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable (HTTP status code </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
@@ -1438,6 +1434,8 @@
       <pre class="lines">
 
 
+190
+191
 192
 193
 194
@@ -1469,15 +1467,10 @@
 220
 221
 222
-223
-224
-225
-226
-227
-228</pre>
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_http_content_headers_and_checksum'>curl_http_content_headers_and_checksum</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>hash_needed:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>user_agent:</span> <span class='symbol'>:default</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:close</span><span class='rparen'>)</span>
@@ -1495,23 +1488,20 @@
     <span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>HTTP/.* (\d+)</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^Location:\s*(.*)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_final_url'>final_url</span> <span class='op'>=</span> <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span> <span class='kw'>if</span> <span class='id identifier rubyid_location'>location</span>
-    <span class='id identifier rubyid_permanent_redirect'>permanent_redirect</span> <span class='op'>=</span> <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span> <span class='kw'>if</span> <span class='id identifier rubyid_status_code'>status_code</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>301</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_output_hash'>output_hash</span> <span class='op'>=</span> <span class='const'>Digest</span><span class='op'>::</span><span class='const'>SHA256</span><span class='period'>.</span><span class='id identifier rubyid_file'>file</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_hash_needed'>hash_needed</span>
 
   <span class='id identifier rubyid_final_url'>final_url</span> <span class='op'>||=</span> <span class='id identifier rubyid_url'>url</span>
-  <span class='id identifier rubyid_permanent_redirect'>permanent_redirect</span> <span class='op'>||=</span> <span class='id identifier rubyid_url'>url</span>
 
   <span class='lbrace'>{</span>
-    <span class='label'>url:</span>                <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
-    <span class='label'>final_url:</span>          <span class='id identifier rubyid_final_url'>final_url</span><span class='comma'>,</span>
-    <span class='label'>permanent_redirect:</span> <span class='id identifier rubyid_permanent_redirect'>permanent_redirect</span><span class='comma'>,</span>
-    <span class='label'>status:</span>             <span class='id identifier rubyid_status_code'>status_code</span><span class='comma'>,</span>
-    <span class='label'>etag:</span>               <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>ETag: ([wW]/)?&quot;(([^&quot;]|\\&quot;)*)&quot;</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span>
-    <span class='label'>content_length:</span>     <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Content-Length: (\d+)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span>
-    <span class='label'>file_hash:</span>          <span class='id identifier rubyid_output_hash'>output_hash</span><span class='comma'>,</span>
-    <span class='label'>file:</span>               <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span>
+    <span class='label'>url:</span>            <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
+    <span class='label'>final_url:</span>      <span class='id identifier rubyid_final_url'>final_url</span><span class='comma'>,</span>
+    <span class='label'>status:</span>         <span class='id identifier rubyid_status_code'>status_code</span><span class='comma'>,</span>
+    <span class='label'>etag:</span>           <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>ETag: ([wW]/)?&quot;(([^&quot;]|\\&quot;)*)&quot;</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>content_length:</span> <span class='id identifier rubyid_headers'>headers</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Content-Length: (\d+)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>file_hash:</span>      <span class='id identifier rubyid_output_hash'>output_hash</span><span class='comma'>,</span>
+    <span class='label'>file:</span>           <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 <span class='kw'>ensure</span>
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
@@ -1652,12 +1642,12 @@
       <pre class="lines">
 
 
-230
-231
-232</pre>
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_status_ok?'>http_status_ok?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='int'>100</span><span class='op'>..</span><span class='int'>299</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
