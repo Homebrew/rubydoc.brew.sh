@@ -28003,7 +28003,12 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 63</span>
@@ -28012,9 +28017,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_upgrade_args'>upgrade_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_casks'>casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_resolved_formulae_casks'>resolved_formulae_casks</span>
+  <span class='comment'># If one or more formulae are specified, but no casks were
+</span>  <span class='comment'># specified, we want to make note of that so we don&#39;t
+</span>  <span class='comment'># try to upgrade all outdated casks.
+</span>  <span class='id identifier rubyid_named_formulae_specified'>named_formulae_specified</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_named_casks_specified'>named_casks_specified</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_named_casks_specified'>named_casks_specified</span>
+  <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_named_formulae_specified'>named_formulae_specified</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -28412,16 +28422,16 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-130
-131
-132
-133
-134
 135
-136</pre>
+136
+137
+138
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cask_upgrade'>cask_upgrade</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Upgrade.html" title="Cask::Cmd::Upgrade (class)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Cmd/Upgrade.html#initialize-instance_method" title="Cask::Cmd::Upgrade#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='rparen'>)</span>
@@ -28450,11 +28460,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
 77
 78
 79
@@ -28506,10 +28511,15 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 125
 126
 127
-128</pre>
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span> <span class='kw'>unless</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
