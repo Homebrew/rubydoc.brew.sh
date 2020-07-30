@@ -241,7 +241,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#migrate_formula_rename-instance_method" title="#migrate_formula_rename (instance method)">#<strong>migrate_formula_rename</strong>  &#x21d2; Object </a>
+      <a href="#migrate_formula_rename-instance_method" title="#migrate_formula_rename (instance method)">#<strong>migrate_formula_rename</strong>(force:)  &#x21d2; Object </a>
     
 
     
@@ -287,7 +287,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#report-instance_method" title="#report (instance method)">#<strong>report</strong>  &#x21d2; Object </a>
+      <a href="#report-instance_method" title="#report (instance method)">#<strong>report</strong>(preinstall: false)  &#x21d2; Object </a>
     
 
     
@@ -546,7 +546,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="migrate_formula_rename-instance_method">
   
-    #<strong>migrate_formula_rename</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>migrate_formula_rename</strong>(force:)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -589,7 +589,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/update-report.rb', line 376</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_migrate_formula_rename'>migrate_formula_rename</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_migrate_formula_rename'>migrate_formula_rename</span><span class='lparen'>(</span><span class='label'>force:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_needs_migration?'><span class='object_link'><a href="Migrator.html#needs_migration%3F-class_method" title="Migrator.needs_migration? (method)">needs_migration?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
 
@@ -613,7 +613,7 @@
       <span class='kw'>next</span>
     <span class='kw'>end</span>
 
-    <span class='const'><span class='object_link'><a href="Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'><span class='object_link'><a href="Migrator.html#migrate_if_needed-class_method" title="Migrator.migrate_if_needed (method)">migrate_if_needed</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'><span class='object_link'><a href="Migrator.html#migrate_if_needed-class_method" title="Migrator.migrate_if_needed (method)">migrate_if_needed</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force'>force</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -804,7 +804,7 @@
       <div class="method_details ">
   <h3 class="signature " id="report-instance_method">
   
-    #<strong>report</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>report</strong>(preinstall: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -923,7 +923,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/update-report.rb', line 189</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='label'>preinstall:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@report</span> <span class='kw'>if</span> <span class='ivar'>@report</span>
 
   <span class='ivar'>@report</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -960,7 +960,7 @@
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_formula_file_to_name'>formula_file_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_src'>src</span><span class='rparen'>)</span>
 
       <span class='comment'># Skip reporting updated formulae to speed up automatic updates.
-</span>      <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="Homebrew.html#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_preinstall?'>preinstall?</span>
+</span>      <span class='kw'>if</span> <span class='id identifier rubyid_preinstall'>preinstall</span>
         <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:M</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_name'>name</span>
         <span class='kw'>next</span>
       <span class='kw'>end</span>

@@ -74,6 +74,11 @@
   
 
   
+  <dl>
+    <dt>Included in:</dt>
+    <dd><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span>, <span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></dd>
+  </dl>
+  
 
   
   <dl>
@@ -151,7 +156,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#check_cc_argv-class_method" title="check_cc_argv (class method)">.<strong>check_cc_argv</strong>  &#x21d2; Object </a>
+      <a href="#check_cc_argv-class_method" title="check_cc_argv (class method)">.<strong>check_cc_argv</strong>(cc)  &#x21d2; Object </a>
     
 
     
@@ -266,7 +271,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#perform_preinstall_checks-class_method" title="perform_preinstall_checks (class method)">.<strong>perform_preinstall_checks</strong>(all_fatal: false)  &#x21d2; Object </a>
+      <a href="#perform_preinstall_checks-class_method" title="perform_preinstall_checks (class method)">.<strong>perform_preinstall_checks</strong>(all_fatal: false, cc: nil)  &#x21d2; Object </a>
     
 
     
@@ -371,7 +376,7 @@
       <div class="method_details ">
   <h3 class="signature " id="check_cc_argv-class_method">
   
-    .<strong>check_cc_argv</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>check_cc_argv</strong>(cc)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -396,12 +401,12 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/install.rb', line 42</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_cc_argv'>check_cc_argv</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="../Homebrew.html#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cc'>cc</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_cc_argv'>check_cc_argv</span><span class='lparen'>(</span><span class='id identifier rubyid_cc'>cc</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cc'>cc</span>
 
   <span class='ivar'>@checks</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Diagnostic.html" title="Homebrew::Diagnostic (module)">Diagnostic</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Diagnostic/Checks.html" title="Homebrew::Diagnostic::Checks (class)">Checks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Diagnostic/Checks.html#initialize-instance_method" title="Homebrew::Diagnostic::Checks#initialize (method)">new</a></span></span>
   <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    You passed `--cc=</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_args'><span class='object_link'><a href="../Homebrew.html#args-class_method" title="Homebrew.args (method)">args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cc'>cc</span><span class='embexpr_end'>}</span><span class='tstring_content'>`.
+<span class='tstring_content'>    You passed `--cc=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cc'>cc</span><span class='embexpr_end'>}</span><span class='tstring_content'>`.
 </span><span class='tstring_content'>    </span><span class='embexpr_beg'>#{</span><span class='ivar'>@checks</span><span class='period'>.</span><span class='id identifier rubyid_please_create_pull_requests'>please_create_pull_requests</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
@@ -581,7 +586,7 @@
       <div class="method_details ">
   <h3 class="signature " id="perform_preinstall_checks-class_method">
   
-    .<strong>perform_preinstall_checks</strong>(all_fatal: false)  &#x21d2; <tt>Object</tt> 
+    .<strong>perform_preinstall_checks</strong>(all_fatal: false, cc: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -604,10 +609,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/install.rb', line 52</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_perform_preinstall_checks'>perform_preinstall_checks</span><span class='lparen'>(</span><span class='label'>all_fatal:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_perform_preinstall_checks'>perform_preinstall_checks</span><span class='lparen'>(</span><span class='label'>all_fatal:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>cc:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_cpu'>check_cpu</span>
   <span class='id identifier rubyid_attempt_directory_creation'>attempt_directory_creation</span>
-  <span class='id identifier rubyid_check_cc_argv'>check_cc_argv</span>
+  <span class='id identifier rubyid_check_cc_argv'>check_cc_argv</span><span class='lparen'>(</span><span class='id identifier rubyid_cc'>cc</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_diagnostic_checks'>diagnostic_checks</span><span class='lparen'>(</span><span class='symbol'>:supported_configuration_checks</span><span class='comma'>,</span> <span class='label'>fatal:</span> <span class='id identifier rubyid_all_fatal'>all_fatal</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_diagnostic_checks'>diagnostic_checks</span><span class='lparen'>(</span><span class='symbol'>:fatal_preinstall_checks</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
