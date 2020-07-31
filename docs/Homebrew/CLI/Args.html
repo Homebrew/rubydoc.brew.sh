@@ -364,6 +364,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#freeze_remaining_args!-instance_method" title="#freeze_remaining_args! (instance method)">#<strong>freeze_remaining_args!</strong>(remaining_args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#include_test_formulae-instance_method" title="#include_test_formulae (instance method)">#<strong>include_test_formulae</strong>  &#x21d2; Object </a>
     
 
@@ -387,7 +410,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(argv = ARGV.freeze, set_default_args: false)  &#x21d2; Args </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; Args </a>
     
 
     
@@ -504,29 +527,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#passthrough-instance_method" title="#passthrough (instance method)">#<strong>passthrough</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#resolved_formulae-instance_method" title="#resolved_formulae (instance method)">#<strong>resolved_formulae</strong>  &#x21d2; Object </a>
     
 
@@ -603,7 +603,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(argv = ARGV.freeze, set_default_args: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Homebrew::CLI::Args (class)">Args</a></span></tt> 
+    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Homebrew::CLI::Args (class)">Args</a></span></tt> 
   
 
   
@@ -636,40 +636,22 @@
 21
 22
 23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33</pre>
+24</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='comma'>,</span> <span class='label'>set_default_args:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='rparen'>)</span>
 
   <span class='ivar'>@processed_options</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='ivar'>@options_only</span> <span class='op'>=</span> <span class='id identifier rubyid_args_options_only'>args_options_only</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span><span class='rparen'>)</span>
-  <span class='ivar'>@flags_only</span> <span class='op'>=</span> <span class='id identifier rubyid_args_flags_only'>args_flags_only</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span><span class='rparen'>)</span>
+  <span class='ivar'>@options_only</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@flags_only</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='comment'># Can set these because they will be overwritten by freeze_named_args!
 </span>  <span class='comment'># (whereas other values below will only be overwritten if passed).
-</span>  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:named_args</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-
-  <span class='comment'># Set values needed before Parser#parse has been run.
-</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_set_default_args'>set_default_args</span>
-
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:build_from_source?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-s</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:build_bottle?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-bottle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:force_bottle?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:HEAD?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:devel?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--devel</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:universal?</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--universal</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</span>  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:named_args</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:remaining</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -787,16 +769,16 @@
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177
-178</pre>
+162
+163
+164
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_build_from_source?'>build_from_source?</span> <span class='op'>||</span> <span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
@@ -848,12 +830,12 @@
       <pre class="lines">
 
 
-168
-169
-170</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_stable?'>build_stable?</span>
   <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_HEAD?'>HEAD?</span> <span class='op'>||</span> <span class='id identifier rubyid_devel?'>devel?</span><span class='rparen'>)</span>
@@ -878,13 +860,13 @@
       <pre class="lines">
 
 
-133
-134
-135
-136</pre>
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_casks'>casks</span>
   <span class='ivar'>@casks</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CASK_TAP_CASK_REGEX-constant" title="HOMEBREW_CASK_TAP_CASK_REGEX (constant)">HOMEBREW_CASK_TAP_CASK_REGEX</a></span></span><span class='rparen'>)</span>
@@ -910,16 +892,16 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79</pre>
+63
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formulae'>formulae</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span>
@@ -948,26 +930,26 @@
       <pre class="lines">
 
 
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
 81
 82
 83
 84
 85
 86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97</pre>
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formulae_and_casks'>formulae_and_casks</span>
   <span class='ivar'>@formulae_and_casks</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1006,14 +988,14 @@
       <pre class="lines">
 
 
-127
-128
-129
-130
-131</pre>
+117
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formulae_paths'>formulae_paths</span>
   <span class='ivar'>@formulae_paths</span> <span class='op'>||=</span> <span class='lparen'>(</span><span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span> <span class='op'>-</span> <span class='id identifier rubyid_casks'>casks</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
@@ -1040,6 +1022,11 @@
       <pre class="lines">
 
 
+30
+31
+32
+33
+34
 35
 36
 37
@@ -1047,16 +1034,10 @@
 39
 40
 41
-42
-43
-44
-45
-46
-47
-48</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_freeze_named_args!'>freeze_named_args!</span><span class='lparen'>(</span><span class='id identifier rubyid_named_args'>named_args</span><span class='rparen'>)</span>
   <span class='comment'># Reset cache values reliant on named_args
@@ -1069,8 +1050,7 @@
   <span class='ivar'>@kegs</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@kegs_casks</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:named_args</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_named_args'>named_args</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:named_args</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:named_args</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_named_args'>named_args</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1092,19 +1072,19 @@
       <pre class="lines">
 
 
+44
+45
+46
+47
+48
+49
 50
 51
 52
-53
-54
-55
-56
-57
-58
-59</pre>
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_freeze_processed_options!'>freeze_processed_options!</span><span class='lparen'>(</span><span class='id identifier rubyid_processed_options'>processed_options</span><span class='rparen'>)</span>
   <span class='comment'># Reset cache values reliant on processed_options
@@ -1113,8 +1093,38 @@
   <span class='ivar'>@processed_options</span> <span class='op'>+=</span> <span class='id identifier rubyid_processed_options'>processed_options</span>
   <span class='ivar'>@processed_options</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 
-  <span class='ivar'>@options_only</span> <span class='op'>=</span> <span class='id identifier rubyid_args_options_only'>args_options_only</span><span class='lparen'>(</span><span class='id identifier rubyid_cli_args'>cli_args</span><span class='rparen'>)</span>
-  <span class='ivar'>@flags_only</span> <span class='op'>=</span> <span class='id identifier rubyid_args_flags_only'>args_flags_only</span><span class='lparen'>(</span><span class='id identifier rubyid_cli_args'>cli_args</span><span class='rparen'>)</span>
+  <span class='ivar'>@options_only</span> <span class='op'>=</span> <span class='id identifier rubyid_cli_args'>cli_args</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='ivar'>@flags_only</span> <span class='op'>=</span> <span class='id identifier rubyid_cli_args'>cli_args</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="freeze_remaining_args!-instance_method">
+  
+    #<strong>freeze_remaining_args!</strong>(remaining_args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_freeze_remaining_args!'>freeze_remaining_args!</span><span class='lparen'>(</span><span class='id identifier rubyid_remaining_args'>remaining_args</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:remaining</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_remaining_args'>remaining_args</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1136,16 +1146,16 @@
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186</pre>
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_include_test_formulae'>include_test_formulae</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_include_test?'>include_test?</span>
@@ -1174,19 +1184,19 @@
       <pre class="lines">
 
 
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147</pre>
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kegs'>kegs</span>
   <span class='ivar'>@kegs</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
@@ -1218,6 +1228,16 @@
       <pre class="lines">
 
 
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
 149
 150
 151
@@ -1225,20 +1245,10 @@
 153
 154
 155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166</pre>
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_kegs_casks'>kegs_casks</span>
   <span class='ivar'>@kegs_casks</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1278,12 +1288,12 @@
       <pre class="lines">
 
 
-65
-66
-67</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named'>named</span>
   <span class='id identifier rubyid_named_args'>named_args</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1331,45 +1341,15 @@
       <pre class="lines">
 
 
-69
-70
-71</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_named?'>no_named?</span>
   <span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="passthrough-instance_method">
-  
-    #<strong>passthrough</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-61
-62
-63</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 61</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_passthrough'>passthrough</span>
-  <span class='id identifier rubyid_options_only'>options_only</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="../CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_global_options'><span class='object_link'><a href="Parser.html#global_options-class_method" title="Homebrew::CLI::Parser.global_options (method)">global_options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:first</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1391,16 +1371,16 @@
       <pre class="lines">
 
 
-99
-100
-101
-102
-103
-104
-105</pre>
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_formulae'>resolved_formulae</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span>
@@ -1429,6 +1409,16 @@
       <pre class="lines">
 
 
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
 107
 108
 109
@@ -1437,20 +1427,10 @@
 112
 113
 114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_formulae_casks'>resolved_formulae_casks</span>
   <span class='ivar'>@resolved_formulae_casks</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1491,16 +1471,16 @@
       <pre class="lines">
 
 
-188
-189
-190
-191
-192
-193
-194</pre>
+178
+179
+180
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/args.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_arg_prefix'>arg_prefix</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span>
