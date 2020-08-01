@@ -131,7 +131,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Get name, url, and version for a given pypi package.</p>
+    <span class="summary_desc"><div class='inline'><p>Get name, url and sha256 for a given pypi package.</p>
 </div></span>
   
 </li>
@@ -226,7 +226,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Get name, url, and version for a given pypi package</p>
+    <p>Get name, url and sha256 for a given pypi package</p>
 
 
   </div>
@@ -254,7 +254,9 @@
 36
 37
 38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 25</span>
@@ -272,6 +274,8 @@
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_sdist'>sdist</span> <span class='op'>=</span> <span class='id identifier rubyid_json'>json</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>urls</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_url'>url</span><span class='op'>|</span> <span class='id identifier rubyid_url'>url</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>packagetype</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sdist</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_json'>json</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>info</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_sdist'>sdist</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
   <span class='lbracket'>[</span><span class='id identifier rubyid_json'>json</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>info</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_sdist'>sdist</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_sdist'>sdist</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>digests</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -332,8 +336,6 @@
       <pre class="lines">
 
 
-41
-42
 43
 44
 45
@@ -426,10 +428,12 @@
 132
 133
 134
-135</pre>
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_python_resources!'>update_python_resources!</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>print_only:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>false</span><span class='comma'>,</span>
                              <span class='label'>ignore_non_pypi_packages:</span> <span class='kw'>false</span><span class='rparen'>)</span>
