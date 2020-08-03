@@ -23956,19 +23956,29 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/ruby.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ruby'>ruby</span>
-  <span class='id identifier rubyid_ruby_args'>ruby_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+  <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_ruby_args'>ruby_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+
+  <span class='id identifier rubyid_ruby_sys_args'>ruby_sys_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_ruby_sys_args'>ruby_sys_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-r</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_r'>r</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_r'>r</span>
+  <span class='id identifier rubyid_ruby_sys_args'>ruby_sys_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-e </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_e'>e</span>
+  <span class='id identifier rubyid_ruby_sys_args'>ruby_sys_args</span> <span class='op'>+=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span>
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#RUBY_PATH-constant" title="RUBY_PATH (constant)">RUBY_PATH</a></span></span><span class='comma'>,</span>
                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-I</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='gvar'>$LOAD_PATH</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>File</span><span class='op'>::</span><span class='const'>PATH_SEPARATOR</span><span class='rparen'>)</span><span class='comma'>,</span>
                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rglobal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-rdev-cmd/irb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                <span class='op'>*</span><span class='const'>ARGV</span>
+                <span class='op'>*</span><span class='id identifier rubyid_ruby_sys_args'>ruby_sys_args</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
     <span class='id identifier rubyid_exit'>exit</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>
   <span class='kw'>end</span>
@@ -24019,10 +24029,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 </span><span class='tstring_content'>      Run a Ruby instance with Homebrew&#39;s libraries loaded, e.g.
 </span><span class='tstring_content'>      `brew ruby -e &quot;puts :gcc.f.deps&quot;` or `brew ruby script.rb`.
 </span><span class='heredoc_end'>    EOS
-</span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-r</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Load a library using `require`.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Execute the given text string as a script.</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-r=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Load a library using `require`.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-e=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Execute the given text string as a script.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
