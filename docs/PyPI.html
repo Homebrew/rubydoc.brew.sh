@@ -97,6 +97,18 @@
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://files.pythonhosted.org/packages/</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
+        <dt id="AUTOMATIC_RESOURCE_UPDATE_BLOCKLIST-constant" class="">AUTOMATIC_RESOURCE_UPDATE_BLOCKLIST =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w[</span><span class='words_sep'>
+  </span><span class='tstring_content'>ansible</span><span class='words_sep'>
+  </span><span class='tstring_content'>ansible@2.8</span><span class='words_sep'>
+  </span><span class='tstring_content'>cloudformation-cli</span><span class='words_sep'>
+  </span><span class='tstring_content'>diffoscope</span><span class='words_sep'>
+  </span><span class='tstring_content'>dxpy</span><span class='words_sep'>
+  </span><span class='tstring_content'>molecule</span><span class='words_sep'>
+</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
     </dl>
   
 
@@ -240,15 +252,6 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29
-30
-31
-32
-33
 34
 35
 36
@@ -256,10 +259,19 @@
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_pypi_info'>get_pypi_info</span><span class='lparen'>(</span><span class='id identifier rubyid_package'>package</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_metadata_url'>metadata_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://pypi.org/pypi/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package'>package</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>/json</span><span class='tstring_end'>&quot;</span></span>
@@ -298,16 +310,16 @@
       <pre class="lines">
 
 
-16
-17
-18
-19
-20
-21
-22</pre>
+25
+26
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_pypi_url'>update_pypi_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_package'>package</span> <span class='op'>=</span> <span class='id identifier rubyid_url_to_pypi_package_name'>url_to_pypi_package_name</span> <span class='id identifier rubyid_url'>url</span>
@@ -336,15 +348,6 @@
       <pre class="lines">
 
 
-43
-44
-45
-46
-47
-48
-49
-50
-51
 52
 53
 54
@@ -430,13 +433,32 @@
 134
 135
 136
-137</pre>
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_python_resources!'>update_python_resources!</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>print_only:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>false</span><span class='comma'>,</span>
                              <span class='label'>ignore_non_pypi_packages:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_print_only'>print_only</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="#AUTOMATIC_RESOURCE_UPDATE_BLOCKLIST-constant" title="PyPI::AUTOMATIC_RESOURCE_UPDATE_BLOCKLIST (constant)">AUTOMATIC_RESOURCE_UPDATE_BLOCKLIST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The resources for \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; need special attention. Please update them manually.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
 
   <span class='comment'># PyPI package name isn&#39;t always the same as the formula name. Try to infer from the URL.
 </span>  <span class='id identifier rubyid_pypi_name'>pypi_name</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_stable'>stable</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#PYTHONHOSTED_URL_PREFIX-constant" title="PyPI::PYTHONHOSTED_URL_PREFIX (constant)">PYTHONHOSTED_URL_PREFIX</a></span></span><span class='rparen'>)</span>
@@ -550,14 +572,14 @@ end
       <pre class="lines">
 
 
-10
-11
-12
-13
-14</pre>
+19
+20
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url_to_pypi_package_name'>url_to_pypi_package_name</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='const'><span class='object_link'><a href="#PYTHONHOSTED_URL_PREFIX-constant" title="PyPI::PYTHONHOSTED_URL_PREFIX (constant)">PYTHONHOSTED_URL_PREFIX</a></span></span>
