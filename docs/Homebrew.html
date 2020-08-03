@@ -8161,20 +8161,20 @@
       <pre class="lines">
 
 
-538
-539
-540
-541
 542
 543
 544
 545
 546
 547
-548</pre>
+548
+549
+550
+551
+552</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 538</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 542</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_update_pair'>alias_update_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_versioned_alias'>versioned_alias</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*@\d+(\.\d+)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -9657,9 +9657,6 @@
       <pre class="lines">
 
 
-111
-112
-113
 114
 115
 116
@@ -9946,10 +9943,14 @@
 397
 398
 399
-400</pre>
+400
+401
+402
+403
+404</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bump_formula_pr'>bump_formula_pr</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_bump_formula_pr_args'>bump_formula_pr_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -10181,6 +10182,7 @@
   <span class='id identifier rubyid_run_audit'>run_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_alias_rename'>alias_rename</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_base_branch'>base_branch</span> <span class='op'>=</span> <span class='id identifier rubyid_origin_branch'>origin_branch</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_branch'>branch</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bump-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_git_dir'>git_dir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git rev-parse --git-dir</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
     <span class='id identifier rubyid_shallow'>shallow</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_git_dir'>git_dir</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_git_dir'>git_dir</span><span class='embexpr_end'>}</span><span class='tstring_content'>/shallow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -10196,7 +10198,7 @@
            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_changed_files'>changed_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git push --set-upstream $HUB_REMOTE </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git checkout --quiet </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_previous_branch'>previous_branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>create pull request with GitHub API</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>create pull request with GitHub API (base branch: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_base_branch'>base_branch</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>else</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_fork?'>no_fork?</span>
@@ -10229,7 +10231,7 @@
 
       <span class='kw'>begin</span>
         <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_pull_request'><span class='object_link'><a href="GitHub.html#create_pull_request-class_method" title="GitHub.create_pull_request (method)">create_pull_request</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_pr_title'>pr_title</span><span class='comma'>,</span>
-                                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pr_message'>pr_message</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+                                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_base_branch'>base_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_pr_message'>pr_message</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_browse?'>no_browse?</span>
           <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_url'>url</span>
         <span class='kw'>else</span>
@@ -10815,19 +10817,19 @@
       <pre class="lines">
 
 
-507
-508
-509
-510
 511
 512
 513
 514
 515
-516</pre>
+516
+517
+518
+519
+520</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 507</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 511</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_all_pull_requests'>check_all_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_version'>version</span>
@@ -11077,10 +11079,6 @@
       <pre class="lines">
 
 
-518
-519
-520
-521
 522
 523
 524
@@ -11095,10 +11093,14 @@
 533
 534
 535
-536</pre>
+536
+537
+538
+539
+540</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 522</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_duplicate_pull_requests'>check_for_duplicate_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_pull_requests'>pull_requests</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_pull_requests'>pull_requests</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -11395,14 +11397,14 @@
       <pre class="lines">
 
 
-501
-502
-503
-504
-505</pre>
+505
+506
+507
+508
+509</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 505</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_open_pull_requests'>check_open_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='comment'># check for open requests
@@ -13527,10 +13529,6 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-402
-403
-404
-405
 406
 407
 408
@@ -13545,10 +13543,14 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
 417
 418
 419
-420</pre>
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_determine_formula_from_url'>determine_formula_from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='comment'># Split the new URL on / and find any formulae that have the same URL
@@ -14964,18 +14966,18 @@ Uses special key <code>:nonexistent =&gt; true</code> for nonexistent formulae.<
       <pre class="lines">
 
 
-491
-492
-493
-494
 495
 496
 497
 498
-499</pre>
+499
+500
+501
+502
+503</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 491</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 495</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_issues_for_formula'><span class='object_link'><a href="GitHub.html#issues_for_formula-class_method" title="GitHub.issues_for_formula (method)">issues_for_formula</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
@@ -15283,10 +15285,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-432
-433
-434
-435
 436
 437
 438
@@ -15302,10 +15300,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 448
 449
 450
-451</pre>
+451
+452
+453
+454
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 436</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_forked_repo_info'>forked_repo_info</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_fork'><span class='object_link'><a href="GitHub.html#create_fork-class_method" title="GitHub.create_fork (method)">create_fork</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
@@ -15547,18 +15549,18 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-481
-482
-483
-484
 485
 486
 487
 488
-489</pre>
+489
+490
+491
+492
+493</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 481</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 485</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_version'>formula_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -16832,10 +16834,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-453
-454
-455
-456
 457
 458
 459
@@ -16858,10 +16856,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 476
 477
 478
-479</pre>
+479
+480
+481
+482
+483</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 453</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 457</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inreplace_pairs'>inreplace_pairs</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_only_run'>read_only_run</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_write?'>write?</span>
@@ -24174,10 +24176,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-550
-551
-552
-553
 554
 555
 556
@@ -24201,10 +24199,14 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 574
 575
 576
-577</pre>
+577
+578
+579
+580
+581</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 550</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 554</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_audit'>run_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_alias_rename'>alias_rename</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -29048,7 +29050,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 106
 107
 108
-109</pre>
+109
+110
+111
+112</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 75</span>
@@ -29086,7 +29091,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='lbracket'>[</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>origin/master</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_origin_branch'>origin_branch</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>symbolic-ref</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--short</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>refs/remotes/origin/HEAD</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
+  <span class='id identifier rubyid_origin_branch'>origin_branch</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>origin/master</span><span class='tstring_end'>&quot;</span></span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_origin_branch'>origin_branch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
