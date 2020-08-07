@@ -258,6 +258,29 @@ of the software.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#strategy-instance_method" title="#strategy (instance method)">#<strong>strategy</strong>(symbol = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the strategy instance variable to the provided symbol or returns the strategy instance variable when no argument is provided.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_hash-instance_method" title="#to_hash (instance method)">#<strong>to_hash</strong>  &#x21d2; Object </a>
     
 
@@ -338,7 +361,8 @@ of the software.</p>
 16
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 13</span>
@@ -348,6 +372,7 @@ of the software.</p>
   <span class='ivar'>@regex</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@skip</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='ivar'>@skip_msg</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@strategy</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@url</span> <span class='op'>=</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -436,14 +461,14 @@ regex instance variable when no argument is given.</p>
       <pre class="lines">
 
 
-23
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_regex'>regex</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@regex</span> <span class='kw'>if</span> <span class='id identifier rubyid_pattern'>pattern</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -483,13 +508,13 @@ assigned.</p>
       <pre class="lines">
 
 
-33
 34
 35
-36</pre>
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip'>skip</span><span class='lparen'>(</span><span class='id identifier rubyid_skip_msg'>skip_msg</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@skip</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -538,15 +563,93 @@ assigned.</p>
       <pre class="lines">
 
 
-39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip?'>skip?</span>
   <span class='ivar'>@skip</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="strategy-instance_method">
+  
+    #<strong>strategy</strong>(symbol = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the strategy instance variable to the provided symbol or returns the
+strategy instance variable when no argument is provided. The strategy
+symbols use snake case (e.g., <code>:page_match</code>) and correspond to the strategy
+file name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>symbol</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>symbol for the desired strategy</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='lparen'>(</span><span class='id identifier rubyid_symbol'>symbol</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_symbol'>symbol</span>
+  <span class='kw'>when</span> <span class='kw'>nil</span>
+    <span class='ivar'>@strategy</span>
+  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></span>
+    <span class='ivar'>@strategy</span> <span class='op'>=</span> <span class='id identifier rubyid_symbol'>symbol</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Livecheck#strategy expects a Symbol</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -578,23 +681,25 @@ assigned.</p>
       <pre class="lines">
 
 
-59
-60
-61
-62
-63
-64
-65
-66</pre>
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='lbrace'>{</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>regex</span><span class='tstring_end'>&quot;</span></span>    <span class='op'>=&gt;</span> <span class='ivar'>@regex</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skip</span><span class='tstring_end'>&quot;</span></span>     <span class='op'>=&gt;</span> <span class='ivar'>@skip</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skip_msg</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@skip_msg</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strategy</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@strategy</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>url</span><span class='tstring_end'>&quot;</span></span>      <span class='op'>=&gt;</span> <span class='ivar'>@url</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -629,21 +734,21 @@ instance variable when no argument is given.</p>
       <pre class="lines">
 
 
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56</pre>
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@url</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
