@@ -212,16 +212,6 @@
         </dt>
         <dd><pre class="code"><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>docs</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
-        <dt id="SPDX_PATH-constant" class="">SPDX_PATH =
-          
-        </dt>
-        <dd><pre class="code"><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>data/spdx.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-      
-        <dt id="SPDX_API_URL-constant" class="">SPDX_API_URL =
-          
-        </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.github.com/repos/spdx/license-list-data/releases/latest</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-      
     </dl>
   
 
@@ -8489,7 +8479,6 @@
       <pre class="lines">
 
 
-76
 77
 78
 79
@@ -8583,7 +8572,7 @@
 167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_args'>audit_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -8630,8 +8619,7 @@
   <span class='comment'># Check style in a single batch run up front for performance
 </span>  <span class='id identifier rubyid_style_results'>style_results</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Style.html" title="Homebrew::Style (module)">Style</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_style_json'><span class='object_link'><a href="Homebrew/Style.html#check_style_json-class_method" title="Homebrew::Style.check_style_json (method)">check_style_json</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_style_files'>style_files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_style_files'>style_files</span>
   <span class='comment'># load licenses
-</span>  <span class='id identifier rubyid_spdx'>spdx</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>data/spdx.json</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_spdx_data'>spdx_data</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_spdx'>spdx</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_spdx_data'>spdx_data</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_spdx_data'><span class='object_link'><a href="SPDX.html#spdx_data-class_method" title="SPDX.spdx_data (method)">spdx_data</a></span></span>
   <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_audit_formulae'>audit_formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='id identifier rubyid_only'>only</span> <span class='op'>=</span> <span class='id identifier rubyid_only_cops'>only_cops</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>style</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span>
@@ -8697,7 +8685,6 @@
       <pre class="lines">
 
 
-20
 21
 22
 23
@@ -8751,10 +8738,11 @@
 71
 72
 73
-74</pre>
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_args'>audit_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
@@ -27848,6 +27836,9 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+25
+26
+27
 28
 29
 30
@@ -27859,30 +27850,23 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 36
 37
 38
-39
-40
-41
-42
-43
-44</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/update-license-data.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/update-license-data.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_license_data'>update_license_data</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_update_license_data_args'>update_license_data_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Updating SPDX license data...</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_latest_tag'>latest_tag</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_api'><span class='object_link'><a href="GitHub.html#open_api-class_method" title="GitHub.open_api (method)">open_api</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#SPDX_API_URL-constant" title="Homebrew::SPDX_API_URL (constant)">SPDX_API_URL</a></span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tag_name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_data_url'>data_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://raw.githubusercontent.com/spdx/license-list-data/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_latest_tag'>latest_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>/json/licenses.json</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_curl_download'><span class='object_link'><a href="top-level-namespace.html#curl_download-instance_method" title="#curl_download (method)">curl_download</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data_url'>data_url</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='const'><span class='object_link'><a href="#SPDX_PATH-constant" title="Homebrew::SPDX_PATH (constant)">SPDX_PATH</a></span></span><span class='comma'>,</span> <span class='label'>partial:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_download_latest_license_data!'><span class='object_link'><a href="SPDX.html#download_latest_license_data!-class_method" title="SPDX.download_latest_license_data! (method)">download_latest_license_data!</a></span></span>
 
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--stat</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--exit-code</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#SPDX_PATH-constant" title="Homebrew::SPDX_PATH (constant)">SPDX_PATH</a></span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_fail_if_not_changed?'>fail_if_not_changed?</span>
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--stat</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--exit-code</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SPDX.html#JSON_PATH-constant" title="SPDX::JSON_PATH (constant)">JSON_PATH</a></span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_fail_if_not_changed?'>fail_if_not_changed?</span>
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_commit?'>commit?</span>
 
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#SPDX_PATH-constant" title="Homebrew::SPDX_PATH (constant)">SPDX_PATH</a></span></span>
+  <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SPDX.html#JSON_PATH-constant" title="SPDX::JSON_PATH (constant)">JSON_PATH</a></span></span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git commit</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>commit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--message</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>data/spdx.json: update to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_latest_tag'>latest_tag</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
@@ -27906,6 +27890,9 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
+9
+10
+11
 12
 13
 14
@@ -27917,13 +27904,10 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 20
 21
 22
-23
-24
-25
-26</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/update-license-data.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/update-license-data.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_license_data_args'>update_license_data_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
@@ -28682,8 +28666,8 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
   <span class='comment'># If one or more formulae are specified, but no casks were
 </span>  <span class='comment'># specified, we want to make note of that so we don&#39;t
 </span>  <span class='comment'># try to upgrade all outdated casks.
-</span>  <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
-  <span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+</span>  <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span>
   <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span>
@@ -29104,8 +29088,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-145
-146
 147
 148
 149
@@ -29116,12 +29098,18 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 154
 155
 156
-157</pre>
+157
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+
   <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Upgrade.html" title="Cask::Cmd::Upgrade (class)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_upgrade_casks'><span class='object_link'><a href="Cask/Cmd/Upgrade.html#upgrade_casks-class_method" title="Cask::Cmd::Upgrade.upgrade_casks (method)">upgrade_casks</a></span></span><span class='lparen'>(</span>
     <span class='op'>*</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span>
     <span class='label'>force:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span>
@@ -29210,12 +29198,16 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 140
 141
 142
-143</pre>
+143
+144
+145</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+
   <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
   <span class='const'><span class='object_link'><a href="Homebrew/Install.html" title="Homebrew::Install (module)">Install</a></span></span><span class='period'>.</span><span class='id identifier rubyid_perform_preinstall_checks'><span class='object_link'><a href="Homebrew/Install.html#perform_preinstall_checks-class_method" title="Homebrew::Install.perform_preinstall_checks (method)">perform_preinstall_checks</a></span></span>
