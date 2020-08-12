@@ -503,6 +503,29 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#svn_version-class_method" title="svn_version (class method)">.<strong>svn_version</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -563,13 +586,15 @@
 
 4
 5
-6</pre>
+6
+7</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 4</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear_svn_version_cache'>clear_svn_version_cache</span>
-  <span class='id identifier rubyid_remove_instance_variable'>remove_instance_variable</span><span class='lparen'>(</span><span class='symbol'>:@svn</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_instance_variable_defined?'>instance_variable_defined?</span><span class='lparen'>(</span><span class='symbol'>:@svn</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_remove_instance_variable'>remove_instance_variable</span><span class='lparen'>(</span><span class='symbol'>:@svn_available</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@svn_available</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_remove_instance_variable'>remove_instance_variable</span><span class='lparen'>(</span><span class='symbol'>:@svn_version</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@svn_version</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1362,19 +1387,19 @@
       <pre class="lines">
 
 
-8
 9
 10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_svn_available?'>svn_available?</span>
-  <span class='kw'>return</span> <span class='ivar'>@svn</span> <span class='kw'>if</span> <span class='id identifier rubyid_instance_variable_defined?'>instance_variable_defined?</span><span class='lparen'>(</span><span class='symbol'>:@svn</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='ivar'>@svn_available</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@svn_available</span><span class='rparen'>)</span>
 
-  <span class='ivar'>@svn</span> <span class='op'>=</span> <span class='id identifier rubyid_quiet_system'>quiet_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_SHIMS_PATH-constant" title="HOMEBREW_SHIMS_PATH (constant)">HOMEBREW_SHIMS_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>scm/svn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--version</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@svn_available</span> <span class='op'>=</span> <span class='id identifier rubyid_quiet_system'>quiet_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_SHIMS_PATH-constant" title="HOMEBREW_SHIMS_PATH (constant)">HOMEBREW_SHIMS_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>scm/svn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--version</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1419,17 +1444,17 @@
       <pre class="lines">
 
 
-14
-15
-16
-17
-18
-19
-20
-21</pre>
+24
+25
+26
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_svn_remote_exists?'>svn_remote_exists?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_svn_available?'>svn_available?</span>
@@ -1438,6 +1463,46 @@
 </span>  <span class='comment'># a URL exists.
 </span>  <span class='id identifier rubyid_quiet_system'>quiet_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>svn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--depth</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--non-interactive</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--trust-server-cert</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="svn_version-class_method">
+  
+    .<strong>svn_version</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/svn.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_svn_version'>svn_version</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_svn_available?'>svn_available?</span>
+  <span class='kw'>return</span> <span class='ivar'>@svn_version</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@svn_version</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@svn_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span>
+    <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_SHIMS_PATH-constant" title="HOMEBREW_SHIMS_PATH (constant)">HOMEBREW_SHIMS_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>scm/svn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--version</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>svn, version (\d+(?:\.\d+)*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
