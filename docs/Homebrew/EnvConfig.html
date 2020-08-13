@@ -146,7 +146,12 @@
     <span class='label'>default:</span>      <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_DEFAULT_CACHE-constant" title="HOMEBREW_DEFAULT_CACHE (constant)">HOMEBREW_DEFAULT_CACHE</a></span></span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_CASK_OPTS:</span>                 <span class='lbrace'>{</span>
-    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Options which should be used for all `cask` commands.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Options which should be used for all `cask` commands. All `--*dir` options, </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--language`, `--require-sha`, `--no-quarantine` and `--no-binaries` are supported.</span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>For example, you might add something like the following to your </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.profile, ~/.bash_profile, or ~/.zshenv:\n\n</span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`export HOMEBREW_CASK_OPTS=&#39;--appdir=~/Applications --fontdir=/Library/Fonts&#39;`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_CLEANUP_MAX_AGE_DAYS:</span>      <span class='lbrace'>{</span>
     <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cleanup all cached files older than this many days.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -367,6 +372,9 @@
     <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A comma-separated list of hostnames and domain names excluded </span><span class='tstring_end'>&quot;</span></span> \
                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>from proxying by `curl`(1), `git`(1) and `svn`(1) when downloading through Homebrew.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>SUDO_ASKPASS:</span>                       <span class='lbrace'>{</span>
+    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>When this variable is set, the `-A` option is passed when calling `sudo`(8)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
 <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
@@ -548,12 +556,12 @@
       <pre class="lines">
 
 
-322
-323
-324</pre>
+330
+331
+332</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 330</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts'>cask_opts</span>
   <span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_shellsplit'>shellsplit</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_CASK_OPTS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -601,17 +609,17 @@
       <pre class="lines">
 
 
-326
-327
-328
-329
-330
-331
-332
-333</pre>
+334
+335
+336
+337
+338
+339
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 334</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_binaries?'>cask_opts_binaries?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -664,17 +672,17 @@
       <pre class="lines">
 
 
-335
-336
-337
-338
-339
-340
-341
-342</pre>
+343
+344
+345
+346
+347
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 335</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_quarantine?'>cask_opts_quarantine?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -727,12 +735,12 @@
       <pre class="lines">
 
 
-344
-345
-346</pre>
+352
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 352</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_require_sha?'>cask_opts_require_sha?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--require-sha</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -757,16 +765,16 @@
       <pre class="lines">
 
 
-281
-282
-283
-284
-285
-286
-287</pre>
+289
+290
+291
+292
+293
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env_method_name'>env_method_name</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -805,18 +813,18 @@
       <pre class="lines">
 
 
-312
-313
-314
-315
-316
-317
-318
-319
-320</pre>
+320
+321
+322
+323
+324
+325
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/env_config.rb', line 320</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_jobs'>make_jobs</span>
   <span class='id identifier rubyid_jobs'>jobs</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MAKE_JOBS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
