@@ -10,6 +10,10 @@ jobs:
     - name: Set up Git repository
       uses: actions/checkout@main
 
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
     - name: Set up Ruby
       uses: actions/setup-ruby@main
       with:
@@ -22,5 +26,5 @@ jobs:
 
     - name: Generate site
       run: |
-        git clone --depth=1 https://github.com/Homebrew/brew
+        ln -s $(brew --repo) brew
         bundle exec rake yard build
