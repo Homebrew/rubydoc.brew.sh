@@ -498,7 +498,13 @@
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/git.rb', line 89</span>
@@ -510,8 +516,14 @@
 </span>  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="../CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="../Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_clear_available_cache'>clear_available_cache</span>
+
+      <span class='comment'># We need to unset `HOMEBREW_TEST_GENERIC_OS`, otherwise `git` will be
+</span>      <span class='comment'># installed from source in tests that need it. This is slow and will
+</span>      <span class='comment'># also likely fail due to `OS::Linux` and `OS::Mac` being undefined.
+</span>      <span class='id identifier rubyid_with_env'>with_env</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_TEST_GENERIC_OS</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_clear_available_cache'>clear_available_cache</span>
+      <span class='kw'>end</span>
     <span class='kw'>rescue</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Git is unavailable</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
@@ -868,20 +880,20 @@
       <pre class="lines">
 
 
-106
-107
-108
-109
-110
-111
 112
 113
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/git.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/git.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_name_email!'>set_name_email!</span><span class='lparen'>(</span><span class='label'>author:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>committer:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_git_name'>git_name</span>
