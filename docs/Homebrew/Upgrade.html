@@ -311,7 +311,8 @@
 235
 236
 237
-238</pre>
+238
+239</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/upgrade.rb', line 123</span>
@@ -366,6 +367,7 @@
 </span>  <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking for dependents of upgraded formulae...</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
   <span class='id identifier rubyid_broken_dependents'>broken_dependents</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="../CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:linkage</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
     <span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:runtime_installed_formula_dependents</span><span class='rparen'>)</span>
+                      <span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
                       <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
       <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_opt_or_installed_prefix_keg'>opt_or_installed_prefix_keg</span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_keg'>keg</span>
@@ -417,7 +419,7 @@
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
 
   <span class='id identifier rubyid_reinstallable_broken_dependents'>reinstallable_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-    <span class='id identifier rubyid_reinstall_formula'>reinstall_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>build_from_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reinstall_formula'><span class='object_link'><a href="../Homebrew.html#reinstall_formula-class_method" title="Homebrew.reinstall_formula (method)">reinstall_formula</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>build_from_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../FormulaInstallationAlreadyAttemptedError.html" title="FormulaInstallationAlreadyAttemptedError (class)">FormulaInstallationAlreadyAttemptedError</a></span></span>
     <span class='comment'># We already attempted to reinstall f as part of the dependency tree of
 </span>    <span class='comment'># another formula. In that case, don&#39;t generate an error, just move on.
