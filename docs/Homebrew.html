@@ -24645,7 +24645,6 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
       <pre class="lines">
 
 
-28
 29
 30
 31
@@ -24675,10 +24674,19 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 55
 56
 57
-58</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/sh.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/sh.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sh'>sh</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_sh_args'>sh_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -24694,22 +24702,30 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
     <span class='comment'># superenv stopped adding brew&#39;s bin but generally users will want it
 </span>    <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_insert'><span class='object_link'><a href="PATH.html#insert-instance_method" title="PATH#insert (method)">insert</a></span></span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bin</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_subshell'>subshell</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>zsh</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PS1=&#39;brew %B%F{green}%~%f%b$ &#39; </span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> -d</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>VERBOSE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cmd'>cmd</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_safe_system'>safe_system</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cmd'>cmd</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_safe_system'>safe_system</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PS1=\&quot;brew \\[\\033[1;32m\\]\\w\\[\\033[0m\\]$ \&quot; </span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_subshell'>subshell</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>zsh</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PS1=&#39;brew %B%F{green}%~%f%b$ &#39; </span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> -d</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>else</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PS1=\&quot;brew \\[\\033[1;32m\\]\\w\\[\\033[0m\\]$ \&quot; </span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SHELL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Your shell has been configured to use Homebrew&#39;s build environment;
+</span><span class='tstring_content'>      this should help you build stuff. Notably though, the system versions of
+</span><span class='tstring_content'>      gem and pip will ignore our configuration and insist on using the
+</span><span class='tstring_content'>      environment they were built under (mostly). Sadly, scons will also
+</span><span class='tstring_content'>      ignore our configuration.
+</span><span class='tstring_content'>      When done, type `exit`.
+</span><span class='heredoc_end'>    EOS
+</span>    <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_flush'>flush</span>
+    <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='id identifier rubyid_subshell'>subshell</span>
   <span class='kw'>end</span>
-  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>VERBOSE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    Your shell has been configured to use Homebrew&#39;s build environment;
-</span><span class='tstring_content'>    this should help you build stuff. Notably though, the system versions of
-</span><span class='tstring_content'>    gem and pip will ignore our configuration and insist on using the
-</span><span class='tstring_content'>    environment they were built under (mostly). Sadly, scons will also
-</span><span class='tstring_content'>    ignore our configuration.
-</span><span class='tstring_content'>    When done, type `exit`.
-</span><span class='heredoc_end'>  EOS
-</span>  <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_flush'>flush</span>
-  <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='id identifier rubyid_subshell'>subshell</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -24747,7 +24763,8 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 23
 24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/sh.rb', line 10</span>
@@ -24755,18 +24772,19 @@ Homebrew core or taps, based simply on relative pathnames of affected files.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_sh_args'>sh_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
     <span class='id identifier rubyid_usage_banner'>usage_banner</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      `sh` [&lt;options&gt;]
+<span class='tstring_content'>      `sh` [&lt;options&gt;] [&lt;file&gt;]
 </span><span class='tstring_content'>
-</span><span class='tstring_content'>      Start a Homebrew build environment shell. Uses our years-battle-hardened
-</span><span class='tstring_content'>      Homebrew build logic to help your `./configure &amp;&amp; make &amp;&amp; make install`
-</span><span class='tstring_content'>      or even your `gem install` succeed. Especially handy if you run Homebrew
+</span><span class='tstring_content'>      Homebrew build environment that uses years-battle-hardened
+</span><span class='tstring_content'>      build logic to help your `./configure &amp;&amp; make &amp;&amp; make install`
+</span><span class='tstring_content'>      and even your `gem install` succeed. Especially handy if you run Homebrew
 </span><span class='tstring_content'>      in an Xcode-only configuration since it adds tools like `make` to your `PATH`
 </span><span class='tstring_content'>      which build systems would not find otherwise.
 </span><span class='heredoc_end'>    EOS
 </span>    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--env=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use the standard `PATH` instead of superenv&#39;s when `std` is passed.</span><span class='tstring_end'>&quot;</span></span>
-
-    <span class='id identifier rubyid_max_named'>max_named</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-c=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cmd=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Execute commands in a non-interactive shell.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_max_named'>max_named</span> <span class='int'>1</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
