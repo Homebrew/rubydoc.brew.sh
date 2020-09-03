@@ -1571,16 +1571,16 @@
       <pre class="lines">
 
 
-388
-389
 390
 391
 392
 393
-394</pre>
+394
+395
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_old_cache_db'>cleanup_old_cache_db</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_rf'>rm_rf</span> <span class='lbracket'>[</span>
@@ -1727,30 +1727,34 @@
 383
 384
 385
-386</pre>
+386
+387
+388</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_portable_ruby'>cleanup_portable_ruby</span>
-  <span class='id identifier rubyid_system_ruby_version'>system_ruby_version</span> <span class='op'>=</span>
-    <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>puts RUBY_VERSION</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-         <span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
-  <span class='id identifier rubyid_use_system_ruby'>use_system_ruby</span> <span class='op'>=</span> <span class='lparen'>(</span>
-    <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_system_ruby_version'>system_ruby_version</span><span class='rparen'>)</span> <span class='op'>&gt;=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>RUBY_VERSION</span><span class='rparen'>)</span>
-  <span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_force_vendor_ruby?'>force_vendor_ruby?</span>
-  <span class='id identifier rubyid_vendor_path'>vendor_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew/vendor</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_portable_ruby_version_file'>portable_ruby_version_file</span> <span class='op'>=</span> <span class='id identifier rubyid_vendor_path'>vendor_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>portable-ruby-version</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_portable_ruby_version'>portable_ruby_version</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_portable_ruby_version_file'>portable_ruby_version_file</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
-    <span class='id identifier rubyid_portable_ruby_version_file'>portable_ruby_version_file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
-                              <span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+  <span class='id identifier rubyid_rubies'>rubies</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+  <span class='id identifier rubyid_system_ruby'>system_ruby</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_rubies'>rubies</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_system_ruby'>system_ruby</span> <span class='kw'>if</span> <span class='id identifier rubyid_system_ruby'>system_ruby</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+
+  <span class='id identifier rubyid_use_system_ruby'>use_system_ruby</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_force_vendor_ruby?'>force_vendor_ruby?</span>
+    <span class='kw'>false</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_check_ruby_version'>check_ruby_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>utils/ruby_check_version_script.rb</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_rubies'>rubies</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ruby'>ruby</span><span class='op'>|</span>
+      <span class='id identifier rubyid_system'>system</span> <span class='id identifier rubyid_ruby'>ruby</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--enable-frozen-string-literal</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--disable=gems,did_you_mean,rubyopt</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+             <span class='id identifier rubyid_check_ruby_version'>check_ruby_version</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_REQUIRED_RUBY_VERSION-constant" title="HOMEBREW_REQUIRED_RUBY_VERSION (constant)">HOMEBREW_REQUIRED_RUBY_VERSION</a></span></span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_portable_ruby_path'>portable_ruby_path</span> <span class='op'>=</span> <span class='id identifier rubyid_vendor_path'>vendor_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>portable-ruby</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_portable_ruby_glob'>portable_ruby_glob</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_portable_ruby_path'>portable_ruby_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/*.*</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_vendor_dir'>vendor_dir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew/vendor</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_portable_ruby_latest_version'>portable_ruby_latest_version</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_vendor_dir'>vendor_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>portable-ruby-version</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+
   <span class='id identifier rubyid_portable_rubies_to_remove'>portable_rubies_to_remove</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_portable_ruby_glob'>portable_ruby_glob</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_use_system_ruby'>use_system_ruby</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_portable_ruby_version'>portable_ruby_version</span> <span class='op'>==</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_vendor_dir'>vendor_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>portable-ruby/*.*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_use_system_ruby'>use_system_ruby</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_portable_ruby_latest_version'>portable_ruby_latest_version</span> <span class='op'>==</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
     <span class='id identifier rubyid_portable_rubies_to_remove'>portable_rubies_to_remove</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_path'>path</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would remove: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_abv'>abv</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -1758,7 +1762,7 @@
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_portable_rubies_to_remove'>portable_rubies_to_remove</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_bundler_path'>bundler_path</span> <span class='op'>=</span> <span class='id identifier rubyid_vendor_path'>vendor_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle/ruby</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_bundler_path'>bundler_path</span> <span class='op'>=</span> <span class='id identifier rubyid_vendor_dir'>vendor_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle/ruby</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>clean</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-nx</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_bundler_path'>bundler_path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
   <span class='kw'>else</span>
@@ -2018,8 +2022,6 @@
       <pre class="lines">
 
 
-407
-408
 409
 410
 411
@@ -2060,10 +2062,12 @@
 446
 447
 448
-449</pre>
+449
+450
+451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 409</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune_prefix_symlinks_and_directories'>prune_prefix_symlinks_and_directories</span>
   <span class='const'>ObserverPathnameExtension</span><span class='period'>.</span><span class='id identifier rubyid_reset_counts!'>reset_counts!</span>
@@ -2142,8 +2146,6 @@
       <pre class="lines">
 
 
-396
-397
 398
 399
 400
@@ -2151,10 +2153,12 @@
 402
 403
 404
-405</pre>
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rm_ds_store'>rm_ds_store</span><span class='lparen'>(</span><span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
