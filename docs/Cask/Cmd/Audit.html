@@ -359,7 +359,7 @@
   <span class='kw'>super</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--download</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit the downloaded file</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--appcast</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--[no-]appcast</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit the appcast</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--token-conflicts</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit for token conflicts</span><span class='tstring_end'>&quot;</span></span>
@@ -455,9 +455,7 @@
 63
 64
 65
-66
-67
-68</pre>
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/audit.rb', line 37</span>
@@ -466,16 +464,14 @@
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/auditor</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_auditing'>auditing</span> <span class='op'>=</span> <span class='kw'>true</span>
-  <span class='id identifier rubyid_strict'>strict</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span>
-  <span class='id identifier rubyid_online'>online</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span>
 
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='label'>audit_download:</span>        <span class='id identifier rubyid_online'>online</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_download?'>download?</span><span class='comma'>,</span>
-    <span class='label'>audit_appcast:</span>         <span class='id identifier rubyid_online'>online</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_appcast?'>appcast?</span><span class='comma'>,</span>
-    <span class='label'>audit_online:</span>          <span class='id identifier rubyid_online'>online</span><span class='comma'>,</span>
-    <span class='label'>audit_strict:</span>          <span class='id identifier rubyid_strict'>strict</span><span class='comma'>,</span>
+    <span class='label'>audit_download:</span>        <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_download?'>download?</span><span class='comma'>,</span>
+    <span class='label'>audit_appcast:</span>         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_appcast?'>appcast?</span><span class='comma'>,</span>
+    <span class='label'>audit_online:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span><span class='comma'>,</span>
+    <span class='label'>audit_strict:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span><span class='comma'>,</span>
     <span class='label'>audit_new_cask:</span>        <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span><span class='comma'>,</span>
-    <span class='label'>audit_token_conflicts:</span> <span class='id identifier rubyid_strict'>strict</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span><span class='comma'>,</span>
+    <span class='label'>audit_token_conflicts:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span><span class='comma'>,</span>
     <span class='label'>quarantine:</span>            <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quarantine?'>quarantine?</span><span class='comma'>,</span>
     <span class='label'>language:</span>              <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
