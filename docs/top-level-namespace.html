@@ -639,7 +639,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="top-level-namespace.html#curl-instance_method" title="#curl (instance method)">#<strong>curl</strong>(*args, secrets: [], **options)  &#x21d2; Object </a>
+      <a href="top-level-namespace.html#curl-instance_method" title="#curl (instance method)">#<strong>curl</strong>(*args, **options)  &#x21d2; Object </a>
     
 
     
@@ -777,7 +777,30 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="top-level-namespace.html#curl_output-instance_method" title="#curl_output (instance method)">#<strong>curl_output</strong>(*args, secrets: [], **options)  &#x21d2; Object </a>
+      <a href="top-level-namespace.html#curl_output-instance_method" title="#curl_output (instance method)">#<strong>curl_output</strong>(*args, **options)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="top-level-namespace.html#curl_with_workarounds-instance_method" title="#curl_with_workarounds (instance method)">#<strong>curl_with_workarounds</strong>(*args, secrets: nil, print_stdout: nil, print_stderr: nil, **options)  &#x21d2; Object </a>
     
 
     
@@ -901,7 +924,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="curl-instance_method">
   
-    #<strong>curl</strong>(*args, secrets: [], **options)  &#x21d2; <tt>Object</tt> 
+    #<strong>curl</strong>(*args, **options)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -913,27 +936,19 @@
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53
-54
-55</pre>
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 84</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_curl'>curl</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>secrets:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='comment'># SSL_CERT_FILE can be incorrectly set by users or portable-ruby and screw
-</span>  <span class='comment'># with SSL downloads so unset it here.
-</span>  <span class='id identifier rubyid_system_command!'>system_command!</span> <span class='id identifier rubyid_curl_executable'><span class='object_link'><a href="#curl_executable-instance_method" title="#curl_executable (method)">curl_executable</a></span></span><span class='comma'>,</span>
-                  <span class='label'>args:</span>         <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="#curl_args-instance_method" title="#curl_args (method)">curl_args</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span>
-                  <span class='label'>print_stdout:</span> <span class='kw'>true</span><span class='comma'>,</span>
-                  <span class='label'>env:</span>          <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SSL_CERT_FILE</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-                  <span class='label'>secrets:</span>      <span class='id identifier rubyid_secrets'>secrets</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_curl'>curl</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_with_workarounds'><span class='object_link'><a href="#curl_with_workarounds-instance_method" title="#curl_with_workarounds (method)">curl_with_workarounds</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_assert_success!'>assert_success!</span>
+  <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1039,19 +1054,6 @@
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
 124
 125
 126
@@ -1116,10 +1118,23 @@
 185
 186
 187
-188</pre>
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_check_http_content'>curl_check_http_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>user_agents:</span> <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>check_content:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http</span><span class='tstring_end'>&quot;</span></span>
@@ -1219,39 +1234,6 @@
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
 90
 91
 92
@@ -1264,10 +1246,26 @@
 99
 100
 101
-102</pre>
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_download'>curl_download</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>partial:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_destination'>destination</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
@@ -1297,23 +1295,6 @@
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_curl'><span class='object_link'><a href="#curl-instance_method" title="#curl (method)">curl</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--location</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--remote-time</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--continue-at</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_continue_at'>continue_at</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--output</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_destination'>destination</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='comment'># This is a workaround for https://github.com/curl/curl/issues/1618.
-</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span> <span class='op'>==</span> <span class='int'>56</span> <span class='comment'># Unexpected EOF
-</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--http1.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_output'><span class='object_link'><a href="#curl_output-instance_method" title="#curl_output (method)">curl_output</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-V</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span>
-
-  <span class='comment'># If `curl` doesn&#39;t support HTTP2, the exception is unrelated to this bug.
-</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_out'>out</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTTP2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='comment'># The bug is fixed in `curl` &gt;= 7.60.0.
-</span>  <span class='id identifier rubyid_curl_version'>curl_version</span> <span class='op'>=</span> <span class='id identifier rubyid_out'>out</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>curl (\d+(\.\d+)+)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_curl_version'>curl_version</span><span class='rparen'>)</span> <span class='op'>&gt;=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.60.0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--http1.1</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>retry</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1379,19 +1360,6 @@
       <pre class="lines">
 
 
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
 203
 204
 205
@@ -1412,10 +1380,23 @@
 220
 221
 222
-223</pre>
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_http_content_headers_and_checksum'>curl_http_content_headers_and_checksum</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>hash_needed:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>user_agent:</span> <span class='symbol'>:default</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:close</span><span class='rparen'>)</span>
@@ -1459,7 +1440,7 @@
       <div class="method_details ">
   <h3 class="signature " id="curl_output-instance_method">
   
-    #<strong>curl_output</strong>(*args, secrets: [], **options)  &#x21d2; <tt>Object</tt> 
+    #<strong>curl_output</strong>(*args, **options)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1471,21 +1452,111 @@
       <pre class="lines">
 
 
-104
-105
-106
-107
-108
-109</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 120</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_curl_output'>curl_output</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>secrets:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_system_command'>system_command</span> <span class='id identifier rubyid_curl_executable'><span class='object_link'><a href="#curl_executable-instance_method" title="#curl_executable (method)">curl_executable</a></span></span><span class='comma'>,</span>
-                 <span class='label'>args:</span>         <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="#curl_args-instance_method" title="#curl_args (method)">curl_args</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>show_output:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span>
-                 <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span>
-                 <span class='label'>secrets:</span>      <span class='id identifier rubyid_secrets'>secrets</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_curl_output'>curl_output</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_curl_with_workarounds'><span class='object_link'><a href="#curl_with_workarounds-instance_method" title="#curl_with_workarounds (method)">curl_with_workarounds</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>show_output:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="curl_with_workarounds-instance_method">
+  
+    #<strong>curl_with_workarounds</strong>(*args, secrets: nil, print_stdout: nil, print_stderr: nil, **options)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_curl_with_workarounds'>curl_with_workarounds</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>secrets:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_command_options'>command_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>secrets:</span>      <span class='id identifier rubyid_secrets'>secrets</span><span class='comma'>,</span>
+    <span class='label'>print_stdout:</span> <span class='id identifier rubyid_print_stdout'>print_stdout</span><span class='comma'>,</span>
+    <span class='label'>print_stderr:</span> <span class='id identifier rubyid_print_stderr'>print_stderr</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+
+  <span class='comment'># SSL_CERT_FILE can be incorrectly set by users or portable-ruby and screw
+</span>  <span class='comment'># with SSL downloads so unset it here.
+</span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span> <span class='id identifier rubyid_curl_executable'><span class='object_link'><a href="#curl_executable-instance_method" title="#curl_executable (method)">curl_executable</a></span></span><span class='comma'>,</span>
+                          <span class='label'>args:</span> <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="#curl_args-instance_method" title="#curl_args (method)">curl_args</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='comma'>,</span>
+                          <span class='label'>env:</span>  <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SSL_CERT_FILE</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+                          <span class='op'>**</span><span class='id identifier rubyid_command_options'>command_options</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--http1.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='comment'># This is a workaround for https://github.com/curl/curl/issues/1618.
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span> <span class='op'>==</span> <span class='int'>56</span> <span class='comment'># Unexpected EOF
+</span>      <span class='id identifier rubyid_out'>out</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_output'><span class='object_link'><a href="#curl_output-instance_method" title="#curl_output (method)">curl_output</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-V</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span>
+
+      <span class='comment'># If `curl` doesn&#39;t support HTTP2, the exception is unrelated to this bug.
+</span>      <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>unless</span> <span class='id identifier rubyid_out'>out</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HTTP2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+      <span class='comment'># The bug is fixed in `curl` &gt;= 7.60.0.
+</span>      <span class='id identifier rubyid_curl_version'>curl_version</span> <span class='op'>=</span> <span class='id identifier rubyid_out'>out</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>curl (\d+(\.\d+)+)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>if</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_curl_version'>curl_version</span><span class='rparen'>)</span> <span class='op'>&gt;=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>7.60.0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+      <span class='kw'>return</span> <span class='id identifier rubyid_curl_with_workarounds'>curl_with_workarounds</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--http1.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_command_options'>command_options</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span> <span class='op'>==</span> <span class='int'>16</span> <span class='comment'># Error in the HTTP2 framing layer
+</span>      <span class='kw'>return</span> <span class='id identifier rubyid_curl_with_workarounds'>curl_with_workarounds</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--http1.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_command_options'>command_options</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1587,12 +1658,12 @@
       <pre class="lines">
 
 
-225
-226
-227</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/curl.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_status_ok?'>http_status_ok?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='int'>100</span><span class='op'>..</span><span class='int'>299</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
