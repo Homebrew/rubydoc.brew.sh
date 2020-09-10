@@ -308,7 +308,14 @@ Returns true if violations were found, false otherwise.</p>
 20
 21
 22
-23</pre>
+23
+24
+25
+26
+27
+28
+29
+30</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 14</span>
@@ -317,8 +324,15 @@ Returns true if violations were found, false otherwise.</p>
   <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='id identifier rubyid_check_style_impl'>check_style_impl</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='symbol'>:print</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GITHUB_ACTIONS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_success'>success</span>
-    <span class='id identifier rubyid_offenses'>offenses</span> <span class='op'>=</span> <span class='id identifier rubyid_check_style_json'>check_style_json</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_offenses'>offenses</span><span class='period'>.</span><span class='id identifier rubyid_to_github_annotations'>to_github_annotations</span>
+    <span class='id identifier rubyid_check_style_json'>check_style_json</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_offenses'>offenses</span><span class='op'>|</span>
+      <span class='id identifier rubyid_offenses'>offenses</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+        <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_line'>line</span>
+        <span class='id identifier rubyid_column'>column</span> <span class='op'>=</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_line'>line</span>
+
+        <span class='id identifier rubyid_annotation'>annotation</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../GitHub/Actions.html" title="GitHub::Actions (module)">Actions</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../GitHub/Actions/Annotation.html" title="GitHub::Actions::Annotation (class)">Annotation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../GitHub/Actions/Annotation.html#initialize-instance_method" title="GitHub::Actions::Annotation#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='symbol'>:error</span><span class='comma'>,</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>line:</span> <span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='label'>column:</span> <span class='id identifier rubyid_column'>column</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_annotation'>annotation</span> <span class='kw'>if</span> <span class='id identifier rubyid_annotation'>annotation</span><span class='period'>.</span><span class='id identifier rubyid_relevant?'>relevant?</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_success'>success</span>
@@ -370,13 +384,6 @@ Returns true if violations were found, false otherwise.</p>
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
-36
-37
 38
 39
 40
@@ -402,10 +409,17 @@ Returns true if violations were found, false otherwise.</p>
 60
 61
 62
-63</pre>
+63
+64
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_style_impl'>check_style_impl</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='comma'>,</span>
                      <span class='label'>fix:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -475,12 +489,12 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_style_json'>check_style_json</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_style_impl'>check_style_impl</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='symbol'>:json</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -519,17 +533,17 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-209
-210
-211
-212
-213
-214
 215
-216</pre>
+216
+217
+218
+219
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_json_result!'>json_result!</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
   <span class='comment'># An exit status of 1 just means violations were found; other numbers mean
@@ -573,13 +587,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70
-71
 72
 73
 74
@@ -651,10 +658,16 @@ object parsed from its JSON output.</p>
 140
 141
 142
-143</pre>
+143
+144
+145
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_rubocop'>run_rubocop</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='comma'>,</span>
                 <span class='label'>fix:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>except_cops:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>only_cops:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>display_cop_names:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -720,10 +733,9 @@ object parsed from its JSON output.</p>
   <span class='kw'>when</span> <span class='symbol'>:print</span>
     <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--debug</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_debug'>debug</span>
 
-    <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-      <span class='comment'># Don&#39;t show the default formatter&#39;s progress dots on CI.
-</span>      <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--format</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>clang</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
+    <span class='comment'># Don&#39;t show the default formatter&#39;s progress dots
+</span>    <span class='comment'># on CI or if only checking a single file.
+</span>    <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--format</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>clang</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='rbrace'>}</span> <span class='op'>==</span> <span class='int'>1</span>
 
     <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--color</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_color?'><span class='object_link'><a href="../Tty.html#color%3F-class_method" title="Tty.color? (method)">color?</a></span></span>
 
@@ -769,12 +781,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
 151
 152
 153
@@ -831,10 +837,16 @@ object parsed from its JSON output.</p>
 204
 205
 206
-207</pre>
+207
+208
+209
+210
+211
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/style.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_shellcheck'>run_shellcheck</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_shellcheck'>shellcheck</span>   <span class='op'>=</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>shellcheck</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
