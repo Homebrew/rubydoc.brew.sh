@@ -431,20 +431,20 @@ for formulae.</p>
       <pre class="lines">
 
 
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269</pre>
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checkable_urls'>checkable_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_urls'>urls</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -505,12 +505,12 @@ provided, returns the name otherwise.</p>
       <pre class="lines">
 
 
-166
-167
-168</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_name'>formula_name</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_full_name?'>full_name?</span> <span class='op'>?</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>:</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -563,39 +563,6 @@ the version information. Returns nil if a latest version couldn’t be found.</p
       <pre class="lines">
 
 
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
 336
 337
 338
@@ -688,10 +655,43 @@ the version information. Returns nil if a latest version couldn’t be found.</p
 425
 426
 427
-428</pre>
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 303</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_latest_version'>latest_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_has_livecheckable'>has_livecheckable</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_livecheckable?'>livecheckable?</span>
@@ -867,7 +867,6 @@ and prints the results.</p>
       <pre class="lines">
 
 
-42
 43
 44
 45
@@ -986,10 +985,43 @@ and prints the results.</p>
 158
 159
 160
-161</pre>
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_livecheck_formulae'>livecheck_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_to_check'>formulae_to_check</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='comment'># Identify any non-homebrew/core taps in use for current formulae
@@ -1018,6 +1050,27 @@ and prints the results.</p>
   <span class='ivar'>@livecheck_strategy_names</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 
   <span class='id identifier rubyid_has_a_newer_upstream_version'>has_a_newer_upstream_version</span> <span class='op'>=</span> <span class='kw'>false</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span> <span class='op'>&amp;&amp;</span> <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
+    <span class='id identifier rubyid_total_formulae'>total_formulae</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formulae_to_check'>formulae_to_check</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span>
+      <span class='id identifier rubyid_formulae_to_check'>formulae_to_check</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_formulae_to_check'>formulae_to_check</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+    <span class='kw'>end</span>
+
+    <span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="../Tty.html#with-class_method" title="Tty.with (method)">with</a></span></span><span class='lparen'>(</span><span class='gvar'>$stderr</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_stderr'>stderr</span><span class='op'>|</span>
+      <span class='id identifier rubyid_stderr'>stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_headline'><span class='object_link'><a href="../Formatter.html#headline-class_method" title="Formatter.headline (method)">headline</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Running checks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='symbol'>:blue</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_progress'>progress</span> <span class='op'>=</span> <span class='const'>ProgressBar</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span>
+      <span class='label'>total:</span>          <span class='id identifier rubyid_total_formulae'>total_formulae</span><span class='comma'>,</span>
+      <span class='label'>progress_mark:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>remainder_mark:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>format:</span>         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> %t: [%B] %c/%C </span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='label'>output:</span>         <span class='gvar'>$stderr</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_formulae_checked'>formulae_checked</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae_to_check'>formulae_to_check</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='period'>.</span><span class='id identifier rubyid_with_index'>with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_debug?'>debug?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -1030,7 +1083,7 @@ and prints the results.</p>
     <span class='id identifier rubyid_skip_result'>skip_result</span> <span class='op'>=</span> <span class='id identifier rubyid_skip_conditions'>skip_conditions</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='id identifier rubyid_skip_result'>skip_result</span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_result'>skip_result</span> <span class='op'>!=</span> <span class='kw'>false</span>
 
-    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_shutup!'>shutup!</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='op'>&amp;.</span><span class='id identifier rubyid_downloader'>downloader</span><span class='op'>&amp;.</span><span class='id identifier rubyid_shutup!'>shutup!</span>
 
     <span class='id identifier rubyid_current'>current</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span>
       <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_any_installed_version'>any_installed_version</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_commit'>commit</span>
@@ -1088,6 +1141,7 @@ and prints the results.</p>
     <span class='id identifier rubyid_has_a_newer_upstream_version'>has_a_newer_upstream_version</span> <span class='op'>||=</span> <span class='kw'>true</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span>
+      <span class='id identifier rubyid_progress'>progress</span><span class='op'>&amp;.</span><span class='id identifier rubyid_increment'>increment</span>
       <span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_except!'>except!</span><span class='lparen'>(</span><span class='symbol'>:meta</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
       <span class='kw'>next</span> <span class='id identifier rubyid_info'>info</span>
     <span class='kw'>end</span>
@@ -1098,6 +1152,7 @@ and prints the results.</p>
     <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='kw'>true</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span>
+      <span class='id identifier rubyid_progress'>progress</span><span class='op'>&amp;.</span><span class='id identifier rubyid_increment'>increment</span>
       <span class='id identifier rubyid_status_hash'>status_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
     <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
       <span class='id identifier rubyid_onoe'>onoe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_name'>formula_name</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1109,7 +1164,16 @@ and prints the results.</p>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No newer upstream versions.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_puts'>puts</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_checked'>formulae_checked</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_progress'>progress</span>
+    <span class='id identifier rubyid_progress'>progress</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
+    <span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="../Tty.html#with-class_method" title="Tty.with (method)">with</a></span></span><span class='lparen'>(</span><span class='gvar'>$stderr</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_stderr'>stderr</span><span class='op'>|</span>
+      <span class='id identifier rubyid_stderr'>stderr</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_up'>up</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_erase_line'>erase_line</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>*</span> <span class='int'>2</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_puts'>puts</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_checked'>formulae_checked</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1158,35 +1222,35 @@ and prints the results.</p>
       <pre class="lines">
 
 
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298</pre>
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 306</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_preprocess_url'>preprocess_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='comment'># Check for GitHub repos on github.com, not AWS
@@ -1261,27 +1325,27 @@ and prints the results.</p>
       <pre class="lines">
 
 
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255</pre>
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 271</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_latest_version'>print_latest_version</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula_s'>formula_s</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_blue'>blue</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1349,39 +1413,6 @@ for doing so, else it returns false.</p>
       <pre class="lines">
 
 
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
 223
 224
 225
@@ -1393,10 +1424,43 @@ for doing so, else it returns false.</p>
 231
 232
 233
-234</pre>
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 223</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_conditions'>skip_conditions</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecated?'>deprecated?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_livecheckable?'>livecheckable?</span>
@@ -1477,25 +1541,25 @@ for doing so, else it returns false.</p>
       <pre class="lines">
 
 
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185</pre>
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/livecheck.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status_hash'>status_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_status_str'>status_str</span><span class='comma'>,</span> <span class='id identifier rubyid_messages'>messages</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_status_hash'>status_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
