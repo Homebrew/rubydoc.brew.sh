@@ -348,7 +348,7 @@ name without leading <code>homebrew-</code>.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-class_method" title="each (class method)">.<strong>each</strong>  &#x21d2; Object </a>
+      <a href="#each-class_method" title="each (class method)">.<strong>each</strong>(&amp;block)  &#x21d2; Object </a>
     
 
     
@@ -1612,7 +1612,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <div class="method_details ">
   <h3 class="signature " id="each-class_method">
   
-    .<strong>each</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>each</strong>(&amp;block)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1639,14 +1639,14 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/tap.rb', line 555</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_to_enum'>to_enum</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
 
   <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_user'>user</span><span class='op'>|</span>
     <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_repo'>repo</span><span class='op'>|</span>
-      <span class='kw'>yield</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
