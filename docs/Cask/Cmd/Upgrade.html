@@ -213,7 +213,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#upgrade_casks-class_method" title="upgrade_casks (class method)">.<strong>upgrade_casks</strong>(*casks, force: false, greedy: false, dry_run: false, skip_cask_deps: false, verbose: false, binaries: nil, quarantine: nil, require_sha: nil)  &#x21d2; Object </a>
+      <a href="#upgrade_casks-class_method" title="upgrade_casks (class method)">.<strong>upgrade_casks</strong>(*casks, args:, force: false, greedy: false, dry_run: false, skip_cask_deps: false, verbose: false, binaries: nil, quarantine: nil, require_sha: nil)  &#x21d2; Object </a>
     
 
     
@@ -437,8 +437,6 @@
       <pre class="lines">
 
 
-102
-103
 104
 105
 106
@@ -503,10 +501,12 @@
 165
 166
 167
-168</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/upgrade.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/upgrade.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_upgrade_cask'>upgrade_cask</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_old_cask'>old_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_new_cask'>new_cask</span><span class='comma'>,</span>
@@ -527,7 +527,7 @@
   <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span> <span class='op'>=</span>
     <span class='const'><span class='object_link'><a href="../Installer.html" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Installer.html#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_old_cask'>old_cask</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_old_options'>old_options</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_new_cask'>new_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_global'><span class='object_link'><a href="../Config.html#global-class_method" title="Cask::Config.global (method)">global</a></span></span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_old_config'>old_config</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new_cask'>new_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask'>new_cask</span><span class='period'>.</span><span class='id identifier rubyid_default_config'>default_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_old_config'>old_config</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_new_options'>new_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>binaries:</span>       <span class='id identifier rubyid_binaries'>binaries</span><span class='comma'>,</span>
@@ -583,7 +583,7 @@
       <div class="method_details ">
   <h3 class="signature " id="upgrade_casks-class_method">
   
-    .<strong>upgrade_casks</strong>(*casks, force: false, greedy: false, dry_run: false, skip_cask_deps: false, verbose: false, binaries: nil, quarantine: nil, require_sha: nil)  &#x21d2; <tt>Object</tt> 
+    .<strong>upgrade_casks</strong>(*casks, args:, force: false, greedy: false, dry_run: false, skip_cask_deps: false, verbose: false, binaries: nil, quarantine: nil, require_sha: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -622,7 +622,6 @@
       <pre class="lines">
 
 
-44
 45
 46
 47
@@ -678,13 +677,16 @@
 97
 98
 99
-100</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/upgrade.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/upgrade.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span><span class='lparen'>(</span>
   <span class='op'>*</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span>
+  <span class='label'>args:</span><span class='comma'>,</span>
   <span class='label'>force:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>greedy:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>dry_run:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -698,7 +700,7 @@
   <span class='id identifier rubyid_quarantine'>quarantine</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='id identifier rubyid_outdated_casks'>outdated_casks</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='const'><span class='object_link'><a href="../Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="../Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='lparen'>(</span><span class='label'>config:</span> <span class='const'><span class='object_link'><a href="../Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_args'><span class='object_link'><a href="../Config.html#from_args-class_method" title="Cask::Config.from_args (method)">from_args</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
       <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span><span class='lparen'>(</span><span class='label'>greedy:</span> <span class='id identifier rubyid_greedy'>greedy</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
@@ -793,7 +795,8 @@
 39
 40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/cmd/upgrade.rb', line 29</span>
@@ -810,6 +813,7 @@
     <span class='label'>require_sha:</span>    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_require_sha?'>require_sha?</span><span class='comma'>,</span>
     <span class='label'>skip_cask_deps:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_skip_cask_deps?'>skip_cask_deps?</span><span class='comma'>,</span>
     <span class='label'>verbose:</span>        <span class='id identifier rubyid_verbose'>verbose</span><span class='comma'>,</span>
+    <span class='label'>args:</span>           <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span>
   <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
