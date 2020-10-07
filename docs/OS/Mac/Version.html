@@ -232,7 +232,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(*args)  &#x21d2; Version </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(value)  &#x21d2; Version </a>
     
 
     
@@ -346,7 +346,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(*args)  &#x21d2; <tt><span class='object_link'><a href="" title="OS::Mac::Version (class)">Version</a></span></tt> 
+    #<strong>initialize</strong>(value)  &#x21d2; <tt><span class='object_link'><a href="" title="OS::Mac::Version (class)">Version</a></span></tt> 
   
 
   
@@ -365,6 +365,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../MacOSVersionError.html" title="MacOSVersionError (class)">MacOSVersionError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -375,13 +388,19 @@
 27
 28
 29
-30</pre>
+30
+31
+32
+33</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='kw'>super</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../MacOSVersionError.html" title="MacOSVersionError (class)">MacOSVersionError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>unless</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A1\d+(?:\.\d+){0,2}\Z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
+
   <span class='ivar'>@comparison_cache</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -477,20 +496,20 @@
       <pre class="lines">
 
 
-32
-33
-34
 35
 36
-37</pre>
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='ivar'>@comparison_cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#SYMBOLS-constant" title="OS::Mac::Version::SYMBOLS (constant)">SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span>
-    <span class='ivar'>@comparison_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_other'>other</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="OS::Mac::Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="OS::Mac::Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='ivar'>@comparison_cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_other'>other</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -527,12 +546,12 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pretty_name'>pretty_name</span>
   <span class='id identifier rubyid_to_sym'>to_sym</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:capitalize</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -588,16 +607,16 @@
       <pre class="lines">
 
 
-48
-49
-50
 51
 52
 53
-54</pre>
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_nehalem_cpu?'>requires_nehalem_cpu?</span>
   <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_intel?'><span class='object_link'><a href="../../Hardware/CPU.html#intel%3F-class_method" title="Hardware::CPU.intel? (method)">intel?</a></span></span>
@@ -640,12 +659,12 @@
       <pre class="lines">
 
 
-39
-40
-41</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/version.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='const'><span class='object_link'><a href="#SYMBOLS-constant" title="OS::Mac::Version::SYMBOLS (constant)">SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_invert'>invert</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@version</span><span class='comma'>,</span> <span class='symbol'>:dunno</span><span class='rparen'>)</span>
