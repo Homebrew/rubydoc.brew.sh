@@ -14308,7 +14308,6 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-29
 30
 31
 32
@@ -14342,10 +14341,11 @@ frozen_string_literal: true</p>
 60
 61
 62
-63</pre>
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/dispatch-build-bottle.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/dispatch-build-bottle.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dispatch_build_bottle'>dispatch_build_bottle</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_dispatch_build_bottle_args'>dispatch_build_bottle_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -14402,7 +14402,6 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-9
 10
 11
 12
@@ -14420,10 +14419,11 @@ frozen_string_literal: true</p>
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/dispatch-build-bottle.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/dispatch-build-bottle.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dispatch_build_bottle_args'>dispatch_build_bottle_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
@@ -15829,12 +15829,6 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-141
-142
-143
-144
-145
-146
 147
 148
 149
@@ -15856,10 +15850,16 @@ frozen_string_literal: true</p>
 165
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filtered_list'>filtered_list</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
@@ -19898,7 +19898,13 @@ frozen_string_literal: true</p>
 94
 95
 96
-97</pre>
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 58</span>
@@ -19935,7 +19941,13 @@ frozen_string_literal: true</p>
       <span class='id identifier rubyid_ls_args'>ls_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-r</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_r?'>r?</span>
       <span class='id identifier rubyid_ls_args'>ls_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-t</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_t?'>t?</span>
 
-      <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_ls_args'>ls_args</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span>
+      <span class='kw'>if</span> <span class='op'>!</span><span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+        <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew list` to only list formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew list --formula`</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_ls_args'>ls_args</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_ls_args'>ls_args</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span>
+        <span class='id identifier rubyid_list_casks'>list_casks</span><span class='lparen'>(</span><span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span> <span class='op'>||</span> <span class='op'>!</span><span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
     <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>find</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>-not</span><span class='words_sep'> </span><span class='tstring_content'>-type</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>-print</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='kw'>true</span>
@@ -20037,9 +20049,9 @@ frozen_string_literal: true</p>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show the versions of pinned formulae, or only the specified (pinned) </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formulae if &lt;formula&gt; are provided. See also `pin`, `unpin`.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>List only formulae.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>List only formulae. `This is the default action on non TTY.`</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>List only casks.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>List only casks, or &lt;cask&gt; if provided.</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># passed through to ls
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Force output to be one entry per line. </span><span class='tstring_end'>&quot;</span></span> \
@@ -20077,18 +20089,18 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-170
-171
-172
-173
-174
-175
 176
 177
-178</pre>
+178
+179
+180
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_casks'>list_casks</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/List.html" title="Cask::Cmd::List (class)">List</a></span></span><span class='period'>.</span><span class='id identifier rubyid_list_casks'><span class='object_link'><a href="Cask/Cmd/List.html#list_casks-class_method" title="Cask::Cmd::List.list_casks (method)">list_casks</a></span></span><span class='lparen'>(</span>
@@ -20119,12 +20131,6 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-121
-122
-123
-124
-125
-126
 127
 128
 129
@@ -20137,10 +20143,16 @@ frozen_string_literal: true</p>
 136
 137
 138
-139</pre>
+139
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_unbrewed'>list_unbrewed</span>
   <span class='id identifier rubyid_dirs'>dirs</span>  <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span>
