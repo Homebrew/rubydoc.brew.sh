@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Superenv.html" title="Superenv (module)">Superenv</a></span></dd>
+    <dd><span class='object_link'><a href="Stdenv.html" title="Stdenv (module)">Stdenv</a></span>, <span class='object_link'><a href="Superenv.html" title="Superenv (module)">Superenv</a></span></dd>
   </dl>
   
 
@@ -92,26 +92,14 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Homebrew extends Ruby’s <code>ENV</code> to make our code more readable.
-Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (module)">SharedEnvExtension</a></span> and either <span class='object_link'><a href="Superenv.html" title="Superenv (module)">Superenv</a></span> or
-<span class='object_link'>Stdenv</span> (depending on the build mode).</p>
+    <p>typed: true
+frozen_string_literal: true</p>
 
 
   </div>
 </div>
 <div class="tags">
   
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="Superenv.html" title="Superenv (module)">Superenv</a></span></li>
-    
-      <li><span class='object_link'>Stdenv</span></li>
-    
-      <li><a href="https://www.rubydoc.info/stdlib/Env" target="_parent" title="Ruby&#39;s ENV API">Ruby's ENV API</a></li>
-    
-  </ul>
 
 </div>
 
@@ -733,7 +721,6 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-66
 67
 68
 69
@@ -743,10 +730,11 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
 73
 74
 75
-76</pre>
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -779,12 +767,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-90
 91
-92</pre>
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_path'>append_path</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_append'><span class='object_link'><a href="PATH.html#append-instance_method" title="PATH#append (method)">append</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
@@ -809,12 +797,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-62
 63
-64</pre>
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_to_cccfg'>append_to_cccfg</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_CCCFG</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -839,12 +827,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_to_cflags'>append_to_cflags</span><span class='lparen'>(</span><span class='id identifier rubyid_newflags'>newflags</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='const'>CC_FLAG_VARS</span><span class='comma'>,</span> <span class='id identifier rubyid_newflags'>newflags</span><span class='rparen'>)</span>
@@ -869,12 +857,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cc'>cc</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CC</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -899,12 +887,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-132
 133
-134</pre>
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cflags'>cflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -957,7 +945,6 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-167
 168
 169
 170
@@ -978,10 +965,11 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
 185
 186
 187
-188</pre>
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compiler'>compiler</span>
   <span class='ivar'>@compiler</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_cc'>cc</span> <span class='op'>=</span> <span class='ivar'>@cc</span><span class='rparen'>)</span>
@@ -1002,7 +990,7 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
   <span class='kw'>elsif</span> <span class='ivar'>@formula</span>
     <span class='const'><span class='object_link'><a href="CompilerSelector.html" title="CompilerSelector (class)">CompilerSelector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select_for'><span class='object_link'><a href="CompilerSelector.html#select_for-class_method" title="CompilerSelector.select_for (method)">select_for</a></span></span><span class='lparen'>(</span><span class='ivar'>@formula</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_default_compiler'>default_compiler</span>
+    <span class='const'><span class='object_link'><a href="DevelopmentTools.html" title="DevelopmentTools (class)">DevelopmentTools</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_compiler'><span class='object_link'><a href="DevelopmentTools.html#default_compiler-class_method" title="DevelopmentTools.default_compiler (method)">default_compiler</a></span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1025,12 +1013,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cppflags'>cppflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CPPFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1055,12 +1043,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-128
 129
-130</pre>
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 129</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cxx'>cxx</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CXX</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1085,12 +1073,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-136
 137
-138</pre>
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cxxflags'>cxxflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CXXFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1115,12 +1103,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-148
 149
-150</pre>
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fc'>fc</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FC</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1145,12 +1133,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-156
 157
-158</pre>
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fcflags'>fcflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FCFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1175,12 +1163,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-152
 153
-154</pre>
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fflags'>fflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>FFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1205,7 +1193,6 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-229
 230
 231
 232
@@ -1234,10 +1221,11 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
 255
 256
 257
-258</pre>
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fortran'>fortran</span>
   <span class='comment'># Ignore repeated calls to this function as it will misleadingly warn about
@@ -1289,12 +1277,12 @@ Implemented in <span class='object_link'><a href="" title="SharedEnvExtension (m
       <pre class="lines">
 
 
-144
 145
-146</pre>
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ldflags'>ldflags</span>
   <span class='kw'>self</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LDFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1337,12 +1325,12 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-206
 207
-208</pre>
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ncurses_define'>ncurses_define</span>
   <span class='id identifier rubyid_append'>append</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CPPFLAGS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-DNCURSES_OPAQUE=0</span><span class='tstring_end'>&quot;</span></span>
@@ -1390,17 +1378,17 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-4
 5
 6
 7
 8
 9
 10
-11</pre>
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/extend/ENV/shared.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/extend/ENV/shared.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_weak_imports_support?'>no_weak_imports_support?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_compiler'>compiler</span> <span class='op'>==</span> <span class='symbol'>:clang</span>
@@ -1430,10 +1418,10 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-300</pre>
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_permit_arch_flags'>permit_arch_flags</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -1466,10 +1454,10 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-303</pre>
+304</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 303</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 304</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_permit_weak_imports'>permit_weak_imports</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -1492,7 +1480,6 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-78
 79
 80
 81
@@ -1502,10 +1489,11 @@ Currently only used by aalib in core.</p>
 85
 86
 87
-88</pre>
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_separator'>separator</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1538,14 +1526,14 @@ Currently only used by aalib in core.</p>
       <pre class="lines">
 
 
-107
 108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_create_path'>prepend_create_path</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span>
@@ -1588,14 +1576,14 @@ don’t accidentally override superenv shims or formulae’s <code>bin</code> di
       <pre class="lines">
 
 
-101
 102
 103
 104
-105</pre>
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_path'>prepend_path</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>/usr/bin</span><span class='words_sep'> </span><span class='tstring_content'>/bin</span><span class='words_sep'> </span><span class='tstring_content'>/usr/sbin</span><span class='words_sep'> </span><span class='tstring_content'>/sbin</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1622,7 +1610,6 @@ don’t accidentally override superenv shims or formulae’s <code>bin</code> di
       <pre class="lines">
 
 
-113
 114
 115
 116
@@ -1631,10 +1618,11 @@ don’t accidentally override superenv shims or formulae’s <code>bin</code> di
 119
 120
 121
-122</pre>
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1666,17 +1654,17 @@ don’t accidentally override superenv shims or formulae’s <code>bin</code> di
       <pre class="lines">
 
 
-45
 46
 47
 48
 49
 50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_cc_etc'>remove_cc_etc</span>
   <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>CC</span><span class='words_sep'> </span><span class='tstring_content'>CXX</span><span class='words_sep'> </span><span class='tstring_content'>OBJC</span><span class='words_sep'> </span><span class='tstring_content'>OBJCXX</span><span class='words_sep'> </span><span class='tstring_content'>LD</span><span class='words_sep'> </span><span class='tstring_content'>CPP</span><span class='words_sep'> </span><span class='tstring_content'>CFLAGS</span><span class='words_sep'> </span><span class='tstring_content'>CXXFLAGS</span><span class='words_sep'> </span><span class='tstring_content'>OBJCFLAGS</span><span class='words_sep'> </span><span class='tstring_content'>OBJCXXFLAGS</span><span class='words_sep'> </span><span class='tstring_content'>LDFLAGS</span><span class='words_sep'> </span><span class='tstring_content'>CPPFLAGS</span><span class='tstring_end'>]</span></span>
@@ -1706,12 +1694,12 @@ don’t accidentally override superenv shims or formulae’s <code>bin</code> di
       <pre class="lines">
 
 
-58
 59
-60</pre>
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/shared.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_from_cflags'>remove_from_cflags</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_remove'>remove</span> <span class='const'>CC_FLAG_VARS</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span>

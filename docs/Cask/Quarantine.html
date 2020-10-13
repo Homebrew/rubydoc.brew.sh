@@ -442,14 +442,14 @@
       <pre class="lines">
 
 
-55
 56
 57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_available?'>available?</span>
   <span class='ivar'>@status</span> <span class='op'>||=</span> <span class='id identifier rubyid_check_quarantine_support'>check_quarantine_support</span>
@@ -490,7 +490,6 @@
       <pre class="lines">
 
 
-109
 110
 111
 112
@@ -514,10 +513,11 @@
 130
 131
 132
-133</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask!'>cask!</span><span class='lparen'>(</span><span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>download_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_download_path'>download_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -526,7 +526,7 @@
 
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Quarantining </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_download_path'>download_path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='id identifier rubyid_swift'>swift</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_swift'>swift</span><span class='comma'>,</span>
                                <span class='label'>args:</span>         <span class='lbracket'>[</span>
                                  <span class='const'><span class='object_link'><a href="#QUARANTINE_SCRIPT-constant" title="Cask::Quarantine::QUARANTINE_SCRIPT (constant)">QUARANTINE_SCRIPT</a></span></span><span class='comma'>,</span>
                                  <span class='id identifier rubyid_download_path'>download_path</span><span class='comma'>,</span>
@@ -578,7 +578,6 @@
       <pre class="lines">
 
 
-27
 28
 29
 30
@@ -604,22 +603,23 @@
 50
 51
 52
-53</pre>
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_quarantine_support'>check_quarantine_support</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking quarantine support</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
     <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>There&#39;s not a working version of xattr.</span><span class='tstring_end'>&quot;</span></span>
     <span class='symbol'>:xattr_broken</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_swift'>swift</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Swift is not available on this system.</span><span class='tstring_end'>&quot;</span></span>
     <span class='symbol'>:no_swift</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_api_check'>api_check</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='id identifier rubyid_swift'>swift</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_api_check'>api_check</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_swift'>swift</span><span class='comma'>,</span>
                                <span class='label'>args:</span>         <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#QUARANTINE_SCRIPT-constant" title="Cask::Quarantine::QUARANTINE_SCRIPT (constant)">QUARANTINE_SCRIPT</a></span></span><span class='rbracket'>]</span><span class='comma'>,</span>
                                <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
 
@@ -670,7 +670,6 @@
       <pre class="lines">
 
 
-61
 62
 63
 64
@@ -680,10 +679,11 @@
 68
 69
 70
-71</pre>
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect'>detect</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -743,7 +743,6 @@
       <pre class="lines">
 
 
-135
 136
 137
 138
@@ -779,10 +778,11 @@
 168
 169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_propagate'>propagate</span><span class='lparen'>(</span><span class='label'>from:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_from'>from</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_to'>to</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -795,7 +795,7 @@
 
   <span class='id identifier rubyid_resolved_paths'>resolved_paths</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**/*</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>File</span><span class='op'>::</span><span class='const'>FNM_DOTMATCH</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:symlink?</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_system_command!'>system_command!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                   <span class='label'>args:</span>  <span class='lbracket'>[</span>
                     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -805,7 +805,7 @@
                   <span class='rbracket'>]</span><span class='comma'>,</span>
                   <span class='label'>input:</span> <span class='id identifier rubyid_resolved_paths'>resolved_paths</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                                <span class='label'>args:</span>         <span class='lbracket'>[</span>
                                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -868,7 +868,6 @@
       <pre class="lines">
 
 
-91
 92
 93
 94
@@ -884,17 +883,18 @@
 104
 105
 106
-107</pre>
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_release!'>release!</span><span class='lparen'>(</span><span class='label'>download_path:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_detect'>detect</span><span class='lparen'>(</span><span class='id identifier rubyid_download_path'>download_path</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Releasing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_download_path'>download_path</span><span class='embexpr_end'>}</span><span class='tstring_content'> from quarantine</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_quarantiner'>quarantiner</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span>
                                <span class='label'>args:</span>         <span class='lbracket'>[</span>
                                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
                                  <span class='const'><span class='object_link'><a href="#QUARANTINE_ATTRIBUTE-constant" title="Cask::Quarantine::QUARANTINE_ATTRIBUTE (constant)">QUARANTINE_ATTRIBUTE</a></span></span><span class='comma'>,</span>
@@ -940,17 +940,17 @@
       <pre class="lines">
 
 
-73
 74
 75
 76
-77</pre>
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xattr'>xattr</span><span class='comma'>,</span>
                  <span class='label'>args:</span>         <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-p</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#QUARANTINE_ATTRIBUTE-constant" title="Cask::Quarantine::QUARANTINE_ATTRIBUTE (constant)">QUARANTINE_ATTRIBUTE</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span><span class='comma'>,</span>
                  <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_rstrip'>rstrip</span>
 <span class='kw'>end</span></pre>
@@ -988,15 +988,15 @@
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_swift'>swift</span>
-  <span class='ivar'>@swift</span> <span class='op'>||=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_locate'>locate</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>swift</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@swift</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../DevelopmentTools.html" title="DevelopmentTools (class)">DevelopmentTools</a></span></span><span class='period'>.</span><span class='id identifier rubyid_locate'><span class='object_link'><a href="../DevelopmentTools.html#locate-class_method" title="DevelopmentTools.locate (method)">locate</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>swift</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1032,7 +1032,6 @@
       <pre class="lines">
 
 
-79
 80
 81
 82
@@ -1042,10 +1041,11 @@
 86
 87
 88
-89</pre>
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toggle_no_translocation_bit'>toggle_no_translocation_bit</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_attribute'>attribute</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1092,15 +1092,15 @@
       <pre class="lines">
 
 
-22
 23
-24</pre>
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cask/quarantine.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xattr'>xattr</span>
-  <span class='ivar'>@xattr</span> <span class='op'>||=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_locate'>locate</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xattr</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@xattr</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../DevelopmentTools.html" title="DevelopmentTools (class)">DevelopmentTools</a></span></span><span class='period'>.</span><span class='id identifier rubyid_locate'><span class='object_link'><a href="../DevelopmentTools.html#locate-class_method" title="DevelopmentTools.locate (method)">locate</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xattr</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
