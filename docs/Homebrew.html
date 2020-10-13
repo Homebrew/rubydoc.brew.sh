@@ -22246,10 +22246,6 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-34
-35
-36
-37
 38
 39
 40
@@ -22279,15 +22275,20 @@ frozen_string_literal: true</p>
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/pr-automerge.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/pr-automerge.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_automerge'>pr_automerge</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_automerge_args'>pr_automerge_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>do not merge</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>new formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>do not merge</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>new formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>automerge-skip</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>is:pr is:open repo:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -22310,12 +22311,13 @@ frozen_string_literal: true</p>
     <span class='id identifier rubyid_pr_urls'>pr_urls</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_pr'>pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
+  <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pr-publish</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tap=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span>
+  <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_publish?'>publish?</span>
-    <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pr-publish</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tap=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_publish_args'>publish_args</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_pr_urls'>pr_urls</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now run:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  brew pr-publish \\\n    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr_urls'>pr_urls</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> \\\n    </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Now run:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  brew </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_publish_args'>publish_args</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'> \\\n    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr_urls'>pr_urls</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> \\\n    </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -22360,7 +22362,11 @@ frozen_string_literal: true</p>
 29
 30
 31
-32</pre>
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/pr-automerge.rb', line 10</span>
@@ -22377,11 +22383,15 @@ frozen_string_literal: true</p>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--with-label=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pull requests must have this label.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_comma_array'>comma_array</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--without-labels=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pull requests must not have these labels (default: `do not merge`, `new formula`).</span><span class='tstring_end'>&quot;</span></span>
+                <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pull requests must not have these labels </span><span class='tstring_end'>&quot;</span></span>\
+                             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(default: `do not merge`, `new formula`, `automerge-skip`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--without-approval</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Pull requests do not require approval to be merged.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--publish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Run `brew pr-publish` on matching pull requests.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Instruct `brew pr-publish` to automatically reformat and reword commits </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in the pull request to our preferred format.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--ignore-failures</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Include pull requests that have failing status checks.</span><span class='tstring_end'>&quot;</span></span>
 
