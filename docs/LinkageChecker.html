@@ -62,7 +62,7 @@
       <div id="content"><h1>Class: LinkageChecker
   
   
-  
+  <span class="private note title">Private</span>
 </h1>
 <div class="box_info">
   
@@ -94,8 +94,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>brew/Library/Homebrew/linkage_checker.rb<span class="defines">,<br />
-  brew/Library/Homebrew/extend/os/linux/linkage_checker.rb</span>
+    <dd>brew/Library/Homebrew/extend/os/linux/linkage_checker.rb<span class="defines">,<br />
+  brew/Library/Homebrew/linkage_checker.rb</span>
 </dd>
   </dl>
   
@@ -103,8 +103,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>typed: true
-frozen_string_literal: true</p>
+    <p class="note private">
+  <strong>This class is part of a private API.</strong>
+  You should avoid using this class if possible, as it may be removed or be changed in the future.
+</p>
+<p>Check for broken/missing linkage in a formula’s keg.</p>
 
 
   </div>
@@ -315,29 +318,6 @@ frozen_string_literal: true</p>
   <span class="summary_signature">
     
       <a href="#broken_library_linkage%3F-instance_method" title="#broken_library_linkage? (instance method)">#<strong>broken_library_linkage?</strong>  &#x21d2; Boolean </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#check_dylibs-instance_method" title="#check_dylibs (instance method)">#<strong>check_dylibs</strong>(rebuild_cache:)  &#x21d2; Object </a>
     
 
     
@@ -892,198 +872,6 @@ frozen_string_literal: true</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span>
   <span class='id identifier rubyid_issues'>issues</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='ivar'>@broken_deps</span><span class='comma'>,</span> <span class='ivar'>@unwanted_system_dylibs</span><span class='comma'>,</span> <span class='ivar'>@version_conflict_deps</span><span class='rbracket'>]</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_issues'>issues</span><span class='comma'>,</span> <span class='id identifier rubyid_unexpected_broken_dylibs'>unexpected_broken_dylibs</span><span class='comma'>,</span> <span class='id identifier rubyid_unexpected_present_dylibs'>unexpected_present_dylibs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:present?</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="check_dylibs-instance_method">
-  
-    #<strong>check_dylibs</strong>(rebuild_cache:)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/linkage_checker.rb', line 133</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_check_dylibs'>check_dylibs</span><span class='lparen'>(</span><span class='label'>rebuild_cache:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span> <span class='op'>=</span> <span class='kw'>nil</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_rebuild_cache'>rebuild_cache</span>
-    <span class='id identifier rubyid_store'>store</span><span class='op'>&amp;.</span><span class='id identifier rubyid_delete!'>delete!</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span> <span class='op'>=</span> <span class='id identifier rubyid_store'>store</span><span class='op'>&amp;.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:keg_files_dylibs</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_keg_files_dylibs_was_empty'>keg_files_dylibs_was_empty</span> <span class='op'>=</span> <span class='kw'>false</span>
-  <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='id identifier rubyid_keg_files_dylibs_was_empty'>keg_files_dylibs_was_empty</span> <span class='op'>=</span> <span class='kw'>true</span>
-    <span class='ivar'>@keg</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
-      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>||</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-      <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_binary_executable?'>binary_executable?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_bundle?'>mach_o_bundle?</span>
-
-      <span class='comment'># weakly loaded dylibs may not actually exist on disk, so skip them
-</span>      <span class='comment'># when checking for broken linkage
-</span>      <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span><span class='lbracket'>[</span><span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span> <span class='op'>=</span>
-        <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamically_linked_libraries'>dynamically_linked_libraries</span><span class='lparen'>(</span><span class='label'>except:</span> <span class='symbol'>:LC_LOAD_WEAK_DYLIB</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_checked_dylibs'>checked_dylibs</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-
-  <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_dylibs'>dylibs</span><span class='op'>|</span>
-    <span class='id identifier rubyid_dylibs'>dylibs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dylib'>dylib</span><span class='op'>|</span>
-      <span class='ivar'>@reverse_links</span><span class='lbracket'>[</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_file'>file</span>
-
-      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_checked_dylibs'>checked_dylibs</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_dylib'>dylib</span>
-
-      <span class='id identifier rubyid_checked_dylibs'>checked_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-
-      <span class='kw'>if</span> <span class='id identifier rubyid_dylib'>dylib</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span>
-        <span class='ivar'>@variable_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-        <span class='kw'>next</span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>begin</span>
-        <span class='id identifier rubyid_owner'>owner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for'><span class='object_link'><a href="Keg.html#for-class_method" title="Keg.for (method)">for</a></span></span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span>
-      <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="NotAKegError.html" title="NotAKegError (class)">NotAKegError</a></span></span>
-        <span class='ivar'>@system_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-      <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span>
-        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_harmless_broken_link?'>harmless_broken_link?</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span>
-
-        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span> <span class='op'>=</span> <span class='id identifier rubyid_dylib_to_dep'>dylib_to_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span><span class='rparen'>)</span>
-          <span class='ivar'>@broken_deps</span><span class='lbracket'>[</span><span class='id identifier rubyid_dep'>dep</span><span class='rbracket'>]</span> <span class='op'>|=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rbracket'>]</span>
-        <span class='kw'>elsif</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:big_sur</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dylib_found_via_dlopen'>dylib_found_via_dlopen</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib'>dylib</span><span class='rparen'>)</span>
-          <span class='comment'># If we cannot associate the dylib with a dependency, then it may be a system library.
-</span>          <span class='comment'># In macOS Big Sur and later, system libraries do not exist on-disk and instead exist in a cache.
-</span>          <span class='comment'># If dlopen finds the dylib, then the linkage is not broken.
-</span>          <span class='ivar'>@system_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-        <span class='kw'>else</span>
-          <span class='ivar'>@broken_dylibs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-        <span class='kw'>end</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_owner'>owner</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span>
-        <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_core_tap?'>core_tap?</span>
-          <span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
-        <span class='kw'>else</span>
-          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-        <span class='kw'>end</span>
-        <span class='ivar'>@brewed_dylibs</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dylib'>dylib</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span>
-    <span class='ivar'>@indirect_deps</span><span class='comma'>,</span> <span class='ivar'>@undeclared_deps</span><span class='comma'>,</span> <span class='ivar'>@unnecessary_deps</span><span class='comma'>,</span>
-      <span class='ivar'>@version_conflict_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_check_formula_deps'>check_formula_deps</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_keg_files_dylibs_was_empty'>keg_files_dylibs_was_empty</span>
-
-  <span class='id identifier rubyid_store'>store</span><span class='op'>&amp;.</span><span class='id identifier rubyid_update!'>update!</span><span class='lparen'>(</span><span class='label'>keg_files_dylibs:</span> <span class='id identifier rubyid_keg_files_dylibs'>keg_files_dylibs</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

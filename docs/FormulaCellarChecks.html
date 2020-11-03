@@ -62,7 +62,7 @@
       <div id="content"><h1>Module: FormulaCellarChecks
   
   
-  
+  <span class="private note title">Private</span>
 </h1>
 <div class="box_info">
   
@@ -88,8 +88,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>brew/Library/Homebrew/formula_cellar_checks.rb<span class="defines">,<br />
-  brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb,<br /> brew/Library/Homebrew/extend/os/linux/formula_cellar_checks.rb</span>
+    <dd>brew/Library/Homebrew/extend/os/linux/formula_cellar_checks.rb<span class="defines">,<br />
+  brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb,<br /> brew/Library/Homebrew/formula_cellar_checks.rb</span>
 </dd>
   </dl>
   
@@ -97,8 +97,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>typed: strict
-frozen_string_literal: true</p>
+    <p class="note private">
+  <strong>This module is part of a private API.</strong>
+  You should avoid using this module if possible, as it may be removed or be changed in the future.
+</p>
+<p>Checks to perform on a formula’s cellar.</p>
 
 
   </div>
@@ -157,6 +160,8 @@ frozen_string_literal: true</p>
       <a href="#audit_installed-instance_method" title="#audit_installed (instance method)">#<strong>audit_installed</strong>  &#x21d2; Object </a>
     
 
+    
+      (also: #generic_audit_installed)
     
   </span>
   
@@ -349,7 +354,7 @@ frozen_string_literal: true</p>
   
   
   
-  <span class="private note title">private</span>
+  
 
   
     <span class="summary_desc"><div class='inline'>
@@ -441,7 +446,7 @@ frozen_string_literal: true</p>
   
   
   
-  <span class="private note title">private</span>
+  
 
   
     <span class="summary_desc"><div class='inline'>
@@ -487,7 +492,7 @@ frozen_string_literal: true</p>
   
   
   
-  <span class="private note title">private</span>
+  
 
   
     <span class="summary_desc"><div class='inline'>
@@ -556,7 +561,7 @@ frozen_string_literal: true</p>
   
   
   
-  <span class="private note title">private</span>
+  
 
   
     <span class="summary_desc"><div class='inline'>
@@ -591,55 +596,11 @@ frozen_string_literal: true</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#generic_audit_installed-instance_method" title="#generic_audit_installed (instance method)">#<strong>generic_audit_installed</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#generic_valid_library_extension%3F-instance_method" title="#generic_valid_library_extension? (instance method)">#<strong>generic_valid_library_extension?</strong>  &#x21d2; Boolean </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#valid_library_extension%3F-instance_method" title="#valid_library_extension? (instance method)">#<strong>valid_library_extension?</strong>(filename)  &#x21d2; Boolean </a>
     
 
+    
+      (also: #generic_valid_library_extension?)
     
   </span>
   
@@ -674,6 +635,10 @@ frozen_string_literal: true</p>
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='generic_audit_installed-instance_method'>generic_audit_installed</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -696,47 +661,23 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298</pre>
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
-  <span class='ivar'>@new_formula</span> <span class='op'>||=</span> <span class='kw'>false</span>
-
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_manpages'>check_manpages</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_infopages'>check_infopages</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_jars'>check_jars</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_libraries'>check_non_libraries</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_executables'>check_non_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bin'>bin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_generic_executables'>check_generic_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bin'>bin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_executables'>check_non_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_sbin'>sbin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_generic_executables'>check_generic_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_sbin'>sbin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_easy_install_pth'>check_easy_install_pth</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_elisp_dirname'>check_elisp_dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_elisp_root'>check_elisp_root</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_packages'>check_python_packages</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_shim_references'>check_shim_references</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_plist'>check_plist</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_plist'>plist</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_symlinks'>check_python_symlinks</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_generic_audit_installed'>generic_audit_installed</span>
+  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_shadowed_headers'>check_shadowed_headers</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_openssl_links'>check_openssl_links</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_framework_links'>check_python_framework_links</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_check_linkage'>check_linkage</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1234,21 +1175,7 @@ frozen_string_literal: true</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -1514,21 +1441,7 @@ frozen_string_literal: true</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -1694,21 +1607,7 @@ frozen_string_literal: true</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -1932,21 +1831,7 @@ frozen_string_literal: true</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -2084,145 +1969,16 @@ frozen_string_literal: true</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="generic_audit_installed-instance_method">
-  
-    #<strong>generic_audit_installed</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 299</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
-  <span class='ivar'>@new_formula</span> <span class='op'>||=</span> <span class='kw'>false</span>
-
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_manpages'>check_manpages</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_infopages'>check_infopages</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_jars'>check_jars</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_libraries'>check_non_libraries</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_executables'>check_non_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bin'>bin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_generic_executables'>check_generic_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bin'>bin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_non_executables'>check_non_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_sbin'>sbin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_generic_executables'>check_generic_executables</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_sbin'>sbin</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_easy_install_pth'>check_easy_install_pth</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_elisp_dirname'>check_elisp_dirname</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_elisp_root'>check_elisp_root</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_share'>share</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_packages'>check_python_packages</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_shim_references'>check_shim_references</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_plist'>check_plist</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_plist'>plist</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_symlinks'>check_python_symlinks</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span><span class='rparen'>)</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="generic_valid_library_extension?-instance_method">
-  
-    #<strong>generic_valid_library_extension?</strong>  &#x21d2; <tt>Boolean</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-71
-72
-73</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 71</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_valid_library_extension?'>valid_library_extension?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="#VALID_LIBRARY_EXTENSIONS-constant" title="FormulaCellarChecks::VALID_LIBRARY_EXTENSIONS (constant)">VALID_LIBRARY_EXTENSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="valid_library_extension?-instance_method">
   
     #<strong>valid_library_extension?</strong>(filename)  &#x21d2; <tt>Boolean</tt> 
   
 
   
+    <span class="aliases">Also known as:
+    <span class="names"><span id='generic_valid_library_extension?-instance_method'>generic_valid_library_extension?</span></span>
+    </span>
+  
 
   
 </h3><div class="docstring">
@@ -2258,15 +2014,17 @@ frozen_string_literal: true</p>
       <pre class="lines">
 
 
-68
-69
-70</pre>
+99
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_cellar_checks.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/formula_cellar_checks.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid_library_extension?'>valid_library_extension?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="#VALID_LIBRARY_EXTENSIONS-constant" title="FormulaCellarChecks::VALID_LIBRARY_EXTENSIONS (constant)">VALID_LIBRARY_EXTENSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span>
+  <span class='id identifier rubyid_macos_lib_extensions'>macos_lib_extensions</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>.dylib</span><span class='words_sep'> </span><span class='tstring_content'>.framework</span><span class='tstring_end'>]</span></span>
+  <span class='id identifier rubyid_generic_valid_library_extension?'>generic_valid_library_extension?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_macos_lib_extensions'>macos_lib_extensions</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
