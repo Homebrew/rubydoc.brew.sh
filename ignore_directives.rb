@@ -2,7 +2,7 @@
 class IgnoreDirectiveDocstringParser < YARD::DocstringParser
   def parse_content(content)
     return '' if !content || content.empty?
-    super(content.sub(/\Atyped:.*/m, ''))
+    super(content.sub(/(\A(typed|.*rubocop)|TODO):.*/m, ''))
   end
 end
 
