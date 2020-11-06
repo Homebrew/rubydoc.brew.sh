@@ -83,14 +83,35 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>brew/Library/Homebrew/extend/ENV/super.rb<span class="defines">,<br />
-  brew/Library/Homebrew/extend/os/mac/extend/ENV/super.rb,<br /> brew/Library/Homebrew/extend/os/linux/extend/ENV/super.rb</span>
+    <dd>brew/Library/Homebrew/extend/os/mac/extend/ENV/super.rb<span class="defines">,<br />
+  brew/Library/Homebrew/extend/os/linux/extend/ENV/super.rb,<br /> brew/Library/Homebrew/extend/ENV/super.rb</span>
 </dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <h3 id="why-superenv">Why <code>superenv</code>?</h3>
 
+<ol>
+  <li>Only specify the environment we need (NO LDFLAGS for cmake)</li>
+  <li>Only apply compiler specific options when we are calling that compiler</li>
+  <li>Force all incpaths and libpaths into the cc instantiation (less bugs)</li>
+  <li>Cater toolchain usage to specific Xcode versions</li>
+  <li>Remove flags that we don’t want or that will break builds</li>
+  <li>Simpler code</li>
+  <li>Simpler formula that <em>just work</em></li>
+  <li>Build-system agnostic configuration of the tool-chain</li>
+</ol>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -154,29 +175,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#determine_cccfg-instance_method" title="#determine_cccfg (instance method)">#<strong>determine_cccfg</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#determine_dynamic_linker_path-instance_method" title="#determine_dynamic_linker_path (instance method)">#<strong>determine_dynamic_linker_path</strong>  &#x21d2; Object </a>
     
 
@@ -201,167 +199,6 @@
   <span class="summary_signature">
     
       <a href="#determine_rpath_paths-instance_method" title="#determine_rpath_paths (instance method)">#<strong>determine_rpath_paths</strong>(formula)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_aclocal_paths-instance_method" title="#homebrew_extra_aclocal_paths (instance method)">#<strong>homebrew_extra_aclocal_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_cmake_frameworks_paths-instance_method" title="#homebrew_extra_cmake_frameworks_paths (instance method)">#<strong>homebrew_extra_cmake_frameworks_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_cmake_include_paths-instance_method" title="#homebrew_extra_cmake_include_paths (instance method)">#<strong>homebrew_extra_cmake_include_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_cmake_library_paths-instance_method" title="#homebrew_extra_cmake_library_paths (instance method)">#<strong>homebrew_extra_cmake_library_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_isystem_paths-instance_method" title="#homebrew_extra_isystem_paths (instance method)">#<strong>homebrew_extra_isystem_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_library_paths-instance_method" title="#homebrew_extra_library_paths (instance method)">#<strong>homebrew_extra_library_paths</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#homebrew_extra_paths-instance_method" title="#homebrew_extra_paths (instance method)">#<strong>homebrew_extra_paths</strong>  &#x21d2; Object </a>
     
 
     
@@ -753,36 +590,6 @@ When passed a block, MAKEFLAGS is removed only for the duration of the block and
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="determine_cccfg-instance_method">
-  
-    #<strong>determine_cccfg</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-227
-228
-229</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 227</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_determine_cccfg'>determine_cccfg</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="determine_dynamic_linker_path-instance_method">
   
     #<strong>determine_dynamic_linker_path</strong>  &#x21d2; <tt>Object</tt> 
@@ -850,216 +657,6 @@ When passed a block, MAKEFLAGS is removed only for the duration of the block and
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_run_time_deps'>run_time_deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_opt_lib'>opt_lib</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_existing'><span class='object_link'><a href="PATH.html#existing-instance_method" title="PATH#existing (method)">existing</a></span></span><span class='comma'>,</span>
   <span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_aclocal_paths-instance_method">
-  
-    #<strong>homebrew_extra_aclocal_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-141
-142
-143</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 141</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_aclocal_paths'>homebrew_extra_aclocal_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_cmake_frameworks_paths-instance_method">
-  
-    #<strong>homebrew_extra_cmake_frameworks_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-208
-209
-210</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 208</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_cmake_frameworks_paths'>homebrew_extra_cmake_frameworks_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_cmake_include_paths-instance_method">
-  
-    #<strong>homebrew_extra_cmake_include_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-192
-193
-194</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 192</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_cmake_include_paths'>homebrew_extra_cmake_include_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_cmake_library_paths-instance_method">
-  
-    #<strong>homebrew_extra_cmake_library_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-200
-201
-202</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 200</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_cmake_library_paths'>homebrew_extra_cmake_library_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_isystem_paths-instance_method">
-  
-    #<strong>homebrew_extra_isystem_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-153
-154
-155</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 153</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_isystem_paths'>homebrew_extra_isystem_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_library_paths-instance_method">
-  
-    #<strong>homebrew_extra_library_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-168
-169
-170</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 168</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_library_paths'>homebrew_extra_library_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="homebrew_extra_paths-instance_method">
-  
-    #<strong>homebrew_extra_paths</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-102
-103
-104</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 102</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_homebrew_extra_paths'>homebrew_extra_paths</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1355,12 +952,16 @@ When passed a block, MAKEFLAGS is removed only for the duration of the block and
       <pre class="lines">
 
 
-296</pre>
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/ENV/super.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/extend/ENV/super.rb', line 105</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_set_x11_env_if_installed'>set_x11_env_if_installed</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_set_x11_env_if_installed'>set_x11_env_if_installed</span>
+  <span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_x11'>x11</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>XQuartz</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
