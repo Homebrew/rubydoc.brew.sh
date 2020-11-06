@@ -105,7 +105,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>This cop audits <code>uses_from_macos</code> dependencies in formulae</p>
+    <p>This cop audits <code>uses_from_macos</code> dependencies in formulae.</p>
 
 
   </div>
@@ -125,9 +125,13 @@
         <dt id="PROVIDED_BY_MACOS_FORMULAE-constant" class="">PROVIDED_BY_MACOS_FORMULAE =
           <div class="docstring">
   <div class="discussion">
-    <p>Generate with:
-brew ruby -e ‘puts Formula.select {|f| f.keg_only_reason&amp;.provided_by_macos? }.map(&amp;:name).sort.join(“\n”)’
-Not done at runtime as its too slow and RuboCop doesn’t have access.</p>
+    <p>Generate with:</p>
+
+<p><code>
+brew ruby -e 'puts Formula.select {|f| f.keg_only_reason&amp;.provided_by_macos? }.map(&amp;:name).sort.join("\n")'
+</code></p>
+
+<p>Not done at runtime as it’s too slow and RuboCop doesn’t have access.</p>
 
 
   </div>
@@ -186,8 +190,8 @@ Not done at runtime as its too slow and RuboCop doesn’t have access.</p>
         <dt id="ALLOWED_USES_FROM_MACOS_DEPS-constant" class="">ALLOWED_USES_FROM_MACOS_DEPS =
           <div class="docstring">
   <div class="discussion">
-    <p>These formulae aren’t keg_only :provided_by_macos but are provided by
-macOS (or very similarly e.g. OpenSSL where system provides LibreSSL)</p>
+    <p>These formulae aren’t <code>keg_only :provided_by_macos</code> but are provided by
+macOS (or very similarly, e.g. OpenSSL where system provides LibreSSL).</p>
 
 
   </div>
@@ -314,10 +318,6 @@ macOS (or very similarly e.g. OpenSSL where system provides LibreSSL)</p>
       <pre class="lines">
 
 
-81
-82
-83
-84
 85
 86
 87
@@ -326,10 +326,14 @@ macOS (or very similarly e.g. OpenSSL where system provides LibreSSL)</p>
 90
 91
 92
-93</pre>
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/uses_from_macos.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/uses_from_macos.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:uses_from_macos</span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^&quot;(.+)&quot;</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='op'>|</span>

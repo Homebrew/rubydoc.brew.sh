@@ -101,12 +101,15 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>The <code>Bitbucket</code> strategy identifies versions of software at
+    <p>The <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::Bitbucket (class)">Bitbucket</a></span> strategy identifies versions of software at
 bitbucket.org by checking a repository’s available downloads.</p>
 
-<p>Bitbucket URLs generally take one of the following formats:
-* <code>https://bitbucket.org/example/example/get/1.2.3.tar.gz</code>
-* <code>https://bitbucket.org/example/example/downloads/example-1.2.3.tar.gz</code></p>
+<p>Bitbucket URLs generally take one of the following formats:</p>
+
+<ul>
+  <li><code>https://bitbucket.org/example/example/get/1.2.3.tar.gz</code></li>
+  <li><code>https://bitbucket.org/example/example/downloads/example-1.2.3.tar.gz</code></li>
+</ul>
 
 <p>The <code>/get/</code> archive files are simply automated snapshots of the files
 for a given tag. The <code>/downloads/</code> archive files are files that have
@@ -186,7 +189,7 @@ attributes.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Generates a URL and regex (if one isn’t provided) and passes them to the <code>PageMatch#find_versions</code> method to identify versions in the content.</p>
+    <span class="summary_desc"><div class='inline'><p>Generates a URL and regex (if one isn’t provided) and passes them to <span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">PageMatch.find_versions</a></span> to identify versions in the content.</p>
 </div></span>
   
 </li>
@@ -236,8 +239,7 @@ attributes.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Generates a URL and regex (if one isn’t provided) and passes them
-to the <code>PageMatch#find_versions</code> method to identify versions in the
-content.</p>
+to <span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">PageMatch.find_versions</a></span> to identify versions in the content.</p>
 
 
   </div>
@@ -300,8 +302,6 @@ content.</p>
       <pre class="lines">
 
 
-46
-47
 48
 49
 50
@@ -327,10 +327,12 @@ content.</p>
 70
 71
 72
-73</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/bitbucket.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/bitbucket.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>
@@ -342,7 +344,7 @@ content.</p>
     (?&lt;suffix&gt;[^/]+) # Filename text after the version
   </span><span class='regexp_end'>}ix</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_url'>url</span>
 
-  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g., .tar.gz)
+  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
 </span>  <span class='id identifier rubyid_suffix'>suffix</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.t(?:ar\..+|[a-z0-9]+)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='comment'># `/get/` archives are Git tag snapshots, so we need to check that tab
@@ -422,12 +424,12 @@ content.</p>
       <pre class="lines">
 
 
-36
-37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/bitbucket.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/bitbucket.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Bitbucket::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>

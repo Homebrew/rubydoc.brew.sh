@@ -101,12 +101,15 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>The <code>Pypi</code> strategy identifies versions of software at pypi.org by
+    <p>The <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::Pypi (class)">Pypi</a></span> strategy identifies versions of software at pypi.org by
 checking project pages for archive files.</p>
 
 <p>PyPI URLs have a standard format but the hexadecimal text between
-<code>/packages/</code> and the filename varies:
-* <code>https://files.pythonhosted.org/packages/&lt;hex&gt;/&lt;hex&gt;/&lt;long_hex&gt;/example-1.2.3.tar.gz</code></p>
+<code>/packages/</code> and the filename varies:</p>
+
+<ul>
+  <li><code>https://files.pythonhosted.org/packages/&lt;hex&gt;/&lt;hex&gt;/&lt;long_hex&gt;/example-1.2.3.tar.gz</code></li>
+</ul>
 
 <p>As such, the default regex only targets the filename at the end of the
 URL.</p>
@@ -190,7 +193,7 @@ URL.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Generates a URL and regex (if one isn’t provided) and passes them to the <code>PageMatch#find_versions</code> method to identify versions in the content.</p>
+    <span class="summary_desc"><div class='inline'><p>Generates a URL and regex (if one isn’t provided) and passes them to <span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">Homebrew::Livecheck::Strategy::PageMatch.find_versions</a></span> to identify versions in the content.</p>
 </div></span>
   
 </li>
@@ -240,8 +243,7 @@ URL.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Generates a URL and regex (if one isn’t provided) and passes them
-to the <code>PageMatch#find_versions</code> method to identify versions in the
-content.</p>
+to <span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">Homebrew::Livecheck::Strategy::PageMatch.find_versions</a></span> to identify versions in the content.</p>
 
 
   </div>
@@ -304,8 +306,6 @@ content.</p>
       <pre class="lines">
 
 
-37
-38
 39
 40
 41
@@ -324,10 +324,12 @@ content.</p>
 54
 55
 56
-57</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>
@@ -336,7 +338,7 @@ content.</p>
     (?&lt;suffix&gt;\.tar\.[a-z0-9]+|\.[a-z0-9]+)$ # Filename extension
   </span><span class='regexp_end'>/ix</span></span> <span class='op'>=~</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
 
-  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g., .tar.gz)
+  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
 </span>  <span class='id identifier rubyid_suffix'>suffix</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.t(?:ar\..+|[a-z0-9]+)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='comment'># It&#39;s not technically necessary to have the `#files` fragment at the
@@ -412,12 +414,12 @@ content.</p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Pypi::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
