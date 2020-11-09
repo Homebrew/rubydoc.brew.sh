@@ -98,7 +98,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Homebrew/Cleanup.html" title="Homebrew::Cleanup (class)">Cleanup</a></span>, <span class='object_link'><a href="Homebrew/FormulaAuditor.html" title="Homebrew::FormulaAuditor (class)">FormulaAuditor</a></span>, <span class='object_link'><a href="Homebrew/FormulaCreator.html" title="Homebrew::FormulaCreator (class)">FormulaCreator</a></span>, <span class='object_link'><a href="Homebrew/FormulaText.html" title="Homebrew::FormulaText (class)">FormulaText</a></span>, <span class='object_link'><a href="Homebrew/ResourceAuditor.html" title="Homebrew::ResourceAuditor (class)">ResourceAuditor</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Homebrew/Cleanup.html" title="Homebrew::Cleanup (class)">Cleanup</a></span>, <span class='object_link'><a href="Homebrew/FormulaAuditor.html" title="Homebrew::FormulaAuditor (class)">FormulaAuditor</a></span>, <span class='object_link'><a href="Homebrew/FormulaCreator.html" title="Homebrew::FormulaCreator (class)">FormulaCreator</a></span>, <span class='object_link'><a href="Homebrew/FormulaText.html" title="Homebrew::FormulaText (class)">FormulaText</a></span>, <span class='object_link'><a href="Homebrew/ResourceAuditor.html" title="Homebrew::ResourceAuditor (class)">ResourceAuditor</a></span>, <span class='object_link'><a href="Homebrew/TapAuditor.html" title="Homebrew::TapAuditor (class)">TapAuditor</a></span>
     
   
 </p>
@@ -8832,7 +8832,35 @@
 176
 177
 178
-179</pre>
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 79</span>
@@ -8879,6 +8907,24 @@
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:except_cops</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:FormulaAuditStrict</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
+  <span class='comment'># Run tap audits first
+</span>  <span class='id identifier rubyid_tap_problem_count'>tap_problem_count</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_tap_count'>tap_count</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'><span class='object_link'><a href="Tap.html#each-class_method" title="Tap.each (method)">each</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_tap'>tap</span> <span class='op'>!=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span>
+
+    <span class='id identifier rubyid_ta'>ta</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/TapAuditor.html" title="Homebrew::TapAuditor (class)">TapAuditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/TapAuditor.html#initialize-instance_method" title="Homebrew::TapAuditor#initialize (method)">new</a></span></span> <span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span>
+    <span class='id identifier rubyid_ta'>ta</span><span class='period'>.</span><span class='id identifier rubyid_audit'>audit</span>
+
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_ta'>ta</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='id identifier rubyid_tap_count'>tap_count</span> <span class='op'>+=</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_tap_problem_count'>tap_problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_ta'>ta</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+    <span class='id identifier rubyid_tap_problem_lines'>tap_problem_lines</span> <span class='op'>=</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_ta'>ta</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_tap_problem_lines'>tap_problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
   <span class='comment'># Check style in a single batch run up front for performance
 </span>  <span class='id identifier rubyid_style_offenses'>style_offenses</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Style.html" title="Homebrew::Style (module)">Style</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_style_json'><span class='object_link'><a href="Homebrew/Style.html#check_style_json-class_method" title="Homebrew::Style.check_style_json (method)">check_style_json</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_style_files'>style_files</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_style_files'>style_files</span>
   <span class='comment'># load licenses
@@ -8888,14 +8934,15 @@
   <span class='id identifier rubyid_audit_formulae'>audit_formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='id identifier rubyid_only'>only</span> <span class='op'>=</span> <span class='id identifier rubyid_only_cops'>only_cops</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>style</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-      <span class='label'>new_formula:</span>         <span class='id identifier rubyid_new_formula'>new_formula</span><span class='comma'>,</span>
-      <span class='label'>strict:</span>              <span class='id identifier rubyid_strict'>strict</span><span class='comma'>,</span>
-      <span class='label'>online:</span>              <span class='id identifier rubyid_online'>online</span><span class='comma'>,</span>
-      <span class='label'>git:</span>                 <span class='id identifier rubyid_git'>git</span><span class='comma'>,</span>
-      <span class='label'>only:</span>                <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
-      <span class='label'>except:</span>              <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
-      <span class='label'>spdx_license_data:</span>   <span class='id identifier rubyid_spdx_license_data'>spdx_license_data</span><span class='comma'>,</span>
-      <span class='label'>spdx_exception_data:</span> <span class='id identifier rubyid_spdx_exception_data'>spdx_exception_data</span><span class='comma'>,</span>
+      <span class='label'>new_formula:</span>          <span class='id identifier rubyid_new_formula'>new_formula</span><span class='comma'>,</span>
+      <span class='label'>strict:</span>               <span class='id identifier rubyid_strict'>strict</span><span class='comma'>,</span>
+      <span class='label'>online:</span>               <span class='id identifier rubyid_online'>online</span><span class='comma'>,</span>
+      <span class='label'>git:</span>                  <span class='id identifier rubyid_git'>git</span><span class='comma'>,</span>
+      <span class='label'>only:</span>                 <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
+      <span class='label'>except:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
+      <span class='label'>spdx_license_data:</span>    <span class='id identifier rubyid_spdx_license_data'>spdx_license_data</span><span class='comma'>,</span>
+      <span class='label'>spdx_exception_data:</span>  <span class='id identifier rubyid_spdx_exception_data'>spdx_exception_data</span><span class='comma'>,</span>
+      <span class='label'>tap_audit_exceptions:</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_audit_exceptions'>audit_exceptions</span><span class='comma'>,</span>
     <span class='rbrace'>}</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:style_offenses</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_style_offenses'>style_offenses</span><span class='period'>.</span><span class='id identifier rubyid_for_path'>for_path</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_style_offenses'>style_offenses</span>
     <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:display_cop_names</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_cop_names?'>display_cop_names?</span>
@@ -8929,14 +8976,23 @@
   <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_total_problems_count'>total_problems_count</span> <span class='op'>=</span> <span class='id identifier rubyid_problem_count'>problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span>
+  <span class='id identifier rubyid_total_problems_count'>total_problems_count</span> <span class='op'>=</span> <span class='id identifier rubyid_problem_count'>problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_tap_problem_count'>tap_problem_count</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_total_problems_count'>total_problems_count</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+
   <span class='id identifier rubyid_problem_plural'>problem_plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_total_problems_count'>total_problems_count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>problem</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_total_problems_count'>total_problems_count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_formula_plural'>formula_plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_count'>formula_count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_count'>formula_count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_tap_plural'>tap_plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap_count'>tap_count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tap</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_count'>tap_count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_corrected_problem_plural'>corrected_problem_plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_corrected_problem_count'>corrected_problem_count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>problem</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_corrected_problem_count'>corrected_problem_count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_errors_summary'>errors_summary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_problem_plural'>problem_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_plural'>formula_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_errors_summary'>errors_summary</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap_count'>tap_count</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_problem_plural'>problem_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_plural'>formula_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula_count'>formula_count</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_problem_plural'>problem_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap_plural'>tap_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_problem_plural'>problem_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_plural'>formula_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> and </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap_plural'>tap_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> detected</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_errors_summary'>errors_summary</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_corrected_problem_plural'>corrected_problem_plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> corrected</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_corrected_problem_count'>corrected_problem_count</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
 
-  <span class='id identifier rubyid_ofail'>ofail</span> <span class='id identifier rubyid_errors_summary'>errors_summary</span> <span class='kw'>if</span> <span class='id identifier rubyid_problem_count'>problem_count</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span> <span class='op'>||</span> <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+  <span class='id identifier rubyid_ofail'>ofail</span> <span class='id identifier rubyid_errors_summary'>errors_summary</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -16113,12 +16169,12 @@
       <pre class="lines">
 
 
-186
-187
-188</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_problem'>format_problem</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_location'>location</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dup'>dup</span><span class='op'>&amp;.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>: </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n    </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -16143,13 +16199,13 @@
       <pre class="lines">
 
 
-181
-182
-183
-184</pre>
+209
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/audit.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
