@@ -312,7 +312,7 @@
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
+    <span class="summary_desc"><div class='inline'><p>Given an API response from GitHub, warn the user if their credentials have insufficient permissions.</p>
 </div></span>
   
 </li>
@@ -1310,7 +1310,8 @@
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
+<p>Given an API response from GitHub, warn the user if their credentials
+have insufficient permissions.</p>
 
 
   </div>
@@ -1324,8 +1325,6 @@
       <pre class="lines">
 
 
-144
-145
 146
 147
 148
@@ -1355,55 +1354,41 @@
 172
 173
 174
-175
-176
-177
-178
-179
-180
-181</pre>
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_api_credentials_error_message'>api_credentials_error_message</span><span class='lparen'>(</span><span class='id identifier rubyid_response_headers'>response_headers</span><span class='comma'>,</span> <span class='id identifier rubyid_needed_scopes'>needed_scopes</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_response_headers'>response_headers</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='ivar'>@api_credentials_error_message</span> <span class='op'>||=</span> <span class='kw'>begin</span>
-    <span class='id identifier rubyid_unauthorized'>unauthorized</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http/1.1</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>401 Unauthorized</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_scopes'>scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-accepted-oauth-scopes</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_unauthorized'>unauthorized</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-      <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_needed_scopes'>needed_scopes</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-oauth-scopes</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-      <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_unauthorized'>unauthorized</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http/1.1</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>401 Unauthorized</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_scopes'>scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-accepted-oauth-scopes</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_unauthorized'>unauthorized</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-      <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-      <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_needed_scopes'>needed_scopes</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_response_headers'>response_headers</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x-oauth-scopes</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-      <span class='kw'>case</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_api_credentials_type'><span class='object_link'><a href="#api_credentials_type-class_method" title="GitHub.api_credentials_type (method)">api_credentials_type</a></span></span>
-      <span class='kw'>when</span> <span class='symbol'>:keychain_username_password</span>
-        <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>          Your macOS keychain GitHub credentials do not have sufficient scope!
-</span><span class='tstring_content'>          Scopes they need: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          Scopes they have: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          Create a personal access token:
-</span><span class='tstring_content'>            </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#ALL_SCOPES_URL-constant" title="GitHub::ALL_SCOPES_URL (constant)">ALL_SCOPES_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Shell.html" title="Utils::Shell (module)">Shell</a></span></span><span class='period'>.</span><span class='id identifier rubyid_set_variable_in_profile'><span class='object_link'><a href="Utils/Shell.html#set_variable_in_profile-class_method" title="Utils::Shell.set_variable_in_profile (method)">set_variable_in_profile</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_GITHUB_API_TOKEN</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your_token_here</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>        EOS
-</span>      <span class='kw'>when</span> <span class='symbol'>:env_token</span>
-        <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>          Your HOMEBREW_GITHUB_API_TOKEN does not have sufficient scope!
-</span><span class='tstring_content'>          Scopes it needs: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>            Scopes it has: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          Create a new personal access token:
-</span><span class='tstring_content'>            </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#ALL_SCOPES_URL-constant" title="GitHub::ALL_SCOPES_URL (constant)">ALL_SCOPES_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Shell.html" title="Utils::Shell (module)">Shell</a></span></span><span class='period'>.</span><span class='id identifier rubyid_set_variable_in_profile'><span class='object_link'><a href="Utils/Shell.html#set_variable_in_profile-class_method" title="Utils::Shell.set_variable_in_profile (method)">set_variable_in_profile</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_GITHUB_API_TOKEN</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your_token_here</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>        EOS
-</span>      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-    <span class='kw'>true</span>
+  <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_what'>what</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_api_credentials_type'><span class='object_link'><a href="#api_credentials_type-class_method" title="GitHub.api_credentials_type (method)">api_credentials_type</a></span></span>
+  <span class='kw'>when</span> <span class='symbol'>:keychain_username_password</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>macOS keychain GitHub</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:env_token</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_GITHUB_API_TOKEN</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
+
+  <span class='ivar'>@api_credentials_error_message</span> <span class='op'>||=</span> <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>    Your </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_what'>what</span><span class='embexpr_end'>}</span><span class='tstring_content'> credentials do not have sufficient scope!
+</span><span class='tstring_content'>    Scopes required: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_needed_human_scopes'>needed_human_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>    Scopes present:  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_credentials_scopes'>credentials_scopes</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>    Create a personal access token:
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#ALL_SCOPES_URL-constant" title="GitHub::ALL_SCOPES_URL (constant)">ALL_SCOPES_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>    </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Shell.html" title="Utils::Shell (module)">Shell</a></span></span><span class='period'>.</span><span class='id identifier rubyid_set_variable_in_profile'><span class='object_link'><a href="Utils/Shell.html#set_variable_in_profile-class_method" title="Utils::Shell.set_variable_in_profile (method)">set_variable_in_profile</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_GITHUB_API_TOKEN</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your_token_here</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>  EOS
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1498,13 +1483,13 @@
       <pre class="lines">
 
 
-627
-628
-629
-630</pre>
+621
+622
+623
+624</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 627</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 621</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_api_errors'>api_errors</span>
   <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/AuthenticationFailedError.html" title="GitHub::AuthenticationFailedError (class)">AuthenticationFailedError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/HTTPNotFoundError.html" title="GitHub::HTTPNotFoundError (class)">HTTPNotFoundError</a></span></span><span class='comma'>,</span>
@@ -1544,6 +1529,12 @@
       <pre class="lines">
 
 
+426
+427
+428
+429
+430
+431
 432
 433
 434
@@ -1579,16 +1570,10 @@
 464
 465
 466
-467
-468
-469
-470
-471
-472
-473</pre>
+467</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_approved_reviews'>approved_reviews</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>commit:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -1666,6 +1651,12 @@
       <pre class="lines">
 
 
+636
+637
+638
+639
+640
+641
 642
 643
 644
@@ -1679,16 +1670,10 @@
 652
 653
 654
-655
-656
-657
-658
-659
-660
-661</pre>
+655</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 642</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 636</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_duplicate_pull_requests'>check_for_duplicate_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pull_requests'>pull_requests</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
@@ -1744,6 +1729,12 @@
       <pre class="lines">
 
 
+378
+379
+380
+381
+382
+383
 384
 385
 386
@@ -1752,16 +1743,10 @@
 389
 390
 391
-392
-393
-394
-395
-396
-397
-398</pre>
+392</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_fork_exists'>check_fork_exists</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_reponame'>reponame</span> <span class='op'>=</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1812,17 +1797,17 @@
       <pre class="lines">
 
 
+294
+295
+296
+297
+298
+299
 300
-301
-302
-303
-304
-305
-306
-307</pre>
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 294</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_runs'>check_runs</span><span class='lparen'>(</span><span class='label'>repo:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>commit:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>pr:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_pr'>pr</span>
@@ -1866,6 +1851,12 @@
       <pre class="lines">
 
 
+674
+675
+676
+677
+678
+679
 680
 681
 682
@@ -1942,16 +1933,10 @@
 753
 754
 755
-756
-757
-758
-759
-760
-761
-762</pre>
+756</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 674</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_bump_pr'>create_bump_pr</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:sourcefile_path</span><span class='rbracket'>]</span>
@@ -2070,12 +2055,12 @@
       <pre class="lines">
 
 
-309
-310
-311</pre>
+303
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 309</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 303</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_check_run'>create_check_run</span><span class='lparen'>(</span><span class='label'>repo:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>check-runs</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
@@ -2114,15 +2099,15 @@
       <pre class="lines">
 
 
-377
-378
-379
-380
-381
-382</pre>
+371
+372
+373
+374
+375
+376</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 377</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_fork'>create_fork</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/forks</span><span class='tstring_end'>&quot;</span></span>
@@ -2164,6 +2149,12 @@
       <pre class="lines">
 
 
+488
+489
+490
+491
+492
+493
 494
 495
 496
@@ -2172,16 +2163,10 @@
 499
 500
 501
-502
-503
-504
-505
-506
-507
-508</pre>
+502</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 494</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_or_update_release'>create_or_update_release</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='label'>id:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>draft:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/releases</span><span class='tstring_end'>&quot;</span></span>
@@ -2232,15 +2217,15 @@
       <pre class="lines">
 
 
-400
-401
-402
-403
-404
-405</pre>
+394
+395
+396
+397
+398
+399</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 400</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_pull_request'>create_pull_request</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_head'>head</span><span class='comma'>,</span> <span class='id identifier rubyid_base'>base</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/pulls</span><span class='tstring_end'>&quot;</span></span>
@@ -2282,15 +2267,15 @@
       <pre class="lines">
 
 
-475
-476
-477
-478
-479
-480</pre>
+469
+470
+471
+472
+473
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 475</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 469</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dispatch_event'>dispatch_event</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_payload'>payload</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/dispatches</span><span class='tstring_end'>&quot;</span></span>
@@ -2386,18 +2371,18 @@
       <pre class="lines">
 
 
+626
+627
+628
+629
+630
+631
 632
 633
-634
-635
-636
-637
-638
-639
-640</pre>
+634</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 632</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 626</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_issues_for_formula'><span class='object_link'><a href="#issues_for_formula-class_method" title="GitHub.issues_for_formula (method)">issues_for_formula</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
@@ -2442,6 +2427,12 @@
       <pre class="lines">
 
 
+657
+658
+659
+660
+661
+662
 663
 664
 665
@@ -2451,16 +2442,10 @@
 669
 670
 671
-672
-673
-674
-675
-676
-677
-678</pre>
+672</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 663</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 657</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_forked_repo_info!'>forked_repo_info!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_create_fork'><span class='object_link'><a href="#create_fork-class_method" title="GitHub.create_fork (method)">create_fork</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
@@ -2512,6 +2497,12 @@
       <pre class="lines">
 
 
+510
+511
+512
+513
+514
+515
 516
 517
 518
@@ -2551,16 +2542,10 @@
 552
 553
 554
-555
-556
-557
-558
-559
-560
-561</pre>
+555</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 516</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 510</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_artifact_url'>get_artifact_url</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>workflow_id:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tests.yml</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>artifact_name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_scopes'>scopes</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#CREATE_ISSUE_FORK_OR_PR_SCOPES-constant" title="GitHub::CREATE_ISSUE_FORK_OR_PR_SCOPES (constant)">CREATE_ISSUE_FORK_OR_PR_SCOPES</a></span></span>
@@ -2642,13 +2627,13 @@
       <pre class="lines">
 
 
-489
-490
-491
-492</pre>
+483
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 489</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 483</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_release'>get_release</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/releases/tags/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag'>tag</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2688,17 +2673,17 @@
       <pre class="lines">
 
 
+612
+613
+614
+615
+616
+617
 618
-619
-620
-621
-622
-623
-624
-625</pre>
+619</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 618</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 612</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_repo_license'>get_repo_license</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_api'><span class='object_link'><a href="#open_api-class_method" title="GitHub.open_api (method)">open_api</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/license</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2742,12 +2727,12 @@
       <pre class="lines">
 
 
-325
-326
-327</pre>
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 325</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_issues_for_formula'>issues_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>tap:</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search_issues'>search_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>repo:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='label'>in:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>title</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2870,15 +2855,15 @@
       <pre class="lines">
 
 
-347
-348
-349
-350
-351
-352</pre>
+341
+342
+343
+344
+345
+346</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 347</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_pull_request'>merge_pull_request</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='label'>number:</span><span class='comma'>,</span> <span class='label'>sha:</span><span class='comma'>,</span> <span class='label'>merge_method:</span><span class='comma'>,</span> <span class='label'>commit_message:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/pulls/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_number'>number</span><span class='embexpr_end'>}</span><span class='tstring_content'>/merge</span><span class='tstring_end'>&quot;</span></span>
@@ -2920,6 +2905,12 @@
       <pre class="lines">
 
 
+177
+178
+179
+180
+181
+182
 183
 184
 185
@@ -2983,16 +2974,10 @@
 243
 244
 245
-246
-247
-248
-249
-250
-251
-252</pre>
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>data_binary_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>request_method:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='comma'>,</span> <span class='label'>parse_json:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='comment'># This is a no-op if the user is opting out of using the GitHub API.
@@ -3111,17 +3096,17 @@
       <pre class="lines">
 
 
+248
+249
+250
+251
+252
+253
 254
-255
-256
-257
-258
-259
-260
-261</pre>
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_graphql'>open_graphql</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>query:</span> <span class='id identifier rubyid_query'>query</span> <span class='rbrace'>}</span>
@@ -3165,12 +3150,12 @@
       <pre class="lines">
 
 
-333
-334
-335</pre>
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 327</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_permission'>permission</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/collaborators/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/permission</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -3209,6 +3194,12 @@
       <pre class="lines">
 
 
+348
+349
+350
+351
+352
+353
 354
 355
 356
@@ -3224,16 +3215,10 @@
 366
 367
 368
-369
-370
-371
-372
-373
-374
-375</pre>
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 348</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_pull_requests_matching'>print_pull_requests_matching</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_open_or_closed_prs'>open_or_closed_prs</span> <span class='op'>=</span> <span class='id identifier rubyid_search_issues'>search_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pr</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>user:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -3304,13 +3289,13 @@
       <pre class="lines">
 
 
-407
-408
-409
-410</pre>
+401
+402
+403
+404</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 401</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_private_repo?'>private_repo?</span><span class='lparen'>(</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_url_to'>url_to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_full_name'>full_name</span>
@@ -3350,6 +3335,12 @@
       <pre class="lines">
 
 
+758
+759
+760
+761
+762
+763
 764
 765
 766
@@ -3364,16 +3355,10 @@
 775
 776
 777
-778
-779
-780
-781
-782
-783
-784</pre>
+778</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 764</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 758</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pull_request_commits'>pull_request_commits</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>per_page:</span> <span class='int'>100</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_pr_data'>pr_data</span> <span class='op'>=</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pulls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3430,13 +3415,13 @@
       <pre class="lines">
 
 
-342
-343
-344
-345</pre>
+336
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pull_requests'>pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/pulls?</span><span class='embexpr_beg'>#{</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_encode_www_form'>encode_www_form</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3476,18 +3461,18 @@
       <pre class="lines">
 
 
+406
+407
+408
+409
+410
+411
 412
 413
-414
-415
-416
-417
-418
-419
-420</pre>
+414</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_query_string'>query_string</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_main_params'>main_params</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='id identifier rubyid_main_params'>main_params</span>
@@ -3532,6 +3517,12 @@
       <pre class="lines">
 
 
+257
+258
+259
+260
+261
+262
 263
 264
 265
@@ -3561,16 +3552,10 @@
 289
 290
 291
-292
-293
-294
-295
-296
-297
-298</pre>
+292</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_raise_api_error'>raise_api_error</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid_errors'>errors</span><span class='comma'>,</span> <span class='id identifier rubyid_http_code'>http_code</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='kw'>begin</span>
@@ -3642,12 +3627,12 @@
       <pre class="lines">
 
 
-317
-318
-319</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 317</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repository'>repository</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3686,14 +3671,14 @@
       <pre class="lines">
 
 
-426
-427
-428
-429
-430</pre>
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_entity'>entity</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_queries'>queries</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='id identifier rubyid_url_to'>url_to</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>search</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_entity'>entity</span>
@@ -3734,12 +3719,12 @@
       <pre class="lines">
 
 
-321
-322
-323</pre>
+315
+316
+317</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_code'>search_code</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>code</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
@@ -3778,12 +3763,12 @@
       <pre class="lines">
 
 
-313
-314
-315</pre>
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 313</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_issues'>search_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>issues</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
@@ -3822,6 +3807,12 @@
       <pre class="lines">
 
 
+557
+558
+559
+560
+561
+562
 563
 564
 565
@@ -3869,16 +3860,10 @@
 607
 608
 609
-610
-611
-612
-613
-614
-615
-616</pre>
+610</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 563</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 557</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sponsors_by_tier'>sponsors_by_tier</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -3968,14 +3953,14 @@
       <pre class="lines">
 
 
-510
-511
-512
-513
-514</pre>
+504
+505
+506
+507
+508</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 510</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 504</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload_release_asset'>upload_release_asset</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>local_file:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>remote_file:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://uploads.github.com/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/releases/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/assets</span><span class='tstring_end'>&quot;</span></span>
@@ -4016,12 +4001,12 @@
       <pre class="lines">
 
 
-422
-423
-424</pre>
+416
+417
+418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_subroutes'>subroutes</span><span class='rparen'>)</span>
   <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_subroutes'>subroutes</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4060,12 +4045,12 @@
       <pre class="lines">
 
 
-329
-330
-331</pre>
+323
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 329</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 323</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user'>user</span>
   <span class='ivar'>@user</span> <span class='op'>||=</span> <span class='id identifier rubyid_open_api'>open_api</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/user</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -4104,15 +4089,15 @@
       <pre class="lines">
 
 
-482
-483
-484
-485
-486
-487</pre>
+476
+477
+478
+479
+480
+481</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 482</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 476</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workflow_dispatch_event'>workflow_dispatch_event</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_workflow'>workflow</span><span class='comma'>,</span> <span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_inputs'>inputs</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/actions/workflows/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_workflow'>workflow</span><span class='embexpr_end'>}</span><span class='tstring_content'>/dispatches</span><span class='tstring_end'>&quot;</span></span>
@@ -4167,13 +4152,13 @@
       <pre class="lines">
 
 
-337
-338
-339
-340</pre>
+331
+332
+333
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 337</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_access?'>write_access?</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
