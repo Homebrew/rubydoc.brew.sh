@@ -10562,7 +10562,8 @@
 208
 209
 210
-211</pre>
+211
+212</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 59</span>
@@ -10654,6 +10655,7 @@
                                                     <span class='label'>silent:</span>        <span class='kw'>true</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_tmp_cask'>tmp_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_tmp_config'>tmp_config</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
     <span class='id identifier rubyid_tmp_url'>tmp_url</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_cask'>tmp_cask</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -10665,9 +10667,9 @@
     <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_language'>language</span><span class='op'>|</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_language'>language</span> <span class='op'>==</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span>
 
-      <span class='id identifier rubyid_tmp_cask'>tmp_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span>
-
+      <span class='id identifier rubyid_lang_config'>lang_config</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_config'>tmp_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_lang_cask'>lang_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_lang_cask'>lang_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_lang_config'>lang_config</span>
       <span class='id identifier rubyid_lang_url'>lang_url</span> <span class='op'>=</span> <span class='id identifier rubyid_lang_cask'>lang_cask</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
       <span class='id identifier rubyid_lang_old_hash'>lang_old_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_lang_cask'>lang_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span>
 
@@ -12027,14 +12029,14 @@
       <pre class="lines">
 
 
-225
 226
 227
 228
-229</pre>
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_closed_pull_requests'>check_closed_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>version:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='comment'># if we haven&#39;t already found open requests, try for an exact match across closed requests
@@ -12109,12 +12111,12 @@
       <pre class="lines">
 
 
-221
 222
-223</pre>
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_open_pull_requests'>check_open_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_for_duplicate_pull_requests'><span class='object_link'><a href="GitHub.html#check_for_duplicate_pull_requests-class_method" title="GitHub.check_for_duplicate_pull_requests (method)">check_for_duplicate_pull_requests</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>open</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -25527,7 +25529,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-231
 232
 233
 234
@@ -25552,10 +25553,11 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 253
 254
 255
-256</pre>
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -25603,7 +25605,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-258
 259
 260
 261
@@ -25623,10 +25624,11 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 275
 276
 277
-278</pre>
+278
+279</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-cask-pr.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
