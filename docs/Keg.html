@@ -705,6 +705,29 @@ directories in the prefix, never symlinks.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#apply_ad_hoc_signature-instance_method" title="#apply_ad_hoc_signature (instance method)">#<strong>apply_ad_hoc_signature</strong>(file)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#apps-instance_method" title="#apps (instance method)">#<strong>apps</strong>  &#x21d2; Object </a>
     
 
@@ -2644,6 +2667,94 @@ in the passed kegs are other kegs in the array.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="apply_ad_hoc_signature-instance_method">
+  
+    #<strong>apply_ad_hoc_signature</strong>(file)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/keg.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_ad_hoc_signature'>apply_ad_hoc_signature</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&lt;</span> <span class='symbol'>:big_sur</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arm?'><span class='object_link'><a href="Hardware/CPU.html#arm%3F-class_method" title="Hardware::CPU.arm? (method)">arm?</a></span></span>
+
+  <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Codesigning </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># Use quiet_system to squash notifications about resigning binaries
+</span>  <span class='comment'># which already have valid signatures.
+</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet_system'>quiet_system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--sign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--preserve-metadata=entitlements,requirements,flags,runtime</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                         <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+
+  <span class='comment'># If the codesigning fails, it may be a bug in Apple&#39;s codesign utility
+</span>  <span class='comment'># A known workaround is to copy the file to another inode, then move it back
+</span>  <span class='comment'># erasing the previous file. Then sign again.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># TODO: remove this once the bug in Apple&#39;s codesign utility is fixed
+</span>  <span class='const'>Dir</span><span class='op'>::</span><span class='const'>Tmpname</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>workaround</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tmppath'>tmppath</span><span class='op'>|</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_cp'>cp</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_tmppath'>tmppath</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mv'>mv</span> <span class='id identifier rubyid_tmppath'>tmppath</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Try signing again
+</span>  <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Codesigning (2nd try) </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet_system'>quiet_system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--sign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--preserve-metadata=entitlements,requirements,flags,runtime</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                         <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+
+  <span class='comment'># If it fails again, error out
+</span>  <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>    Failed applying an ad-hoc signature to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>  EOS
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="apps-instance_method">
   
     #<strong>apps</strong>  &#x21d2; <tt>Object</tt> 
@@ -2717,7 +2828,8 @@ in the passed kegs are other kegs in the array.</p>
 15
 16
 17
-18</pre>
+18
+19</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/keg.rb', line 5</span>
@@ -2728,6 +2840,7 @@ in the passed kegs are other kegs in the array.</p>
   <span class='ivar'>@require_relocation</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Changing dylib ID of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n  from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib_id'>dylib_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n    to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'>MachO</span><span class='op'>::</span><span class='const'>Tools</span><span class='period'>.</span><span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_apply_ad_hoc_signature'>apply_ad_hoc_signature</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>MachOError</span>
   <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Failed changing dylib ID of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
@@ -2756,7 +2869,6 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-20
 21
 22
 23
@@ -2769,10 +2881,12 @@ in the passed kegs are other kegs in the array.</p>
 30
 31
 32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/keg.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/os/mac/keg.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_old'>old</span> <span class='op'>==</span> <span class='id identifier rubyid_new'>new</span>
@@ -2780,6 +2894,7 @@ in the passed kegs are other kegs in the array.</p>
   <span class='ivar'>@require_relocation</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Changing install name in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n  from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old'>old</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n    to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new'>new</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'>MachO</span><span class='op'>::</span><span class='const'>Tools</span><span class='period'>.</span><span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_apply_ad_hoc_signature'>apply_ad_hoc_signature</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>MachOError</span>
   <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Failed changing install name in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
