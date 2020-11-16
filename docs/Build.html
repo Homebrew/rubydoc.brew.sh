@@ -726,18 +726,18 @@
       <pre class="lines">
 
 
+186
+187
+188
+189
+190
+191
 192
 193
-194
-195
-196
-197
-198
-199
-200</pre>
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_stdlibs'>detect_stdlibs</span><span class='lparen'>(</span><span class='id identifier rubyid_compiler'>compiler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
@@ -830,6 +830,10 @@
       <pre class="lines">
 
 
+62
+63
+64
+65
 66
 67
 68
@@ -837,28 +841,20 @@
 70
 71
 72
-73
-74
-75
-76
-77
-78
-79</pre>
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_deps'>expand_deps</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
     <span class='id identifier rubyid_build'>build</span> <span class='op'>=</span> <span class='id identifier rubyid_effective_build_options_for'>effective_build_options_for</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_prune_from_option?'>prune_from_option?</span><span class='lparen'>(</span><span class='id identifier rubyid_build'>build</span><span class='rparen'>)</span>
-      <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Dependency.html#prune-class_method" title="Dependency.prune (method)">prune</a></span></span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_prune_if_build_and_not_dependent?'>prune_if_build_and_not_dependent?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_prune_from_option?'>prune_from_option?</span><span class='lparen'>(</span><span class='id identifier rubyid_build'>build</span><span class='rparen'>)</span> <span class='op'>||</span>
+       <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_prune_if_build_and_not_dependent?'>prune_if_build_and_not_dependent?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span> <span class='op'>||</span>
+       <span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_build?'>build?</span><span class='rparen'>)</span>
       <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Dependency.html#prune-class_method" title="Dependency.prune (method)">prune</a></span></span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_build?'>build?</span>
       <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keep_but_prune_recursive_deps'><span class='object_link'><a href="Dependency.html#keep_but_prune_recursive_deps-class_method" title="Dependency.keep_but_prune_recursive_deps (method)">keep_but_prune_recursive_deps</a></span></span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span>
-      <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Dependency.html#prune-class_method" title="Dependency.prune (method)">prune</a></span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -903,11 +899,7 @@
 57
 58
 59
-60
-61
-62
-63
-64</pre>
+60</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 53</span>
@@ -915,11 +907,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_reqs'>expand_reqs</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_recursive_requirements'>recursive_requirements</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_req'>req</span><span class='op'>|</span>
     <span class='id identifier rubyid_build'>build</span> <span class='op'>=</span> <span class='id identifier rubyid_effective_build_options_for'>effective_build_options_for</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_prune_from_option?'>prune_from_option?</span><span class='lparen'>(</span><span class='id identifier rubyid_build'>build</span><span class='rparen'>)</span>
-      <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Requirement.html#prune-class_method" title="Requirement.prune (method)">prune</a></span></span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_prune_if_build_and_not_dependent?'>prune_if_build_and_not_dependent?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
-      <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Requirement.html#prune-class_method" title="Requirement.prune (method)">prune</a></span></span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_prune_from_option?'>prune_from_option?</span><span class='lparen'>(</span><span class='id identifier rubyid_build'>build</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_prune_if_build_and_not_dependent?'>prune_if_build_and_not_dependent?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span>
       <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Requirement.html#prune-class_method" title="Requirement.prune (method)">prune</a></span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -958,6 +946,12 @@
       <pre class="lines">
 
 
+196
+197
+198
+199
+200
+201
 202
 203
 204
@@ -965,16 +959,10 @@
 206
 207
 208
-209
-210
-211
-212
-213
-214
-215</pre>
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fixopt'>fixopt</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
@@ -1024,6 +1012,12 @@
       <pre class="lines">
 
 
+75
+76
+77
+78
+79
+80
 81
 82
 83
@@ -1127,16 +1121,10 @@
 181
 182
 183
-184
-185
-186
-187
-188
-189
-190</pre>
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/build.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_formula_deps'>formula_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span>
