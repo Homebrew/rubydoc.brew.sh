@@ -138,7 +138,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#check_installed_dependents-class_method" title="check_installed_dependents (class method)">.<strong>check_installed_dependents</strong>(args:)  &#x21d2; Object </a>
+      <a href="#check_installed_dependents-class_method" title="check_installed_dependents (class method)">.<strong>check_installed_dependents</strong>(formulae, args:)  &#x21d2; Object </a>
     
 
     
@@ -259,7 +259,7 @@
       <div class="method_details ">
   <h3 class="signature " id="check_installed_dependents-class_method">
   
-    .<strong>check_installed_dependents</strong>(args:)  &#x21d2; <tt>Object</tt> 
+    .<strong>check_installed_dependents</strong>(formulae, args:)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -402,10 +402,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/upgrade.rb', line 137</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_installed_dependents'>check_installed_dependents</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_installed_dependents'>check_installed_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_installed_dependents_check?'>no_installed_dependents_check?</span>
 
-  <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="../FormulaInstaller.html#installed-class_method" title="FormulaInstaller.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span> <span class='op'>?</span> <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="../FormulaInstaller.html#installed-class_method" title="FormulaInstaller.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_already_broken_dependents'>already_broken_dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_check_broken_dependents'>check_broken_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='rparen'>)</span>
