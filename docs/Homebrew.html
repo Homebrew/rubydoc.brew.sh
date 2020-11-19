@@ -31042,9 +31042,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-25
-26
-27
 28
 29
 30
@@ -31064,18 +31061,37 @@ corresponding to all the original commit messages combined.</p>
 44
 45
 46
-47</pre>
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/vendor-gems.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/vendor-gems.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_vendor_gems'>vendor_gems</span>
-  <span class='id identifier rubyid_vendor_gems_args'>vendor_gems_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+  <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_vendor_gems_args'>vendor_gems_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler!'><span class='object_link'><a href="#install_bundler!-class_method" title="Homebrew.install_bundler! (method)">install_bundler!</a></span></span>
 
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cd </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_update?'>update?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle update</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>update</span><span class='tstring_end'>&quot;</span></span>
+
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git add Gemfile.lock</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Gemfile.lock</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle install --standalone</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--standalone</span><span class='tstring_end'>&quot;</span></span>
 
@@ -31122,7 +31138,10 @@ corresponding to all the original commit messages combined.</p>
 20
 21
 22
-23</pre>
+23
+24
+25
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/vendor-gems.rb', line 13</span>
@@ -31135,6 +31154,9 @@ corresponding to all the original commit messages combined.</p>
 </span><span class='tstring_content'>      Install and commit Homebrew&#39;s vendored gems.
 </span><span class='heredoc_end'>    EOS
 </span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--update</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Update all vendored Gems to the latest version.</span><span class='tstring_end'>&quot;</span></span>
+
     <span class='id identifier rubyid_max_named'>max_named</span> <span class='int'>0</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
