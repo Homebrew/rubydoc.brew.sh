@@ -6,7 +6,7 @@ task default: :yard
 desc "Generate documentation with YARD"
 task :yard do
   sh "find", "docs", "-mindepth", "1", "!", "-name", "_config.yml", "!", "-name", "CNAME", "-delete"
-  sh "bundle", "exec", "yard"
+  sh "bundle", "exec", "yard", "doc", "--plugin", "sorbet"
 end
 
 desc "Build the site"
