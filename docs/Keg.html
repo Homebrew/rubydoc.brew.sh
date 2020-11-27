@@ -1998,8 +1998,6 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-220
-221
 222
 223
 224
@@ -2008,10 +2006,12 @@ directories in the prefix, never symlinks.</p>
 227
 228
 229
-230</pre>
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/opt/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2065,12 +2065,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-210
-211
-212</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_linked_keg_record'>linked_keg_record</span>
   <span class='ivar'>@linked_keg_record</span>
@@ -2111,12 +2111,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-210
-211
-212</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -2157,12 +2157,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-210
-211
-212</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_opt_record'>opt_record</span>
   <span class='ivar'>@opt_record</span>
@@ -2208,12 +2208,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-206
-207
-208</pre>
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
   <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_racks'>racks</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:subdirs</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -2493,7 +2493,7 @@ in the passed kegs are other kegs in the array.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="NotAKegError.html" title="NotAKegError (class)">NotAKegError</a></span></tt>)</span>
+        <span class='type'>(<tt>Errno::ENOENT</tt>)</span>
       
       
       
@@ -2517,14 +2517,18 @@ in the passed kegs are other kegs in the array.</p>
 201
 202
 203
-204</pre>
+204
+205
+206</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='kw'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_original_path'>original_path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_original_path'>original_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_original_path'>original_path</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span><span class='comma'>,</span> <span class='id identifier rubyid_original_path'>original_path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>unless</span> <span class='id identifier rubyid_original_path'>original_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_original_path'>original_path</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span><span class='rparen'>)</span>
     <span class='kw'>until</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_root?'>root?</span>
       <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span>
 
@@ -2607,12 +2611,12 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-243
-244
-245</pre>
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
@@ -2651,12 +2655,12 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-566
-567
-568</pre>
+568
+569
+570</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 566</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 568</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_aliases'>aliases</span>
   <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2796,13 +2800,13 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-440
-441
 442
-443</pre>
+443
+444
+445</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 440</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 442</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apps'>apps</span>
   <span class='id identifier rubyid_app_prefix'>app_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_optlinked?'>optlinked?</span> <span class='op'>?</span> <span class='id identifier rubyid_opt_record'>opt_record</span> <span class='op'>:</span> <span class='id identifier rubyid_path'>path</span>
@@ -3045,8 +3049,6 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-401
-402
 403
 404
 405
@@ -3054,10 +3056,12 @@ in the passed kegs are other kegs in the array.</p>
 407
 408
 409
-410</pre>
+410
+411
+412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 401</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_completion_installed?'>completion_installed?</span><span class='lparen'>(</span><span class='id identifier rubyid_shell'>shell</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_shell'>shell</span>
@@ -3103,13 +3107,13 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-585
-586
 587
-588</pre>
+588
+589
+590</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 585</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 587</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_pyc_files!'>delete_pyc_files!</span>
   <span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_pn'>pn</span><span class='op'>|</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#PYC_EXTENSIONS-constant" title="Keg::PYC_EXTENSIONS (constant)">PYC_EXTENSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -3405,14 +3409,14 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-445
-446
 447
 448
-449</pre>
+449
+450
+451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 445</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 447</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_elisp_installed?'>elisp_installed?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share/emacs/site-lisp</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -3466,8 +3470,6 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-249
-250
 251
 252
 253
@@ -3478,10 +3480,12 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
 258
 259
 260
-261</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_empty_installation?'>empty_installation?</span>
   <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -3823,8 +3827,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-412
-413
 414
 415
 416
@@ -3834,10 +3836,12 @@ expensive recursive search if possible.</p>
 420
 421
 422
-423</pre>
+423
+424
+425</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_functions_installed?'>functions_installed?</span><span class='lparen'>(</span><span class='id identifier rubyid_shell'>shell</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_shell'>shell</span>
@@ -3898,12 +3902,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-239
-240
-241</pre>
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 241</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -4046,8 +4050,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-469
-470
 471
 472
 473
@@ -4123,10 +4125,12 @@ expensive recursive search if possible.</p>
 543
 544
 545
-546</pre>
+546
+547
+548</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 469</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 471</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link'>link</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Keg/AlreadyLinkedError.html" title="Keg::AlreadyLinkedError (class)">AlreadyLinkedError</a></span></span><span class='comma'>,</span> <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_linked_keg_record'>linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -4253,14 +4257,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-267
-268
 269
 270
-271</pre>
+271
+272
+273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_linked?'>linked?</span>
   <span class='id identifier rubyid_linked_keg_record'>linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>&amp;&amp;</span>
@@ -4301,18 +4305,18 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-391
-392
 393
 394
 395
 396
 397
 398
-399</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 393</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="FormulaLock.html" title="FormulaLock (class)">FormulaLock</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FormulaLock.html#initialize-instance_method" title="FormulaLock#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_with_lock'><span class='object_link'><a href="LockFile.html#with_lock-instance_method" title="LockFile#with_lock (method)">with_lock</a></span></span> <span class='kw'>do</span>
@@ -4411,16 +4415,16 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-460
-461
 462
 463
 464
 465
-466</pre>
+466
+467
+468</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 460</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 462</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_oldname_opt_record'>oldname_opt_record</span>
   <span class='ivar'>@oldname_opt_record</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_opt_dir'>opt_dir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>opt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -4463,8 +4467,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-570
-571
 572
 573
 574
@@ -4476,10 +4478,12 @@ expensive recursive search if possible.</p>
 580
 581
 582
-583</pre>
+583
+584
+585</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 570</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 572</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optlink'>optlink</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='kw'>if</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>||</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -4542,12 +4546,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-278
-279
-280</pre>
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 280</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optlinked?'>optlinked?</span>
   <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_path'>path</span> <span class='op'>==</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span>
@@ -4599,12 +4603,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-426
-427
-428</pre>
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 428</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plist_installed?'>plist_installed?</span>
   <span class='op'>!</span><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/*.plist</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -4656,12 +4660,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-435
-436
-437</pre>
+437
+438
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 435</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 437</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_python_pth_files_installed?'>python_pth_files_installed?</span>
   <span class='op'>!</span><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>/lib/python2.7/site-packages/*.pth</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -4713,12 +4717,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-430
-431
-432</pre>
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_python_site_packages_installed?'>python_site_packages_installed?</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib/python2.7/site-packages</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -4757,12 +4761,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-232
-233
-234</pre>
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rack'>rack</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
@@ -4903,13 +4907,13 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-273
-274
 275
-276</pre>
+276
+277
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_linked_keg_record'>remove_linked_keg_record</span>
   <span class='id identifier rubyid_linked_keg_record'>linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
@@ -4949,8 +4953,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-282
-283
 284
 285
 286
@@ -4992,10 +4994,12 @@ expensive recursive search if possible.</p>
 322
 323
 324
-325</pre>
+325
+326
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_old_aliases'>remove_old_aliases</span>
   <span class='id identifier rubyid_opt'>opt</span> <span class='op'>=</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
@@ -5075,17 +5079,17 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-548
-549
 550
 551
 552
 553
 554
-555</pre>
+555
+556
+557</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 548</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 550</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_oldname_opt_record'>remove_oldname_opt_record</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_oldname_opt_record'>oldname_opt_record</span>
@@ -5129,13 +5133,13 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-327
-328
 329
-330</pre>
+330
+331
+332</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 329</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_opt_record'>remove_opt_record</span>
   <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
@@ -5366,12 +5370,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-263
-264
-265</pre>
+265
+266
+267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_require_relocation?'>require_relocation?</span>
   <span class='ivar'>@require_relocation</span>
@@ -5410,13 +5414,13 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-561
-562
 563
-564</pre>
+564
+565
+566</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 561</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 563</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span>
   <span class='const'><span class='object_link'><a href="" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cache'><span class='object_link'><a href="Cachable.html#cache-instance_method" title="Cachable#cache (method)">cache</a></span></span><span class='lbracket'>[</span><span class='symbol'>:runtime_dependencies</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -5496,12 +5500,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-557
-558
-559</pre>
+559
+560
+561</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 557</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 559</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tab'>tab</span>
   <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -5652,12 +5656,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-456
-457
-458</pre>
+458
+459
+460</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 456</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 458</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formula'>to_formula</span>
   <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_keg'><span class='object_link'><a href="Formulary.html#from_keg-class_method" title="Formulary.from_keg (method)">from_keg</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -5696,8 +5700,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-332
-333
 334
 335
 336
@@ -5713,10 +5715,12 @@ expensive recursive search if possible.</p>
 346
 347
 348
-349</pre>
+349
+350
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 334</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall'>uninstall</span>
   <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:linkage</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
@@ -5770,8 +5774,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-352
-353
 354
 355
 356
@@ -5807,10 +5809,12 @@ expensive recursive search if possible.</p>
 386
 387
 388
-389</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink'>unlink</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='const'>ObserverPathnameExtension</span><span class='period'>.</span><span class='id identifier rubyid_reset_counts!'>reset_counts!</span>
@@ -5884,13 +5888,13 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-451
-452
 453
-454</pre>
+454
+455
+456</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/keg.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pkg_version</span><span class='tstring_end'>&quot;</span></span>
