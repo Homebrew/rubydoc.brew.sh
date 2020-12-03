@@ -256,7 +256,11 @@
 112
 113
 114
-115</pre>
+115
+116
+117
+118
+119</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 110</span>
@@ -264,8 +268,12 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_update_pypi_url'>update_pypi_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_package'>package</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PyPI/Package.html" title="PyPI::Package (class)">Package</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PyPI/Package.html#initialize-instance_method" title="PyPI::Package#initialize (method)">new</a></span></span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>is_url:</span> <span class='kw'>true</span>
 
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_package'>package</span><span class='period'>.</span><span class='id identifier rubyid_valid_pypi_package?'>valid_pypi_package?</span>
+
   <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_package'>package</span><span class='period'>.</span><span class='id identifier rubyid_pypi_info'>pypi_info</span><span class='lparen'>(</span><span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_url'>url</span>
+<span class='kw'>rescue</span> <span class='const'>ArgumentError</span>
+  <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -420,10 +428,6 @@
       <pre class="lines">
 
 
-130
-131
-132
-133
 134
 135
 136
@@ -581,10 +585,14 @@
 288
 289
 290
-291</pre>
+291
+292
+293
+294
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/pypi.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_python_resources!'>update_python_resources!</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>package_name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>extra_packages:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>exclude_packages:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                              <span class='label'>print_only:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>ignore_non_pypi_packages:</span> <span class='kw'>false</span><span class='rparen'>)</span>
