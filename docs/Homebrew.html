@@ -16208,11 +16208,7 @@
 76
 77
 78
-79
-80
-81
-82
-83</pre>
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/dispatch-build-bottle.rb', line 35</span>
@@ -16221,13 +16217,8 @@
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_dispatch_build_bottle_args'>dispatch_build_bottle_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='comment'># Fixup version for ARM/Apple Silicon
-</span>  <span class='id identifier rubyid_arm_regex'>arm_regex</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_union'>union</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^arm64_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>-arm$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_arm_label'>arm_label</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_arm_regex'>arm_regex</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span><span class='op'>&amp;.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='id identifier rubyid_arm_regex'>arm_regex</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>true</span>
-  <span class='kw'>else</span>
-    <span class='kw'>false</span>
-  <span class='kw'>end</span>
+</span>  <span class='comment'># TODO: fix label name to be 11-arm64 instead and remove this.
+</span>  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span><span class='op'>&amp;.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^11-arm$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>11-arm64</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_macos'>macos</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span><span class='op'>&amp;.</span><span class='id identifier rubyid_yield_self'>yield_self</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
     <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_from_symbol'>from_symbol</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
@@ -16238,8 +16229,9 @@
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Must specify --macos option</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_macos'>macos</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='comment'># Fixup label for ARM/Apple Silicon
-</span>  <span class='id identifier rubyid_macos_label'>macos_label</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_arm_label'>arm_label</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_macos'>macos</span><span class='embexpr_end'>}</span><span class='tstring_content'>-arm</span><span class='tstring_end'>&quot;</span></span>
+</span>  <span class='id identifier rubyid_macos_label'>macos_label</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_macos'>macos</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span> <span class='op'>==</span> <span class='symbol'>:arm64</span>
+    <span class='comment'># TODO: fix label name to be 11-arm64 instead.
+</span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_macos'>macos</span><span class='embexpr_end'>}</span><span class='tstring_content'>-arm</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_macos'>macos</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>end</span>
