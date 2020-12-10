@@ -9029,20 +9029,20 @@
       <pre class="lines">
 
 
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454</pre>
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 444</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 473</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_update_pair'>alias_update_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_versioned_alias'>versioned_alias</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*@\d+(\.\d+)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -11875,13 +11875,46 @@
 359
 360
 361
-362</pre>
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bump_formula_pr'>bump_formula_pr</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_bump_formula_pr_args'>bump_formula_pr_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_revision'>revision</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--revision` must be passed with either `--tag` or `--version`!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
   <span class='comment'># As this command is simplifying user-run commands then let&#39;s just use a
 </span>  <span class='comment'># user path, too.
@@ -11939,21 +11972,28 @@
     <span class='id identifier rubyid_check_closed_pull_requests'>check_closed_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='id identifier rubyid_new_tag'>new_tag</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_new_version'>new_version</span>
     <span class='kw'>false</span>
   <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_hash_type'>hash_type</span>
-    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: no --tag= or --version= argument specified!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_new_version'>new_version</span>
-    <span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>||=</span> <span class='id identifier rubyid_old_tag'>old_tag</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_old_version'>old_version</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>==</span> <span class='id identifier rubyid_old_tag'>old_tag</span>
-      <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>        You need to bump this formula manually since the new tag
-</span><span class='tstring_content'>        and old tag are both </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_tag'>new_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
-</span><span class='heredoc_end'>      EOS
-</span>    <span class='kw'>end</span>
-    <span class='id identifier rubyid_check_closed_pull_requests'>check_closed_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='id identifier rubyid_new_tag'>new_tag</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_new_version'>new_version</span>
-    <span class='id identifier rubyid_resource_path'>resource_path</span><span class='comma'>,</span> <span class='id identifier rubyid_forced_version'>forced_version</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='comma'>,</span> <span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='id identifier rubyid_new_tag'>new_tag</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_new_revision'>new_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git -C \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource_path'>resource_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; rev-parse -q --verify HEAD</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_new_revision'>new_revision</span> <span class='op'>=</span> <span class='id identifier rubyid_new_revision'>new_revision</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
+    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_new_revision'>new_revision</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: no --tag= or --version= argument specified!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_old_tag'>old_tag</span>
+      <span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>||=</span> <span class='id identifier rubyid_old_tag'>old_tag</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_old_version'>old_version</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_new_tag'>new_tag</span> <span class='op'>==</span> <span class='id identifier rubyid_old_tag'>old_tag</span>
+        <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>          You need to bump this formula manually since the new tag
+</span><span class='tstring_content'>          and old tag are both </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_tag'>new_tag</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
+</span><span class='heredoc_end'>        EOS
+</span>      <span class='kw'>end</span>
+      <span class='id identifier rubyid_check_closed_pull_requests'>check_closed_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='id identifier rubyid_new_tag'>new_tag</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_new_version'>new_version</span>
+      <span class='id identifier rubyid_resource_path'>resource_path</span><span class='comma'>,</span> <span class='id identifier rubyid_forced_version'>forced_version</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='comma'>,</span> <span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='id identifier rubyid_new_tag'>new_tag</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_new_revision'>new_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git -C \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource_path'>resource_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot; rev-parse -q --verify HEAD</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_new_revision'>new_revision</span> <span class='op'>=</span> <span class='id identifier rubyid_new_revision'>new_revision</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: the current URL requires specifying a --revision= argument.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_new_revision'>new_revision</span>
+    <span class='kw'>end</span>
     <span class='kw'>false</span>
   <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_new_url'>new_url</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_new_version'>new_version</span>
-    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: no --url= or --version= argument specified!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: no --url= or --version= argument specified!</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_new_url'>new_url</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="PyPI.html" title="PyPI (module)">PyPI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_update_pypi_url'><span class='object_link'><a href="PyPI.html#update_pypi_url-class_method" title="PyPI.update_pypi_url (method)">update_pypi_url</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_old_url'>old_url</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
     <span class='kw'>unless</span> <span class='id identifier rubyid_new_url'>new_url</span>
@@ -12003,12 +12043,30 @@
         <span class='id identifier rubyid_new_hash'>new_hash</span><span class='comma'>,</span>
       <span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='rbracket'>]</span>
-  <span class='kw'>else</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_new_tag'>new_tag</span>
     <span class='lbracket'>[</span>
       <span class='lbracket'>[</span>
         <span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_new_tag'>new_tag</span><span class='comma'>,</span>
       <span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='lbracket'>[</span>
+        <span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:revision</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_new_revision'>new_revision</span><span class='comma'>,</span>
+      <span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='rbracket'>]</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_new_url'>new_url</span>
+    <span class='lbracket'>[</span>
+      <span class='lbracket'>[</span>
+        <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='regexp_end'>/</span></span><span class='comma'>,</span>
+        <span class='id identifier rubyid_new_url'>new_url</span><span class='comma'>,</span>
+      <span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='lbracket'>[</span>
+        <span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:revision</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_new_revision'>new_revision</span><span class='comma'>,</span>
+      <span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='lbracket'>[</span>
       <span class='lbracket'>[</span>
         <span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:revision</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_new_revision'>new_revision</span><span class='comma'>,</span>
@@ -12074,8 +12132,8 @@
   <span class='kw'>if</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_old_formula_version'>old_formula_version</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span><span class='lparen'>(</span><span class='id identifier rubyid_old_contents'>old_contents</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
     <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      You need to bump this formula manually since changing the
-</span><span class='tstring_content'>      version from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_formula_version'>old_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> would be a downgrade.
+<span class='tstring_content'>      You need to bump this formula manually since changing the version
+</span><span class='tstring_content'>      from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_formula_version'>old_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> would be a downgrade.
 </span><span class='heredoc_end'>    EOS
 </span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span> <span class='op'>==</span> <span class='id identifier rubyid_old_formula_version'>old_formula_version</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span><span class='lparen'>(</span><span class='id identifier rubyid_old_contents'>old_contents</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -12297,8 +12355,8 @@
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tag=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Specify the new git commit &lt;tag&gt; for the formula.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--revision=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>depends_on:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tag=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Specify the new git commit &lt;revision&gt; corresponding to the specified &lt;tag&gt;.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Specify the new commit &lt;revision&gt; corresponding to the specified git &lt;tag&gt; </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>or specified &lt;version&gt;.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ignore duplicate open PRs. Remove all mirrors if `--mirror` was not specified.</span><span class='tstring_end'>&quot;</span></span>
 
@@ -13358,21 +13416,21 @@
       <pre class="lines">
 
 
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408</pre>
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_mirrors'>check_for_mirrors</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_old_mirrors'>old_mirrors</span><span class='comma'>,</span> <span class='id identifier rubyid_new_mirrors'>new_mirrors</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_mirrors'>new_mirrors</span> <span class='op'>||</span> <span class='id identifier rubyid_old_mirrors'>old_mirrors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -16026,28 +16084,28 @@
       <pre class="lines">
 
 
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382</pre>
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 364</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 393</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_determine_formula_from_url'>determine_formula_from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='comment'># Split the new URL on / and find any formulae that have the same URL
@@ -16088,21 +16146,21 @@
       <pre class="lines">
 
 
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395</pre>
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 413</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_determine_mirror'>determine_mirror</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_url'>url</span>
@@ -18441,18 +18499,18 @@
       <pre class="lines">
 
 
-420
-421
-422
-423
-424
-425
-426
-427
-428</pre>
+449
+450
+451
+452
+453
+454
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 420</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 449</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_version'>formula_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -28804,40 +28862,40 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
 485
-486</pre>
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 456</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bump-formula-pr.rb', line 485</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_audit'>run_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_alias_rename'>alias_rename</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_audit_args'>audit_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
