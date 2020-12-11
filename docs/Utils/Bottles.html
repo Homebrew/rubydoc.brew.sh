@@ -134,6 +134,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#add_bottle_stanza!-class_method" title="add_bottle_stanza! (class method)">.<strong>add_bottle_stanza!</strong>(formula_contents, bottle_output)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#built_as%3F-class_method" title="built_as? (class method)">.<strong>built_as?</strong>(f)  &#x21d2; Boolean </a>
     
 
@@ -326,7 +349,147 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="built_as?-class_method">
+  <h3 class="signature first" id="add_bottle_stanza!-class_method">
+  
+    .<strong>add_bottle_stanza!</strong>(formula_contents, bottle_output)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/bottles.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_bottle_stanza!'>add_bottle_stanza!</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_output'>bottle_output</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="../Homebrew.html#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span>
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rubocop-ast</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_ruby_version'>ruby_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_REQUIRED_RUBY_VERSION-constant" title="HOMEBREW_REQUIRED_RUBY_VERSION (constant)">HOMEBREW_REQUIRED_RUBY_VERSION</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_major_minor'><span class='object_link'><a href="../Version.html#major_minor-instance_method" title="Version#major_minor (method)">major_minor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+  <span class='id identifier rubyid_processed_source'>processed_source</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../RuboCop/AST.html" title="RuboCop::AST (module)">AST</a></span></span><span class='op'>::</span><span class='const'>ProcessedSource</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='comma'>,</span> <span class='id identifier rubyid_ruby_version'>ruby_version</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_root_node'>root_node</span> <span class='op'>=</span> <span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_ast'>ast</span>
+
+  <span class='id identifier rubyid_class_node'>class_node</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_root_node'>root_node</span><span class='period'>.</span><span class='id identifier rubyid_class_type?'>class_type?</span>
+    <span class='id identifier rubyid_root_node'>root_node</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_root_node'>root_node</span><span class='period'>.</span><span class='id identifier rubyid_begin_type?'>begin_type?</span>
+    <span class='id identifier rubyid_root_node'>root_node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span>
+      <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_class_type?'>class_type?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_parent_class'>parent_class</span><span class='op'>&amp;.</span><span class='id identifier rubyid_const_name'>const_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Could not find formula class!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_class_node'>class_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_body_node'>body_node</span> <span class='op'>=</span> <span class='id identifier rubyid_class_node'>class_node</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula class is empty!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='id identifier rubyid_node_before_bottle'>node_before_bottle</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='period'>.</span><span class='id identifier rubyid_begin_type?'>begin_type?</span>
+    <span class='id identifier rubyid_body_node'>body_node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_previous_child'>previous_child</span><span class='comma'>,</span> <span class='id identifier rubyid_current_child'>current_child</span><span class='op'>|</span>
+      <span class='kw'>break</span> <span class='id identifier rubyid_previous_child'>previous_child</span> <span class='kw'>unless</span> <span class='id identifier rubyid_component_before_bottle_block?'>component_before_bottle_block?</span> <span class='id identifier rubyid_current_child'>current_child</span>
+
+      <span class='id identifier rubyid_current_child'>current_child</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_body_node'>body_node</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_node_before_bottle'>node_before_bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_node_before_bottle'>node_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_last_argument'>last_argument</span> <span class='kw'>if</span> <span class='id identifier rubyid_node_before_bottle'>node_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_send_type?'>send_type?</span>
+
+  <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_node_before_bottle'>node_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_expression'>expression</span>
+  <span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_comment'>comment</span><span class='op'>|</span>
+    <span class='id identifier rubyid_comment_expr'>comment_expr</span> <span class='op'>=</span> <span class='id identifier rubyid_comment'>comment</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_expression'>expression</span>
+    <span class='id identifier rubyid_distance'>distance</span> <span class='op'>=</span> <span class='id identifier rubyid_comment_expr'>comment_expr</span><span class='period'>.</span><span class='id identifier rubyid_first_line'>first_line</span> <span class='op'>-</span> <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_first_line'>first_line</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_distance'>distance</span>
+    <span class='kw'>when</span> <span class='int'>0</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_comment_expr'>comment_expr</span><span class='period'>.</span><span class='id identifier rubyid_last_line'>last_line</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_last_line'>last_line</span> <span class='op'>||</span>
+         <span class='id identifier rubyid_comment_expr'>comment_expr</span><span class='period'>.</span><span class='id identifier rubyid_end_pos'>end_pos</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span><span class='period'>.</span><span class='id identifier rubyid_end_pos'>end_pos</span>
+        <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_comment_expr'>comment_expr</span>
+      <span class='kw'>end</span>
+    <span class='kw'>when</span> <span class='int'>1</span>
+      <span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_comment_expr'>comment_expr</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_tree_rewriter'>tree_rewriter</span> <span class='op'>=</span> <span class='const'>Parser</span><span class='op'>::</span><span class='const'>Source</span><span class='op'>::</span><span class='const'>TreeRewriter</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tree_rewriter'>tree_rewriter</span><span class='period'>.</span><span class='id identifier rubyid_insert_after'>insert_after</span><span class='lparen'>(</span><span class='id identifier rubyid_expr_before_bottle'>expr_before_bottle</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bottle_output'>bottle_output</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_tree_rewriter'>tree_rewriter</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="built_as?-class_method">
   
     .<strong>built_as?</strong>(f)  &#x21d2; <tt>Boolean</tt> 
   
