@@ -19488,11 +19488,6 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29
 30
 31
 32
@@ -19502,10 +19497,17 @@
 36
 37
 38
-39</pre>
+39
+40
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/home.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/home.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_home'>home</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_home_args'>home_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -19515,7 +19517,9 @@
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_homepages'>homepages</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
+  <span class='id identifier rubyid_only'>only</span> <span class='op'>=</span> <span class='symbol'>:formula</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+  <span class='id identifier rubyid_only'>only</span> <span class='op'>=</span> <span class='symbol'>:cask</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+  <span class='id identifier rubyid_homepages'>homepages</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Opening homepage for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name_of'>name_of</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_homepage'>homepage</span>
   <span class='kw'>end</span>
@@ -19574,7 +19578,12 @@
 19
 20
 21
-22</pre>
+22
+23
+24
+25
+26
+27</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/home.rb', line 13</span>
@@ -19587,7 +19596,12 @@
 </span><span class='tstring_content'>      Open a &lt;formula&gt; or &lt;cask&gt;&#39;s homepage in a browser, or open
 </span><span class='tstring_content'>      Homebrew&#39;s own homepage if no argument is provided.
 </span><span class='heredoc_end'>    EOS
-</span>  <span class='kw'>end</span>
+</span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Treat all named arguments as formulae.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Treat all named arguments as casks.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -24373,16 +24387,16 @@
       <pre class="lines">
 
 
-41
-42
-43
-44
-45
-46
-47</pre>
+48
+49
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/home.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/home.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name_of'>name_of</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
