@@ -101,7 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>The <span class='object_link'><a href="" title="Livecheck (class)">Livecheck</a></span> class implements the DSL methods used in a formula’s
+    <p>The <span class='object_link'><a href="" title="Livecheck (class)">Livecheck</a></span> class implements the DSL methods used in a formula’s or cask’s
 <code>livecheck</code> block and stores related instance variables. Most of these methods
 also return the related instance variable when no argument is provided.</p>
 
@@ -143,7 +143,7 @@ behavior.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A very brief description of why the formula is skipped (e.g. <code>No longer developed or maintained</code>).</p>
+    <span class="summary_desc"><div class='inline'><p>A very brief description of why the formula/cask is skipped (e.g. <code>No longer developed or maintained</code>).</p>
 </div></span>
   
 </li>
@@ -165,7 +165,7 @@ behavior.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula)  &#x21d2; Livecheck </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula_or_cask)  &#x21d2; Livecheck </a>
     
 
     
@@ -250,7 +250,7 @@ behavior.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Should <code>livecheck</code> skip this formula?.</p>
+    <span class="summary_desc"><div class='inline'><p>Should <code>livecheck</code> skip this formula/cask?.</p>
 </div></span>
   
 </li>
@@ -334,7 +334,7 @@ behavior.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(formula)  &#x21d2; <tt><span class='object_link'><a href="" title="Livecheck (class)">Livecheck</a></span></tt> 
+    #<strong>initialize</strong>(formula_or_cask)  &#x21d2; <tt><span class='object_link'><a href="" title="Livecheck (class)">Livecheck</a></span></tt> 
   
 
   
@@ -368,8 +368,8 @@ behavior.</p>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
-  <span class='ivar'>@formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
+  <span class='ivar'>@formula_or_cask</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
   <span class='ivar'>@regex</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@skip</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='ivar'>@skip_msg</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -399,7 +399,7 @@ behavior.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>A very brief description of why the formula is skipped (e.g. <code>No longer
+    <p>A very brief description of why the formula/cask is skipped (e.g. <code>No longer
 developed or maintained</code>).</p>
 
 
@@ -551,8 +551,8 @@ developed or maintained</code>).</p>
   <div class="discussion">
     <p>Sets the <code>@skip</code> instance variable to <code>true</code> and sets the <code>@skip_msg</code>
 instance variable if a <code>String</code> is provided. <code>@skip</code> is used to indicate
-that the formula should be skipped and the <code>skip_msg</code> very briefly describes
-why the formula is skipped (e.g. “No longer developed or maintained”).</p>
+that the formula/cask should be skipped and the <code>skip_msg</code> very briefly
+describes why it is skipped (e.g. “No longer developed or maintained”).</p>
 
 
   </div>
@@ -573,7 +573,7 @@ why the formula is skipped (e.g. “No longer developed or maintained”).</p>
       
       
         &mdash;
-        <div class='inline'><p>string describing why the formula is skipped</p>
+        <div class='inline'><p>string describing why the formula/cask is skipped</p>
 </div>
       
     </li>
@@ -638,7 +638,7 @@ why the formula is skipped (e.g. “No longer developed or maintained”).</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Should <code>livecheck</code> skip this formula?</p>
+    <p>Should <code>livecheck</code> skip this formula/cask?</p>
 
 
   </div>
@@ -809,18 +809,18 @@ file name.</p>
       <pre class="lines">
 
 
-105
-106
-107
 108
 109
 110
 111
 112
-113</pre>
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='lbrace'>{</span>
@@ -850,7 +850,7 @@ file name.</p>
     <p>Sets the <code>@url</code> instance variable to the provided argument or returns the
 <code>@url</code> instance variable when no argument is provided. The argument can be
 a <code>String</code> (a URL) or a supported <code>Symbol</code> corresponding to a URL in the
-formula (e.g. <code>:stable</code>, <code>:homepage</code>, or <code>:head</code>).</p>
+formula/cask (e.g. <code>:stable</code>, <code>:homepage</code>, <code>:head</code>, <code>:cask_url</code>, <code>:appcast</code>).</p>
 
 
   </div>
@@ -898,6 +898,7 @@ formula (e.g. <code>:stable</code>, <code>:homepage</code>, or <code>:head</code
       <pre class="lines">
 
 
+87
 88
 89
 90
@@ -911,19 +912,26 @@ formula (e.g. <code>:stable</code>, <code>:homepage</code>, or <code>:head</code
 98
 99
 100
-101</pre>
+101
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@url</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_val'>val</span>
   <span class='kw'>when</span> <span class='kw'>nil</span>
     <span class='kw'>return</span> <span class='ivar'>@url</span>
+  <span class='kw'>when</span> <span class='symbol'>:appcast</span>
+    <span class='ivar'>@formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_appcast'>appcast</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>when</span> <span class='symbol'>:cask_url</span>
+    <span class='ivar'>@formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>when</span> <span class='symbol'>:head</span><span class='comma'>,</span> <span class='symbol'>:stable</span>
-    <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span>
+    <span class='ivar'>@formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span>
   <span class='kw'>when</span> <span class='symbol'>:homepage</span>
-    <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_homepage'>homepage</span>
+    <span class='ivar'>@formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_homepage'>homepage</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span>
     <span class='id identifier rubyid_val'>val</span>
   <span class='kw'>else</span>
