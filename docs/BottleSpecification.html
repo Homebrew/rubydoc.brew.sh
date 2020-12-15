@@ -721,12 +721,12 @@
       <pre class="lines">
 
 
-409
-410
-411</pre>
+411
+412
+413</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 411</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checksum_for'>checksum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_collector'>collector</span><span class='period'>.</span><span class='id identifier rubyid_fetch_checksum_for'>fetch_checksum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
@@ -751,8 +751,6 @@
       <pre class="lines">
 
 
-413
-414
 415
 416
 417
@@ -765,10 +763,12 @@
 424
 425
 426
-427</pre>
+427
+428
+429</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 413</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 415</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checksums'>checksums</span>
   <span class='id identifier rubyid_tags'>tags</span> <span class='op'>=</span> <span class='id identifier rubyid_collector'>collector</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tag'>tag</span><span class='op'>|</span>
@@ -845,22 +845,26 @@
 385
 386
 387
-388</pre>
+388
+389
+390</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compatible_locations?'>compatible_locations?</span>
-  <span class='id identifier rubyid_compatible_cellar'>compatible_cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>==</span> <span class='symbol'>:any</span> <span class='op'>||</span>
-                      <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>==</span> <span class='symbol'>:any_skip_relocation</span> <span class='op'>||</span>
-                      <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='comment'># this looks like it should check prefix and repository too but to be
+</span>  <span class='comment'># `cellar :any` actually requires no references to the cellar, prefix or
+</span>  <span class='comment'># repository.
+</span>  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='symbol'>:any</span><span class='comma'>,</span> <span class='symbol'>:any_skip_relocation</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_cellar'>cellar</span><span class='rparen'>)</span>
 
+  <span class='id identifier rubyid_compatible_cellar'>compatible_cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_compatible_prefix'>compatible_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
   <span class='comment'># Only check the repository matches if the prefix is the default.
 </span>  <span class='comment'># This is because the bottle DSL does not allow setting a custom repository
 </span>  <span class='comment'># but does allow setting a custom prefix.
-</span>  <span class='id identifier rubyid_compatible_repository'>compatible_repository</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'>DEFAULT_PREFIX</span>
+</span>  <span class='id identifier rubyid_compatible_repository'>compatible_repository</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_prefix?'><span class='object_link'><a href="Homebrew.html#default_prefix%3F-class_method" title="Homebrew.default_prefix? (method)">default_prefix?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_repository'>repository</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='kw'>else</span>
     <span class='kw'>true</span>
@@ -1004,12 +1008,12 @@
       <pre class="lines">
 
 
-396
-397
-398</pre>
+398
+399
+400</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/software_spec.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tag?'>tag?</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_checksum_for'>checksum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>false</span>
