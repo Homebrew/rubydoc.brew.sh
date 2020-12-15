@@ -33279,7 +33279,25 @@ corresponding to all the original commit messages combined.</p>
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/untap.rb', line 24</span>
@@ -33290,6 +33308,24 @@ corresponding to all the original commit messages combined.</p>
   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tapname'>tapname</span><span class='op'>|</span>
     <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tapname'>tapname</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Untapping </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not allowed</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_core_tap?'>core_tap?</span>
+
+    <span class='id identifier rubyid_installed_tap_formulae'>installed_tap_formulae</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>==</span> <span class='id identifier rubyid_tap'>tap</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_installed_tap_casks'>installed_tap_casks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>==</span> <span class='id identifier rubyid_tap'>tap</span> <span class='rbrace'>}</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_installed_tap_formulae'>installed_tap_formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_installed_tap_casks'>installed_tap_casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+      <span class='id identifier rubyid_installed_names'>installed_names</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_installed_tap_formulae'>installed_tap_formulae</span> <span class='op'>+</span> <span class='id identifier rubyid_installed_tap_casks'>installed_tap_casks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:token</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
+        <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>          Untapping </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'> even though it contains the following installed formulae or casks:
+</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_installed_names'>installed_names</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>        EOS
+</span>      <span class='kw'>else</span>
+        <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>          Refusing to untap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'> because it contains the following installed formulae or casks:
+</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_installed_names'>installed_names</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>        EOS
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'>uninstall</span>
   <span class='kw'>end</span>
