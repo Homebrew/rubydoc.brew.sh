@@ -176,7 +176,7 @@ for finding new software versions at a given source.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#page_content-class_method" title="page_content (class method)">.<strong>page_content</strong>(url)  &#x21d2; Object </a>
+      <a href="#page_content-class_method" title="page_content (class method)">.<strong>page_content</strong>(url)  &#x21d2; Hash </a>
     
 
     
@@ -190,7 +190,7 @@ for finding new software versions at a given source.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
+    <span class="summary_desc"><div class='inline'><p>Fetches the content at the URL and returns a hash containing the content and, if there are any redirections, the final URL.</p>
 </div></span>
   
 </li>
@@ -461,7 +461,7 @@ for finding new software versions at a given source.</p>
       <div class="method_details ">
   <h3 class="signature " id="page_content-class_method">
   
-    .<strong>page_content</strong>(url)  &#x21d2; <tt>Object</tt> 
+    .<strong>page_content</strong>(url)  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -473,13 +473,46 @@ for finding new software versions at a given source.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
+<p>Fetches the content at the URL and returns a hash containing the
+content and, if there are any redirections, the final URL.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the URL of the content to check</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -487,15 +520,43 @@ for finding new software versions at a given source.</p>
       <pre class="lines">
 
 
-118
-119
-120</pre>
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_content'>page_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
-  <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
+  <span class='id identifier rubyid_original_url'>original_url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span>
+
+  <span class='comment'># Manually handling `URI#open` redirections allows us to detect the
+</span>  <span class='comment'># resolved URL while also supporting HTTPS to HTTP redirections (which
+</span>  <span class='comment'># are normally forbidden by `OpenURI`).
+</span>  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='label'>redirect:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:read</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'>OpenURI</span><span class='op'>::</span><span class='const'>HTTPRedirect</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='kw'>retry</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>content:</span> <span class='id identifier rubyid_content'>content</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:final_url</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span> <span class='kw'>unless</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>==</span> <span class='id identifier rubyid_original_url'>original_url</span>
+  <span class='id identifier rubyid_data'>data</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
