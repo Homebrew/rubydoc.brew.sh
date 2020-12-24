@@ -23620,7 +23620,11 @@
 570
 571
 572
-573</pre>
+573
+574
+575
+576
+577</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bottle.rb', line 542</span>
@@ -23638,7 +23642,11 @@
     <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:rebuild</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:prefix</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'>DEFAULT_PREFIX</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:cellar</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'>DEFAULT_REPOSITORY</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:cellar</span> <span class='op'>&amp;&amp;</span> <span class='lbracket'>[</span>
+      <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#DEFAULT_MACOS_CELLAR-constant" title="Homebrew::DEFAULT_MACOS_CELLAR (constant)">DEFAULT_MACOS_CELLAR</a></span></span><span class='comma'>,</span>
+      <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#DEFAULT_MACOS_ARM_CELLAR-constant" title="Homebrew::DEFAULT_MACOS_ARM_CELLAR (constant)">DEFAULT_MACOS_ARM_CELLAR</a></span></span><span class='comma'>,</span>
+      <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#DEFAULT_LINUX_CELLAR-constant" title="Homebrew::DEFAULT_LINUX_CELLAR (constant)">DEFAULT_LINUX_CELLAR</a></span></span><span class='comma'>,</span>
+    <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:cellar</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>==</span> <span class='symbol'>:any</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>==</span> <span class='symbol'>:any_skip_relocation</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_value'>new_value</span> <span class='op'>==</span> <span class='id identifier rubyid_old_value'>old_value</span>
 
@@ -24947,7 +24955,14 @@
 165
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/unbottled.rb', line 149</span>
@@ -24962,7 +24977,14 @@
     <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='const'>Array</span><span class='lparen'>(</span><span class='id identifier rubyid_deps_hash'>deps_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
       <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_bottle_specification'>bottle_specification</span><span class='period'>.</span><span class='id identifier rubyid_tag?'>tag?</span><span class='lparen'>(</span><span class='ivar'>@bottle_tag</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_bottle_unneeded?'>bottle_unneeded?</span>
     <span class='kw'>end</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_bottle_unneeded?'>bottle_unneeded?</span>
+
+      <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_noun'>noun</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_noun'>noun</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'>: ready to bottle</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>next</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_any_found'>any_found</span> <span class='op'>||=</span> <span class='kw'>true</span>
     <span class='id identifier rubyid_count'>count</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_noun'>noun</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_noun'>noun</span>
