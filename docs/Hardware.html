@@ -296,7 +296,14 @@
 12
 13
 14
-15</pre>
+15
+16
+17
+18
+19
+20
+21
+22</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/hardware.rb', line 7</span>
@@ -304,7 +311,14 @@
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_oldest_cpu'>oldest_cpu</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Hardware/CPU.html#arch-class_method" title="Hardware::CPU.arch (method)">arch</a></span></span> <span class='op'>==</span> <span class='symbol'>:arm64</span>
     <span class='symbol'>:arm_vortex_tempest</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:mojave</span>
+  <span class='comment'># TODO: this cannot be re-enabled until either Rosetta 2 supports AVX
+</span>  <span class='comment'># instructions in bottles or Homebrew refuses to run under Rosetta 2 (when
+</span>  <span class='comment'># ARM support is sufficiently complete):
+</span>  <span class='comment'>#   https://github.com/Homebrew/homebrew-core/issues/67713
+</span>  <span class='comment'>#
+</span>  <span class='comment'># elsif version &gt;= :big_sur
+</span>  <span class='comment'>#   :ivybridge
+</span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:mojave</span>
     <span class='symbol'>:nehalem</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_generic_oldest_cpu'>generic_oldest_cpu</span>
