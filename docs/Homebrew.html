@@ -8026,13 +8026,7 @@
 53
 54
 55
-56
-57
-58
-59
-60
-61
-62</pre>
+56</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/--cache.rb', line 39</span>
@@ -8045,13 +8039,7 @@
     <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae'>to_formulae</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_casks'>to_casks</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span>
 
   <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
@@ -20156,13 +20144,23 @@
 348
 349
 350
-351</pre>
+351
+352
+353
+354
+355
+356</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_install_args'>install_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='comment'># TODO: enable for Homebrew 2.8.0 and use `replacement: false` for 2.9.0.
+</span>    <span class='comment'># odeprecated &quot;brew install --env&quot;, &quot;`env :std` in specific formula files&quot;
+</span>  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -20924,11 +20922,6 @@
       <pre class="lines">
 
 
-353
-354
-355
-356
-357
 358
 359
 360
@@ -20960,10 +20953,15 @@
 386
 387
 388
-389</pre>
+389
+390
+391
+392
+393
+394</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 353</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 358</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_formula'>install_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_print_tap_action'>print_tap_action</span>
@@ -26403,12 +26401,12 @@
       <pre class="lines">
 
 
-74
-75
-76</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/--cache.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/--cache.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_cask_cache'>print_cask_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downloader'><span class='object_link'><a href="Cask/Download.html#downloader-instance_method" title="Cask::Download#downloader (method)">downloader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cached_location'>cached_location</span>
@@ -26469,16 +26467,16 @@
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70
-71</pre>
+59
+60
+61
+62
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/--cache.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/--cache.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_formula_cache'>print_formula_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_fetch_bottle?'>fetch_bottle?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
