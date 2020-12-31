@@ -167,6 +167,37 @@ attributes.</p>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>X.Org</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
+        <dt id="MODULE_REGEX-constant" class="">MODULE_REGEX =
+          <div class="docstring">
+  <div class="discussion">
+    <p>A <code>Regexp</code> used in determining if the strategy applies to the URL and
+also as part of extracting the module name from the URL basename.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;module_name&gt;.+)-\d+</span><span class='regexp_end'>/i</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="FILENAME_REGEX-constant" class="">FILENAME_REGEX =
+          <div class="docstring">
+  <div class="discussion">
+    <p>A <code>Regexp</code> used to extract the module name from the URL basename.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#MODULE_REGEX-constant" title="Homebrew::Livecheck::Strategy::Xorg::MODULE_REGEX (constant)">MODULE_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='embexpr_end'>}</span><span class='regexp_end'>/i</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
         <dt id="URL_MATCH_REGEX-constant" class="">URL_MATCH_REGEX =
           <div class="docstring">
   <div class="discussion">
@@ -181,8 +212,9 @@ attributes.</p>
 </div>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>
-  [/.]x\.org.*?/individual/|
-  freedesktop\.org/(?:archive|dist|software)/
+  ^https?://(?:[^/]+?\.)* # Scheme and any leading subdomains
+  (?:x\.org/(?:[^/]+/)*individual/(?:[^/]+/)*</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#MODULE_REGEX-constant" title="Homebrew::Livecheck::Strategy::Xorg::MODULE_REGEX (constant)">MODULE_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+  |freedesktop\.org/(?:archive|dist|software)/(?:[^/]+/)*</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#MODULE_REGEX-constant" title="Homebrew::Livecheck::Strategy::Xorg::MODULE_REGEX (constant)">MODULE_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='embexpr_end'>}</span><span class='tstring_content'>)
 </span><span class='regexp_end'>}ix</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
@@ -338,14 +370,6 @@ then this strategy can be brought in line with the others.</p>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79
-80
 81
 82
 83
@@ -358,22 +382,30 @@ then this strategy can be brought in line with the others.</p>
 90
 91
 92
-93</pre>
+93
+94
+95
+96
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/xorg.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/xorg.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_file_name'>file_name</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
-  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(?&lt;module_name&gt;.+)-\d+</span><span class='regexp_end'>/i</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_file_name'>file_name</span>
+  <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_file_name'>file_name</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FILENAME_REGEX-constant" title="Homebrew::Livecheck::Strategy::Xorg::FILENAME_REGEX (constant)">FILENAME_REGEX</a></span></span><span class='rparen'>)</span>
 
   <span class='comment'># /pub/ URLs redirect to the same URL with /archive/, so we replace
 </span>  <span class='comment'># it to avoid the redirection. Removing the filename from the end of
 </span>  <span class='comment'># the URL gives us the relevant directory listing page.
 </span>  <span class='id identifier rubyid_page_url'>page_url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x.org/pub/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x.org/archive/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_suffix'>delete_suffix</span><span class='lparen'>(</span><span class='id identifier rubyid_file_name'>file_name</span><span class='rparen'>)</span>
 
-  <span class='comment'># Example regex: /href=.*?example[._-]v?(\d+(?:\.\d+)+)\.t/i
-</span>  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>href=.*?</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_module_name'>module_name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]v?(\d+(?:\.\d+)+)\.t</span><span class='regexp_end'>/i</span></span>
+  <span class='comment'># Example regex: `/href=.*?example[._-]v?(\d+(?:\.\d+)+)\.t/i`
+</span>  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>href=.*?</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:module_name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]v?(\d+(?:\.\d+)+)\.t</span><span class='regexp_end'>/i</span></span>
 
   <span class='comment'># Use the cached page content to avoid duplicate fetches
 </span>  <span class='id identifier rubyid_cached_content'>cached_content</span> <span class='op'>=</span> <span class='ivar'>@page_data</span><span class='lbracket'>[</span><span class='id identifier rubyid_page_url'>page_url</span><span class='rbracket'>]</span>
@@ -446,12 +478,12 @@ then this strategy can be brought in line with the others.</p>
       <pre class="lines">
 
 
-57
-58
-59</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/xorg.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/xorg.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Xorg::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>

@@ -144,6 +144,26 @@ URL.</p>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PyPI</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
+        <dt id="FILENAME_REGEX-constant" class="">FILENAME_REGEX =
+          <div class="docstring">
+  <div class="discussion">
+    <p>The <code>Regexp</code> used to extract the package name and suffix (e.g., file
+extension) from the URL basename.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>
+  (?&lt;package_name&gt;.+)- # The package name followed by a hyphen
+  .*? # The version string
+  (?&lt;suffix&gt;\.tar\.[a-z0-9]+|\.[a-z0-9]+)$ # Filename extension
+</span><span class='regexp_end'>/ix</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
         <dt id="URL_MATCH_REGEX-constant" class="">URL_MATCH_REGEX =
           <div class="docstring">
   <div class="discussion">
@@ -157,7 +177,12 @@ URL.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>files\.pythonhosted\.org</span><span class='regexp_end'>/i</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>
+  ^https?://files\.pythonhosted\.org
+  /packages
+  (?:/[^/]+)+ # The hexadecimal paths before the filename
+  /</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#FILENAME_REGEX-constant" title="Homebrew::Livecheck::Strategy::Pypi::FILENAME_REGEX (constant)">FILENAME_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='embexpr_end'>}</span><span class='tstring_content'> # The filename
+</span><span class='regexp_end'>}ix</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -306,19 +331,6 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
 52
 53
 54
@@ -326,29 +338,34 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
 56
 57
 58
-59</pre>
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>
-    (?&lt;package_name&gt;.+)- # The package name followed by a hyphen
-    .*? # The version string
-    (?&lt;suffix&gt;\.tar\.[a-z0-9]+|\.[a-z0-9]+)$ # Filename extension
-  </span><span class='regexp_end'>/ix</span></span> <span class='op'>=~</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FILENAME_REGEX-constant" title="Homebrew::Livecheck::Strategy::Pypi::FILENAME_REGEX (constant)">FILENAME_REGEX</a></span></span><span class='rparen'>)</span>
 
   <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
-</span>  <span class='id identifier rubyid_suffix'>suffix</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.t(?:ar\..+|[a-z0-9]+)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_suffix'>suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:suffix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.t(?:ar\..+|[a-z0-9]+)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='comment'># It&#39;s not technically necessary to have the `#files` fragment at the
 </span>  <span class='comment'># end of the URL but it makes the debug output a bit more useful.
-</span>  <span class='id identifier rubyid_page_url'>page_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://pypi.org/project/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_package_name'>package_name</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>%20|_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>/#files</span><span class='tstring_end'>&quot;</span></span>
+</span>  <span class='id identifier rubyid_page_url'>page_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://pypi.org/project/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>%20|_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>/#files</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='comment'># Example regex: `%r{href=.*?/packages.*?/example[._-]v?(\d+(?:\.\d+)*).t}i`.
-</span>  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span>
-    <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>href=.*?/packages.*?/</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_package_name'>package_name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]
-       v?(\d+(?:\.\d+)*(.post\d+)?)</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='regexp_end'>}ix</span></span>
+  <span class='comment'># Example regex: `%r{href=.*?/packages.*?/example[._-]v?(\d+(?:\.\d+)*(?:[._-]post\d+)?)\.t}i`
+</span>  <span class='id identifier rubyid_re_package_name'>re_package_name</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_re_suffix'>re_suffix</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>href=.*?/packages.*?/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_re_package_name'>re_package_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]v?(\d+(?:\.\d+)*(?:[._-]post\d+)?)</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_re_suffix'>re_suffix</span><span class='embexpr_end'>}</span><span class='regexp_end'>}i</span></span>
 
   <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -414,12 +431,12 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-29
-30
-31</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/livecheck/strategy/pypi.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Pypi::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
