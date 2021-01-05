@@ -4801,6 +4801,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#old_checksums-class_method" title="old_checksums (class method)">.<strong>old_checksums</strong>(formula_path, bottle_hash, args:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#options-class_method" title="options (class method)">.<strong>options</strong>  &#x21d2; Object </a>
     
 
@@ -23454,22 +23477,7 @@
 525
 526
 527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543</pre>
+528</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bottle.rb', line 474</span>
@@ -23492,36 +23500,21 @@
       <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
     <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_output'>bottle_output</span> <span class='id identifier rubyid_bottle'>bottle</span>
-
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_write?'>write?</span>
       <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='op'>/</span><span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_update_or_add'>update_or_add</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_nilable'>nilable</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_checksums'>checksums</span> <span class='op'>=</span> <span class='id identifier rubyid_old_checksums'>old_checksums</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_update_or_add'>update_or_add</span> <span class='op'>=</span> <span class='id identifier rubyid_checksums'>checksums</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>update</span><span class='tstring_end'>&quot;</span></span>
+
+      <span class='id identifier rubyid_checksums'>checksums</span><span class='op'>&amp;.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:sha256</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_output'>bottle_output</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle'>bottle</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_output'>output</span>
 
       <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Inreplace.html" title="Utils::Inreplace (module)">Inreplace</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inreplace'><span class='object_link'><a href="Utils/Inreplace.html#inreplace-class_method" title="Utils::Inreplace.inreplace (method)">inreplace</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span>
         <span class='id identifier rubyid_formula_contents'>formula_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_inreplace_string'>inreplace_string</span>
-        <span class='id identifier rubyid_bottle_node'>bottle_node</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_bottle_block'><span class='object_link'><a href="Utils/AST.html#bottle_block-class_method" title="Utils::AST.bottle_block (method)">bottle_block</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='rparen'>)</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_bottle_node'>bottle_node</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-          <span class='id identifier rubyid_update_or_add'>update_or_add</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>update</span><span class='tstring_end'>&quot;</span></span>
-          <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_old?'>keep_old?</span>
-            <span class='id identifier rubyid_old_keys'>old_keys</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_body_children'><span class='object_link'><a href="Utils/AST.html#body_children-class_method" title="Utils::AST.body_children (method)">body_children</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_node'>bottle_node</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:method_name</span><span class='rparen'>)</span>
-            <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bottle_specification'>bottle_specification</span>
-            <span class='id identifier rubyid_mismatches'>mismatches</span><span class='comma'>,</span> <span class='id identifier rubyid_checksums'>checksums</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-            <span class='kw'>if</span> <span class='id identifier rubyid_mismatches'>mismatches</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-              <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>                --keep-old was passed but there are changes in:
-</span><span class='tstring_content'>                </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mismatches'>mismatches</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>              EOS
-</span>            <span class='kw'>end</span>
-            <span class='id identifier rubyid_checksums'>checksums</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cksum'>cksum</span><span class='op'>|</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='lparen'>(</span><span class='id identifier rubyid_cksum'>cksum</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-            <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_output'>bottle_output</span> <span class='id identifier rubyid_bottle'>bottle</span>
-          <span class='kw'>end</span>
-          <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_output'>output</span>
+        <span class='kw'>case</span> <span class='id identifier rubyid_update_or_add'>update_or_add</span>
+        <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>update</span><span class='tstring_end'>&quot;</span></span>
           <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_replace_bottle_stanza!'><span class='object_link'><a href="Utils/AST.html#replace_bottle_stanza!-class_method" title="Utils::AST.replace_bottle_stanza! (method)">replace_bottle_stanza!</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='comma'>,</span> <span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--keep-old was passed but there was no existing bottle block!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_old?'>keep_old?</span>
-          <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_output'>output</span>
-          <span class='id identifier rubyid_update_or_add'>update_or_add</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>add</span><span class='tstring_end'>&quot;</span></span>
           <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_add_bottle_stanza!'><span class='object_link'><a href="Utils/AST.html#add_bottle_stanza!-class_method" title="Utils::AST.add_bottle_stanza! (method)">add_bottle_stanza!</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_contents'>formula_contents</span><span class='comma'>,</span> <span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
@@ -23540,7 +23533,7 @@
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_output'>output</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_bottle_output'>bottle_output</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle'>bottle</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -23564,6 +23557,21 @@
       <pre class="lines">
 
 
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
 545
 546
 547
@@ -23584,25 +23592,10 @@
 562
 563
 564
-565
-566
-567
-568
-569
-570
-571
-572
-573
-574
-575
-576
-577
-578
-579
-580</pre>
+565</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bottle.rb', line 545</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bottle.rb', line 530</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_new_bottle_hash'>new_bottle_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -23626,7 +23619,7 @@
     <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>: old: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_value'>old_value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, new: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_value'>new_value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
-  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_mismatches'>mismatches</span><span class='comma'>,</span> <span class='id identifier rubyid_checksums'>checksums</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_keys'>old_keys</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='symbol'>:sha256</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_mismatches'>mismatches</span><span class='comma'>,</span> <span class='id identifier rubyid_checksums'>checksums</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_keys'>old_keys</span><span class='period'>.</span><span class='id identifier rubyid_exclude?'>exclude?</span> <span class='symbol'>:sha256</span>
 
   <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='period'>.</span><span class='id identifier rubyid_collector'>collector</span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tag'>tag</span><span class='op'>|</span>
     <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='period'>.</span><span class='id identifier rubyid_collector'>collector</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag'>tag</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hexdigest'>hexdigest</span>
@@ -24354,6 +24347,68 @@
   <span class='kw'>else</span>
     <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>==&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="old_checksums-class_method">
+  
+    .<strong>old_checksums</strong>(formula_path, bottle_hash, args:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/bottle.rb', line 567</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_old_checksums'>old_checksums</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bottle_node'>bottle_node</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_bottle_block'><span class='object_link'><a href="Utils/AST.html#bottle_block-class_method" title="Utils::AST.bottle_block (method)">bottle_block</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_bottle_node'>bottle_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--keep-old was passed but there was no existing bottle block!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_old?'>keep_old?</span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_old?'>keep_old?</span>
+
+  <span class='id identifier rubyid_old_keys'>old_keys</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/AST.html" title="Utils::AST (module)">AST</a></span></span><span class='period'>.</span><span class='id identifier rubyid_body_children'><span class='object_link'><a href="Utils/AST.html#body_children-class_method" title="Utils::AST.body_children (method)">body_children</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_node'>bottle_node</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:method_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bottle_specification'>bottle_specification</span>
+  <span class='id identifier rubyid_mismatches'>mismatches</span><span class='comma'>,</span> <span class='id identifier rubyid_checksums'>checksums</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_mismatches'>mismatches</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      --keep-old was passed but there are changes in:
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mismatches'>mismatches</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
+  <span class='id identifier rubyid_checksums'>checksums</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
