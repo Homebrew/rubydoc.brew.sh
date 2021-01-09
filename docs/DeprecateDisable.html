@@ -232,14 +232,14 @@
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/deprecate_disable.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprecate_disable_info'>deprecate_disable_info</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecated?'>deprecated?</span> <span class='op'>||</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span>
-
   <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecated?'>deprecated?</span>
     <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:deprecated</span>
     <span class='id identifier rubyid_reason'>reason</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecation_reason'>deprecation_reason</span>
-  <span class='kw'>else</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span>
     <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:disabled</span>
     <span class='id identifier rubyid_reason'>reason</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disable_reason'>disable_reason</span>
+  <span class='kw'>else</span>
+    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_reason'>reason</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DEPRECATE_DISABLE_REASONS-constant" title="DeprecateDisable::DEPRECATE_DISABLE_REASONS (constant)">DEPRECATE_DISABLE_REASONS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_reason'>reason</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#DEPRECATE_DISABLE_REASONS-constant" title="DeprecateDisable::DEPRECATE_DISABLE_REASONS (constant)">DEPRECATE_DISABLE_REASONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_reason'>reason</span>

@@ -443,17 +443,13 @@
 149
 150
 151
-152
-153
-154</pre>
+152</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/debrew.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_original_raise'>original_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_active?'>active?</span> <span class='op'>&amp;&amp;</span>
-                           <span class='id identifier rubyid_debugged_exceptions'>debugged_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_add?'>add?</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
-                           <span class='id identifier rubyid_try_lock'>try_lock</span>
+  <span class='id identifier rubyid_original_raise'>original_raise</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_active?'>active?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_debugged_exceptions'>debugged_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_add?'>add?</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_try_lock'>try_lock</span>
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
