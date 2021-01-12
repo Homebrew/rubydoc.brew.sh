@@ -7469,7 +7469,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#upgrade_outdated_casks-class_method" title="upgrade_outdated_casks (class method)">.<strong>upgrade_outdated_casks</strong>(casks, args:)  &#x21d2; void </a>
+      <a href="#upgrade_outdated_casks-class_method" title="upgrade_outdated_casks (class method)">.<strong>upgrade_outdated_casks</strong>(casks, args:)  &#x21d2; Boolean </a>
     
 
     
@@ -7492,7 +7492,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#upgrade_outdated_formulae-class_method" title="upgrade_outdated_formulae (class method)">.<strong>upgrade_outdated_formulae</strong>(formulae, args:)  &#x21d2; void </a>
+      <a href="#upgrade_outdated_formulae-class_method" title="upgrade_outdated_formulae (class method)">.<strong>upgrade_outdated_formulae</strong>(formulae, args:)  &#x21d2; Boolean </a>
     
 
     
@@ -34332,7 +34332,11 @@ corresponding to all the original commit messages combined.</p>
 105
 106
 107
-108</pre>
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 96</span>
@@ -34344,11 +34348,15 @@ corresponding to all the original commit messages combined.</p>
   <span class='comment'># If one or more formulae are specified, but no casks were
 </span>  <span class='comment'># specified, we want to make note of that so we don&#39;t
 </span>  <span class='comment'># try to upgrade all outdated casks.
-</span>  <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-  <span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+</span>  <span class='id identifier rubyid_only_upgrade_formulae'>only_upgrade_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_only_upgrade_casks'>only_upgrade_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upgrade_casks'>upgrade_casks</span>
-  <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upgrade_formulae'>upgrade_formulae</span>
+  <span class='id identifier rubyid_display_messages'>display_messages</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_only_upgrade_casks'>only_upgrade_casks</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_force_caveats'>force_caveats</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_only_upgrade_formulae'>only_upgrade_formulae</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_display_messages'>display_messages</span>
+
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages'><span class='object_link'><a href="#messages-class_method" title="Homebrew.messages (method)">messages</a></span></span><span class='period'>.</span><span class='id identifier rubyid_display_messages'>display_messages</span><span class='lparen'>(</span><span class='label'>force_caveats:</span> <span class='id identifier rubyid_force_caveats'>force_caveats</span><span class='comma'>,</span> <span class='label'>display_times:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_times?'>display_times?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -34557,7 +34565,7 @@ corresponding to all the original commit messages combined.</p>
       <div class="method_details ">
   <h3 class="signature " id="upgrade_outdated_casks-class_method">
   
-    .<strong>upgrade_outdated_casks</strong>(casks, args:)  &#x21d2; <tt>void</tt> 
+    .<strong>upgrade_outdated_casks</strong>(casks, args:)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -34565,7 +34573,7 @@ corresponding to all the original commit messages combined.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
+    
 
 
   </div>
@@ -34598,6 +34606,19 @@ corresponding to all the original commit messages combined.</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -34605,10 +34626,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-179
-180
-181
-182
 183
 184
 185
@@ -34620,13 +34637,17 @@ corresponding to all the original commit messages combined.</p>
 191
 192
 193
-194</pre>
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
 
   <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Upgrade.html" title="Cask::Cmd::Upgrade (class)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_upgrade_casks'><span class='object_link'><a href="Cask/Cmd/Upgrade.html#upgrade_casks-class_method" title="Cask::Cmd::Upgrade.upgrade_casks (method)">upgrade_casks</a></span></span><span class='lparen'>(</span>
     <span class='op'>*</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span>
@@ -34649,7 +34670,7 @@ corresponding to all the original commit messages combined.</p>
       <div class="method_details ">
   <h3 class="signature " id="upgrade_outdated_formulae-class_method">
   
-    .<strong>upgrade_outdated_formulae</strong>(formulae, args:)  &#x21d2; <tt>void</tt> 
+    .<strong>upgrade_outdated_formulae</strong>(formulae, args:)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -34657,7 +34678,7 @@ corresponding to all the original commit messages combined.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
+    
 
 
   </div>
@@ -34690,6 +34711,19 @@ corresponding to all the original commit messages combined.</p>
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -34697,10 +34731,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
 115
 116
 117
@@ -34762,13 +34792,17 @@ corresponding to all the original commit messages combined.</p>
 173
 174
 175
-176</pre>
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
 
   <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
@@ -34794,7 +34828,7 @@ corresponding to all the original commit messages combined.</p>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_outdated'>outdated</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_outdated'>outdated</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_pinned'>pinned</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated'>outdated</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:pinned?</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_outdated'>outdated</span> <span class='op'>-=</span> <span class='id identifier rubyid_pinned'>pinned</span>
@@ -34831,7 +34865,7 @@ corresponding to all the original commit messages combined.</p>
 
   <span class='const'><span class='object_link'><a href="Homebrew/Upgrade.html" title="Homebrew::Upgrade (module)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_installed_dependents'><span class='object_link'><a href="Homebrew/Upgrade.html#check_installed_dependents-class_method" title="Homebrew::Upgrade.check_installed_dependents (method)">check_installed_dependents</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages'><span class='object_link'><a href="#messages-class_method" title="Homebrew.messages (method)">messages</a></span></span><span class='period'>.</span><span class='id identifier rubyid_display_messages'>display_messages</span><span class='lparen'>(</span><span class='label'>display_times:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_times?'>display_times?</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
