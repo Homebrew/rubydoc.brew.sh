@@ -74,7 +74,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next"><span class='object_link'><a href="../../Cop.html" title="RuboCop::Cop (module)">RuboCop::Cop</a></span></li>
+            <li class="next">Base</li>
           
             <li class="next"><span class='object_link'><a href="../FormulaCop.html" title="RuboCop::Cop::FormulaCop (class)">RuboCop::Cop::FormulaCop</a></span></li>
           
@@ -88,6 +88,11 @@
   
 
   
+  
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>AutoCorrector</dd>
+  </dl>
   
   
   
@@ -160,33 +165,11 @@
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#autocorrect-instance_method" title="#autocorrect (instance method)">#<strong>autocorrect</strong>(node)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
 
+  
   
   
   
@@ -209,11 +192,6 @@
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../HelperFunctions.html" title="RuboCop::Cop::HelperFunctions (module)">HelperFunctions</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../HelperFunctions.html#line_number-instance_method" title="RuboCop::Cop::HelperFunctions#line_number (method)">#line_number</a></span>, <span class='object_link'><a href="../HelperFunctions.html#line_start_column-instance_method" title="RuboCop::Cop::HelperFunctions#line_start_column (method)">#line_start_column</a></span>, <span class='object_link'><a href="../HelperFunctions.html#problem-instance_method" title="RuboCop::Cop::HelperFunctions#problem (method)">#problem</a></span>, <span class='object_link'><a href="../HelperFunctions.html#regex_match_group-instance_method" title="RuboCop::Cop::HelperFunctions#regex_match_group (method)">#regex_match_group</a></span>, <span class='object_link'><a href="../HelperFunctions.html#source_buffer-instance_method" title="RuboCop::Cop::HelperFunctions#source_buffer (method)">#source_buffer</a></span>, <span class='object_link'><a href="../HelperFunctions.html#start_column-instance_method" title="RuboCop::Cop::HelperFunctions#start_column (method)">#start_column</a></span>, <span class='object_link'><a href="../HelperFunctions.html#string_content-instance_method" title="RuboCop::Cop::HelperFunctions#string_content (method)">#string_content</a></span></p>
 
-  
-  
-  
-  
-  
   
   
   
@@ -274,7 +252,12 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/class.rb', line 37</span>
@@ -294,86 +277,17 @@
     <span class='id identifier rubyid_p1'>p1</span><span class='comma'>,</span> <span class='id identifier rubyid_p2'>p2</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_string_content'>string_content</span><span class='lparen'>(</span><span class='id identifier rubyid_p1'>p1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>(/usr/local/(s?bin))</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
       <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_p1'>p1</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use \#{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>} instead of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use \#{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>} instead of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
+        <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_p1'>p1</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span> <span class='id identifier rubyid_p1'>p1</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\#{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span> <span class='op'>==</span> <span class='symbol'>:shell_output</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node_equals?'>node_equals?</span><span class='lparen'>(</span><span class='id identifier rubyid_p2'>p2</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_p2'>p2</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Passing 0 to shell_output() is redundant</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="autocorrect-instance_method">
-  
-    #<strong>autocorrect</strong>(node)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/class.rb', line 62</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_autocorrect'>autocorrect</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
-    <span class='kw'>case</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
-    <span class='kw'>when</span> <span class='symbol'>:str</span><span class='comma'>,</span> <span class='symbol'>:dstr</span>
-      <span class='comment'># Rubocop: intentionally outputted non-interpolated strings
-</span>      <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span>
-                        <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>(/usr/local/(s?bin))</span><span class='regexp_end'>}</span></span><span class='comma'>,</span>
-                                             <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#{\2}</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Lint/InterpolationCheck
-</span>    <span class='kw'>when</span> <span class='symbol'>:int</span>
-      <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span>
-        <span class='id identifier rubyid_range_with_surrounding_comma'>range_with_surrounding_comma</span><span class='lparen'>(</span>
-          <span class='id identifier rubyid_range_with_surrounding_space'>range_with_surrounding_space</span><span class='lparen'>(</span><span class='label'>range:</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span>
-                                       <span class='label'>side:</span>  <span class='symbol'>:left</span><span class='rparen'>)</span><span class='comma'>,</span>
-        <span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='rparen'>)</span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Passing 0 to shell_output() is redundant</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
+        <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='id identifier rubyid_range_with_surrounding_comma'>range_with_surrounding_comma</span><span class='lparen'>(</span><span class='id identifier rubyid_range_with_surrounding_space'>range_with_surrounding_space</span><span class='lparen'>(</span><span class='label'>range:</span> <span class='id identifier rubyid_p2'>p2</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span>
+                                                                                   <span class='label'>side:</span>  <span class='symbol'>:left</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
