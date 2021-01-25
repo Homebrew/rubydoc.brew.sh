@@ -691,12 +691,12 @@
       <pre class="lines">
 
 
-202
-203
-204</pre>
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_homebrew_tap_cask_names'>homebrew_tap_cask_names</span>
   <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CASK_TAP_CASK_REGEX-constant" title="HOMEBREW_CASK_TAP_CASK_REGEX (constant)">HOMEBREW_CASK_TAP_CASK_REGEX</a></span></span><span class='rparen'>)</span>
@@ -888,7 +888,13 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
 53
 54
 55
-56</pre>
+56
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 49</span>
@@ -897,6 +903,12 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
   <span class='ivar'>@to_formulae_and_casks</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@to_formulae_and_casks</span><span class='lbracket'>[</span><span class='id identifier rubyid_only'>only</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
     <span class='id identifier rubyid_load_formula_or_cask'>load_formula_or_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../FormulaUnreadableError.html" title="FormulaUnreadableError (class)">FormulaUnreadableError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../FormulaClassUnavailableError.html" title="FormulaClassUnavailableError (class)">FormulaClassUnavailableError</a></span></span><span class='comma'>,</span>
+         <span class='const'><span class='object_link'><a href="../../TapFormulaUnreadableError.html" title="TapFormulaUnreadableError (class)">TapFormulaUnreadableError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../TapFormulaClassUnavailableError.html" title="TapFormulaClassUnavailableError (class)">TapFormulaClassUnavailableError</a></span></span><span class='comma'>,</span>
+         <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/CaskUnreadableError.html" title="Cask::CaskUnreadableError (class)">CaskUnreadableError</a></span></span>
+    <span class='comment'># Need to rescue before `*UnavailableError` (superclass of this)
+</span>    <span class='comment'># The formula/cask was found, but there&#39;s a problem with its implementation
+</span>    <span class='id identifier rubyid_raise'>raise</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../NoSuchKegError.html" title="NoSuchKegError (class)">NoSuchKegError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/CaskUnavailableError.html" title="Cask::CaskUnavailableError (class)">CaskUnavailableError</a></span></span>
     <span class='id identifier rubyid_ignore_unavailable'>ignore_unavailable</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_raise'>raise</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -935,17 +947,17 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70
 71
-72</pre>
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_and_casks_and_unavailable'>to_formulae_and_casks_and_unavailable</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@to_formulae_casks_unknowns</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -989,12 +1001,12 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-125
-126
-127</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_paths'>to_formulae_paths</span>
   <span class='id identifier rubyid_to_paths'>to_paths</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='symbol'>:formula</span><span class='rparen'>)</span>
@@ -1033,15 +1045,15 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-58
-59
-60
-61
-62
-63</pre>
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_to_casks'>to_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@to_formulae_to_casks</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1096,14 +1108,14 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-195
-196
-197
-198
-199</pre>
+214
+215
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_installed_taps'>to_installed_taps</span>
   <span class='ivar'>@to_installed_taps</span> <span class='op'>||=</span> <span class='id identifier rubyid_to_taps'>to_taps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>|</span>
@@ -1157,19 +1169,19 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174</pre>
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_kegs'>to_kegs</span>
   <span class='ivar'>@to_kegs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1271,17 +1283,17 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186
-187</pre>
+199
+200
+201
+202
+203
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_kegs_to_casks'>to_kegs_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>ignore_unavailable:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>all_kegs:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='id identifier rubyid_all_kegs'>all_kegs</span> <span class='op'>?</span> <span class='symbol'>:kegs</span> <span class='op'>:</span> <span class='symbol'>:keg</span>
@@ -1370,25 +1382,6 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
 152
 153
 154
@@ -1399,10 +1392,29 @@ unless <code>only</code> is specified.</p>
 159
 160
 161
-162</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_paths'>to_paths</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>recurse_tap:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@to_paths</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1481,13 +1493,13 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-116
-117
-118
-119</pre>
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_resolved_formulae'>to_resolved_formulae</span>
   <span class='ivar'>@to_resolved_formulae</span> <span class='op'>||=</span> <span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='symbol'>:formula</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='rparen'>)</span>
@@ -1527,12 +1539,12 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-121
-122
-123</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_resolved_formulae_to_casks'>to_resolved_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_formulae_to_casks'>to_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='rparen'>)</span>
@@ -1584,12 +1596,12 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-190
-191
-192</pre>
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/named_args.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_taps'>to_taps</span>
   <span class='ivar'>@to_taps</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
