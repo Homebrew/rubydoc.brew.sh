@@ -348,6 +348,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#cleanup_bootsnap-instance_method" title="#cleanup_bootsnap (instance method)">#<strong>cleanup_bootsnap</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#cleanup_cache-instance_method" title="#cleanup_cache (instance method)">#<strong>cleanup_cache</strong>(entries = nil)  &#x21d2; Object </a>
     
 
@@ -1121,7 +1144,8 @@
 227
 228
 229
-230</pre>
+230
+231</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 188</span>
@@ -1150,6 +1174,7 @@
 </span>    <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_periodic'>periodic</span>
 
     <span class='id identifier rubyid_cleanup_portable_ruby'>cleanup_portable_ruby</span>
+    <span class='id identifier rubyid_cleanup_bootsnap'>cleanup_bootsnap</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span>
       <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='kw'>begin</span>
@@ -1167,6 +1192,64 @@
       <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span>
       <span class='id identifier rubyid_cleanup_cask'>cleanup_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span>
     <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cleanup_bootsnap-instance_method">
+  
+    #<strong>cleanup_bootsnap</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 403</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cleanup_bootsnap'>cleanup_bootsnap</span>
+  <span class='id identifier rubyid_bootsnap'>bootsnap</span> <span class='op'>=</span> <span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bootsnap</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_bootsnap'>bootsnap</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would remove: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bootsnap'>bootsnap</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bootsnap'>bootsnap</span><span class='period'>.</span><span class='id identifier rubyid_abv'>abv</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_rf'>rm_rf</span> <span class='id identifier rubyid_bootsnap'>bootsnap</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1203,7 +1286,6 @@
       <pre class="lines">
 
 
-301
 302
 303
 304
@@ -1227,10 +1309,11 @@
 322
 323
 324
-325</pre>
+325
+326</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 302</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cache'>cleanup_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_entries'>entries</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_entries'>entries</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_cache'>cache</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:children</span><span class='rparen'>)</span>
@@ -1291,27 +1374,27 @@
       <pre class="lines">
 
 
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
 414
 415
 416
 417
 418
-419</pre>
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cache_db'>cleanup_cache_db</span><span class='lparen'>(</span><span class='id identifier rubyid_rack'>rack</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_rf'>rm_rf</span> <span class='lbracket'>[</span>
@@ -1365,14 +1448,14 @@
       <pre class="lines">
 
 
-245
 246
 247
 248
-249</pre>
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cask'>cleanup_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>ds_store:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cleanup_cache'>cleanup_cache</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'>--*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1413,17 +1496,17 @@
       <pre class="lines">
 
 
-236
 237
 238
 239
 240
 241
 242
-243</pre>
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>ds_store:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>cache_db:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_eligible_kegs_for_cleanup'>eligible_kegs_for_cleanup</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='rparen'>)</span>
@@ -1467,15 +1550,15 @@
       <pre class="lines">
 
 
-251
 252
 253
 254
 255
-256</pre>
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_keg'>cleanup_keg</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cleanup_path'>cleanup_path</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'>uninstall</span><span class='lparen'>(</span><span class='label'>raise_failures:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1517,7 +1600,6 @@
       <pre class="lines">
 
 
-343
 344
 345
 346
@@ -1532,10 +1614,11 @@
 355
 356
 357
-358</pre>
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 343</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 344</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_lockfiles'>cleanup_lockfiles</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_lockfiles'>lockfiles</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -1587,7 +1670,6 @@
       <pre class="lines">
 
 
-258
 259
 260
 261
@@ -1599,10 +1681,11 @@
 267
 268
 269
-270</pre>
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_logs'>cleanup_logs</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_LOGS-constant" title="HOMEBREW_LOGS (constant)">HOMEBREW_LOGS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -1651,7 +1734,6 @@
       <pre class="lines">
 
 
-327
 328
 329
 330
@@ -1665,10 +1747,11 @@
 338
 339
 340
-341</pre>
+341
+342</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 328</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_path'>cleanup_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -1719,7 +1802,6 @@
       <pre class="lines">
 
 
-360
 361
 362
 363
@@ -1759,10 +1841,11 @@
 397
 398
 399
-400</pre>
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_portable_ruby'>cleanup_portable_ruby</span>
   <span class='id identifier rubyid_rubies'>rubies</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
@@ -1839,7 +1922,6 @@
       <pre class="lines">
 
 
-272
 273
 274
 275
@@ -1866,10 +1948,11 @@
 296
 297
 298
-299</pre>
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_unreferenced_downloads'>cleanup_unreferenced_downloads</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -2056,18 +2139,6 @@
       <pre class="lines">
 
 
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
 444
 445
 446
@@ -2098,10 +2169,22 @@
 471
 472
 473
-474</pre>
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 444</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune_prefix_symlinks_and_directories'>prune_prefix_symlinks_and_directories</span>
   <span class='const'>ObserverPathnameExtension</span><span class='period'>.</span><span class='id identifier rubyid_reset_counts!'>reset_counts!</span>
@@ -2180,19 +2263,19 @@
       <pre class="lines">
 
 
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430</pre>
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 421</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 433</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rm_ds_store'>rm_ds_store</span><span class='lparen'>(</span><span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -2238,12 +2321,12 @@
       <pre class="lines">
 
 
-232
 233
-234</pre>
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cleanup.rb', line 233</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unremovable_kegs'>unremovable_kegs</span>
   <span class='ivar'>@unremovable_kegs</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
