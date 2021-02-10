@@ -2243,8 +2243,6 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-84
-85
 86
 87
 88
@@ -2254,15 +2252,17 @@ directories in the prefix, never symlinks.</p>
 92
 93
 94
-95</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bottle_dependencies'>bottle_dependencies</span>
   <span class='ivar'>@bottle_dependencies</span> <span class='op'>||=</span> <span class='kw'>begin</span>
     <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_relocation_formulae'>relocation_formulae</span>
-    <span class='id identifier rubyid_gcc'>gcc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gcc</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_gcc'>gcc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="CompilerSelector.html" title="CompilerSelector (class)">CompilerSelector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_preferred_gcc'><span class='object_link'><a href="CompilerSelector.html#preferred_gcc-class_method" title="CompilerSelector.preferred_gcc (method)">preferred_gcc</a></span></span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_force_homebrew_on_linux?'>force_homebrew_on_linux?</span> <span class='op'>&amp;&amp;</span>
        <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_non_apple_gcc_version'>non_apple_gcc_version</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gcc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_gcc'>gcc</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
       <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>+=</span> <span class='id identifier rubyid_gcc'>gcc</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
@@ -2562,12 +2562,12 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-80
-81
-82</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_relocation_formulae'>relocation_formulae</span>
   <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>patchelf</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -2945,8 +2945,6 @@ in the passed kegs are other kegs in the array.</p>
       <pre class="lines">
 
 
-19
-20
 21
 22
 23
@@ -2973,10 +2971,12 @@ in the passed kegs are other kegs in the array.</p>
 44
 45
 46
-47</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_old_prefix'>old_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_new_prefix'>new_prefix</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_elf?'>elf?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamic_elf?'>dynamic_elf?</span>
@@ -3331,8 +3331,6 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-63
-64
 65
 66
 67
@@ -3346,10 +3344,12 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
 75
 76
 77
-78</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/linux/keg_relocate.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_elf_files'>elf_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
