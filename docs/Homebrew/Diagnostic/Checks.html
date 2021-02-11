@@ -446,6 +446,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#check_broken_sdks-instance_method" title="#check_broken_sdks (instance method)">#<strong>check_broken_sdks</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The CLT 10.x -&gt; 11.x upgrade process on 10.14 contained a bug which broke the SDKs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#check_cask_environment_variables-instance_method" title="#check_cask_environment_variables (instance method)">#<strong>check_cask_environment_variables</strong>  &#x21d2; Object </a>
     
 
@@ -2561,16 +2584,16 @@
       <pre class="lines">
 
 
-82
 83
 84
 85
 86
 87
-88</pre>
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_from_source_checks'>build_from_source_checks</span>
   <span class='qwords_beg'>%w[</span><span class='words_sep'>
@@ -2739,6 +2762,102 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_check_brew_git_origin'>check_brew_git_origin</span>
   <span class='id identifier rubyid_examine_git_origin'>examine_git_origin</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_brew_git_remote'>brew_git_remote</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_broken_sdks-instance_method">
+  
+    #<strong>check_broken_sdks</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The CLT 10.x -&gt; 11.x upgrade process on 10.14 contained a bug which broke the SDKs.
+Notably, MacOSX10.14.sdk would indirectly symlink to MacOSX10.15.sdk.
+This diagnostic was introduced to check for this and recommend a full reinstall.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 446</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_broken_sdks'>check_broken_sdks</span>
+  <span class='id identifier rubyid_locator'>locator</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_sdk_locator'>sdk_locator</span>
+
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_locator'>locator</span><span class='period'>.</span><span class='id identifier rubyid_all_sdks'>all_sdks</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sdk'>sdk</span><span class='op'>|</span>
+    <span class='id identifier rubyid_path_version'>path_version</span> <span class='op'>=</span> <span class='id identifier rubyid_sdk'>sdk</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>SDK</span><span class='op'>::</span><span class='const'>VERSIONED_SDK_REGEX</span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+    <span class='kw'>next</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_path_version'>path_version</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='id identifier rubyid_sdk'>sdk</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>==</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_path_version'>path_version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_strip_patch'>strip_patch</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_locator'>locator</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>==</span> <span class='symbol'>:clt</span>
+    <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Command Line Tools (CLT)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_path_to_remove'>path_to_remove</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='op'>::</span><span class='const'>PKG_PATH</span>
+    <span class='id identifier rubyid_installation_instructions'>installation_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_installation_instructions'>installation_instructions</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Xcode</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_path_to_remove'>path_to_remove</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_bundle_path'>bundle_path</span>
+    <span class='id identifier rubyid_installation_instructions'>installation_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_installation_instructions'>installation_instructions</span>
+  <span class='kw'>end</span>
+
+  <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>    The contents of the SDKs in your </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'> installation do not match the SDK folder names.
+</span><span class='tstring_content'>    A clean reinstall of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'> should fix this.
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    Remove the broken installation before reinstalling:
+</span><span class='tstring_content'>      sudo rm -rf </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path_to_remove'>path_to_remove</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_installation_instructions'>installation_instructions</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>  EOS
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -3395,17 +3514,17 @@
       <pre class="lines">
 
 
-181
 182
 183
 184
 185
 186
 187
-188</pre>
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_clt_minimum_version'>check_clt_minimum_version</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_below_minimum_version?'>below_minimum_version?</span>
@@ -3435,7 +3554,6 @@
       <pre class="lines">
 
 
-153
 154
 155
 156
@@ -3448,10 +3566,11 @@
 163
 164
 165
-166</pre>
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_clt_up_to_date'>check_clt_up_to_date</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span>
@@ -3601,7 +3720,6 @@
       <pre class="lines">
 
 
-407
 408
 409
 410
@@ -3611,10 +3729,11 @@
 414
 415
 416
-417</pre>
+417
+418</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_deprecated_caskroom_taps'>check_deprecated_caskroom_taps</span>
   <span class='id identifier rubyid_tapped_caskroom_taps'>tapped_caskroom_taps</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>caskroom</span><span class='tstring_end'>&quot;</span></span> <span class='op'>||</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>phinze/cask</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -3839,7 +3958,6 @@
       <pre class="lines">
 
 
-271
 272
 273
 274
@@ -3870,10 +3988,11 @@
 299
 300
 301
-302</pre>
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 271</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_filesystem_case_sensitive'>check_filesystem_case_sensitive</span>
   <span class='id identifier rubyid_dirs_to_check'>dirs_to_check</span> <span class='op'>=</span> <span class='lbracket'>[</span>
@@ -4010,7 +4129,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-361
 362
 363
 364
@@ -4021,10 +4139,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 369
 370
 371
-372</pre>
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 361</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_bitdefender'>check_for_bitdefender</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Library/Bitdefender/AVP/EndpointSecurityforMac.app</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span>
@@ -4332,7 +4451,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-304
 305
 306
 307
@@ -4357,10 +4475,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 326
 327
 328
-329</pre>
+329
+330</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 305</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_gettext'>check_for_gettext</span>
   <span class='id identifier rubyid_find_relative_paths'>find_relative_paths</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib/libgettextlib.dylib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -4466,7 +4585,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-331
 332
 333
 334
@@ -4494,10 +4612,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 356
 357
 358
-359</pre>
+359
+360</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 332</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_iconv'>check_for_iconv</span>
   <span class='id identifier rubyid_find_relative_paths'>find_relative_paths</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib/libiconv.dylib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>include/iconv.h</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -4602,7 +4721,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-374
 375
 376
 377
@@ -4633,10 +4751,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 402
 403
 404
-405</pre>
+405
+406</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_multiple_volumes'>check_for_multiple_volumes</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -4754,7 +4873,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-90
 91
 92
 93
@@ -4767,10 +4885,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 100
 101
 102
-103</pre>
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_non_prefixed_findutils'>check_for_non_prefixed_findutils</span>
   <span class='id identifier rubyid_findutils'>findutils</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>findutils</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -5666,7 +5785,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-105
 106
 107
 108
@@ -5685,10 +5803,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 121
 122
 123
-124</pre>
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_unsupported_macos'>check_for_unsupported_macos</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
@@ -6078,7 +6197,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-419
 420
 421
 422
@@ -6099,10 +6217,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 437
 438
 439
-440</pre>
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 420</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_if_supported_sdk_available'>check_if_supported_sdk_available</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -6113,7 +6232,7 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 
   <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_locator'>locator</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>==</span> <span class='symbol'>:clt</span>
     <span class='id identifier rubyid_update_instructions'>update_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_update_instructions'>update_instructions</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CLT</span><span class='tstring_end'>&quot;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Command Line Tools (CLT)</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_update_instructions'>update_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_update_instructions'>update_instructions</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Xcode</span><span class='tstring_end'>&quot;</span></span>
@@ -6146,17 +6265,17 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-190
 191
 192
 193
 194
 195
 196
-197</pre>
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_if_xcode_needs_clt_installed'>check_if_xcode_needs_clt_installed</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_needs_clt_installed?'>needs_clt_installed?</span>
@@ -6368,7 +6487,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-199
 200
 201
 202
@@ -6378,10 +6496,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 206
 207
 208
-209</pre>
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_ruby_version'>check_ruby_version</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>RUBY_VERSION</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REQUIRED_RUBY_VERSION-constant" title="HOMEBREW_REQUIRED_RUBY_VERSION (constant)">HOMEBREW_REQUIRED_RUBY_VERSION</a></span></span>
@@ -7003,7 +7122,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-247
 248
 249
 250
@@ -7014,10 +7132,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 255
 256
 257
-258</pre>
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_license_approved'>check_xcode_license_approved</span>
   <span class='comment'># If the user installs Xcode-only, they have to approve the
@@ -7051,7 +7170,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-168
 169
 170
 171
@@ -7062,10 +7180,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 176
 177
 178
-179</pre>
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_minimum_version'>check_xcode_minimum_version</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_below_minimum_version?'>below_minimum_version?</span>
@@ -7099,7 +7218,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-211
 212
 213
 214
@@ -7108,10 +7226,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 217
 218
 219
-220</pre>
+220
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_prefix'>check_xcode_prefix</span>
   <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span>
@@ -7143,7 +7262,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-222
 223
 224
 225
@@ -7152,10 +7270,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 228
 229
 230
-231</pre>
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 223</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_prefix_exists'>check_xcode_prefix_exists</span>
   <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span>
@@ -7187,7 +7306,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-233
 234
 235
 236
@@ -7199,10 +7317,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 242
 243
 244
-245</pre>
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_select_path'>check_xcode_select_path</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -7237,7 +7356,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-126
 127
 128
 129
@@ -7262,10 +7380,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 148
 149
 150
-151</pre>
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xcode_up_to_date'>check_xcode_up_to_date</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span>
@@ -7361,7 +7480,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-260
 261
 262
 263
@@ -7370,10 +7488,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 266
 267
 268
-269</pre>
+269
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xquartz_up_to_date'>check_xquartz_up_to_date</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>XQuartz</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span>
@@ -7515,7 +7634,8 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 60</span>
@@ -7527,6 +7647,7 @@ to ignore those as warnings rather than extremely likely breakage.</p>
     </span><span class='tstring_content'>check_clt_minimum_version</span><span class='words_sep'>
     </span><span class='tstring_content'>check_if_xcode_needs_clt_installed</span><span class='words_sep'>
     </span><span class='tstring_content'>check_if_supported_sdk_available</span><span class='words_sep'>
+    </span><span class='tstring_content'>check_broken_sdks</span><span class='words_sep'>
   </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -7621,14 +7742,14 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-70
 71
 72
 73
-74</pre>
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fatal_setup_build_environment_checks'>fatal_setup_build_environment_checks</span>
   <span class='qwords_beg'>%w[</span><span class='words_sep'>
@@ -7878,14 +7999,14 @@ Sets @found for your convenience.</p>
       <pre class="lines">
 
 
-76
 77
 78
 79
-80</pre>
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/extend/os/mac/diagnostic.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_supported_configuration_checks'>supported_configuration_checks</span>
   <span class='qwords_beg'>%w[</span><span class='words_sep'>
