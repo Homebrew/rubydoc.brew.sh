@@ -462,7 +462,16 @@
 567
 568
 569
-570</pre>
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/lines.rb', line 354</span>
@@ -662,6 +671,15 @@
     <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`depends_on` can take requirement classes instead of instances</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
+  <span class='id identifier rubyid_find_instance_method_call'>find_instance_method_call</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ENV</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:[]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_modifier?'>modifier?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_param'>param</span> <span class='op'>=</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_node_equals?'>node_equals?</span><span class='lparen'>(</span><span class='id identifier rubyid_param'>param</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Don\&#39;t use ENV[&quot;CI&quot;] for Homebrew CI checks.</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_find_instance_method_call'>find_instance_method_call</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dir</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:[]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span>
 
@@ -731,14 +749,14 @@
       <pre class="lines">
 
 
-572
-573
-574
-575
-576</pre>
+581
+582
+583
+584
+585</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/lines.rb', line 572</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/rubocops/lines.rb', line 581</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_modifier?'>modifier?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_if_type?'>if_type?</span>
