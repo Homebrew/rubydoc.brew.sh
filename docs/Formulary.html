@@ -207,6 +207,29 @@ It is not meant to be used directly from formulae.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#clear_cache-class_method" title="clear_cache (class method)">.<strong>clear_cache</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#core_path-class_method" title="core_path (class method)">.<strong>core_path</strong>(name)  &#x21d2; Object </a>
     
 
@@ -668,16 +691,16 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-431
-432
-433
-434
-435
-436
-437</pre>
+446
+447
+448
+449
+450
+451
+452</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 431</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_canonical_name'>canonical_name</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_loader_for'>loader_for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -720,16 +743,16 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-108
-109
-110
-111
-112
-113
-114</pre>
+123
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class_s'>class_s</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_class_name'>class_name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span>
@@ -737,6 +760,68 @@ It is not meant to be used directly from formulae.</p>
   <span class='id identifier rubyid_class_name'>class_name</span><span class='period'>.</span><span class='id identifier rubyid_tr!'>tr!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_class_name'>class_name</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.)@(\d)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1AT\\2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_class_name'>class_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="clear_cache-class_method">
+  
+    .<strong>clear_cache</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 36</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span>
+  <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_klass'>klass</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>==</span> <span class='symbol'>:formulary_factory</span>
+
+    <span class='id identifier rubyid_namespace'>namespace</span> <span class='op'>=</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_deconstantize'>deconstantize</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_namespace'>namespace</span><span class='period'>.</span><span class='id identifier rubyid_deconstantize'>deconstantize</span> <span class='op'>!=</span> <span class='id identifier rubyid_name'>name</span>
+
+    <span class='id identifier rubyid_remove_const'>remove_const</span><span class='lparen'>(</span><span class='id identifier rubyid_namespace'>namespace</span><span class='period'>.</span><span class='id identifier rubyid_demodulize'>demodulize</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -772,12 +857,12 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-497
-498
-499</pre>
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 512</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_core_path'>core_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_dir'>formula_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
@@ -860,12 +945,12 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-104
-105
-106</pre>
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ensure_utf8_encoding'>ensure_utf8_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_set_encoding'>set_encoding</span><span class='lparen'>(</span><span class='const'>Encoding</span><span class='op'>::</span><span class='const'>UTF_8</span><span class='rparen'>)</span>
@@ -925,26 +1010,26 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
 357
-358</pre>
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 342</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_factory'>factory</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='symbol'>:stable</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae must have a ref!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_ref'>ref</span>
@@ -1155,13 +1240,13 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-413
-414
-415
-416</pre>
+428
+429
+430
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 413</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 428</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_contents'>from_contents</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='symbol'>:stable</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Formulary/FormulaContentsLoader.html" title="Formulary::FormulaContentsLoader (class)">FormulaContentsLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Formulary/FormulaContentsLoader.html#initialize-instance_method" title="Formulary::FormulaContentsLoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span><span class='rparen'>)</span>
@@ -1222,21 +1307,6 @@ It is not meant to be used directly from formulae.</p>
       <pre class="lines">
 
 
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
 403
 404
 405
@@ -1244,10 +1314,25 @@ It is not meant to be used directly from formulae.</p>
 407
 408
 409
-410</pre>
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_keg'>from_keg</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tab'>tab</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
@@ -1344,20 +1429,20 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376</pre>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_rack'>from_rack</span><span class='lparen'>(</span><span class='id identifier rubyid_rack'>rack</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='id identifier rubyid_rack'>rack</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>?</span> <span class='id identifier rubyid_rack'>rack</span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1417,14 +1502,14 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-379
-380
-381
-382
-383</pre>
+394
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 379</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span><span class='lparen'>(</span><span class='id identifier rubyid_rack'>rack</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_rack'><span class='object_link'><a href="#from_rack-class_method" title="Formulary.from_rack (method)">from_rack</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_rack'>rack</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -1465,19 +1550,6 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
 49
 50
 51
@@ -1492,10 +1564,25 @@ to install the formula will be set instead.</p>
 60
 61
 62
-63</pre>
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load_formula'>load_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span><span class='comma'>,</span> <span class='id identifier rubyid_namespace'>namespace</span><span class='comma'>,</span> <span class='label'>flags:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula loading disabled by HOMEBREW_DISABLE_LOAD_FORMULA!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disable_load_formula?'>disable_load_formula?</span>
@@ -1511,6 +1598,7 @@ to install the formula will be set instead.</p>
 </span>    <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_const_set'>const_set</span><span class='lparen'>(</span><span class='symbol'>:BUILD_FLAGS</span><span class='comma'>,</span> <span class='id identifier rubyid_flags'>flags</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_module_eval'>module_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_contents'>contents</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span> <span class='const'>NameError</span><span class='comma'>,</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='const'>ScriptError</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="MethodDeprecatedError.html" title="MethodDeprecatedError (class)">MethodDeprecatedError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='id identifier rubyid_remove_const'>remove_const</span><span class='lparen'>(</span><span class='id identifier rubyid_namespace'>namespace</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FormulaUnreadableError.html" title="FormulaUnreadableError (class)">FormulaUnreadableError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FormulaUnreadableError.html#initialize-instance_method" title="FormulaUnreadableError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_class_name'>class_name</span> <span class='op'>=</span> <span class='id identifier rubyid_class_s'>class_s</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -1522,6 +1610,7 @@ to install the formula will be set instead.</p>
                     <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_const_name'>const_name</span><span class='op'>|</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='id identifier rubyid_const_name'>const_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
                     <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_const'>const</span><span class='op'>|</span> <span class='id identifier rubyid_const'>const</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
     <span class='id identifier rubyid_new_exception'>new_exception</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FormulaClassUnavailableError.html" title="FormulaClassUnavailableError (class)">FormulaClassUnavailableError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FormulaClassUnavailableError.html#initialize-instance_method" title="FormulaClassUnavailableError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_class_name'>class_name</span><span class='comma'>,</span> <span class='id identifier rubyid_class_list'>class_list</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_remove_const'>remove_const</span><span class='lparen'>(</span><span class='id identifier rubyid_namespace'>namespace</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_new_exception'>new_exception</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1559,15 +1648,15 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
-70</pre>
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load_formula_from_path'>load_formula_from_path</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>flags:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>r</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_ensure_utf8_encoding'>ensure_utf8_encoding</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span> <span class='rbrace'>}</span>
@@ -1622,21 +1711,6 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
 458
 459
 460
@@ -1674,10 +1748,25 @@ to install the formula will be set instead.</p>
 492
 493
 494
-495</pre>
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 458</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_loader_for'>loader_for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='label'>from:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_ref'>ref</span>
@@ -1766,12 +1855,12 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-439
-440
-441</pre>
+454
+455
+456</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 454</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_loader_for'>loader_for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
@@ -1810,21 +1899,6 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
 87
 88
 89
@@ -1840,10 +1914,25 @@ to install the formula will be set instead.</p>
 99
 100
 101
-102</pre>
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>spec:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -1910,20 +1999,20 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511</pre>
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 516</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tap_paths'>tap_paths</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_taps'>taps</span> <span class='op'>=</span> <span class='const'>Dir</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Taps/*/*/</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
@@ -1970,21 +2059,21 @@ to install the formula will be set instead.</p>
       <pre class="lines">
 
 
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428
-429</pre>
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 418</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formulary.rb', line 433</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_rack'>to_rack</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='comment'># If using a fully-scoped reference, check if the formula can be resolved.
