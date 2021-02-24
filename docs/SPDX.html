@@ -538,7 +538,8 @@
 81
 82
 83
-84</pre>
+84
+85</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 77</span>
@@ -547,6 +548,7 @@
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#ALLOWED_LICENSE_SYMBOLS-constant" title="SPDX::ALLOWED_LICENSE_SYMBOLS (constant)">ALLOWED_LICENSE_SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_license'>license</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_license?'>valid_license?</span><span class='lparen'>(</span><span class='id identifier rubyid_license'>license</span><span class='rparen'>)</span>
 
+  <span class='id identifier rubyid_license'>license</span> <span class='op'>=</span> <span class='id identifier rubyid_license'>license</span><span class='period'>.</span><span class='id identifier rubyid_delete_suffix'>delete_suffix</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_license_data'>license_data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>licenses</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_spdx_license'>spdx_license</span><span class='op'>|</span>
     <span class='id identifier rubyid_spdx_license'>spdx_license</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>licenseId</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_license'>license</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_spdx_license'>spdx_license</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>isDeprecatedLicenseId</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -690,7 +692,6 @@
       <pre class="lines">
 
 
-162
 163
 164
 165
@@ -704,10 +705,11 @@
 173
 174
 175
-176</pre>
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_forbidden_licenses_include?'>forbidden_licenses_include?</span><span class='lparen'>(</span><span class='id identifier rubyid_license'>license</span><span class='comma'>,</span> <span class='id identifier rubyid_forbidden_licenses'>forbidden_licenses</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_forbidden_licenses'>forbidden_licenses</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_license'>license</span>
@@ -846,7 +848,6 @@
       <pre class="lines">
 
 
-92
 93
 94
 95
@@ -883,10 +884,11 @@
 126
 127
 128
-129</pre>
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_license_expression_to_string'>license_expression_to_string</span><span class='lparen'>(</span><span class='id identifier rubyid_license_expression'>license_expression</span><span class='comma'>,</span> <span class='label'>bracket:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>hash_type:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_license_expression'>license_expression</span>
@@ -960,7 +962,6 @@
       <pre class="lines">
 
 
-131
 132
 133
 134
@@ -972,10 +973,11 @@
 140
 141
 142
-143</pre>
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_license_version_info'>license_version_info</span><span class='lparen'>(</span><span class='id identifier rubyid_license'>license</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_license'>license</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#ALLOWED_LICENSE_SYMBOLS-constant" title="SPDX::ALLOWED_LICENSE_SYMBOLS (constant)">ALLOWED_LICENSE_SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_license'>license</span>
@@ -1037,7 +1039,6 @@
       <pre class="lines">
 
 
-145
 146
 147
 148
@@ -1052,10 +1053,11 @@
 157
 158
 159
-160</pre>
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_licenses_forbid_installation?'>licenses_forbid_installation?</span><span class='lparen'>(</span><span class='id identifier rubyid_license_expression'>license_expression</span><span class='comma'>,</span> <span class='id identifier rubyid_forbidden_licenses'>forbidden_licenses</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_license_expression'>license_expression</span>
@@ -1277,14 +1279,14 @@
       <pre class="lines">
 
 
-86
 87
 88
 89
-90</pre>
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/spdx.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid_license_exception?'>valid_license_exception?</span><span class='lparen'>(</span><span class='id identifier rubyid_exception'>exception</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exception_data'>exception_data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exceptions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_spdx_exception'>spdx_exception</span><span class='op'>|</span>
