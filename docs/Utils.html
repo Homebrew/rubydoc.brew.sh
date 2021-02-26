@@ -1125,7 +1125,14 @@
 94
 95
 96
-97</pre>
+97
+98
+99
+100
+101
+102
+103
+104</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/fork.rb', line 32</span>
@@ -1152,7 +1159,14 @@
 </span>        <span class='comment'># to rescue them further down.
 </span>        <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span><span class='rparen'>)</span>
           <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmd</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_cmd'>cmd</span>
-          <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span>
+          <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>status</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Process</span><span class='op'>::</span><span class='const'>Status</span><span class='rparen'>)</span>
+            <span class='lbrace'>{</span>
+              <span class='label'>exitstatus:</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_exitstatus'>exitstatus</span><span class='comma'>,</span>
+              <span class='label'>termsig:</span>    <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_termsig'>termsig</span><span class='comma'>,</span>
+            <span class='rbrace'>}</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span>
+          <span class='kw'>end</span>
           <span class='id identifier rubyid_error_hash'>error_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>output</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_output'>output</span>
         <span class='kw'>end</span>
 
