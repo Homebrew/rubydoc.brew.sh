@@ -31863,6 +31863,7 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
+32
 33
 34
 35
@@ -31997,10 +31998,12 @@ corresponding to all the original commit messages combined.</p>
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/tap-new.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/tap-new.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tap_new'>tap_new</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_tap_new_args'>tap_new_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -32022,11 +32025,13 @@ corresponding to all the original commit messages combined.</p>
 <span class='tstring_content'>    # </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_titleized_user'>titleized_user</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_titleized_repo'>titleized_repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    ## How do I install these formulae?
+</span><span class='tstring_content'>
 </span><span class='tstring_content'>    `brew install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'>/&lt;formula&gt;`
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Or `brew tap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_content'>` and then `brew install &lt;formula&gt;`.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    ## Documentation
+</span><span class='tstring_content'>
 </span><span class='tstring_content'>    `brew help`, `man brew` or check [Homebrew&#39;s documentation](https://docs.brew.sh).
 </span><span class='heredoc_end'>  MARKDOWN
 </span>  <span class='id identifier rubyid_write_path'>write_path</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>README.md</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_readme'>readme</span><span class='rparen'>)</span>
@@ -32035,13 +32040,14 @@ corresponding to all the original commit messages combined.</p>
 <span class='tstring_content'>    name: brew test-bot
 </span><span class='tstring_content'>    on:
 </span><span class='tstring_content'>      push:
-</span><span class='tstring_content'>        branches: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        branches:
+</span><span class='tstring_content'>          - </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>      pull_request:
 </span><span class='tstring_content'>    jobs:
 </span><span class='tstring_content'>      test-bot:
 </span><span class='tstring_content'>        strategy:
 </span><span class='tstring_content'>          matrix:
-</span><span class='tstring_content'>            os: [ubuntu-latest, macOS-latest]
+</span><span class='tstring_content'>            os: [ubuntu-latest, macos-latest]
 </span><span class='tstring_content'>        runs-on: ${{ matrix.os }}
 </span><span class='tstring_content'>        steps:
 </span><span class='tstring_content'>          - name: Set up Homebrew
@@ -32197,8 +32203,7 @@ corresponding to all the original commit messages combined.</p>
 27
 28
 29
-30
-31</pre>
+30</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/tap-new.rb', line 13</span>
@@ -32215,9 +32220,8 @@ corresponding to all the original commit messages combined.</p>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--pull-label=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Label name for pull requests ready to be pulled (default: `pr-pull`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--branch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Initialize Git repository with the specified branch name (default: `main`).</span><span class='tstring_end'>&quot;</span></span>
-
-    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--branch</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Initialize Git repository and setup GitHub Actions workflows with the </span><span class='tstring_end'>&quot;</span></span> \
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>specified branch name (default: `main`).</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:tap</span><span class='comma'>,</span> <span class='label'>number:</span> <span class='int'>1</span>
   <span class='kw'>end</span>
@@ -36506,16 +36510,16 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-169
-170
 171
 172
 173
 174
-175</pre>
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/tap-new.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dev-cmd/tap-new.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write_path'>write_path</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='id identifier rubyid_filename'>filename</span>
