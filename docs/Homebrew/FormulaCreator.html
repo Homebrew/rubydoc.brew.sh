@@ -1533,11 +1533,7 @@
 227
 228
 229
-230
-231
-232
-233
-234</pre>
+230</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_creator.rb', line 94</span>
@@ -1607,10 +1603,8 @@
 </span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% elsif mode == :autotools %&gt;
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
-</span><span class='tstring_content'>        system &quot;./configure&quot;, &quot;--disable-debug&quot;,
-</span><span class='tstring_content'>                              &quot;--disable-dependency-tracking&quot;,
-</span><span class='tstring_content'>                              &quot;--disable-silent-rules&quot;,
-</span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
+</span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
+</span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :crystal %&gt;
 </span><span class='tstring_content'>        system &quot;shards&quot;, &quot;build&quot;, &quot;--release&quot;
 </span><span class='tstring_content'>        bin.install &quot;bin/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
@@ -1657,10 +1651,8 @@
 </span><span class='tstring_content'>        system &quot;cargo&quot;, &quot;install&quot;, *std_cargo_args
 </span><span class='tstring_content'>    &lt;% else %&gt;
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
-</span><span class='tstring_content'>        system &quot;./configure&quot;, &quot;--disable-debug&quot;,
-</span><span class='tstring_content'>                              &quot;--disable-dependency-tracking&quot;,
-</span><span class='tstring_content'>                              &quot;--disable-silent-rules&quot;,
-</span><span class='tstring_content'>                              &quot;--prefix=\#{prefix}&quot;
+</span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
+</span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
 </span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>    &lt;% if mode == :autotools || mode == :cmake %&gt;
