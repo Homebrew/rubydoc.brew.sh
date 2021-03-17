@@ -1600,11 +1600,14 @@
 </span><span class='tstring_content'>      def install
 </span><span class='tstring_content'>        # ENV.deparallelize  # if your formula fails when building in parallel
 </span><span class='tstring_content'>    &lt;% if mode == :cmake %&gt;
-</span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
+</span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;-S&quot;, &quot;.&quot;, &quot;-B&quot;, &quot;build&quot;, *std_cmake_args
+</span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;--build&quot;, &quot;build&quot;
+</span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;--install&quot;, &quot;build&quot;
 </span><span class='tstring_content'>    &lt;% elsif mode == :autotools %&gt;
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
 </span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
 </span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
+</span><span class='tstring_content'>        system &quot;make&quot;, &quot;install&quot; # if this fails, try separate make/make install steps
 </span><span class='tstring_content'>    &lt;% elsif mode == :crystal %&gt;
 </span><span class='tstring_content'>        system &quot;shards&quot;, &quot;build&quot;, &quot;--release&quot;
 </span><span class='tstring_content'>        bin.install &quot;bin/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
@@ -1653,10 +1656,7 @@
 </span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
 </span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
 </span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
-</span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;.&quot;, *std_cmake_args
-</span><span class='tstring_content'>    &lt;% end %&gt;
-</span><span class='tstring_content'>    &lt;% if mode == :autotools || mode == :cmake %&gt;
-</span><span class='tstring_content'>        system &quot;make&quot;, &quot;install&quot; # if this fails, try separate make/make install steps
+</span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;-S&quot;, &quot;.&quot;, &quot;-B&quot;, &quot;build&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      end
 </span><span class='tstring_content'>
