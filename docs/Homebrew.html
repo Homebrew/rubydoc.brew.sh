@@ -20548,7 +20548,15 @@
 381
 382
 383
-384</pre>
+384
+385
+386
+387
+388
+389
+390
+391
+392</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 131</span>
@@ -20601,7 +20609,15 @@
 
   <span class='comment'># if the user&#39;s flags will prevent bottle only-installations when no
 </span>  <span class='comment'># developer tools are available, we need to stop them early on
-</span>  <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+</span>  <span class='kw'>unless</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+    <span class='id identifier rubyid_build_flags'>build_flags</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
+    <span class='id identifier rubyid_build_flags'>build_flags</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span>
+    <span class='id identifier rubyid_build_flags'>build_flags</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-bottle</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
+    <span class='id identifier rubyid_build_flags'>build_flags</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source?'>build_from_source?</span>
+
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="BuildFlagsError.html" title="BuildFlagsError (class)">BuildFlagsError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="BuildFlagsError.html#initialize-instance_method" title="BuildFlagsError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_build_flags'>build_flags</span><span class='comma'>,</span> <span class='label'>bottled:</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:bottled?</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_build_flags'>build_flags</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
@@ -21375,14 +21391,6 @@
       <pre class="lines">
 
 
-386
-387
-388
-389
-390
-391
-392
-393
 394
 395
 396
@@ -21411,10 +21419,18 @@
 419
 420
 421
-422</pre>
+422
+423
+424
+425
+426
+427
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/install.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_formula'>install_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_print_tap_action'>print_tap_action</span>
@@ -23177,8 +23193,7 @@
 161
 162
 163
-164
-165</pre>
+164</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/list.rb', line 157</span>
@@ -23189,7 +23204,6 @@
     <span class='label'>one:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='symbol'>:&#39;1?&#39;</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='label'>full_name:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_full_name?'>full_name?</span><span class='comma'>,</span>
     <span class='label'>versions:</span>  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_versions?'>versions?</span><span class='comma'>,</span>
-    <span class='label'>args:</span>      <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span>
   <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -28415,7 +28429,9 @@
 137
 138
 139
-140</pre>
+140
+141
+142</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/reinstall.rb', line 81</span>
@@ -28423,12 +28439,14 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_reinstall'>reinstall</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_reinstall_args'>reinstall_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-
-  <span class='const'><span class='object_link'><a href="Homebrew/Install.html" title="Homebrew::Install (module)">Install</a></span></span><span class='period'>.</span><span class='id identifier rubyid_perform_preinstall_checks'><span class='object_link'><a href="Homebrew/Install.html#perform_preinstall_checks-class_method" title="Homebrew::Install.perform_preinstall_checks (method)">perform_preinstall_checks</a></span></span>
-
   <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_casks'>casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='rparen'>)</span>
                         <span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source?'>build_from_source?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="BuildFlagsError.html" title="BuildFlagsError (class)">BuildFlagsError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="BuildFlagsError.html#initialize-instance_method" title="BuildFlagsError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>bottled:</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:bottled?</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='const'><span class='object_link'><a href="Homebrew/Install.html" title="Homebrew::Install (module)">Install</a></span></span><span class='period'>.</span><span class='id identifier rubyid_perform_preinstall_checks'><span class='object_link'><a href="Homebrew/Install.html#perform_preinstall_checks-class_method" title="Homebrew::Install.perform_preinstall_checks (method)">perform_preinstall_checks</a></span></span>
 
   <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span>
@@ -35818,8 +35836,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-208
-209
 210
 211
 212
@@ -35833,10 +35849,12 @@ corresponding to all the original commit messages combined.</p>
 220
 221
 222
-223</pre>
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
@@ -36013,7 +36031,9 @@ corresponding to all the original commit messages combined.</p>
 202
 203
 204
-205</pre>
+205
+206
+207</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cmd/upgrade.rb', line 115</span>
@@ -36021,7 +36041,9 @@ corresponding to all the original commit messages combined.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
 
-  <span class='const'><span class='object_link'><a href="FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prevent_build_flags'><span class='object_link'><a href="FormulaInstaller.html#prevent_build_flags-class_method" title="FormulaInstaller.prevent_build_flags (method)">prevent_build_flags</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source?'>build_from_source?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="BuildFlagsError.html" title="BuildFlagsError (class)">BuildFlagsError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="BuildFlagsError.html#initialize-instance_method" title="BuildFlagsError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>bottled:</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:bottled?</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='const'><span class='object_link'><a href="Homebrew/Install.html" title="Homebrew::Install (module)">Install</a></span></span><span class='period'>.</span><span class='id identifier rubyid_perform_preinstall_checks'><span class='object_link'><a href="Homebrew/Install.html#perform_preinstall_checks-class_method" title="Homebrew::Install.perform_preinstall_checks (method)">perform_preinstall_checks</a></span></span>
 
