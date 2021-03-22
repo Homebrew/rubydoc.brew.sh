@@ -256,18 +256,18 @@
       <pre class="lines">
 
 
+72
+73
+74
+75
 76
 77
 78
 79
-80
-81
-82
-83
-84</pre>
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dependencies_helpers.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dependencies_helpers.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
@@ -401,6 +401,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -433,25 +446,17 @@
 59
 60
 61
-62
-63
-64
-65
-66</pre>
+62</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dependencies_helpers.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_includes'>recursive_includes</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='id identifier rubyid_root_dependent'>root_dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_includes'>includes</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span>
-    <span class='symbol'>:dependencies</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_klass'>klass</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span>
-    <span class='symbol'>:requirements</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid class argument: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_klass'>klass</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid class argument: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_klass'>klass</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_klass'>klass</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span>
 
-  <span class='id identifier rubyid_root_dependent'>root_dependent</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>recursive_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
+  <span class='id identifier rubyid_cache_key'>cache_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>recursive_includes_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_includes'>includes</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ignores'>ignores</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_root_dependent'>root_dependent</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_recommended?'>recommended?</span>
       <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_prune'>prune</span> <span class='kw'>if</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>recommended?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='period'>.</span><span class='id identifier rubyid_without?'>without?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_optional?'>optional?</span>
@@ -465,7 +470,7 @@
 
     <span class='comment'># If a tap isn&#39;t installed, we can&#39;t find the dependencies of one of
 </span>    <span class='comment'># its formulae, and an exception will be thrown if we try.
-</span>    <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='symbol'>:dependencies</span> <span class='op'>&amp;&amp;</span>
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_klass'>klass</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span> <span class='op'>&amp;&amp;</span>
        <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="TapDependency.html" title="TapDependency (class)">TapDependency</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
        <span class='op'>!</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
       <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keep_but_prune_recursive_deps'><span class='object_link'><a href="Dependency.html#keep_but_prune_recursive_deps-class_method" title="Dependency.keep_but_prune_recursive_deps (method)">keep_but_prune_recursive_deps</a></span></span>
@@ -506,16 +511,16 @@
       <pre class="lines">
 
 
+64
+65
+66
+67
 68
 69
-70
-71
-72
-73
-74</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dependencies_helpers.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/dependencies_helpers.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reject_ignores'>reject_ignores</span><span class='lparen'>(</span><span class='id identifier rubyid_dependables'>dependables</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='comma'>,</span> <span class='id identifier rubyid_includes'>includes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dependables'>dependables</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>

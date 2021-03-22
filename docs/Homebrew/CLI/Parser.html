@@ -879,7 +879,8 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 144
 145
 146
-147</pre>
+147
+148</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 112</span>
@@ -911,6 +912,7 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
   <span class='ivar'>@usage_banner</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@hide_from_man_page</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='ivar'>@formula_options</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@cask_options</span> <span class='op'>=</span> <span class='kw'>false</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_global_options'>global_options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='op'>|</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='label'>env:</span> <span class='id identifier rubyid_option_to_name'>option_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_long'>long</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:on_tail</span>
@@ -1347,21 +1349,23 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-355
-356
 357
 358
 359
-360</pre>
+360
+361
+362
+363</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_options'>cask_options</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options'>global_cask_options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='op'>|</span>
     <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
   <span class='kw'>end</span>
+  <span class='ivar'>@cask_options</span> <span class='op'>=</span> <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1383,17 +1387,17 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-200
 201
 202
 203
 204
 205
 206
-207</pre>
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_comma_array'>comma_array</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span>
@@ -1423,12 +1427,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-234
 235
-236</pre>
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_conflicts'>conflicts</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@conflicts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_option'>option</span><span class='op'>|</span> <span class='id identifier rubyid_option_to_name'>option_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1453,14 +1457,14 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-186
 187
 188
 189
-190</pre>
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@description</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1510,14 +1514,14 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-180
 181
 182
 183
-184</pre>
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env?'>env?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1544,7 +1548,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-209
 210
 211
 212
@@ -1567,10 +1570,11 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 229
 230
 231
-232</pre>
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flag'>flag</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacement:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>required_for:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>depends_on:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_required'>required</span><span class='comma'>,</span> <span class='id identifier rubyid_flag_type'>flag_type</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1626,12 +1630,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-363
-364
-365</pre>
+366
+367
+368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 366</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_options'>formula_options</span>
   <span class='ivar'>@formula_options</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1656,18 +1660,18 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-345
-346
 347
 348
 349
 350
 351
 352
-353</pre>
+353
+354
+355</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 347</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_help_text'>generate_help_text</span>
   <span class='const'><span class='object_link'><a href="../../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap'><span class='object_link'><a href="../../Formatter.html#wrap-class_method" title="Formatter.wrap (method)">wrap</a></span></span><span class='lparen'>(</span><span class='ivar'>@parser</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#COMMAND_DESC_WIDTH-constant" title="COMMAND_DESC_WIDTH (constant)">COMMAND_DESC_WIDTH</a></span></span><span class='rparen'>)</span>
@@ -1708,12 +1712,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-435
-436
-437</pre>
+438
+439
+440</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 435</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 438</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hide_from_man_page!'>hide_from_man_page!</span>
   <span class='ivar'>@hide_from_man_page</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1761,16 +1765,16 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-396
-397
-398
 399
 400
 401
-402</pre>
+402
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 399</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_max_named'>max_named</span><span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`max_named`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`named_args max:`</span><span class='tstring_end'>&quot;</span></span>
@@ -1799,9 +1803,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-404
-405
-406
 407
 408
 409
@@ -1812,10 +1813,13 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 414
 415
 416
-417</pre>
+417
+418
+419
+420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_min_named'>min_named</span><span class='lparen'>(</span><span class='id identifier rubyid_count_or_type'>count_or_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`min_named`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`named_args min:`</span><span class='tstring_end'>&quot;</span></span>
@@ -1851,16 +1855,16 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-244
 245
 246
 247
 248
 249
-250</pre>
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name_to_option'>name_to_option</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -1889,9 +1893,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-419
-420
-421
 422
 423
 424
@@ -1902,10 +1903,13 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 429
 430
 431
-432</pre>
+432
+433
+434
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 422</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named'>named</span><span class='lparen'>(</span><span class='id identifier rubyid_count_or_type'>count_or_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`named`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`named_args`</span><span class='tstring_end'>&quot;</span></span>
@@ -2007,9 +2011,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-375
-376
-377
 378
 379
 380
@@ -2026,10 +2027,13 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 391
 392
 393
-394</pre>
+394
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named_args'>named_args</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>number:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_max'>max</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span>
@@ -2071,12 +2075,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-252
 253
-254</pre>
+254
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 253</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_option_to_description'>option_to_description</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A--?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
@@ -2101,14 +2105,14 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-238
 239
 240
 241
-242</pre>
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_option_to_name'>option_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_option'>option</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A--?(\[no-\])?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2188,7 +2192,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-291
 292
 293
 294
@@ -2240,10 +2243,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 340
 341
 342
-343</pre>
+343
+344
+345</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 291</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='comma'>,</span> <span class='label'>ignore_invalid_options:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Arguments were already parsed!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@args_parsed</span>
@@ -2285,9 +2290,10 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
     <span class='id identifier rubyid_check_named_args'>check_named_args</span><span class='lparen'>(</span><span class='id identifier rubyid_named_args'>named_args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='ivar'>@args</span><span class='period'>.</span><span class='id identifier rubyid_freeze_named_args!'>freeze_named_args!</span><span class='lparen'>(</span><span class='id identifier rubyid_named_args'>named_args</span><span class='rparen'>)</span>
+  <span class='ivar'>@args</span><span class='period'>.</span><span class='id identifier rubyid_freeze_named_args!'>freeze_named_args!</span><span class='lparen'>(</span><span class='id identifier rubyid_named_args'>named_args</span><span class='comma'>,</span> <span class='label'>cask_options:</span> <span class='ivar'>@cask_options</span><span class='rparen'>)</span>
   <span class='ivar'>@args</span><span class='period'>.</span><span class='id identifier rubyid_freeze_remaining_args!'>freeze_remaining_args!</span><span class='lparen'>(</span><span class='id identifier rubyid_non_options'>non_options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='id identifier rubyid_remaining'>remaining</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_remaining'>remaining</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_non_options'>non_options</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@args</span><span class='period'>.</span><span class='id identifier rubyid_freeze_processed_options!'>freeze_processed_options!</span><span class='lparen'>(</span><span class='ivar'>@processed_options</span><span class='rparen'>)</span>
+  <span class='ivar'>@args</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 
   <span class='ivar'>@args_parsed</span> <span class='op'>=</span> <span class='kw'>true</span>
 
@@ -2318,7 +2324,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-256
 257
 258
 259
@@ -2350,10 +2355,11 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 285
 286
 287
-288</pre>
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_remaining'>parse_remaining</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span><span class='comma'>,</span> <span class='label'>ignore_invalid_options:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -2412,7 +2418,6 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-149
 150
 151
 152
@@ -2440,10 +2445,11 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
 174
 175
 176
-177</pre>
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_switch'>switch</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacement:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>env:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>required_for:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>depends_on:</span> <span class='kw'>nil</span><span class='comma'>,</span>
            <span class='label'>method:</span> <span class='symbol'>:on</span><span class='rparen'>)</span>
@@ -2494,12 +2500,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-192
 193
-194</pre>
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@usage_banner</span><span class='comma'>,</span> <span class='ivar'>@description</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
@@ -2524,12 +2530,12 @@ See https://github.com/sorbet/sorbet/issues/498.</p>
       <pre class="lines">
 
 
-196
 197
-198</pre>
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/cli/parser.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_usage_banner_text'>usage_banner_text</span>
   <span class='ivar'>@parser</span><span class='period'>.</span><span class='id identifier rubyid_banner'>banner</span>
