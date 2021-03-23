@@ -343,7 +343,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#check_for_duplicate_pull_requests-class_method" title="check_for_duplicate_pull_requests (class method)">.<strong>check_for_duplicate_pull_requests</strong>(name, tap_full_name, state:, file:, args:, version: nil)  &#x21d2; Object </a>
+      <a href="#check_for_duplicate_pull_requests-class_method" title="check_for_duplicate_pull_requests (class method)">.<strong>check_for_duplicate_pull_requests</strong>(name, tap_remote_repo, state:, file:, args:, version: nil)  &#x21d2; Object </a>
     
 
     
@@ -596,7 +596,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#fetch_pull_requests-class_method" title="fetch_pull_requests (class method)">.<strong>fetch_pull_requests</strong>(name, tap_full_name, state: nil, version: nil)  &#x21d2; Object </a>
+      <a href="#fetch_pull_requests-class_method" title="fetch_pull_requests (class method)">.<strong>fetch_pull_requests</strong>(name, tap_remote_repo, state: nil, version: nil)  &#x21d2; Object </a>
     
 
     
@@ -619,7 +619,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#forked_repo_info!-class_method" title="forked_repo_info! (class method)">.<strong>forked_repo_info!</strong>(tap_full_name)  &#x21d2; Object </a>
+      <a href="#forked_repo_info!-class_method" title="forked_repo_info! (class method)">.<strong>forked_repo_info!</strong>(tap_remote_repo)  &#x21d2; Object </a>
     
 
     
@@ -757,7 +757,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#issues_for_formula-class_method" title="issues_for_formula (class method)">.<strong>issues_for_formula</strong>(name, tap: CoreTap.instance, tap_full_name: tap.full_name, state: nil)  &#x21d2; Object </a>
+      <a href="#issues_for_formula-class_method" title="issues_for_formula (class method)">.<strong>issues_for_formula</strong>(name, tap: CoreTap.instance, tap_remote_repo: tap.full_name, state: nil)  &#x21d2; Object </a>
     
 
     
@@ -1391,7 +1391,7 @@
       <div class="method_details ">
   <h3 class="signature " id="check_for_duplicate_pull_requests-class_method">
   
-    .<strong>check_for_duplicate_pull_requests</strong>(name, tap_full_name, state:, file:, args:, version: nil)  &#x21d2; <tt>Object</tt> 
+    .<strong>check_for_duplicate_pull_requests</strong>(name, tap_remote_repo, state:, file:, args:, version: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1444,9 +1444,9 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 429</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_for_duplicate_pull_requests'>check_for_duplicate_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>file:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_pull_requests'>pull_requests</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
-    <span class='id identifier rubyid_pr_files'>pr_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_rest'><span class='object_link'><a href="GitHub/API.html#open_rest-class_method" title="GitHub::API.open_rest (method)">open_rest</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pulls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>number</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>files</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_for_duplicate_pull_requests'>check_for_duplicate_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>file:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_pull_requests'>pull_requests</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
+    <span class='id identifier rubyid_pr_files'>pr_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_rest'><span class='object_link'><a href="GitHub/API.html#open_rest-class_method" title="GitHub::API.open_rest (method)">open_rest</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pulls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>number</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>files</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_pr_files'>pr_files</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_file'>file</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_pull_requests'>pull_requests</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1711,7 +1711,7 @@
   <span class='id identifier rubyid_branch'>branch</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:branch_name</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:commit_message</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_previous_branch'>previous_branch</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:previous_branch</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_tap_full_name'>tap_full_name</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:tap_full_name</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
+  <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:tap_remote_repo</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
   <span class='id identifier rubyid_pr_message'>pr_message</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:pr_message</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -1738,7 +1738,7 @@
           <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span>
         <span class='kw'>else</span>
           <span class='kw'>begin</span>
-            <span class='id identifier rubyid_remote_url'>remote_url</span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_forked_repo_info!'>forked_repo_info!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_remote_url'>remote_url</span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_forked_repo_info!'>forked_repo_info!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='rparen'>)</span>
           <span class='kw'>rescue</span> <span class='op'>*</span><span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/API.html#ERRORS-constant" title="GitHub::API::ERRORS (constant)">ERRORS</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
             <span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span><span class='lparen'>(</span><span class='id identifier rubyid_old_contents'>old_contents</span><span class='rparen'>)</span>
             <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to fork: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
@@ -1772,7 +1772,7 @@
 </span>      <span class='kw'>end</span>
 
       <span class='kw'>begin</span>
-        <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_create_pull_request'>create_pull_request</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_commit_message'>commit_message</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_create_pull_request'>create_pull_request</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='id identifier rubyid_commit_message'>commit_message</span><span class='comma'>,</span>
                                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_remote_branch'>remote_branch</span><span class='comma'>,</span> <span class='id identifier rubyid_pr_message'>pr_message</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_browse?'>no_browse?</span>
           <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_url'>url</span>
@@ -2153,7 +2153,7 @@
       <div class="method_details ">
   <h3 class="signature " id="fetch_pull_requests-class_method">
   
-    .<strong>fetch_pull_requests</strong>(name, tap_full_name, state: nil, version: nil)  &#x21d2; <tt>Object</tt> 
+    .<strong>fetch_pull_requests</strong>(name, tap_remote_repo, state: nil, version: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2198,7 +2198,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 413</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_fetch_pull_requests'>fetch_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
     <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(^|\s)</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_quote'>quote</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>(:|,|\s)(.*\s)?</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_quote'>quote</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>(:|,|\s|$)</span><span class='regexp_end'>/i</span></span>
@@ -2206,7 +2206,7 @@
     <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
     <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(^|\s)</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_quote'>quote</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>(:|,|\s|$)</span><span class='regexp_end'>/i</span></span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_issues_for_formula'>issues_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
+  <span class='id identifier rubyid_issues_for_formula'>issues_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>tap_remote_repo:</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pr'>pr</span><span class='op'>|</span>
     <span class='id identifier rubyid_pr'>pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>html_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/pull/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_regex'>regex</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_pr'>pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>title</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/API/RateLimitExceededError.html" title="GitHub::API::RateLimitExceededError (class)">RateLimitExceededError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
@@ -2221,7 +2221,7 @@
       <div class="method_details ">
   <h3 class="signature " id="forked_repo_info!-class_method">
   
-    .<strong>forked_repo_info!</strong>(tap_full_name)  &#x21d2; <tt>Object</tt> 
+    .<strong>forked_repo_info!</strong>(tap_remote_repo)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2267,10 +2267,10 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 453</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_forked_repo_info!'>forked_repo_info!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_create_fork'>create_fork</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_forked_repo_info!'>forked_repo_info!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_response'>response</span> <span class='op'>=</span> <span class='id identifier rubyid_create_fork'>create_fork</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='rparen'>)</span>
   <span class='comment'># GitHub API responds immediately but fork takes a few seconds to be ready.
-</span>  <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>1</span> <span class='kw'>until</span> <span class='id identifier rubyid_check_fork_exists'>check_fork_exists</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_sleep'>sleep</span> <span class='int'>1</span> <span class='kw'>until</span> <span class='id identifier rubyid_check_fork_exists'>check_fork_exists</span><span class='lparen'>(</span><span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_remote_url'>remote_url</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--local</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--get-regexp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>remote\..*\.url</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git@github.com:.*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ssh_url</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>else</span>
@@ -2613,7 +2613,7 @@
       <div class="method_details ">
   <h3 class="signature " id="issues_for_formula-class_method">
   
-    .<strong>issues_for_formula</strong>(name, tap: CoreTap.instance, tap_full_name: tap.full_name, state: nil)  &#x21d2; <tt>Object</tt> 
+    .<strong>issues_for_formula</strong>(name, tap: CoreTap.instance, tap_remote_repo: tap.full_name, state: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2646,8 +2646,8 @@
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/utils/github.rb', line 66</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_issues_for_formula'>issues_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>tap:</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='comma'>,</span> <span class='label'>tap_full_name:</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_search_issues'>search_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>repo:</span> <span class='id identifier rubyid_tap_full_name'>tap_full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='label'>in:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>title</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_issues_for_formula'>issues_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>tap:</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='comma'>,</span> <span class='label'>tap_remote_repo:</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_search_issues'>search_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>repo:</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='label'>in:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>title</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
