@@ -1966,12 +1966,12 @@
       <pre class="lines">
 
 
-1176
-1177
-1178</pre>
+1181
+1182
+1183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1176</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1181</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_locked'>locked</span>
   <span class='ivar'>@locked</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2016,16 +2016,16 @@
       <pre class="lines">
 
 
-1168
-1169
-1170
-1171
-1172
 1173
-1174</pre>
+1174
+1175
+1176
+1177
+1178
+1179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1168</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -3243,18 +3243,18 @@ being installed.</p>
       <pre class="lines">
 
 
-1110
-1111
 1112
 1113
 1114
 1115
 1116
 1117
-1118</pre>
+1118
+1119
+1120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1110</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_path'>bottle_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='rparen'>)</span>
@@ -3585,7 +3585,9 @@ being installed.</p>
 1105
 1106
 1107
-1108</pre>
+1108
+1109
+1110</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1098</span>
@@ -3595,7 +3597,9 @@ being installed.</p>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_only_deps?'>only_deps?</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>output_warning:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>output_warning:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_bottle_tab'>fetch_bottle_tab</span>
+  <span class='kw'>else</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_patches'>fetch_patches</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:fetch</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -5216,8 +5220,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1121
-1122
 1123
 1124
 1125
@@ -5253,10 +5255,15 @@ being installed.</p>
 1155
 1156
 1157
-1158</pre>
+1158
+1159
+1160
+1161
+1162
+1163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1121</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour'>pour</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -5264,13 +5271,16 @@ being installed.</p>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_tab'>tab</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'><span class='object_link'><a href="Cachable.html#clear_cache-instance_method" title="Cachable#clear_cache (method)">clear_cache</a></span></span>
+
+  <span class='id identifier rubyid_tab'>tab</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_tab_attributes'>tab_attributes</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tab_attributes'>bottle_tab_attributes</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_file_content'><span class='object_link'><a href="Tab.html#from_file_content-class_method" title="Tab.from_file_content (method)">from_file_content</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tab_attributes'>tab_attributes</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='comma'>,</span> <span class='id identifier rubyid_keg'>keg</span><span class='op'>/</span><span class='const'>Tab</span><span class='op'>::</span><span class='const'>FILENAME</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_skip_linkage'>skip_linkage</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_specification'>bottle_specification</span><span class='period'>.</span><span class='id identifier rubyid_skip_relocation?'>skip_relocation?</span>
   <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_replace_placeholders_with_locations'>replace_placeholders_with_locations</span> <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_changed_files'>changed_files</span><span class='comma'>,</span> <span class='label'>skip_linkage:</span> <span class='id identifier rubyid_skip_linkage'>skip_linkage</span>
-
-  <span class='id identifier rubyid_tab'>tab</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_ignore_deps?'>ignore_deps?</span>
     <span class='const'><span class='object_link'><a href="CxxStdlib.html" title="CxxStdlib (class)">CxxStdlib</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_compatibility'><span class='object_link'><a href="CxxStdlib.html#check_compatibility-class_method" title="CxxStdlib.check_compatibility (method)">check_compatibility</a></span></span><span class='lparen'>(</span>
@@ -5565,15 +5575,15 @@ being installed.</p>
       <pre class="lines">
 
 
-1161
-1162
-1163
-1164
-1165
-1166</pre>
+1166
+1167
+1168
+1169
+1170
+1171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1161</span>
+      <pre class="code"><span class="info file"># File 'brew/Library/Homebrew/formula_installer.rb', line 1166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_output'>output</span>
