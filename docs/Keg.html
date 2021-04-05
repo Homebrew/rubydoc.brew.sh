@@ -854,7 +854,7 @@ directories in the prefix, never symlinks.</p>
   
   
   
-    <span class="summary_desc"><div class='inline'><p>Detects the C++ dynamic libraries in-place, scanning the dynamic links of the files within the keg.</p>
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -2955,30 +2955,12 @@ directories in the prefix, never symlinks.</p>
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Detects the C++ dynamic libraries in-place, scanning the dynamic links
-of the files within the keg.
-Note that this doesn’t attempt to distinguish between libstdc++ versions,
-for instance between Apple libstdc++ and GNU libstdc++.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
 51
 52
 53
@@ -2987,23 +2969,26 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
 56
 57
 58
-59</pre>
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_cxx_stdlibs'>detect_cxx_stdlibs</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_skip_executables'>skip_executables</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:skip_executables</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-
-  <span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_executable?'>mach_o_executable?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_skip_executables'>skip_executables</span>
+  <span class='id identifier rubyid_elf_files'>elf_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamic_elf?'>dynamic_elf?</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_binary_executable?'>binary_executable?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_skip_executables'>skip_executables</span>
 
     <span class='id identifier rubyid_dylibs'>dylibs</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamically_linked_libraries'>dynamically_linked_libraries</span>
-    <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:libcxx</span> <span class='kw'>unless</span> <span class='id identifier rubyid_dylibs'>dylibs</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>libc\+\+.+\.dylib</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:libstdcxx</span> <span class='kw'>unless</span> <span class='id identifier rubyid_dylibs'>dylibs</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>libstdc\+\+.+\.dylib</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:libcxx</span> <span class='kw'>if</span> <span class='id identifier rubyid_dylibs'>dylibs</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libc++.so</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_results'>results</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:libstdcxx</span> <span class='kw'>if</span> <span class='id identifier rubyid_dylibs'>dylibs</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libstdc++.so</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-
   <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3026,16 +3011,16 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139</pre>
+114
+115
+116
+117
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dylib_id_for'>dylib_id_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='comment'># The new dylib ID should have the same basename as the old dylib ID, not
@@ -3064,15 +3049,15 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
-131</pre>
+107
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_install_name_for'>each_install_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dylibs'>dylibs</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamically_linked_libraries'>dynamically_linked_libraries</span>
@@ -3344,19 +3329,19 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100</pre>
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_rpath'>expand_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_suffix'>suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^@rpath</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -3388,15 +3373,15 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-153
-154
-155
-156
-157
-158</pre>
+134
+135
+136
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib'>find_dylib</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lib'>lib</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3424,16 +3409,16 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151</pre>
+126
+127
+128
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib_suffix_from'>find_dylib_suffix_from</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_framework'>framework</span> <span class='op'>=</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FRAMEWORK_RX-constant" title="Keg::FRAMEWORK_RX (constant)">FRAMEWORK_RX</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3466,6 +3451,25 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
       <pre class="lines">
 
 
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
 61
 62
 63
@@ -3475,29 +3479,10 @@ for instance between Apple libstdc++ and GNU libstdc++.</p>
 67
 68
 69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span>
   <span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -3560,29 +3545,29 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124</pre>
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fixed_name'>fixed_name</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='const'><span class='object_link'><a href="#PREFIX_PLACEHOLDER-constant" title="Keg::PREFIX_PLACEHOLDER (constant)">PREFIX_PLACEHOLDER</a></span></span>
@@ -4178,24 +4163,24 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174</pre>
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mach_o_files'>mach_o_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -4633,14 +4618,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-176
-177
-178
-179
-180</pre>
+157
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>
   <span class='comment'># Don&#39;t recurse into symlinks; the man page says this is the default, but
