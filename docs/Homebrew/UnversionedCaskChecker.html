@@ -171,6 +171,28 @@ contents and guessing the version from contained files.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#all_versions-instance_method" title="#all_versions (instance method)">#<strong>all_versions</strong>  &#x21d2; Hash{String =&gt; BundleVersion} </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#apps-instance_method" title="#apps (instance method)">#<strong>apps</strong>  &#x21d2; Array&lt;Cask::Artifact::App&gt; </a>
     
     
@@ -485,7 +507,155 @@ contents and guessing the version from contained files.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="apps-instance_method">
+  <h3 class="signature first" id="all_versions-instance_method">
+  
+    #<strong>all_versions</strong>  &#x21d2; <tt>Hash{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="BundleVersion.html" title="Homebrew::BundleVersion (class)">BundleVersion</a></span>}</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../String.html" title="String (class)">String</a></span> =&gt; <span class='object_link'><a href="BundleVersion.html" title="Homebrew::BundleVersion (class)">BundleVersion</a></span>}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 64</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_all_versions'>all_versions</span>
+  <span class='id identifier rubyid_versions'>versions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_parse_info_plist'>parse_info_plist</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_info_plist_path'>info_plist_path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_plist'>plist</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>plutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-convert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xml1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-o</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_info_plist_path'>info_plist_path</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_plist'>plist</span>
+
+    <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_plist'>plist</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CFBundleIdentifier</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="BundleVersion.html" title="Homebrew::BundleVersion (class)">BundleVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_info_plist_content'><span class='object_link'><a href="BundleVersion.html#from_info_plist_content-class_method" title="Homebrew::BundleVersion.from_info_plist_content (method)">from_info_plist_content</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_plist'>plist</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_versions'>versions</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_version'>version</span> <span class='kw'>if</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_version'>version</span>
+  <span class='kw'>end</span>
+
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_mktmpdir'>mktmpdir</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span>
+    <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_installer'>installer</span><span class='period'>.</span><span class='id identifier rubyid_extract_primary_container'>extract_primary_container</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_info_plist_paths'>info_plist_paths</span> <span class='op'>=</span> <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_app'>app</span><span class='op'>|</span>
+      <span class='id identifier rubyid_top_level_info_plists'>top_level_info_plists</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Contents</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Info.plist</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_info_plist_paths'>info_plist_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_parse_info_plist'>parse_info_plist</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_pkg_paths'>pkg_paths</span> <span class='op'>=</span> <span class='id identifier rubyid_pkgs'>pkgs</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pkg'>pkg</span><span class='op'>|</span>
+      <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='id identifier rubyid_pkg'>pkg</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_pkg_paths'>pkg_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_pkg_path'>pkg_path</span><span class='op'>|</span>
+      <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_mktmpdir'>mktmpdir</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='op'>|</span>
+        <span class='id identifier rubyid_extract_dir'>extract_dir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='rparen'>)</span>
+        <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rmdir'>rmdir</span> <span class='id identifier rubyid_extract_dir'>extract_dir</span>
+
+        <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="../SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pkgutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--expand-full</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pkg_path'>pkg_path</span><span class='comma'>,</span> <span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='rbracket'>]</span>
+
+        <span class='id identifier rubyid_top_level_info_plist_paths'>top_level_info_plist_paths</span> <span class='op'>=</span> <span class='id identifier rubyid_top_level_info_plists'>top_level_info_plists</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**/Contents/Info.plist</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+        <span class='id identifier rubyid_top_level_info_plist_paths'>top_level_info_plist_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_parse_info_plist'>parse_info_plist</span><span class='rparen'>)</span>
+      <span class='kw'>ensure</span>
+        <span class='const'><span class='object_link'><a href="../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Utils.html" title="Cask::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_gain_permissions_remove'><span class='object_link'><a href="../Cask/Utils.html#gain_permissions_remove-class_method" title="Cask::Utils.gain_permissions_remove (method)">gain_permissions_remove</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_extract_dir'>extract_dir</span><span class='period'>.</span><span class='id identifier rubyid_mkpath'>mkpath</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_versions'>versions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apps-instance_method">
   
     #<strong>apps</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../Cask/Artifact/App.html" title="Cask::Artifact::App (class)">Cask::Artifact::App</a></span>&gt;</tt> 
   
@@ -585,56 +755,6 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
 114
 115
 116
@@ -674,10 +794,60 @@ contents and guessing the version from contained files.</p>
 150
 151
 152
-153</pre>
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_guess_cask_version'>guess_cask_version</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_pkgs'>pkgs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>

@@ -85,6 +85,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>T::Sig</dd>
+  </dl>
+  
   
   
   
@@ -183,7 +188,7 @@ attributes.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url, regex = nil, &amp;block)  &#x21d2; Hash </a>
+      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url, regex, cask: nil, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
     
     
   </span>
@@ -227,6 +232,7 @@ attributes.</p>
   
 
 
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -235,7 +241,7 @@ attributes.</p>
       <div class="method_details first">
   <h3 class="signature first" id="find_versions-class_method">
   
-    .<strong>find_versions</strong>(url, regex = nil, &amp;block)  &#x21d2; <tt>Hash</tt> 
+    .<strong>find_versions</strong>(url, regex, cask: nil, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
   
 
   
@@ -273,15 +279,37 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
         <span class='name'>regex</span>
       
       
-        <span class='type'>(<tt>Regexp</tt>)</span>
+        <span class='type'>(<tt>Regexp</tt>, <tt>nil</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
         <div class='inline'><p>a regex used for matching versions in content</p>
 </div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>cask</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Cask/Cask.html" title="Cask::Cask (class)">Cask::Cask</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>T.proc.params(arg0: <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>).returns(T.any(T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>))</tt>, <tt>nil</tt>)</span>
+      
+      
       
     </li>
   
@@ -293,7 +321,7 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt>)</span>
       
       
       
@@ -307,16 +335,6 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
 65
 66
 67
@@ -327,12 +345,22 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
 72
 73
 74
-75</pre>
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/bitbucket.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/bitbucket.rb', line 65</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Bitbucket::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='rparen'>)</span>
 
   <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
@@ -351,7 +379,7 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
 </span>  <span class='comment'># * `/href=.*?example-v?(\d+(?:\.\d+)+)\.t/i`
 </span>  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>href=.*?</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:prefix</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>v?(\d+(?:\.\d+)+)</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='regexp_end'>/i</span></span>
 
-  <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -415,12 +443,12 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-45
-46
-47</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/bitbucket.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/bitbucket.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Bitbucket::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>

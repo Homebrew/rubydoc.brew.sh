@@ -85,6 +85,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>T::Sig</dd>
+  </dl>
+  
   
   
   
@@ -169,7 +174,7 @@ lowest to highest).</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url, regex = nil, &amp;block)  &#x21d2; Hash </a>
+      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url, regex, cask: nil, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
     
     
   </span>
@@ -235,6 +240,7 @@ lowest to highest).</p>
   
 
 
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -243,7 +249,7 @@ lowest to highest).</p>
       <div class="method_details first">
   <h3 class="signature first" id="find_versions-class_method">
   
-    .<strong>find_versions</strong>(url, regex = nil, &amp;block)  &#x21d2; <tt>Hash</tt> 
+    .<strong>find_versions</strong>(url, regex, cask: nil, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
   
 
   
@@ -282,15 +288,37 @@ strings and parses the remaining text as a <span class='object_link'><a href="..
         <span class='name'>regex</span>
       
       
-        <span class='type'>(<tt>Regexp</tt>)</span>
+        <span class='type'>(<tt>Regexp</tt>, <tt>nil</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
         <div class='inline'><p>the regex to use for matching versions</p>
 </div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>cask</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../Cask/Cask.html" title="Cask::Cask (class)">Cask::Cask</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>T.proc.params(arg0: T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>]) .returns(T.any(T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>))</tt>, <tt>nil</tt>)</span>
+      
+      
       
     </li>
   
@@ -302,7 +330,7 @@ strings and parses the remaining text as a <span class='object_link'><a href="..
     <li>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt>)</span>
       
       
       
@@ -316,17 +344,6 @@ strings and parses the remaining text as a <span class='object_link'><a href="..
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
 88
 89
 90
@@ -361,12 +378,23 @@ strings and parses the remaining text as a <span class='object_link'><a href="..
 119
 120
 121
-122</pre>
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 88</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>matches:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_tags_data'>tags_data</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_info'>tag_info</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span>
@@ -474,12 +502,12 @@ strings and parses the remaining text as a <span class='object_link'><a href="..
       <pre class="lines">
 
 
-66
-67
-68</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../../../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../../../GitDownloadStrategy.html" title="GitDownloadStrategy (class)">GitDownloadStrategy</a></span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='kw'>true</span>
@@ -565,8 +593,6 @@ used to filter out any tags that don’t match it.</p>
       <pre class="lines">
 
 
-38
-39
 40
 41
 42
@@ -587,10 +613,12 @@ used to filter out any tags that don’t match it.</p>
 57
 58
 59
-60</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/git.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tag_info'>tag_info</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Open3#capture3 is used here because we need to capture stderr
