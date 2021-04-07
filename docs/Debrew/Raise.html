@@ -180,21 +180,27 @@
       <pre class="lines">
 
 
-17
-18
-19
-20
-21
-22</pre>
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'debrew.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'debrew.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='op'>*</span><span class='rparen'>)</span>
-  <span class='kw'>super</span>
-<span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
-</span>  <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Debrew.html#Ignorable-constant" title="Debrew::Ignorable (constant)">Ignorable</a></span></span><span class='rparen'>)</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Debrew.html" title="Debrew (module)">Debrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_debug'><span class='object_link'><a href="../Debrew.html#debug-class_method" title="Debrew.debug (method)">debug</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='symbol'>:ignore</span>
+  <span class='id identifier rubyid_callcc'>callcc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_continuation'>continuation</span><span class='op'>|</span>
+    <span class='kw'>super</span>
+  <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
+</span>    <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Ignorable.html" title="Debrew::Ignorable (module)">Ignorable</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_continuation'>continuation</span> <span class='op'>=</span> <span class='id identifier rubyid_continuation'>continuation</span>
+    <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
