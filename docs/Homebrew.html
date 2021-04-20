@@ -29979,7 +29979,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-67
 68
 69
 70
@@ -30048,10 +30047,17 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 133
 134
 135
-136</pre>
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/search.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'cmd/search.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search'>search</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_search_args'>search_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -30060,6 +30066,12 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
     <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_package_manager'>package_manager</span>
     <span class='id identifier rubyid_exec_browser'>exec_browser</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_encode_www_form_component'>encode_www_form_component</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='kw'>return</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
+    <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew search --cask` with no arguments to output casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew casks`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This command requires at least 1 text or regex argument.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -30200,7 +30212,8 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/search.rb', line 31</span>
@@ -30237,7 +30250,8 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--open</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--closed</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_package_manager_switches'>package_manager_switches</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:text_or_regex</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
+    <span class='comment'># TODO: (3.2) Add `min: 1` the `named_args` once `brew search --cask` is removed
+</span>    <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:text_or_regex</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
