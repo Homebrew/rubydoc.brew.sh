@@ -166,7 +166,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#curl_check_http_content-class_method" title="curl_check_http_content (class method)">.<strong>curl_check_http_content</strong>(url, specs: {}, user_agents: [:default], check_content: false, strict: false)  &#x21d2; Object </a>
+      <a href="#curl_check_http_content-class_method" title="curl_check_http_content (class method)">.<strong>curl_check_http_content</strong>(url, url_type, specs: {}, user_agents: [:default], check_content: false, strict: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -530,7 +530,7 @@
       <div class="method_details ">
   <h3 class="signature " id="curl_check_http_content-class_method">
   
-    .<strong>curl_check_http_content</strong>(url, specs: {}, user_agents: [:default], check_content: false, strict: false)  &#x21d2; <tt>Object</tt> 
+    .<strong>curl_check_http_content</strong>(url, url_type, specs: {}, user_agents: [:default], check_content: false, strict: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -646,12 +646,14 @@
 257
 258
 259
-260</pre>
+260
+261</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/curl.rb', line 171</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_curl_check_http_content'>curl_check_http_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>user_agents:</span> <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>check_content:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_curl_check_http_content'>curl_check_http_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_url_type'>url_type</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>user_agents:</span> <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                            <span class='label'>check_content:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_secure_url'>secure_url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\Ahttp:</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -685,18 +687,18 @@
     <span class='comment'># Hack around https://github.com/Homebrew/brew/issues/3199
 </span>    <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>==</span> <span class='symbol'>:el_capitan</span>
 
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_http_status_ok?'><span class='object_link'><a href="#http_status_ok%3F-class_method" title="Utils::Curl.http_status_ok? (method)">http_status_ok?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_url_protected_by_cloudflare?'><span class='object_link'><a href="#url_protected_by_cloudflare%3F-class_method" title="Utils::Curl.url_protected_by_cloudflare? (method)">url_protected_by_cloudflare?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_details'>details</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_url_protected_by_incapsula?'><span class='object_link'><a href="#url_protected_by_incapsula%3F-class_method" title="Utils::Curl.url_protected_by_incapsula? (method)">url_protected_by_incapsula?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_details'>details</span><span class='rparen'>)</span>
 
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable (HTTP status code </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable (HTTP status code </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_insecure_redirect?'>no_insecure_redirect?</span> <span class='op'>&amp;&amp;</span>
      <span class='op'>!</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:final_url</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> redirects back to HTTP</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> redirects back to HTTP</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_secure_details'>secure_details</span>
@@ -713,7 +715,7 @@
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_etag_match'>etag_match</span> <span class='op'>||</span> <span class='id identifier rubyid_content_length_match'>content_length_match</span> <span class='op'>||</span> <span class='id identifier rubyid_file_match'>file_match</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
      <span class='id identifier rubyid_secure_details'>secure_details</span><span class='lbracket'>[</span><span class='symbol'>:final_url</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
      <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> should use HTTPS rather than HTTP</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> should use HTTPS rather than HTTP</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_check_content'>check_content</span>
@@ -725,7 +727,7 @@
   <span class='comment'># Check for the same content after removing all protocols
 </span>  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_http_content'>http_content</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_https_content'>https_content</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_http_content'>http_content</span> <span class='op'>==</span> <span class='id identifier rubyid_https_content'>https_content</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
      <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_secure_details'>secure_details</span><span class='lbracket'>[</span><span class='symbol'>:final_url</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> should use HTTPS rather than HTTP</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> should use HTTPS rather than HTTP</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_strict'>strict</span>
@@ -733,13 +735,13 @@
   <span class='comment'># Same size, different content after normalization
 </span>  <span class='comment'># (typical causes: Generated ID, Timestamp, Unix time)
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_http_content'>http_content</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='id identifier rubyid_https_content'>https_content</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> may be able to use HTTPS rather than HTTP. Please verify it in a browser.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> may be able to use HTTPS rather than HTTP. Please verify it in a browser.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_lenratio'>lenratio</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='int'>100</span> <span class='op'>*</span> <span class='id identifier rubyid_https_content'>https_content</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>/</span> <span class='id identifier rubyid_http_content'>http_content</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='int'>90</span><span class='op'>..</span><span class='int'>110</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_lenratio'>lenratio</span><span class='rparen'>)</span>
 
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> may be able to use HTTPS rather than HTTP. Please verify it in a browser.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> may be able to use HTTPS rather than HTTP. Please verify it in a browser.</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -936,7 +938,6 @@
       <pre class="lines">
 
 
-262
 263
 264
 265
@@ -974,10 +975,11 @@
 297
 298
 299
-300</pre>
+300
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_http_content_headers_and_checksum'>curl_http_content_headers_and_checksum</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>hash_needed:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>user_agent:</span> <span class='symbol'>:default</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:close</span><span class='rparen'>)</span>
@@ -1263,12 +1265,12 @@
       <pre class="lines">
 
 
-302
 303
-304</pre>
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 302</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 303</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_status_ok?'>http_status_ok?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='int'>100</span><span class='op'>..</span><span class='int'>299</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
