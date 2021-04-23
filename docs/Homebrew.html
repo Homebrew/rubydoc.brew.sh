@@ -1009,6 +1009,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#bottles_hash_from_json_files-class_method" title="bottles_hash_from_json_files (class method)">.<strong>bottles_hash_from_json_files</strong>(root_url)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#brief_build_info-class_method" title="brief_build_info (class method)">.<strong>brief_build_info</strong>(f, with_hostname:)  &#x21d2; Object </a>
     
     
@@ -1383,7 +1405,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#check_bottled_formulae-class_method" title="check_bottled_formulae (class method)">.<strong>check_bottled_formulae</strong>(bottles_hash)  &#x21d2; Object </a>
+      <a href="#check_bottled_formulae!-class_method" title="check_bottled_formulae! (class method)">.<strong>check_bottled_formulae!</strong>(bottles_hash)  &#x21d2; Object </a>
     
     
   </span>
@@ -10875,6 +10897,62 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="bottles_hash_from_json_files-class_method">
+  
+    .<strong>bottles_hash_from_json_files</strong>(root_url)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-upload.rb', line 87</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bottles_hash_from_json_files'>bottles_hash_from_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_root_url'>root_url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_json_files'>json_files</span> <span class='op'>=</span> <span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.bottle.json</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No bottle JSON files found in the current working directory</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_json_file'>json_file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_deep_merge'>deep_merge</span><span class='lparen'>(</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_json_file'>json_file</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_root_url'>root_url</span>
+    <span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='period'>.</span><span class='id identifier rubyid_each_value'>each_value</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='op'>|</span>
+      <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_bottles_hash'>bottles_hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="brief_build_info-class_method">
   
     .<strong>brief_build_info</strong>(f, with_hostname:)  &#x21d2; <tt>Object</tt> 
@@ -13439,9 +13517,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="check_bottled_formulae-class_method">
+  <h3 class="signature " id="check_bottled_formulae!-class_method">
   
-    .<strong>check_bottled_formulae</strong>(bottles_hash)  &#x21d2; <tt>Object</tt> 
+    .<strong>check_bottled_formulae!</strong>(bottles_hash)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -13467,7 +13545,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-upload.rb', line 48</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_check_bottled_formulae'>check_bottled_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_check_bottled_formulae!'>check_bottled_formulae!</span><span class='lparen'>(</span><span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_formula_path'>formula_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='op'>/</span><span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_formula_version'>formula_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span>
@@ -23962,7 +24040,50 @@
 672
 673
 674
-675</pre>
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 607</span>
@@ -23970,12 +24091,6 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_json_files'>merge_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_json_files'>parse_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
-  <span class='comment'># TODO: deduplicate --no-json bottles by:
-</span>  <span class='comment'># 1. throwing away bottles for newer versions of macOS if their SHA256 is
-</span>  <span class='comment'>#    identical
-</span>  <span class='comment'># 2. generating `all: $SHA256` bottles that can be used on macOS and Linux
-</span>  <span class='comment'>#    i.e. need to be `any_skip_relocation` and contain no ELF/MachO files.
-</span>
   <span class='id identifier rubyid_any_cellars'>any_cellars</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>any</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>any_skip_relocation</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_name'>formula_name</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='id identifier rubyid_formula_name'>formula_name</span>
@@ -23983,14 +24098,63 @@
     <span class='id identifier rubyid_bottle'>bottle</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="BottleSpecification.html" title="BottleSpecification (class)">BottleSpecification</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="BottleSpecification.html#initialize-instance_method" title="BottleSpecification#initialize (method)">new</a></span></span>
     <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_rebuild'>rebuild</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rebuild</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+
+    <span class='comment'># if all the cellars and checksums are the same: we can create an
+</span>    <span class='comment'># `all: $SHA256` bottle.
+</span>    <span class='id identifier rubyid_tag_hashes'>tag_hashes</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tags</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+    <span class='id identifier rubyid_all_bottle'>all_bottle</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_tag_hashes'>tag_hashes</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>&gt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_tag_hashes'>tag_hashes</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='op'>|</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cellar</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span>
+
     <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tags</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='op'>|</span>
       <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cellar</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_cellar'>cellar</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='kw'>if</span> <span class='id identifier rubyid_any_cellars'>any_cellars</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_cellar'>cellar</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_sha256_hash'>sha256_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>cellar:</span> <span class='id identifier rubyid_cellar'>cellar</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+
+      <span class='id identifier rubyid_tag_sym'>tag_sym</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_all_bottle'>all_bottle</span>
+        <span class='symbol'>:all</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_sha256_hash'>sha256_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>cellar:</span> <span class='id identifier rubyid_cellar'>cellar</span><span class='comma'>,</span> <span class='id identifier rubyid_tag_sym'>tag_sym</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
       <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span> <span class='id identifier rubyid_sha256_hash'>sha256_hash</span>
+
+      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_all_bottle'>all_bottle</span>
     <span class='kw'>end</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_write?'>write?</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_all_bottle'>all_bottle</span>
+        <span class='id identifier rubyid_all_bottle_hash'>all_bottle_hash</span> <span class='op'>=</span> <span class='kw'>nil</span>
+        <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tags</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='op'>|</span>
+          <span class='id identifier rubyid_local_filename'>local_filename</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>local_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+          <span class='id identifier rubyid_local_json_filename'>local_json_filename</span> <span class='op'>=</span> <span class='id identifier rubyid_local_filename'>local_filename</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.tar\.gz$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+          <span class='kw'>if</span> <span class='id identifier rubyid_all_bottle_hash'>all_bottle_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+            <span class='id identifier rubyid_all_filename'>all_filename</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_all_local_filename'>all_local_filename</span> <span class='op'>=</span> <span class='id identifier rubyid_local_filename'>local_filename</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_all_local_json_filename'>all_local_json_filename</span> <span class='op'>=</span> <span class='id identifier rubyid_local_json_filename'>local_json_filename</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+            <span class='id identifier rubyid_all_bottle_tag_hash'>all_bottle_tag_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_tag_hash'>tag_hash</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+            <span class='id identifier rubyid_all_bottle_tag_hash'>all_bottle_tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_all_filename'>all_filename</span>
+            <span class='id identifier rubyid_all_bottle_tag_hash'>all_bottle_tag_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>local_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_all_local_filename'>all_local_filename</span>
+            <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_all_bottle_tag_hash'>all_bottle_tag_hash</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cellar</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+            <span class='id identifier rubyid_all_bottle_formula_hash'>all_bottle_formula_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+            <span class='id identifier rubyid_all_bottle_formula_hash'>all_bottle_formula_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cellar</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_cellar'>cellar</span>
+            <span class='id identifier rubyid_all_bottle_formula_hash'>all_bottle_formula_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tags</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>all:</span> <span class='id identifier rubyid_all_bottle_tag_hash'>all_bottle_tag_hash</span> <span class='rbrace'>}</span>
+
+            <span class='id identifier rubyid_all_bottle_hash'>all_bottle_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_formula_name'>formula_name</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_all_bottle_formula_hash'>all_bottle_formula_hash</span> <span class='rbrace'>}</span>
+
+            <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_cp'>cp</span> <span class='id identifier rubyid_local_filename'>local_filename</span><span class='comma'>,</span> <span class='id identifier rubyid_all_local_filename'>all_local_filename</span>
+            <span class='id identifier rubyid_all_local_json_path'>all_local_json_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_all_local_json_filename'>all_local_json_filename</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_all_local_json_path'>all_local_json_path</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span> <span class='kw'>if</span> <span class='id identifier rubyid_all_local_json_path'>all_local_json_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+            <span class='id identifier rubyid_all_local_json_path'>all_local_json_path</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_pretty_generate'>pretty_generate</span><span class='lparen'>(</span><span class='id identifier rubyid_all_bottle_hash'>all_bottle_hash</span><span class='rparen'>)</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+
+          <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span> <span class='lbracket'>[</span><span class='id identifier rubyid_local_filename'>local_filename</span><span class='comma'>,</span> <span class='id identifier rubyid_local_json_filename'>local_json_filename</span><span class='rbracket'>]</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+
       <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span>
       <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>utils/ast</span><span class='tstring_end'>&quot;</span></span>
 
@@ -24056,49 +24220,49 @@
       <pre class="lines">
 
 
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694
-695
-696
-697
-698
-699
-700
-701
-702
-703
-704
-705
-706
-707
-708
-709
-710
-711
-712
-713
-714
-715
-716</pre>
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 677</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 720</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_new_bottle_hash'>new_bottle_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -24865,28 +25029,28 @@
       <pre class="lines">
 
 
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
-733
-734
-735
-736</pre>
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 718</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 761</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_old_checksums'>old_checksums</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle_node'>bottle_node</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='period'>.</span><span class='id identifier rubyid_bottle_block'>bottle_block</span>
@@ -26686,23 +26850,6 @@
       <pre class="lines">
 
 
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
 104
 105
 106
@@ -26774,26 +26921,25 @@
 172
 173
 174
-175</pre>
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-upload.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-upload.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_upload'>pr_upload</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_upload_args'>pr_upload_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='id identifier rubyid_json_files'>json_files</span> <span class='op'>=</span> <span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.bottle.json</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No bottle JSON files found in the current working directory</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-
-  <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_json_file'>json_file</span><span class='op'>|</span>
-    <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_deep_merge'>deep_merge</span><span class='lparen'>(</span><span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_json_file'>json_file</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span>
-    <span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='period'>.</span><span class='id identifier rubyid_each_value'>each_value</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='op'>|</span>
-      <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>root_url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_bottles_hash_from_json_files'>bottles_hash_from_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_bottle_args'>bottle_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--merge</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--write</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_bottle_args'>bottle_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--verbose</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
@@ -26828,9 +26974,13 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_check_bottled_formulae'>check_bottled_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_check_bottled_formulae!'>check_bottled_formulae!</span><span class='lparen'>(</span><span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_bottle_args'>bottle_args</span>
+
+  <span class='comment'># Reload the JSON files (in case `brew bottle --merge` generated
+</span>  <span class='comment'># `all: $SHA256` bottles)
+</span>  <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_bottles_hash_from_json_files'>bottles_hash_from_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_root_url'>root_url</span><span class='rparen'>)</span>
 
   <span class='comment'># Check the bottle commits did not break `brew audit`
 </span>  <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_commit?'>no_commit?</span>
