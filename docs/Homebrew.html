@@ -6157,7 +6157,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#setup_tar_owner_group_args!-class_method" title="setup_tar_owner_group_args! (class method)">.<strong>setup_tar_owner_group_args!</strong>  &#x21d2; Object </a>
+      <a href="#setup_tar_and_args!-class_method" title="setup_tar_and_args! (class method)">.<strong>setup_tar_and_args!</strong>  &#x21d2; Object </a>
     
     
   </span>
@@ -10209,6 +10209,7 @@
       <pre class="lines">
 
 
+285
 286
 287
 288
@@ -10512,7 +10513,7 @@
 586</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 285</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bottle_formula'>bottle_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_bottle_json'>local_bottle_json</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -10648,9 +10649,10 @@
       <span class='id identifier rubyid_cd'>cd</span> <span class='id identifier rubyid_cellar'>cellar</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_sudo_purge'>sudo_purge</span>
         <span class='comment'># Tar then gzip for reproducible bottles.
-</span>        <span class='id identifier rubyid_owner_group_args'>owner_group_args</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_tar_owner_group_args!'>setup_tar_owner_group_args!</span>
-        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--create</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--numeric-owner</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                    <span class='op'>*</span><span class='id identifier rubyid_owner_group_args'>owner_group_args</span><span class='comma'>,</span>
+</span>        <span class='id identifier rubyid_tar'>tar</span><span class='comma'>,</span> <span class='id identifier rubyid_tar_args'>tar_args</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_tar_and_args!'>setup_tar_and_args!</span>
+        <span class='comment'># Use portable tar format to match libarchive format.
+</span>        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='id identifier rubyid_tar'>tar</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--create</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--numeric-owner</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--format</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ustar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                    <span class='op'>*</span><span class='id identifier rubyid_tar_args'>tar_args</span><span class='comma'>,</span>
                     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--file</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_tar_path'>tar_path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_sudo_purge'>sudo_purge</span>
         <span class='comment'># Set more times for reproducible bottles.
@@ -30688,9 +30690,9 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="setup_tar_owner_group_args!-class_method">
+  <h3 class="signature " id="setup_tar_and_args!-class_method">
   
-    .<strong>setup_tar_owner_group_args!</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>setup_tar_and_args!</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -30728,39 +30730,37 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 280
 281
 282
-283
-284</pre>
+283</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 257</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_setup_tar_owner_group_args!'>setup_tar_owner_group_args!</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_setup_tar_and_args!'>setup_tar_and_args!</span>
   <span class='comment'># Unset the owner/group for reproducible bottles.
-</span>  <span class='comment'># Use gnu-tar on Linux
-</span>  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--owner</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--group</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
-
-  <span class='id identifier rubyid_bsdtar_args'>bsdtar_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--uid</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--gid</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-
+</span>
   <span class='comment'># System bsdtar is new enough on macOS Catalina and above.
-</span>  <span class='kw'>return</span> <span class='id identifier rubyid_bsdtar_args'>bsdtar_args</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:catalina</span>
+</span>  <span class='comment'># Set uid and gid for reproducible bottles.
+</span>  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--uid</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--gid</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;=</span> <span class='symbol'>:catalina</span>
 
-  <span class='comment'># Use newish libarchive on older macOS versions for reproducibility.
+  <span class='comment'># Use gnu-tar on Linux
+</span>  <span class='comment'># Set owner and group for reproducible bottles.
+</span>  <span class='id identifier rubyid_gnutar_args'>gnutar_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--owner</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--group</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_gnutar_args'>gnutar_args</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
+
+  <span class='comment'># Use gnu-tar on older macOS versions for `--owner`/`--group` support (which
+</span>  <span class='comment'># old `libarchive` doesn&#39;t have).
 </span>  <span class='kw'>begin</span>
-    <span class='id identifier rubyid_libarchive'>libarchive</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libarchive</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_gnu_tar'>gnu_tar</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gnu-tar</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span>
-    <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+    <span class='kw'>return</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_libarchive'>libarchive</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing `libarchive` for bottling...</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_libarchive'>libarchive</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_gnu_tar'>gnu_tar</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing `gnu-tar` for bottling...</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_gnu_tar'>gnu_tar</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PATH.html" title="PATH (class)">PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PATH.html#initialize-instance_method" title="PATH#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_libarchive'>libarchive</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span>
-
-  <span class='id identifier rubyid_bsdtar_args'>bsdtar_args</span>
+  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_gnu_tar'>gnu_tar</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gtar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_gnutar_args'>gnutar_args</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
