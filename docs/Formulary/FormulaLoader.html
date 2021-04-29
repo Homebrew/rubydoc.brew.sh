@@ -229,7 +229,7 @@ Subclasses implement loaders for particular sources of formulae.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_formula-instance_method" title="#get_formula (instance method)">#<strong>get_formula</strong>(spec, alias_path: nil, force_bottle: false, flags: [])  &#x21d2; Object </a>
+      <a href="#get_formula-instance_method" title="#get_formula (instance method)">#<strong>get_formula</strong>(spec, alias_path: nil, force_bottle: false, flags: [], ignore_errors: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -275,7 +275,7 @@ Subclasses implement loaders for particular sources of formulae.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#klass-instance_method" title="#klass (instance method)">#<strong>klass</strong>(flags:)  &#x21d2; Object </a>
+      <a href="#klass-instance_method" title="#klass (instance method)">#<strong>klass</strong>(flags:, ignore_errors:)  &#x21d2; Object </a>
     
     
   </span>
@@ -341,13 +341,13 @@ Subclasses implement loaders for particular sources of formulae.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148</pre>
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
@@ -395,12 +395,12 @@ Subclasses implement loaders for particular sources of formulae.</p>
       <pre class="lines">
 
 
-143
-144
-145</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_path'>alias_path</span>
   <span class='ivar'>@alias_path</span>
@@ -442,12 +442,12 @@ Subclasses implement loaders for particular sources of formulae.</p>
       <pre class="lines">
 
 
-139
-140
-141</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -489,12 +489,12 @@ Subclasses implement loaders for particular sources of formulae.</p>
       <pre class="lines">
 
 
-141
-142
-143</pre>
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@path</span>
@@ -514,7 +514,7 @@ Subclasses implement loaders for particular sources of formulae.</p>
       <div class="method_details first">
   <h3 class="signature first" id="get_formula-instance_method">
   
-    #<strong>get_formula</strong>(spec, alias_path: nil, force_bottle: false, flags: [])  &#x21d2; <tt>Object</tt> 
+    #<strong>get_formula</strong>(spec, alias_path: nil, force_bottle: false, flags: [], ignore_errors: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -543,17 +543,19 @@ a formula that was loaded in another way.</p>
       <pre class="lines">
 
 
-153
-154
-155
-156</pre>
+164
+165
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 164</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_get_formula'>get_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_get_formula'>get_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>flags:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>ignore_errors:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_alias_path'>alias_path</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_alias_path'>alias_path</span>
-  <span class='id identifier rubyid_klass'>klass</span><span class='lparen'>(</span><span class='label'>flags:</span> <span class='id identifier rubyid_flags'>flags</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='id identifier rubyid_alias_path'>alias_path</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='id identifier rubyid_force_bottle'>force_bottle</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_klass'>klass</span><span class='lparen'>(</span><span class='label'>flags:</span> <span class='id identifier rubyid_flags'>flags</span><span class='comma'>,</span> <span class='label'>ignore_errors:</span> <span class='id identifier rubyid_ignore_errors'>ignore_errors</span><span class='rparen'>)</span>
+    <span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='label'>alias_path:</span> <span class='id identifier rubyid_alias_path'>alias_path</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='id identifier rubyid_force_bottle'>force_bottle</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -563,7 +565,7 @@ a formula that was loaded in another way.</p>
       <div class="method_details ">
   <h3 class="signature " id="klass-instance_method">
   
-    #<strong>klass</strong>(flags:)  &#x21d2; <tt>Object</tt> 
+    #<strong>klass</strong>(flags:, ignore_errors:)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -590,16 +592,16 @@ a formula that was loaded in another way.</p>
       <pre class="lines">
 
 
-158
-159
-160
-161</pre>
+170
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formulary.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'formulary.rb', line 170</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span><span class='lparen'>(</span><span class='label'>flags:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='label'>flags:</span> <span class='id identifier rubyid_flags'>flags</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_class_defined?'><span class='object_link'><a href="../Formulary.html#formula_class_defined%3F-class_method" title="Formulary.formula_class_defined? (method)">formula_class_defined?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span><span class='lparen'>(</span><span class='label'>flags:</span><span class='comma'>,</span> <span class='label'>ignore_errors:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='label'>flags:</span> <span class='id identifier rubyid_flags'>flags</span><span class='comma'>,</span> <span class='label'>ignore_errors:</span> <span class='id identifier rubyid_ignore_errors'>ignore_errors</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_class_defined?'><span class='object_link'><a href="../Formulary.html#formula_class_defined%3F-class_method" title="Formulary.formula_class_defined? (method)">formula_class_defined?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_class_get'><span class='object_link'><a href="../Formulary.html#formula_class_get-class_method" title="Formulary.formula_class_get (method)">formula_class_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
