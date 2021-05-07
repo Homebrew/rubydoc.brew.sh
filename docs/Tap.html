@@ -983,7 +983,7 @@ name without the leading <code>homebrew-</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#install-instance_method" title="#install (instance method)">#<strong>install</strong>(full_clone: true, quiet: false, clone_target: nil, force_auto_update: nil)  &#x21d2; Object </a>
+      <a href="#install-instance_method" title="#install (instance method)">#<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil)  &#x21d2; Object </a>
     
     
   </span>
@@ -3089,7 +3089,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <div class="method_details ">
   <h3 class="signature " id="install-instance_method">
   
-    #<strong>install</strong>(full_clone: true, quiet: false, clone_target: nil, force_auto_update: nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -3143,23 +3143,6 @@ logic that skips non-GitHub repositories during auto-updates.</p>
   
     <li>
       
-        <span class='name'>full_clone</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>If set as true, full clone will be used. If unset/nil, means “no change”.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>quiet</span>
       
       
@@ -3184,6 +3167,7 @@ logic that skips non-GitHub repositories during auto-updates.</p>
       <pre class="lines">
 
 
+248
 249
 250
 251
@@ -3281,9 +3265,9 @@ logic that skips non-GitHub repositories during auto-updates.</p>
 343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 248</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='label'>full_clone:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>clone_target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_auto_update:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>clone_target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_auto_update:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>descriptions</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>readall</span><span class='tstring_end'>&quot;</span></span>
 
@@ -3307,11 +3291,13 @@ logic that skips non-GitHub repositories during auto-updates.</p>
   <span class='kw'>if</span> <span class='id identifier rubyid_installed?'>installed?</span>
     <span class='kw'>unless</span> <span class='id identifier rubyid_force_auto_update'>force_auto_update</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
       <span class='id identifier rubyid_config'>config</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>forceautoupdate</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_force_auto_update'>force_auto_update</span>
-      <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_full_clone'>full_clone</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_shallow?'>shallow?</span>
+      <span class='kw'>return</span>
     <span class='kw'>end</span>
 
-    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unshallowing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_quiet'>quiet</span>
-    <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>fetch</span><span class='words_sep'> </span><span class='tstring_content'>--unshallow</span><span class='tstring_end'>]</span></span>
+    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unshallowing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_shallow?'>shallow?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_quiet'>quiet</span>
+    <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>fetch</span><span class='tstring_end'>]</span></span>
+    <span class='comment'># Git throws an error when attempting to unshallow a full clone
+</span>    <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--unshallow</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_shallow?'>shallow?</span>
     <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet'>quiet</span>
     <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rbrace'>}</span>
     <span class='kw'>return</span>
@@ -3325,7 +3311,6 @@ logic that skips non-GitHub repositories during auto-updates.</p>
   <span class='comment'># Override possible user configs like:
 </span>  <span class='comment'>#   git config --global clone.defaultRemoteName notorigin
 </span>  <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--origin=origin</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--depth=1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_full_clone'>full_clone</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet'>quiet</span>
 
   <span class='kw'>begin</span>
