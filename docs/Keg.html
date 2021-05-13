@@ -634,6 +634,28 @@ directories in the prefix, never symlinks.</p>
 </li>
 
       
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#text_matches_in_file-class_method" title="text_matches_in_file (class method)">.<strong>text_matches_in_file</strong>(file, string, ignores, linked_libraries, formula_and_runtime_deps_names)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
     <h2>
@@ -2434,6 +2456,106 @@ directories in the prefix, never symlinks.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="text_matches_in_file-class_method">
+  
+    .<strong>text_matches_in_file</strong>(file, string, ignores, linked_libraries, formula_and_runtime_deps_names)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 245</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_text_matches_in_file'>text_matches_in_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_string'>string</span><span class='comma'>,</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='comma'>,</span> <span class='id identifier rubyid_linked_libraries'>linked_libraries</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_and_runtime_deps_names'>formula_and_runtime_deps_names</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_text_matches'>text_matches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_path_regex'>path_regex</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg/Relocation.html" title="Keg::Relocation (class)">Relocation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_path_to_regex'><span class='object_link'><a href="Keg/Relocation.html#path_to_regex-class_method" title="Keg::Relocation.path_to_regex (method)">path_to_regex</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strings</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-t</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_io'>io</span><span class='op'>|</span>
+    <span class='kw'>until</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_eof?'>eof?</span>
+      <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_readline'>readline</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
+      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_ignores'>ignores</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>=~</span> <span class='id identifier rubyid_str'>str</span> <span class='rbrace'>}</span>
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span> <span class='id identifier rubyid_path_regex'>path_regex</span>
+
+      <span class='id identifier rubyid_offset'>offset</span><span class='comma'>,</span> <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
+
+      <span class='comment'># Some binaries contain strings with lists of files
+</span>      <span class='comment'># e.g. `/usr/local/lib/foo:/usr/local/share/foo:/usr/lib/foo`
+</span>      <span class='comment'># Each item in the list should be checked separately
+</span>      <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sub_match'>sub_match</span><span class='op'>|</span>
+        <span class='comment'># Not all items in the list may be matches
+</span>        <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_sub_match'>sub_match</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span> <span class='id identifier rubyid_path_regex'>path_regex</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_linked_libraries'>linked_libraries</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_sub_match'>sub_match</span> <span class='comment'># Don&#39;t bother reporting a string if it was found by otool
+</span>
+        <span class='comment'># Do not report matches to files that do not exist.
+</span>        <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='id identifier rubyid_sub_match'>sub_match</span>
+
+        <span class='comment'># Do not report matches to build dependencies.
+</span>        <span class='kw'>if</span> <span class='id identifier rubyid_formula_and_runtime_deps_names'>formula_and_runtime_deps_names</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+          <span class='kw'>begin</span>
+            <span class='id identifier rubyid_keg_name'>keg_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for'><span class='object_link'><a href="#for-class_method" title="Keg.for (method)">for</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_sub_match'>sub_match</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+            <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula_and_runtime_deps_names'>formula_and_runtime_deps_names</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_keg_name'>keg_name</span>
+          <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="NotAKegError.html" title="NotAKegError (class)">NotAKegError</a></span></span>
+            <span class='kw'>nil</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+
+        <span class='id identifier rubyid_text_matches'>text_matches</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='id identifier rubyid_offset'>offset</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_text_matches'>text_matches</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_text'>text</span><span class='op'>|</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='id identifier rubyid_offset'>offset</span> <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_text_matches'>text_matches</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
   <div id="instance_method_details" class="method_details_list">
@@ -3138,21 +3260,21 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156</pre>
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_unique_file_matching'>each_unique_file_matching</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fgrep</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span><span class='comma'>,</span> <span class='id identifier rubyid_string'>string</span><span class='comma'>,</span> <span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_io'>io</span><span class='op'>|</span>
@@ -3728,12 +3850,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-158
-159
-160</pre>
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lib'>lib</span>
   <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span>
@@ -3758,12 +3880,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-162
-163
-164</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_libexec'>libexec</span>
   <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libexec</span><span class='tstring_end'>&quot;</span></span>
@@ -3788,19 +3910,19 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220</pre>
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_libtool_files'>libtool_files</span>
   <span class='id identifier rubyid_libtool_files'>libtool_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -4506,35 +4628,35 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85</pre>
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_relocation_to_placeholders'>prepare_relocation_to_placeholders</span>
   <span class='id identifier rubyid_relocation'>relocation</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg/Relocation.html" title="Keg::Relocation (class)">Relocation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg/Relocation.html#initialize-instance_method" title="Keg::Relocation#initialize (method)">new</a></span></span>
-  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:prefix</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#PREFIX_PLACEHOLDER-constant" title="Keg::PREFIX_PLACEHOLDER (constant)">PREFIX_PLACEHOLDER</a></span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:cellar</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#CELLAR_PLACEHOLDER-constant" title="Keg::CELLAR_PLACEHOLDER (constant)">CELLAR_PLACEHOLDER</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:prefix</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#PREFIX_PLACEHOLDER-constant" title="Keg::PREFIX_PLACEHOLDER (constant)">PREFIX_PLACEHOLDER</a></span></span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:cellar</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#CELLAR_PLACEHOLDER-constant" title="Keg::CELLAR_PLACEHOLDER (constant)">CELLAR_PLACEHOLDER</a></span></span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='comment'># when HOMEBREW_PREFIX == HOMEBREW_REPOSITORY we should use HOMEBREW_PREFIX for all relocations to avoid
 </span>  <span class='comment'># being unable to differentiate between them.
 </span>  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span>
-    <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:repository</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#REPOSITORY_PLACEHOLDER-constant" title="Keg::REPOSITORY_PLACEHOLDER (constant)">REPOSITORY_PLACEHOLDER</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:repository</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#REPOSITORY_PLACEHOLDER-constant" title="Keg::REPOSITORY_PLACEHOLDER (constant)">REPOSITORY_PLACEHOLDER</a></span></span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:library</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#LIBRARY_PLACEHOLDER-constant" title="Keg::LIBRARY_PLACEHOLDER (constant)">LIBRARY_PLACEHOLDER</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:library</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY-constant" title="HOMEBREW_LIBRARY (constant)">HOMEBREW_LIBRARY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#LIBRARY_PLACEHOLDER-constant" title="Keg::LIBRARY_PLACEHOLDER (constant)">LIBRARY_PLACEHOLDER</a></span></span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='symbol'>:perl</span><span class='comma'>,</span>
                                   <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>\A#!(?:/usr/bin/perl\d\.\d+|</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/opt/perl/bin/perl)( |$)</span><span class='regexp_end'>}o</span></span><span class='comma'>,</span>
                                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#!</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#PERL_PLACEHOLDER-constant" title="Keg::PERL_PLACEHOLDER (constant)">PERL_PLACEHOLDER</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>\\1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -5123,14 +5245,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-88
-89
-90
-91
-92</pre>
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_locations_with_placeholders'>replace_locations_with_placeholders</span>
   <span class='id identifier rubyid_relocation'>relocation</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_relocation_to_placeholders'>prepare_relocation_to_placeholders</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -5157,14 +5279,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-105
-106
-107
-108
-109</pre>
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_placeholders_with_locations'>replace_placeholders_with_locations</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='label'>skip_linkage:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_relocation'>relocation</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_relocation_to_locations'>prepare_relocation_to_locations</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -5191,20 +5313,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
 125
 126
 127
@@ -5213,10 +5321,24 @@ expensive recursive search if possible.</p>
 130
 131
 132
-133</pre>
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_text_in_files'>replace_text_in_files</span><span class='lparen'>(</span><span class='id identifier rubyid_relocation'>relocation</span><span class='comma'>,</span> <span class='label'>files:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_files'>files</span> <span class='op'>||=</span> <span class='id identifier rubyid_text_files'>text_files</span> <span class='op'>|</span> <span class='id identifier rubyid_libtool_files'>libtool_files</span>
@@ -5366,17 +5488,17 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-222
-223
-224
-225
-226
-227
-228
-229</pre>
+236
+237
+238
+239
+240
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_symlink_files'>symlink_files</span>
   <span class='id identifier rubyid_symlink_files'>symlink_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -5451,20 +5573,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
 180
 181
 182
@@ -5494,10 +5602,24 @@ expensive recursive search if possible.</p>
 206
 207
 208
-209</pre>
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_text_files'>text_files</span>
   <span class='id identifier rubyid_text_files'>text_files</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>

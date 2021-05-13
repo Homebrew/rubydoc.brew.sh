@@ -105,12 +105,59 @@
 </div>
 
 
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="RELOCATABLE_PATH_REGEX_PREFIX-constant" class="">RELOCATABLE_PATH_REGEX_PREFIX =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;![a-zA-Z0-9])</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
 
 
 
 
 
 
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path_to_regex-class_method" title="path_to_regex (class method)">.<strong>path_to_regex</strong>(path)  &#x21d2; Regexp </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -123,7 +170,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#add_replacement_pair-instance_method" title="#add_replacement_pair (instance method)">#<strong>add_replacement_pair</strong>(key, old_value, new_value)  &#x21d2; void </a>
+      <a href="#add_replacement_pair-instance_method" title="#add_replacement_pair (instance method)">#<strong>add_replacement_pair</strong>(key, old_value, new_value, path: false)  &#x21d2; void </a>
     
     
   </span>
@@ -263,12 +310,12 @@
       <pre class="lines">
 
 
-14
-15
-16</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@replacement_map</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -281,6 +328,92 @@
 </div>
 
 
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="path_to_regex-class_method">
+  
+    .<strong>path_to_regex</strong>(path)  &#x21d2; <tt>Regexp</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>Regexp</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Regexp</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path_to_regex'>path_to_regex</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span>
+    <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='kw'>when</span> <span class='const'>Regexp</span>
+    <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span>
+  <span class='kw'>end</span>
+  <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#RELOCATABLE_PATH_REGEX_PREFIX-constant" title="Keg::Relocation::RELOCATABLE_PATH_REGEX_PREFIX (constant)">RELOCATABLE_PATH_REGEX_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>+</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
@@ -288,7 +421,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="add_replacement_pair-instance_method">
   
-    #<strong>add_replacement_pair</strong>(key, old_value, new_value)  &#x21d2; <tt>void</tt> 
+    #<strong>add_replacement_pair</strong>(key, old_value, new_value, path: false)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -338,6 +471,19 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>path</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
 </ul>
 
 
@@ -347,14 +493,16 @@
       <pre class="lines">
 
 
-24
-25
-26</pre>
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 26</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_add_replacement_pair'>add_replacement_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_old_value'>old_value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_path_to_regex'>path_to_regex</span><span class='lparen'>(</span><span class='id identifier rubyid_old_value'>old_value</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@replacement_map</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_old_value'>old_value</span><span class='comma'>,</span> <span class='id identifier rubyid_new_value'>new_value</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -377,13 +525,13 @@
       <pre class="lines">
 
 
-18
-19
 20
-21</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_freeze'>freeze</span>
   <span class='ivar'>@replacement_map</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -434,9 +582,6 @@
       <pre class="lines">
 
 
-34
-35
-36
 37
 38
 39
@@ -447,10 +592,13 @@
 44
 45
 46
-47</pre>
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_text'>replace_text</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_replacements'>replacements</span> <span class='op'>=</span> <span class='ivar'>@replacement_map</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
@@ -524,12 +672,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'keg_relocate.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replacement_pair_for'>replacement_pair_for</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='ivar'>@replacement_map</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
