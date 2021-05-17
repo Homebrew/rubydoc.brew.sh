@@ -3252,16 +3252,16 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-101
 102
 103
 104
 105
 106
-107</pre>
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dylib_id_for'>dylib_id_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='comment'># The new dylib ID should have the same basename as the old dylib ID, not
@@ -3295,7 +3295,8 @@ directories in the prefix, never symlinks.</p>
 96
 97
 98
-99</pre>
+99
+100</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 94</span>
@@ -3303,6 +3304,7 @@ directories in the prefix, never symlinks.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_linkage_type'>linkage_type</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_links'>links</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='id identifier rubyid_linkage_type'>linkage_type</span><span class='rparen'>)</span>
               <span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+              <span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
               <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fn'>fn</span><span class='op'>|</span> <span class='id identifier rubyid_fn'>fn</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^@(loader_|executable_|r)path</span><span class='regexp_end'>/</span></span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_links'>links</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -3570,15 +3572,15 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-132
 133
 134
 135
 136
-137</pre>
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib'>find_dylib</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lib'>lib</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3606,16 +3608,16 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-124
 125
 126
 127
 128
 129
-130</pre>
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib_suffix_from'>find_dylib_suffix_from</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_framework'>framework</span> <span class='op'>=</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FRAMEWORK_RX-constant" title="Keg::FRAMEWORK_RX (constant)">FRAMEWORK_RX</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4352,7 +4354,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-139
 140
 141
 142
@@ -4366,10 +4367,11 @@ expensive recursive search if possible.</p>
 150
 151
 152
-153</pre>
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mach_o_files'>mach_o_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -4646,7 +4648,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-155
 156
 157
 158
@@ -4663,10 +4664,11 @@ expensive recursive search if possible.</p>
 169
 170
 171
-172</pre>
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_relocation_to_locations'>prepare_relocation_to_locations</span>
   <span class='id identifier rubyid_relocation'>relocation</span> <span class='op'>=</span> <span class='id identifier rubyid_generic_prepare_relocation_to_locations'>generic_prepare_relocation_to_locations</span>
@@ -4929,14 +4931,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-174
 175
 176
 177
-178</pre>
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>
   <span class='comment'># Don&#39;t recurse into symlinks; the man page says this is the default, but
@@ -5031,7 +5033,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-109
 110
 111
 112
@@ -5040,10 +5041,11 @@ expensive recursive search if possible.</p>
 115
 116
 117
-118</pre>
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_relocated_name_for'>relocated_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_prefix'>old_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_new_prefix'>new_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_replacement_pair_for'>replacement_pair_for</span><span class='lparen'>(</span><span class='symbol'>:prefix</span><span class='rparen'>)</span>
