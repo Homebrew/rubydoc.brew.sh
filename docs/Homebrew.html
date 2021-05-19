@@ -26460,8 +26460,6 @@
       <pre class="lines">
 
 
-34
-35
 36
 37
 38
@@ -26484,17 +26482,19 @@
 55
 56
 57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_publish'>pr_publish</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_publish_args'>pr_publish_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>publish-commit-bottles.yml</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_branch'>branch</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
@@ -26576,7 +26576,9 @@
 29
 30
 31
-32</pre>
+32
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 13</span>
@@ -26590,6 +26592,8 @@
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If supported on the target tap, automatically reformat and reword commits </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in the pull request to our preferred format.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--branch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Branch to publish to (default: `master`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--message=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>depends_on:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Message to include when autosquashing revision bumps, deletions, and rebuilds.</span><span class='tstring_end'>&quot;</span></span>
