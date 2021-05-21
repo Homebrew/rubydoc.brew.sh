@@ -1429,7 +1429,7 @@ Make sure you check with <code>brew search</code> that the name is free!</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pour_bottle%3F-class_method" title="pour_bottle? (class method)">.<strong>pour_bottle?</strong>(reason: nil, &amp;block)  &#x21d2; Boolean </a>
+      <a href="#pour_bottle%3F-class_method" title="pour_bottle? (class method)">.<strong>pour_bottle?</strong>(only_if: nil, &amp;block)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -7021,7 +7021,7 @@ conditional.</p>
       <div class="method_details ">
   <h3 class="signature " id="pour_bottle?-class_method">
   
-    .<strong>pour_bottle?</strong>(reason: nil, &amp;block)  &#x21d2; <tt>Boolean</tt> 
+    .<strong>pour_bottle?</strong>(only_if: nil, &amp;block)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -7043,7 +7043,7 @@ installation.</p>
 the <span class='object_link'><a href="" title="Formula (class)">Formula</a></span> will be built from source and <code>reason</code> will be printed.</p>
 
 <p>Alternatively, a preset reason can be passed as a symbol:</p>
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span> <span class='label'>reason:</span> <span class='symbol'>:clt_required</span></code></pre>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span> <span class='label'>only_if:</span> <span class='symbol'>:clt_installed</span></code></pre>
 
 
   </div>
@@ -7099,15 +7099,15 @@ the <span class='object_link'><a href="" title="Formula (class)">Formula</a></sp
     <td>
       <pre class="code"><span class="info file"># File 'formula.rb', line 2924</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>reason:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>only_if:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@pour_bottle_check</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PourBottleCheck.html" title="PourBottleCheck (class)">PourBottleCheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PourBottleCheck.html#initialize-instance_method" title="PourBottleCheck#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_reason'>reason</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not pass both a reason and a block to `pour_bottle?`</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_only_if'>only_if</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not pass both a preset condition and a block to `pour_bottle?`</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_block'>block</span> <span class='op'>||=</span> <span class='kw'>case</span> <span class='id identifier rubyid_reason'>reason</span>
-  <span class='kw'>when</span> <span class='symbol'>:clt_required</span>
+  <span class='id identifier rubyid_block'>block</span> <span class='op'>||=</span> <span class='kw'>case</span> <span class='id identifier rubyid_only_if'>only_if</span>
+  <span class='kw'>when</span> <span class='symbol'>:clt_installed</span>
     <span class='id identifier rubyid_lambda'>lambda</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='op'>|</span>
       <span class='id identifier rubyid_on_macos'>on_macos</span> <span class='kw'>do</span>
         <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_cast'>cast</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="PourBottleCheck.html" title="PourBottleCheck (class)">PourBottleCheck</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reason'>reason</span><span class='lparen'>(</span><span class='op'>+</span><span class='heredoc_beg'>&lt;&lt;~EOS</span><span class='rparen'>)</span>
@@ -7119,7 +7119,7 @@ the <span class='object_link'><a href="" title="Formula (class)">Formula</a></sp
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid `pour_bottle?` reason</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_reason'>reason</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid preset `pour_bottle?` condition</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_only_if'>only_if</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
   <span class='kw'>end</span>
 
   <span class='ivar'>@pour_bottle_check</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
