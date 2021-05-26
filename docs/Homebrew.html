@@ -18066,7 +18066,6 @@
       <pre class="lines">
 
 
-138
 139
 140
 141
@@ -18093,10 +18092,11 @@
 162
 163
 164
-165</pre>
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/list.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'cmd/list.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filtered_list'>filtered_list</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
@@ -22621,8 +22621,6 @@
       <pre class="lines">
 
 
-34
-35
 36
 37
 38
@@ -22700,10 +22698,23 @@
 110
 111
 112
-113</pre>
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/link.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'cmd/link.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link'>link</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_link_args'>link_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -22714,18 +22725,29 @@
     <span class='label'>verbose:</span>   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span>
+  <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_resolved_kegs'>resolved_kegs</span><span class='op'>|</span>
+      <span class='id identifier rubyid_head_keg'>head_keg</span> <span class='op'>=</span> <span class='id identifier rubyid_resolved_kegs'>resolved_kegs</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span> <span class='rbrace'>}</span>
+      <span class='kw'>next</span> <span class='id identifier rubyid_head_keg'>head_keg</span> <span class='kw'>if</span> <span class='id identifier rubyid_head_keg'>head_keg</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+
+      <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>        No HEAD keg installed for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        To install, run:
+</span><span class='tstring_content'>          brew install --HEAD </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>      EOS
+</span>    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_latest_kegs'>to_latest_kegs</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span>
     <span class='id identifier rubyid_keg_only'>keg_only</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'><span class='object_link'><a href="Formulary.html#keg_only%3F-class_method" title="Formulary.keg_only? (method)">keg_only?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_rack'>rack</span><span class='rparen'>)</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span>
       <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Already linked: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_keg'>keg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_name_and_flag'>name_and_flag</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_keg_only'>keg_only</span>
-        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
-      <span class='kw'>end</span>
+      <span class='id identifier rubyid_name_and_flag'>name_and_flag</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_keg_only'>keg_only</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>        To relink:
+<span class='tstring_content'>        To relink, run:
 </span><span class='tstring_content'>          brew unlink </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &amp;&amp; brew link </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name_and_flag'>name_and_flag</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>      <span class='kw'>next</span>
@@ -22845,7 +22867,9 @@
 29
 30
 31
-32</pre>
+32
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/link.rb', line 15</span>
@@ -22864,6 +22888,8 @@
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew link --overwrite` without actually linking or deleting any files.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Allow keg-only formulae to be linked.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Link the HEAD version of the formula if it is installed.</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:installed_formula</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
   <span class='kw'>end</span>
@@ -22967,10 +22993,10 @@
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_linkage_args'>linkage_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:linkage</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
-    <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
       <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_installed_keg</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:nil?</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span>
+      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> linkage</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
@@ -23151,7 +23177,8 @@
 133
 134
 135
-136</pre>
+136
+137</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/list.rb', line 78</span>
@@ -23210,9 +23237,10 @@
       <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_ls_args'>ls_args</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_path'><span class='object_link'><a href="Cask/Caskroom.html#path-class_method" title="Cask::Caskroom.path (method)">path</a></span></span>
     <span class='kw'>end</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span> <span class='op'>||</span> <span class='op'>!</span><span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
-    <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>find</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>-not</span><span class='words_sep'> </span><span class='tstring_content'>-type</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>-print</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_system_command!'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">system_command!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>find</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span>         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>-not</span><span class='words_sep'> </span><span class='tstring_content'>-type</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>-print</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+                            <span class='label'>print_stdout:</span> <span class='kw'>true</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="PrettyListing.html" title="PrettyListing (class)">PrettyListing</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PrettyListing.html#initialize-instance_method" title="PrettyListing#initialize (method)">new</a></span></span> <span class='id identifier rubyid_keg'>keg</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="PrettyListing.html" title="PrettyListing (class)">PrettyListing</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PrettyListing.html#initialize-instance_method" title="PrettyListing#initialize (method)">new</a></span></span> <span class='id identifier rubyid_keg'>keg</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -23406,17 +23434,17 @@
       <pre class="lines">
 
 
-167
 168
 169
 170
 171
 172
 173
-174</pre>
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/list.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'cmd/list.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list_casks'>list_casks</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/List.html" title="Cask::Cmd::List (class)">List</a></span></span><span class='period'>.</span><span class='id identifier rubyid_list_casks'><span class='object_link'><a href="Cask/Cmd/List.html#list_casks-class_method" title="Cask::Cmd::List.list_casks (method)">list_casks</a></span></span><span class='lparen'>(</span>
@@ -28252,19 +28280,19 @@
       <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124</pre>
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/link.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'cmd/link.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_puts_keg_only_path_message'>puts_keg_only_path_message</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bin'>bin</span> <span class='op'>=</span> <span class='id identifier rubyid_keg'>keg</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bin</span><span class='tstring_end'>&quot;</span></span>
@@ -34067,7 +34095,7 @@ corresponding to all the original commit messages combined.</p>
 
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_kegs'>to_kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span>
+  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would remove:</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
