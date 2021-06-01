@@ -116,8 +116,16 @@ file.</p>
   <li><code>https://download.gnome.org/sources/example/1.2/example-1.2.3.tar.xz</code></li>
 </ul>
 
-<p>The default regex restricts matching to filenames containing a version
-with an even-numbered minor below 90, as these are stable releases.</p>
+<p>Before version 40, GNOME used a version scheme where unstable releases
+were indicated with a minor that’s 90+ or odd. The newer version scheme
+uses trailing alpha/beta/rc text to identify unstable versions
+(e.g., <code>40.alpha</code>).</p>
+
+<p>When a regex isn’t provided in a <code>livecheck</code> block, the strategy uses
+a default regex that matches versions which don’t include trailing text
+after the numeric version (e.g., <code>40.0</code> instead of <code>40.alpha</code>) and it
+selectively filters out unstable versions below 40 using the rules for
+the older version scheme.</p>
 
 
   </div>
@@ -336,14 +344,6 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59
-60
 61
 62
 63
@@ -354,29 +354,45 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
 68
 69
 70
-71</pre>
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/gnome.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/gnome.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Gnome::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_page_url'>page_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://download.gnome.org/sources/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>/cache.json</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='comment'># GNOME archive files seem to use a standard filename format, so we
-</span>  <span class='comment'># count on the delimiter between the package name and numeric version
-</span>  <span class='comment'># being a hyphen and the file being a tarball.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># The `([0-8]\d*?)?[02468]` part of the regex is intended to restrict
-</span>  <span class='comment'># matching to versions with an even-numbered minor, as these are
-</span>  <span class='comment'># stable releases. This also excludes x.90+ versions, which are
-</span>  <span class='comment'># development versions. See: https://www.gnome.org/gnome-3/source/
-</span>  <span class='comment'>#
-</span>  <span class='comment'># Example regex: `/example-(\d+\.([0-8]\d*?)?[02468](?:\.\d+)*?)\.t/i`
-</span>  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>-(\d+\.([0-8]\d*?)?[02468](?:\.\d+)*?)\.t</span><span class='regexp_end'>/i</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_regex'>regex</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+    <span class='comment'># GNOME archive files seem to use a standard filename format, so we
+</span>    <span class='comment'># count on the delimiter between the package name and numeric
+</span>    <span class='comment'># version being a hyphen and the file being a tarball.
+</span>    <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>-(\d+(?:\.\d+)+)\.t</span><span class='regexp_end'>/i</span></span>
+    <span class='id identifier rubyid_version_data'>version_data</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 
-  <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='comment'># Filter out unstable versions using the old version scheme where
+</span>    <span class='comment'># the major version is below 40.
+</span>    <span class='id identifier rubyid_version_data'>version_data</span><span class='lbracket'>[</span><span class='symbol'>:matches</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='op'>|</span>
+      <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_major'>major</span> <span class='op'>&lt;</span> <span class='int'>40</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_minor'>minor</span> <span class='op'>&gt;=</span> <span class='int'>90</span> <span class='op'>||</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_minor'>minor</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='period'>.</span><span class='id identifier rubyid_odd?'>odd?</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_version_data'>version_data</span>
+  <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -440,12 +456,12 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
-35
-36
-37</pre>
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/gnome.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/gnome.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::Gnome::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
