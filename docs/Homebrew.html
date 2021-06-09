@@ -14049,8 +14049,6 @@
       <pre class="lines">
 
 
-188
-189
 190
 191
 192
@@ -14072,10 +14070,12 @@
 208
 209
 210
-211</pre>
+211
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cmd_comment_manpage_lines'>cmd_comment_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_comment_lines'>comment_lines</span> <span class='op'>=</span> <span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^#:</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
@@ -14134,14 +14134,18 @@
 183
 184
 185
-186</pre>
+186
+187
+188</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cmd_parser_manpage_lines'>cmd_parser_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_format_usage_banner'>format_usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='period'>.</span><span class='id identifier rubyid_usage_banner_text'>usage_banner_text</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_lines'>lines</span> <span class='op'>+=</span> <span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='period'>.</span><span class='id identifier rubyid_processed_options'>processed_options</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='op'>|</span>
+  <span class='id identifier rubyid_lines'>lines</span> <span class='op'>+=</span> <span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='period'>.</span><span class='id identifier rubyid_processed_options'>processed_options</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='comma'>,</span> <span class='id identifier rubyid_hidden'>hidden</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_hidden'>hidden</span>
+
     <span class='kw'>if</span> <span class='id identifier rubyid_long'>long</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_global_options'><span class='object_link'><a href="Homebrew/CLI/Parser.html#global_options-class_method" title="Homebrew::CLI::Parser.global_options (method)">global_options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rbracket'>]</span><span class='rparen'>)</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options'><span class='object_link'><a href="Homebrew/CLI/Parser.html#global_cask_options-class_method" title="Homebrew::CLI::Parser.global_cask_options (method)">global_cask_options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_option'>option</span><span class='comma'>,</span> <span class='label'>description:</span><span class='comma'>,</span> <span class='op'>**</span><span class='op'>|</span>
@@ -14150,7 +14154,7 @@
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_generate_option_doc'>generate_option_doc</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:blank?</span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
   <span class='id identifier rubyid_lines'>lines</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -15358,7 +15362,6 @@
       <pre class="lines">
 
 
-330
 331
 332
 333
@@ -15367,10 +15370,11 @@
 336
 337
 338
-339</pre>
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 330</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate_dependencies'>decorate_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_dependencies'>dependencies</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_deps_status'>deps_status</span> <span class='op'>=</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
@@ -15402,16 +15406,16 @@
       <pre class="lines">
 
 
-341
 342
 343
 344
 345
 346
-347</pre>
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 342</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate_requirements'>decorate_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_requirements'>requirements</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_req_status'>req_status</span> <span class='op'>=</span> <span class='id identifier rubyid_requirements'>requirements</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_req'>req</span><span class='op'>|</span>
@@ -15565,14 +15569,14 @@
       <pre class="lines">
 
 
-349
 350
 351
 352
-353</pre>
+353
+354</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dep_display_s'>dep_display_s</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_option_tags'>option_tags</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -17123,8 +17127,6 @@
       <pre class="lines">
 
 
-233
-234
 235
 236
 237
@@ -17133,10 +17135,12 @@
 240
 241
 242
-243</pre>
+243
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env_vars_manpage'>env_vars_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html#ENVS-constant" title="Homebrew::EnvConfig::ENVS (constant)">ENVS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
@@ -18235,12 +18239,12 @@
       <pre class="lines">
 
 
-257
-258
-259</pre>
+259
+260
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_long_opt'>format_long_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opt'>opt</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -18327,12 +18331,12 @@
       <pre class="lines">
 
 
-253
-254
-255</pre>
+255
+256
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 253</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 255</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_short_opt'>format_short_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opt'>opt</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -18357,12 +18361,12 @@
       <pre class="lines">
 
 
-261
-262
-263</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_usage_banner'>format_usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='op'>&amp;.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(#: *\* )?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>### </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -18948,16 +18952,16 @@
       <pre class="lines">
 
 
-245
-246
 247
 248
 249
 250
-251</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_option_doc'>generate_option_doc</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_comma'>comma</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_long'>long</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -19377,7 +19381,6 @@
       <pre class="lines">
 
 
-231
 232
 233
 234
@@ -19386,10 +19389,11 @@
 237
 238
 239
-240</pre>
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_github_info'>github_info</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote'>remote</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -19543,16 +19547,16 @@
       <pre class="lines">
 
 
-223
 224
 225
 226
 227
 228
-229</pre>
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_github_remote_path'>github_remote_path</span><span class='lparen'>(</span><span class='id identifier rubyid_remote'>remote</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_remote'>remote</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^(?:https?://|git(?:@|://))github\.com[:/](.+)/(.+?)(?:\.git)?$</span><span class='regexp_end'>}</span></span>
@@ -19604,17 +19608,17 @@
       <pre class="lines">
 
 
-214
-215
 216
 217
 218
 219
 220
-221</pre>
+221
+222
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_global_cask_options_manpage'>global_cask_options_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>These options are applicable to the `install`, `reinstall`, and `upgrade` </span><span class='tstring_end'>&quot;</span></span> \
@@ -19667,16 +19671,16 @@
       <pre class="lines">
 
 
-224
-225
 226
 227
 228
 229
-230</pre>
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/generate-man-completions.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_global_options_manpage'>global_options_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>These options are applicable across multiple subcommands.\n</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -19858,7 +19862,6 @@
       <pre class="lines">
 
 
-81
 82
 83
 84
@@ -19888,10 +19891,11 @@
 108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_info'>info</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_info_args'>info_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -20020,7 +20024,8 @@
 75
 76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/info.rb', line 25</span>
@@ -20055,7 +20060,8 @@
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JSON output: &lt;https://docs.brew.sh/Querying-Brew&gt;</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>depends_on:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Output information about the bottles for &lt;formula&gt; and its dependencies.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Output information about the bottles for &lt;formula&gt; and its dependencies.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>hidden:</span>      <span class='kw'>true</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--installed</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>depends_on:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print JSON of formulae that are currently installed.</span><span class='tstring_end'>&quot;</span></span>
@@ -20099,15 +20105,15 @@
       <pre class="lines">
 
 
-355
 356
 357
 358
 359
-360</pre>
+360
+361</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 356</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_info_cask'>info_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/cmd</span><span class='tstring_end'>&quot;</span></span>
@@ -20135,7 +20141,6 @@
       <pre class="lines">
 
 
-242
 243
 244
 245
@@ -20221,10 +20226,11 @@
 325
 326
 327
-328</pre>
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 242</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 243</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_info_formula'>info_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_specs'>specs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -22238,7 +22244,6 @@
       <pre class="lines">
 
 
-166
 167
 168
 169
@@ -22248,10 +22253,11 @@
 173
 174
 175
-176</pre>
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_json_version'>json_version</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_version_hash'>version_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -27340,7 +27346,6 @@
       <pre class="lines">
 
 
-122
 123
 124
 125
@@ -27360,10 +27365,11 @@
 139
 140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_analytics'>print_analytics</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
@@ -27560,7 +27566,6 @@
       <pre class="lines">
 
 
-145
 146
 147
 148
@@ -27579,10 +27584,11 @@
 161
 162
 163
-164</pre>
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_info'>print_info</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks_and_unavailable'>to_formulae_and_casks_and_unavailable</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
@@ -27662,7 +27668,6 @@
       <pre class="lines">
 
 
-179
 180
 181
 182
@@ -27704,10 +27709,11 @@
 218
 219
 220
-221</pre>
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_json'>print_json</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FormulaOrCaskUnspecifiedError.html" title="FormulaOrCaskUnspecifiedError (class)">FormulaOrCaskUnspecifiedError</a></span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
@@ -27880,15 +27886,15 @@
       <pre class="lines">
 
 
-114
 115
 116
 117
 118
-119</pre>
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'cmd/info.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_statistics'>print_statistics</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
