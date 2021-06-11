@@ -2262,9 +2262,6 @@
       <pre class="lines">
 
 
-624
-625
-626
 627
 628
 629
@@ -2273,10 +2270,13 @@
 632
 633
 634
-635</pre>
+635
+636
+637
+638</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 624</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 627</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid___check_linked_brew'>__check_linked_brew</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_installed_prefixes'>installed_prefixes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_prefix'>prefix</span><span class='op'>|</span>
@@ -2325,8 +2325,6 @@
       <pre class="lines">
 
 
-204
-205
 206
 207
 208
@@ -2336,10 +2334,12 @@
 212
 213
 214
-215</pre>
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='comma'>,</span> <span class='id identifier rubyid_pattern'>pattern</span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
@@ -2433,12 +2433,12 @@
       <pre class="lines">
 
 
-1033
-1034
-1035</pre>
+1036
+1037
+1038</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1033</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1036</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all'>all</span>
   <span class='id identifier rubyid_methods'>methods</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^check_</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
@@ -2495,14 +2495,18 @@
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'diagnostic.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_tap'>broken_tap</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../../Utils/Git.html#available%3F-class_method" title="Utils::Git.available? (method)">available?</a></span></span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
+
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../GitRepositoryExtension.html" title="GitRepositoryExtension (module)">GitRepositoryExtension</a></span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
 
   <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> was not tapped properly! Run:
@@ -2514,7 +2518,7 @@
 
   <span class='id identifier rubyid_tap_head'>tap_head</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_git_head'>git_head</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_message'>message</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap_head'>tap_head</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap_head'>tap_head</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_git_head'>git_head</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap_head'>tap_head</span> <span class='op'>!=</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_git_head'>git_head</span>
 
   <span class='id identifier rubyid_message'>message</span>
 <span class='kw'>end</span></pre>
@@ -2651,12 +2655,12 @@
       <pre class="lines">
 
 
-1037
-1038
-1039</pre>
+1040
+1041
+1042</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1037</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1040</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_checks'>cask_checks</span>
   <span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^check_cask_</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
@@ -2696,8 +2700,6 @@
       <pre class="lines">
 
 
-379
-380
 381
 382
 383
@@ -2712,10 +2714,12 @@
 392
 393
 394
-395</pre>
+395
+396
+397</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 379</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_access_directories'>check_access_directories</span>
   <span class='id identifier rubyid_not_writable_dirs'>not_writable_dirs</span> <span class='op'>=</span>
@@ -2769,15 +2773,17 @@
       <pre class="lines">
 
 
-576
-577
-578</pre>
+578
+579
+580
+581</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 576</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 578</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_brew_git_origin'>check_brew_git_origin</span>
-  <span class='id identifier rubyid_examine_git_origin'>examine_git_origin</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_brew_git_remote'>brew_git_remote</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../GitRepositoryExtension.html" title="GitRepositoryExtension (module)">GitRepositoryExtension</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_examine_git_origin'>examine_git_origin</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_brew_git_remote'>brew_git_remote</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2910,9 +2916,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-965
-966
-967
 968
 969
 970
@@ -2933,10 +2936,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 985
 986
 987
-988</pre>
+988
+989
+990
+991</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 965</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 968</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_environment_variables'>check_cask_environment_variables</span>
   <span class='id identifier rubyid_environment_variables'>environment_variables</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='words_sep'>
@@ -2997,17 +3003,17 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-906
-907
-908
 909
 910
 911
 912
-913</pre>
+913
+914
+915
+916</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 906</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 909</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_install_location'>check_cask_install_location</span>
   <span class='id identifier rubyid_locations'>locations</span> <span class='op'>=</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew-cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
@@ -3052,16 +3058,16 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-957
-958
-959
 960
 961
 962
-963</pre>
+963
+964
+965
+966</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 957</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 960</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_load_path'>check_cask_load_path</span>
   <span class='id identifier rubyid_paths'>paths</span> <span class='op'>=</span> <span class='gvar'>$LOAD_PATH</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:user_tilde</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3105,9 +3111,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-1018
-1019
-1020
 1021
 1022
 1023
@@ -3118,10 +3121,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 1028
 1029
 1030
-1031</pre>
+1031
+1032
+1033
+1034</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1018</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1021</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_quarantine_support'>check_cask_quarantine_support</span>
   <span class='kw'>case</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Quarantine.html" title="Cask::Quarantine (module)">Quarantine</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_quarantine_support'><span class='object_link'><a href="../../Cask/Quarantine.html#check_quarantine_support-class_method" title="Cask::Quarantine.check_quarantine_support (method)">check_quarantine_support</a></span></span>
@@ -3172,9 +3178,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-884
-885
-886
 887
 888
 889
@@ -3192,10 +3195,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 901
 902
 903
-904</pre>
+904
+905
+906
+907</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 884</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 887</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_software_versions'>check_cask_software_versions</span>
   <span class='id identifier rubyid_add_info'>add_info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew Version</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_VERSION-constant" title="HOMEBREW_VERSION (constant)">HOMEBREW_VERSION</a></span></span>
@@ -3253,9 +3259,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-915
-916
-917
 918
 919
 920
@@ -3268,10 +3271,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 927
 928
 929
-930</pre>
+930
+931
+932
+933</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 915</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 918</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_staging_location'>check_cask_staging_location</span>
   <span class='comment'># Skip this check when running CI since the staging path is not writable for security reasons
@@ -3324,9 +3330,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-932
-933
-934
 935
 936
 937
@@ -3347,10 +3350,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 952
 953
 954
-955</pre>
+955
+956
+957
+958</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 932</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 935</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_taps'>check_cask_taps</span>
   <span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_cask_tap'><span class='object_link'><a href="../../Tap.html#default_cask_tap-class_method" title="Tap.default_cask_tap (method)">default_cask_tap</a></span></span>
@@ -3411,9 +3417,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-990
-991
-992
 993
 994
 995
@@ -3437,10 +3440,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 1013
 1014
 1015
-1016</pre>
+1016
+1017
+1018
+1019</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 990</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 993</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cask_xattr'>check_cask_xattr</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="../../SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xattr</span><span class='tstring_end'>&quot;</span></span>
@@ -3504,15 +3510,15 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-585
-586
-587
 588
 589
-590</pre>
+590
+591
+592
+593</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 585</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 588</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_casktap_integrity'>check_casktap_integrity</span>
   <span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_cask_tap'><span class='object_link'><a href="../../Tap.html#default_cask_tap-class_method" title="Tap.default_cask_tap (method)">default_cask_tap</a></span></span>
@@ -3647,13 +3653,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-580
-581
-582
-583</pre>
+583
+584
+585
+586</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 580</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 583</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_coretap_integrity'>check_coretap_integrity</span>
   <span class='id identifier rubyid_coretap'>coretap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="../../CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span>
@@ -3694,9 +3700,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-867
-868
-869
 870
 871
 872
@@ -3709,10 +3712,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 879
 880
 881
-882</pre>
+882
+883
+884
+885</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 867</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 870</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted_formula'>check_deleted_formula</span>
   <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="../../Keg.html#all-class_method" title="Keg.all (method)">all</a></span></span>
@@ -3811,9 +3817,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-683
-684
-685
 686
 687
 688
@@ -3823,10 +3826,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 692
 693
 694
-695</pre>
+695
+696
+697
+698</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 683</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 686</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_deprecated_disabled'>check_deprecated_disabled</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -3876,9 +3882,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-612
-613
-614
 615
 616
 617
@@ -3886,10 +3889,13 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 619
 620
 621
-622</pre>
+622
+623
+624
+625</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 612</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 615</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_deprecated_official_taps'>check_deprecated_official_taps</span>
   <span class='id identifier rubyid_tapped_deprecated_taps'>tapped_deprecated_taps</span> <span class='op'>=</span>
@@ -3937,8 +3943,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-363
-364
 365
 366
 367
@@ -3951,10 +3955,12 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 374
 375
 376
-377</pre>
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 365</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_exist_directories'>check_exist_directories</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_writable_real?'>writable_real?</span>
@@ -4097,8 +4103,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-182
-183
 184
 185
 186
@@ -4117,10 +4121,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 199
 200
 201
-202</pre>
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_anaconda'>check_for_anaconda</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>anaconda</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -4226,8 +4232,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-334
-335
 336
 337
 338
@@ -4241,10 +4245,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 346
 347
 348
-349</pre>
+349
+350
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 334</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_broken_symlinks'>check_for_broken_symlinks</span>
   <span class='id identifier rubyid_broken_symlinks'>broken_symlinks</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -4297,8 +4303,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-474
-475
 476
 477
 478
@@ -4334,10 +4338,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 508
 509
 510
-511</pre>
+511
+512
+513</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 474</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 476</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_config_scripts'>check_for_config_scripts</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -4412,9 +4418,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-803
-804
-805
 806
 807
 808
@@ -4437,10 +4440,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 825
 826
 827
-828</pre>
+828
+829
+830
+831</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 803</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 806</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_external_cmd_name_conflict'>check_for_external_cmd_name_conflict</span>
   <span class='id identifier rubyid_cmds'>cmds</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cmd_directories'><span class='object_link'><a href="../../Tap.html#cmd_directories-class_method" title="Tap.cmd_directories (method)">cmd_directories</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_p'>p</span><span class='embexpr_end'>}</span><span class='tstring_content'>/brew-*</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
@@ -4579,8 +4585,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-547
-548
 549
 550
 551
@@ -4588,10 +4592,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 553
 554
 555
-556</pre>
+556
+557
+558</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 547</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 549</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_git'>check_for_git</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../../Utils/Git.html#available%3F-class_method" title="Utils::Git.available? (method)">available?</a></span></span>
@@ -4720,17 +4726,17 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-169
-170
 171
 172
 173
 174
 175
-176</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_installed_developer_tools'>check_for_installed_developer_tools</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -4863,9 +4869,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-738
-739
-740
 741
 742
 743
@@ -4875,10 +4878,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 747
 748
 749
-750</pre>
+750
+751
+752
+753</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 738</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 741</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_non_prefixed_coreutils'>check_for_non_prefixed_coreutils</span>
   <span class='id identifier rubyid_coreutils'>coreutils</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>coreutils</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -4980,9 +4986,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-637
-638
-639
 640
 641
 642
@@ -4997,10 +5000,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 651
 652
 653
-654</pre>
+654
+655
+656
+657</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 637</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 640</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_other_frameworks'>check_for_other_frameworks</span>
   <span class='comment'># Other frameworks that are known to cause problems when present
@@ -5055,19 +5061,19 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-752
-753
-754
 755
 756
 757
 758
 759
 760
-761</pre>
+761
+762
+763
+764</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 752</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 755</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_pydistutils_cfg_in_home'>check_for_pydistutils_cfg_in_home</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOME</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>/.pydistutils.cfg</span><span class='tstring_end'>&quot;</span></span>
@@ -5114,8 +5120,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-217
-218
 219
 220
 221
@@ -5144,10 +5148,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 244
 245
 246
-247</pre>
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_stray_dylibs'>check_for_stray_dylibs</span>
   <span class='comment'># Dylibs which are generally OK should be added to this list,
@@ -5215,8 +5221,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-315
-316
 317
 318
 319
@@ -5232,10 +5236,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 329
 330
 331
-332</pre>
+332
+333
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 317</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_stray_headers'>check_for_stray_headers</span>
   <span class='id identifier rubyid_allow_list'>allow_list</span> <span class='op'>=</span> <span class='lbracket'>[</span>
@@ -5290,8 +5296,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-294
-295
 296
 297
 298
@@ -5309,10 +5313,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 310
 311
 312
-313</pre>
+313
+314
+315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 296</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_stray_las'>check_for_stray_las</span>
   <span class='id identifier rubyid_allow_list'>allow_list</span> <span class='op'>=</span> <span class='lbracket'>[</span>
@@ -5369,8 +5375,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-274
-275
 276
 277
 278
@@ -5387,10 +5391,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 289
 290
 291
-292</pre>
+292
+293
+294</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 274</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_stray_pcs'>check_for_stray_pcs</span>
   <span class='comment'># Package-config files which are generally OK should be added to this list,
@@ -5446,8 +5452,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-249
-250
 251
 252
 253
@@ -5469,10 +5473,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 269
 270
 271
-272</pre>
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_stray_static_libs'>check_for_stray_static_libs</span>
   <span class='comment'># Static libs which are generally OK should be added to this list,
@@ -5533,8 +5539,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-513
-514
 515
 516
 517
@@ -5550,10 +5554,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 527
 528
 529
-530</pre>
+530
+531
+532</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 513</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 515</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_symlinked_cellar'>check_for_symlinked_cellar</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -5608,9 +5614,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-830
-831
-832
 833
 834
 835
@@ -5632,10 +5635,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 851
 852
 853
-854</pre>
+854
+855
+856
+857</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 830</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 833</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_tap_ruby_files_locations'>check_for_tap_ruby_files_locations</span>
   <span class='id identifier rubyid_bad_tap_files'>bad_tap_files</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -5697,9 +5703,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-782
-783
-784
 785
 786
 787
@@ -5716,10 +5719,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 798
 799
 800
-801</pre>
+801
+802
+803
+804</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 782</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 785</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_unlinked_but_not_keg_only'>check_for_unlinked_but_not_keg_only</span>
   <span class='id identifier rubyid_unlinked'>unlinked</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_racks'>racks</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rack'>rack</span><span class='op'>|</span>
@@ -5776,9 +5782,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-763
-764
-765
 766
 767
 768
@@ -5793,10 +5796,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 777
 778
 779
-780</pre>
+780
+781
+782
+783</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 763</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 766</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_unreadable_installed_formula'>check_for_unreadable_installed_formula</span>
   <span class='id identifier rubyid_formula_unavailable_exceptions'>formula_unavailable_exceptions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -5915,8 +5921,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-558
-559
 560
 561
 562
@@ -5931,10 +5935,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 571
 572
 573
-574</pre>
+574
+575
+576</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 558</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 560</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_git_newline_settings'>check_git_newline_settings</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../../Utils/Git.html#available%3F-class_method" title="Utils::Git.available? (method)">available?</a></span></span>
@@ -5988,9 +5994,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-697
-698
-699
 700
 701
 702
@@ -6027,10 +6030,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 733
 734
 735
-736</pre>
+736
+737
+738
+739</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 697</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 700</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_git_status'>check_git_status</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../../Utils/Git.html#available%3F-class_method" title="Utils::Git.available? (method)">available?</a></span></span>
@@ -6107,8 +6113,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-532
-533
 534
 535
 536
@@ -6120,10 +6124,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 542
 543
 544
-545</pre>
+545
+546
+547</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 532</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 534</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_git_version'>check_git_version</span>
   <span class='id identifier rubyid_minimum_version'>minimum_version</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MINIMUM_GIT_VERSION</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -6222,19 +6228,19 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-856
-857
-858
 859
 860
 861
 862
 863
 864
-865</pre>
+865
+866
+867
+868</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 856</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 859</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_homebrew_prefix'>check_homebrew_prefix</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_prefix?'><span class='object_link'><a href="../../Homebrew.html#default_prefix%3F-class_method" title="Homebrew.default_prefix? (method)">default_prefix?</a></span></span>
@@ -6439,9 +6445,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-665
-666
-667
 668
 669
 670
@@ -6455,10 +6458,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 678
 679
 680
-681</pre>
+681
+682
+683
+684</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 665</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 668</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_missing_deps'>check_missing_deps</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -6512,8 +6518,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-397
-398
 399
 400
 401
@@ -6522,10 +6526,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 404
 405
 406
-407</pre>
+407
+408
+409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 397</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 399</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_multiple_cellars'>check_multiple_cellars</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -6674,9 +6680,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-593
-594
-595
 596
 597
 598
@@ -6691,10 +6694,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 607
 608
 609
-610</pre>
+610
+611
+612
+613</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 593</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 596</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_tap_git_branch'>check_tap_git_branch</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -6749,17 +6755,17 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-656
-657
-658
 659
 660
 661
 662
-663</pre>
+663
+664
+665
+666</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 656</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 659</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_tmpdir'>check_tmpdir</span>
   <span class='id identifier rubyid_tmpdir'>tmpdir</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TMPDIR</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -6973,8 +6979,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-409
-410
 411
 412
 413
@@ -7009,10 +7013,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 442
 443
 444
-445</pre>
+445
+446
+447</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 411</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_user_path_1'>check_user_path_1</span>
   <span class='ivar'>@seen_prefix_bin</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -7086,18 +7092,18 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-447
-448
 449
 450
 451
 452
 453
 454
-455</pre>
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 447</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 449</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_user_path_2'>check_user_path_2</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@seen_prefix_bin</span>
@@ -7143,8 +7149,6 @@ to ignore those as warnings rather than extremely likely breakage.</p>
       <pre class="lines">
 
 
-457
-458
 459
 460
 461
@@ -7158,10 +7162,12 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 469
 470
 471
-472</pre>
+472
+473
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 457</span>
+      <pre class="code"><span class="info file"># File 'diagnostic.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_user_path_3'>check_user_path_3</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@seen_prefix_sbin</span>
