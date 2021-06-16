@@ -640,7 +640,9 @@
 21
 22
 23
-24</pre>
+24
+25
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 11</span>
@@ -657,6 +659,8 @@
   <span class='ivar'>@spec_name</span> <span class='op'>=</span> <span class='id identifier rubyid_spec_name'>spec_name</span>
   <span class='ivar'>@online</span>    <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:online</span><span class='rbracket'>]</span>
   <span class='ivar'>@strict</span>    <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:strict</span><span class='rbracket'>]</span>
+  <span class='ivar'>@only</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:only</span><span class='rbracket'>]</span>
+  <span class='ivar'>@except</span>    <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:except</span><span class='rbracket'>]</span>
   <span class='ivar'>@problems</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1176,20 +1180,20 @@
       <pre class="lines">
 
 
-83
-84
-85
-86
-87
-88
-89
-90
-91
 92
-93</pre>
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_curl_openssl_and_deps'>curl_openssl_and_deps</span>
   <span class='ivar'>@curl_openssl_and_deps</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1243,22 +1247,36 @@
       <pre class="lines">
 
 
-26
-27
 28
 29
 30
 31
-32</pre>
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
-  <span class='id identifier rubyid_audit_version'>audit_version</span>
-  <span class='id identifier rubyid_audit_download_strategy'>audit_download_strategy</span>
-  <span class='id identifier rubyid_audit_checksum'>audit_checksum</span>
-  <span class='id identifier rubyid_audit_urls'>audit_urls</span>
+  <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
+  <span class='id identifier rubyid_except_audits'>except_audits</span> <span class='op'>=</span> <span class='ivar'>@except</span>
+
+  <span class='id identifier rubyid_methods'>methods</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^audit_</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='op'>|</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='period'>.</span><span class='id identifier rubyid_delete_prefix'>delete_prefix</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>audit_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_only_audits'>only_audits</span><span class='op'>&amp;.</span><span class='id identifier rubyid_exclude?'>exclude?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_except_audits'>except_audits</span><span class='op'>&amp;.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1296,15 +1314,15 @@
       <pre class="lines">
 
 
-76
-77
-78
-79
-80
-81</pre>
+85
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_checksum'>audit_checksum</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_spec_name'>spec_name</span> <span class='op'>==</span> <span class='symbol'>:head</span>
@@ -1347,15 +1365,6 @@
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51
-52
-53
-54
 55
 56
 57
@@ -1375,10 +1384,19 @@
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_download_strategy'>audit_download_strategy</span>
   <span class='id identifier rubyid_url_strategy'>url_strategy</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -1444,15 +1462,6 @@
       <pre class="lines">
 
 
-95
-96
-97
-98
-99
-100
-101
-102
-103
 104
 105
 106
@@ -1465,10 +1474,19 @@
 113
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_urls'>audit_urls</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
@@ -1527,20 +1545,20 @@
       <pre class="lines">
 
 
-34
-35
-36
-37
-38
-39
-40
-41
-42
 43
-44</pre>
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_version'>audit_version</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1588,12 +1606,12 @@
       <pre class="lines">
 
 
-118
-119
-120</pre>
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@problems</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_text'>text</span>
