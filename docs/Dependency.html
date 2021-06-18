@@ -288,7 +288,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#action-class_method" title="action (class method)">.<strong>action</strong>(dependent, dep, &amp;block)  &#x21d2; Object </a>
+      <a href="#action-class_method" title="action (class method)">.<strong>action</strong>(dependent, dep, ignore_missing: false, &amp;block)  &#x21d2; Object </a>
     
     
   </span>
@@ -310,7 +310,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#expand-class_method" title="expand (class method)">.<strong>expand</strong>(dependent, deps = dependent.deps, cache_key: nil, &amp;block)  &#x21d2; Object </a>
+      <a href="#expand-class_method" title="expand (class method)">.<strong>expand</strong>(dependent, deps = dependent.deps, cache_key: nil, ignore_missing: false, &amp;block)  &#x21d2; Object </a>
     
     
   </span>
@@ -671,6 +671,28 @@
 </li>
 
       
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#unavailable_core_formula%3F-instance_method" title="#unavailable_core_formula? (instance method)">#<strong>unavailable_core_formula?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -999,12 +1021,12 @@
       <pre class="lines">
 
 
-80
-81
-82</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__load'>_load</span><span class='lparen'>(</span><span class='id identifier rubyid_marshaled'>marshaled</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_marshaled'>marshaled</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Security/MarshalLoad
@@ -1017,7 +1039,7 @@
       <div class="method_details ">
   <h3 class="signature " id="action-class_method">
   
-    .<strong>action</strong>(dependent, dep, &amp;block)  &#x21d2; <tt>Object</tt> 
+    .<strong>action</strong>(dependent, dep, ignore_missing: false, &amp;block)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1044,21 +1066,25 @@
       <pre class="lines">
 
 
-131
-132
-133
-134
-135
-136
-137
-138
-139</pre>
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 140</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_catch'>catch</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_prune'>prune</span> <span class='kw'>if</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_unavailable_core_formula?'>unavailable_core_formula?</span>
+
     <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
       <span class='kw'>yield</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_optional?'>optional?</span> <span class='op'>||</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_recommended?'>recommended?</span>
@@ -1074,7 +1100,7 @@
       <div class="method_details ">
   <h3 class="signature " id="expand-class_method">
   
-    .<strong>expand</strong>(dependent, deps = dependent.deps, cache_key: nil, &amp;block)  &#x21d2; <tt>Object</tt> 
+    .<strong>expand</strong>(dependent, deps = dependent.deps, cache_key: nil, ignore_missing: false, &amp;block)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1105,15 +1131,6 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
-97
-98
-99
-100
 101
 102
 103
@@ -1142,12 +1159,21 @@ optionals and recommendeds based on what the dependent has asked for</p>
 126
 127
 128
-129</pre>
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 101</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='comment'># Keep track dependencies to avoid infinite cyclic dependency recursion.
 </span>  <span class='ivar'>@expand_stack</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@expand_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -1162,19 +1188,19 @@ optionals and recommendeds based on what the dependent has asked for</p>
   <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 
-    <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='symbol'>:prune</span>
       <span class='kw'>next</span>
     <span class='kw'>when</span> <span class='symbol'>:skip</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='ivar'>@expand_stack</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 
-      <span class='id identifier rubyid_expanded_deps'>expanded_deps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_expanded_deps'>expanded_deps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='symbol'>:keep_but_prune_recursive_deps</span>
       <span class='id identifier rubyid_expanded_deps'>expanded_deps</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dep'>dep</span>
     <span class='kw'>else</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='ivar'>@expand_stack</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 
-      <span class='id identifier rubyid_expanded_deps'>expanded_deps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_expanded_deps'>expanded_deps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_expand'>expand</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='comma'>,</span> <span class='label'>cache_key:</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_expanded_deps'>expanded_deps</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_dep'>dep</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -1220,12 +1246,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-155
-156
-157</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keep_but_prune_recursive_deps'>keep_but_prune_recursive_deps</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:keep_but_prune_recursive_deps</span><span class='rparen'>)</span>
@@ -1265,20 +1291,20 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_repeats'>merge_repeats</span><span class='lparen'>(</span><span class='id identifier rubyid_all'>all</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_grouped'>grouped</span> <span class='op'>=</span> <span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
@@ -1326,12 +1352,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-143
-144
-145</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune'>prune</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:prune</span><span class='rparen'>)</span>
@@ -1371,12 +1397,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-149
-150
-151</pre>
+160
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip'>skip</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:skip</span><span class='rparen'>)</span>
@@ -1471,12 +1497,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-76
-77
-78</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__dump'>_dump</span><span class='lparen'>(</span><span class='op'>*</span><span class='rparen'>)</span>
   <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tags'>tags</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1574,12 +1600,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-71
-72
-73</pre>
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -1632,12 +1658,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed?'>installed?</span>
   <span class='id identifier rubyid_to_formula'>to_formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span>
@@ -1677,17 +1703,17 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64</pre>
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_missing_options'>missing_options</span><span class='lparen'>(</span><span class='id identifier rubyid_inherited_options'>inherited_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='id identifier rubyid_to_formula'>to_formula</span>
@@ -1732,12 +1758,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-66
-67
-68</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_modify_build_environment'>modify_build_environment</span>
   <span class='id identifier rubyid_env_proc'>env_proc</span><span class='op'>&amp;.</span><span class='id identifier rubyid_call'>call</span>
@@ -1790,12 +1816,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-53
-54
-55</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfied?'>satisfied?</span><span class='lparen'>(</span><span class='id identifier rubyid_inherited_options'>inherited_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_missing_options'>missing_options</span><span class='lparen'>(</span><span class='id identifier rubyid_inherited_options'>inherited_options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1893,6 +1919,74 @@ optionals and recommendeds based on what the dependent has asked for</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="unavailable_core_formula?-instance_method">
+  
+    #<strong>unavailable_core_formula?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_unavailable_core_formula?'>unavailable_core_formula?</span>
+  <span class='id identifier rubyid_to_formula'>to_formula</span>
+  <span class='kw'>false</span>
+<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="CoreTapFormulaUnavailableError.html" title="CoreTapFormulaUnavailableError (class)">CoreTapFormulaUnavailableError</a></span></span>
+  <span class='kw'>true</span>
+<span class='kw'>rescue</span>
+  <span class='kw'>false</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
