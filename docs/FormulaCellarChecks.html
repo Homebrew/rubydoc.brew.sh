@@ -184,6 +184,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#check_cpuid_instruction-instance_method" title="#check_cpuid_instruction (instance method)">#<strong>check_cpuid_instruction</strong>(formula)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#check_easy_install_pth-instance_method" title="#check_easy_install_pth (instance method)">#<strong>check_easy_install_pth</strong>(lib)  &#x21d2; Object </a>
     
     
@@ -683,6 +705,103 @@
   <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_openssl_links'>check_openssl_links</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_framework_links'>check_python_framework_links</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_linkage'>check_linkage</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_cpuid_instruction-instance_method">
+  
+    #<strong>check_cpuid_instruction</strong>(formula)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 287</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_cpuid_instruction'>check_cpuid_instruction</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+  <span class='comment'># TODO: add methods to `utils/ast` to allow checking for method use
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ENV.runtime_cpu_detection</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># Checking for `cpuid` only makes sense on Intel:
+</span>  <span class='comment'># https://en.wikipedia.org/wiki/CPUID
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_intel?'><span class='object_link'><a href="Hardware/CPU.html#intel%3F-class_method" title="Hardware::CPU.intel? (method)">intel?</a></span></span>
+
+  <span class='comment'># macOS `objdump` is a bit slow, so we prioritise llvm&#39;s `llvm-objdump` (~5.7x faster)
+</span>  <span class='comment'># or binutils&#39; `objdump` (~1.8x faster) if they are installed.
+</span>  <span class='id identifier rubyid_objdump'>objdump</span>   <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>llvm</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>llvm-objdump</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>llvm</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
+  <span class='id identifier rubyid_objdump'>objdump</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>binutils</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>objdump</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>binutils</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
+  <span class='id identifier rubyid_objdump'>objdump</span> <span class='op'>||=</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>objdump</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_objdump'>objdump</span> <span class='op'>||=</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>objdump</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_objdump'>objdump</span>
+    <span class='kw'>return</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      No `objdump` found, so cannot check for a `cpuid` instruction. Install `objdump` with
+</span><span class='tstring_content'>        brew install binutils
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_binary_executable_or_library_files'>binary_executable_or_library_files</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_cpuid_instruction?'>cpuid_instruction?</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_objdump'>objdump</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No `cpuid` instruction detected. </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'> should not use `ENV.runtime_cpu_detection`.</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
