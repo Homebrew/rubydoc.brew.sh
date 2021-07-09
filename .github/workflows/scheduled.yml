@@ -1,53 +1,59 @@
 name: Scheduled regeneration
+
 on:
   push:
     paths:
       - .github/workflows/scheduled.yml
   schedule:
     # Once every hour
-    - cron:  '30 * * * *'
+    - cron: "30 * * * *"
+
+concurrency:
+  group: scheduled
+  cancel-in-progress: true
+
 jobs:
   generate:
     if: startsWith( github.repository, 'Homebrew/' )
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Git repository
-      uses: actions/checkout@main
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Git repository
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Set up Homebrew
-      id: set-up-homebrew
-      uses: Homebrew/actions/setup-homebrew@master
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
 
-    - name: Set up Ruby
-      uses: actions/setup-ruby@main
-      with:
-        ruby-version: '2.6'
+      - name: Set up Ruby
+        uses: actions/setup-ruby@main
+        with:
+          ruby-version: "2.6"
 
-    - name: Install RubyGems
-      run: |
-        gem install bundler -v "~>1"
-        bundle install --jobs 4 --retry 3
+      - name: Install RubyGems
+        run: |
+          gem install bundler -v "~>1"
+          bundle install --jobs 4 --retry 3
 
-    - name: Configure Git user
-      uses: Homebrew/actions/git-user-config@master
-      with:
-        username: BrewTestBot
+      - name: Configure Git user
+        uses: Homebrew/actions/git-user-config@master
+        with:
+          username: BrewTestBot
 
-    - name: Generate site
-      run: |
-        ln -s $(brew --repo) brew
-        bundle exec rake yard build
+      - name: Generate site
+        run: |
+          ln -s $(brew --repo) brew
+          bundle exec rake yard build
 
-    - name: Commit changes
-      run: |
-        git reset origin/master
-        git add docs
-        if ! git diff --no-patch --exit-code HEAD -- docs; then
-          git commit -m "docs: updates from Homebrew/brew" docs
-        fi
+      - name: Commit changes
+        run: |
+          git reset origin/master
+          git add docs
+          if ! git diff --no-patch --exit-code HEAD -- docs; then
+            git commit -m "docs: updates from Homebrew/brew" docs
+          fi
 
-    - name: Push commits
-      uses: Homebrew/actions/git-try-push@master
+      - name: Push commits
+        uses: Homebrew/actions/git-try-push@master
