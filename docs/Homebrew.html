@@ -13425,9 +13425,6 @@
       <pre class="lines">
 
 
-301
-302
-303
 304
 305
 306
@@ -13441,10 +13438,13 @@
 314
 315
 316
-317</pre>
+317
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 304</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_changed_formulae'>changed_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disable_load_formula?'>disable_load_formula?</span>
@@ -16792,9 +16792,6 @@
       <pre class="lines">
 
 
-319
-320
-321
 322
 323
 324
@@ -16806,10 +16803,13 @@
 330
 331
 332
-333</pre>
+333
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 322</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download_artifact'>download_artifact</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_dir'>dir</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Credentials must be set to access the Artifacts API</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_credentials_type'><span class='object_link'><a href="GitHub/API.html#credentials_type-class_method" title="GitHub::API.credentials_type (method)">credentials_type</a></span></span> <span class='op'>==</span> <span class='symbol'>:none</span>
@@ -18613,14 +18613,20 @@
 296
 297
 298
-299</pre>
+299
+300
+301
+302</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formulae_need_bottles?'>formulae_need_bottles?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_labels'><span class='object_link'><a href="GitHub.html#pull_request_labels-class_method" title="GitHub.pull_request_labels (method)">pull_request_labels</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI-syntax-only</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_labels'><span class='object_link'><a href="GitHub.html#pull_request_labels-class_method" title="GitHub.pull_request_labels (method)">pull_request_labels</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI-syntax-only</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI-no-bottles</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_changed_formulae'>changed_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_bottle_unneeded?'>bottle_unneeded?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_bottle_disabled?'>bottle_disabled?</span>
@@ -26255,9 +26261,6 @@
       <pre class="lines">
 
 
-335
-336
-337
 338
 339
 340
@@ -26336,10 +26339,13 @@
 413
 414
 415
-416</pre>
+416
+417
+418
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 335</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 338</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_pull'>pr_pull</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_pull_args'>pr_pull_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
