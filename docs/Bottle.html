@@ -361,7 +361,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula, spec)  &#x21d2; Bottle </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula, spec, tag = nil)  &#x21d2; Bottle </a>
     
     
   </span>
@@ -457,7 +457,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(formula, spec)  &#x21d2; <tt><span class='object_link'><a href="" title="Bottle (class)">Bottle</a></span></tt> 
+    #<strong>initialize</strong>(formula, spec, tag = nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Bottle (class)">Bottle</a></span></tt> 
   
 
   
@@ -497,19 +497,29 @@
 317
 318
 319
-320</pre>
+320
+321
+322
+323
+324
+325</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'software_spec.rb', line 302</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@resource</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Resource.html" title="Resource (class)">Resource</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Resource.html#initialize-instance_method" title="Resource#initialize (method)">new</a></span></span>
   <span class='ivar'>@resource</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span>
   <span class='ivar'>@resource</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:bottle</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='ivar'>@spec</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span>
 
-  <span class='id identifier rubyid_checksum'>checksum</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_checksum_for'>checksum_for</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tag'><span class='object_link'><a href="Utils/Bottles.html#tag-class_method" title="Utils::Bottles.tag (method)">tag</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_tag'>tag</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_symbol'><span class='object_link'><a href="Utils/Bottles/Tag.html#from_symbol-class_method" title="Utils::Bottles::Tag.from_symbol (method)">from_symbol</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tag'><span class='object_link'><a href="Utils/Bottles.html#tag-class_method" title="Utils::Bottles.tag (method)">tag</a></span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_checksum'>checksum</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='comma'>,</span> <span class='id identifier rubyid_cellar'>cellar</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_checksum_for'>checksum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
 
   <span class='ivar'>@prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span>
   <span class='ivar'>@tag</span> <span class='op'>=</span> <span class='id identifier rubyid_tag'>tag</span>
@@ -763,13 +773,13 @@
       <pre class="lines">
 
 
-331
-332
-333
-334</pre>
+336
+337
+338
+339</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_cache'>clear_cache</span>
   <span class='ivar'>@resource</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span>
@@ -818,12 +828,12 @@
       <pre class="lines">
 
 
-336
-337
-338</pre>
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 336</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compatible_locations?'>compatible_locations?</span>
   <span class='ivar'>@spec</span><span class='period'>.</span><span class='id identifier rubyid_compatible_locations?'>compatible_locations?</span>
@@ -848,17 +858,17 @@
       <pre class="lines">
 
 
-322
-323
-324
-325
-326
 327
 328
-329</pre>
+329
+330
+331
+332
+333
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 327</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>verify_download_integrity:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@resource</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>verify_download_integrity:</span> <span class='id identifier rubyid_verify_download_integrity'>verify_download_integrity</span><span class='rparen'>)</span>
@@ -888,11 +898,6 @@
       <pre class="lines">
 
 
-349
-350
-351
-352
-353
 354
 355
 356
@@ -907,10 +912,15 @@
 365
 366
 367
-368</pre>
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_tab'>fetch_tab</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_github_packages_manifest_resource'>github_packages_manifest_resource</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -975,12 +985,12 @@
       <pre class="lines">
 
 
-341
-342
-343</pre>
+346
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 341</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 346</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_relocation?'>skip_relocation?</span>
   <span class='ivar'>@spec</span><span class='period'>.</span><span class='id identifier rubyid_skip_relocation?'>skip_relocation?</span>
@@ -1005,12 +1015,12 @@
       <pre class="lines">
 
 
-345
-346
-347</pre>
+350
+351
+352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span>
   <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_stage'>stage</span>
@@ -1058,11 +1068,6 @@
       <pre class="lines">
 
 
-370
-371
-372
-373
-374
 375
 376
 377
@@ -1093,10 +1098,15 @@
 402
 403
 404
-405</pre>
+405
+406
+407
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'software_spec.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'software_spec.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tab_attributes'>tab_attributes</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_github_packages_manifest_resource'>github_packages_manifest_resource</span><span class='op'>&amp;.</span><span class='id identifier rubyid_downloaded?'>downloaded?</span>
