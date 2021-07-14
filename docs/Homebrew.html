@@ -10445,7 +10445,9 @@
 571
 572
 573
-574</pre>
+574
+575
+576</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 274</span>
@@ -10578,6 +10580,8 @@
       <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
         <span class='comment'># Set the times for reproducible bottles.
 </span>        <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
+          <span class='comment'># Need to make symlink permissions consistent on macOS and Linux
+</span>          <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_lchmod'>lchmod</span> <span class='int'>0777</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span>
           <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_lutime'>lutime</span><span class='lparen'>(</span><span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='comma'>,</span> <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_utime'>utime</span><span class='lparen'>(</span><span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='comma'>,</span> <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='rparen'>)</span>
@@ -23917,8 +23921,6 @@
       <pre class="lines">
 
 
-595
-596
 597
 598
 599
@@ -24060,10 +24062,12 @@
 735
 736
 737
-738</pre>
+738
+739
+740</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 595</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 597</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_json_files'>merge_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_json_files'>parse_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -24229,8 +24233,6 @@
       <pre class="lines">
 
 
-740
-741
 742
 743
 744
@@ -24268,10 +24270,12 @@
 776
 777
 778
-779</pre>
+779
+780
+781</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 740</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 742</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_new_bottle_hash'>new_bottle_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -24333,8 +24337,6 @@
       <pre class="lines">
 
 
-582
-583
 584
 585
 586
@@ -24344,10 +24346,12 @@
 590
 591
 592
-593</pre>
+593
+594
+595</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 582</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 584</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_json_files'>merge_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_json_files'>json_files</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_json_file'>json_file</span><span class='op'>|</span>
@@ -24841,8 +24845,6 @@
       <pre class="lines">
 
 
-781
-782
 783
 784
 785
@@ -24856,10 +24858,12 @@
 793
 794
 795
-796</pre>
+796
+797
+798</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 781</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 783</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_old_checksums'>old_checksums</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle_node'>bottle_node</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='period'>.</span><span class='id identifier rubyid_bottle_block'>bottle_block</span>
@@ -25641,14 +25645,14 @@
       <pre class="lines">
 
 
-576
-577
 578
 579
-580</pre>
+580
+581
+582</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 576</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 578</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_json_files'>parse_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_filenames'>filenames</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_filename'>filename</span><span class='op'>|</span>
