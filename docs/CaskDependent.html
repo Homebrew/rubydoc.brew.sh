@@ -415,12 +415,12 @@
       <pre class="lines">
 
 
-54
-55
-56</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -445,14 +445,14 @@
       <pre class="lines">
 
 
-22
-23
-24
 25
-26</pre>
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deps'>deps</span>
   <span class='ivar'>@deps</span> <span class='op'>||=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
@@ -539,12 +539,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='lparen'>(</span><span class='label'>ignore_missing:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_expand'><span class='object_link'><a href="Dependency.html#expand-class_method" title="Dependency.expand (method)">expand</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -569,12 +569,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_requirements'>recursive_requirements</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Requirement.html" title="Requirement (class)">Requirement</a></span></span><span class='period'>.</span><span class='id identifier rubyid_expand'><span class='object_link'><a href="Requirement.html#expand-class_method" title="Requirement.expand (method)">expand</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -599,9 +599,6 @@
       <pre class="lines">
 
 
-28
-29
-30
 31
 32
 33
@@ -615,10 +612,13 @@
 41
 42
 43
-44</pre>
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requirements'>requirements</span>
   <span class='ivar'>@requirements</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -659,13 +659,19 @@
 
 18
 19
-20</pre>
+20
+21
+22
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask_dependent.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span><span class='lparen'>(</span><span class='label'>ignore_missing:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span>
+  <span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='lparen'>(</span><span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependency'>dependency</span><span class='op'>|</span>
+    <span class='id identifier rubyid_tags'>tags</span> <span class='op'>=</span> <span class='id identifier rubyid_dependency'>dependency</span><span class='period'>.</span><span class='id identifier rubyid_tags'>tags</span>
+    <span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:build</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='symbol'>:test</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
