@@ -476,15 +476,15 @@
       <pre class="lines">
 
 
-79
-80
-81
-82
-83
-84</pre>
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'bottle_api.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'bottle_api.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checksum_from_url'>checksum_from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span> <span class='const'><span class='object_link'><a href="#GITHUB_PACKAGES_SHA256_REGEX-constant" title="BottleAPI::GITHUB_PACKAGES_SHA256_REGEX (constant)">GITHUB_PACKAGES_SHA256_REGEX</a></span></span>
@@ -553,15 +553,6 @@
       <pre class="lines">
 
 
-87
-88
-89
-90
-91
-92
-93
-94
-95
 96
 97
 98
@@ -571,13 +562,24 @@
 102
 103
 104
-105</pre>
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'bottle_api.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'bottle_api.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download_bottle'>download_bottle</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle'>bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag'>tag</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_bottle'>bottle</span> <span class='op'>||=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_sha256'>sha256</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha256</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_checksum_from_url'>checksum_from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle'>bottle</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>url</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -747,7 +749,16 @@
 73
 74
 75
-76</pre>
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'bottle_api.rb', line 65</span>
@@ -756,11 +767,20 @@
   <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tag'><span class='object_link'><a href="Utils/Bottles.html#tag-class_method" title="Utils::Bottles.tag (method)">tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
 
-  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No bottle available for current OS</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span> <span class='id identifier rubyid_bottle_tag'>bottle_tag</span>
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No bottle available for current OS</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bottles</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_download_bottle'>download_bottle</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependencies</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep_hash'>dep_hash</span><span class='op'>|</span>
+    <span class='id identifier rubyid_existing_formula'>existing_formula</span> <span class='op'>=</span> <span class='kw'>begin</span>
+      <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span> <span class='id identifier rubyid_dep_hash'>dep_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="FormulaUnavailableError.html" title="FormulaUnavailableError (class)">FormulaUnavailableError</a></span></span>
+      <span class='comment'># The formula might not exist if it&#39;s not installed and homebrew/core isn&#39;t tapped
+</span>      <span class='kw'>nil</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_existing_formula'>existing_formula</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_existing_formula'>existing_formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span>
+
     <span class='id identifier rubyid_download_bottle'>download_bottle</span><span class='lparen'>(</span><span class='id identifier rubyid_dep_hash'>dep_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
