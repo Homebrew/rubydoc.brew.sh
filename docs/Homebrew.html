@@ -25922,9 +25922,6 @@
       <pre class="lines">
 
 
-40
-41
-42
 43
 44
 45
@@ -25962,13 +25959,20 @@
 77
 78
 79
-80</pre>
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-automerge.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-automerge.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_automerge'>pr_automerge</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_automerge_args'>pr_automerge_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+
+  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew pr-automerge --autosquash`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew pr-automerge`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
 
   <span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_without_labels'>without_labels</span> <span class='op'>||</span> <span class='lbracket'>[</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>do not merge</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -26001,7 +26005,7 @@
 
   <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pr-publish</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--tap=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span>
-  <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
+  <span class='id identifier rubyid_publish_args'>publish_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_autosquash?'>no_autosquash?</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_publish?'>publish?</span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_publish_args'>publish_args</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_pr_urls'>pr_urls</span>
   <span class='kw'>else</span>
@@ -26076,7 +26080,10 @@
 35
 36
 37
-38</pre>
+38
+39
+40
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-automerge.rb', line 13</span>
@@ -26101,6 +26108,9 @@
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Instruct `brew pr-publish` to automatically reformat and reword commits </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in the pull request to our preferred format.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Instruct `brew pr-publish` to skip automatically reformatting and rewording commits </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in the pull request to the preferred format.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--ignore-failures</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Include pull requests that have failing status checks.</span><span class='tstring_end'>&quot;</span></span>
 
@@ -26127,9 +26137,6 @@
       <pre class="lines">
 
 
-36
-37
-38
 39
 40
 41
@@ -26151,10 +26158,15 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pr_publish'>pr_publish</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_publish_args'>pr_publish_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -26163,8 +26175,10 @@
   <span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_workflow'>workflow</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>publish-commit-bottles.yml</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_branch'>branch</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span>
 
+  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew pr-publish --autosquash`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew pr-publish`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
+
   <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_autosquash?'>autosquash?</span>
+  <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_autosquash?'>no_autosquash?</span>
   <span class='id identifier rubyid_extra_args'>extra_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--message=&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
   <span class='id identifier rubyid_dispatch_args'>dispatch_args</span> <span class='op'>=</span> <span class='id identifier rubyid_extra_args'>extra_args</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>
 
@@ -26245,7 +26259,10 @@
 31
 32
 33
-34</pre>
+34
+35
+36
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-publish.rb', line 13</span>
@@ -26259,6 +26276,9 @@
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If supported on the target tap, automatically reformat and reword commits </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in the pull request to our preferred format.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-autosquash</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Skip automatically reformatting and rewording commits in the pull request </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>to the preferred format, even if supported on the target tap.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--branch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Branch to publish to (default: `master`).</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--message=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
