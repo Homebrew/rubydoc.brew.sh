@@ -23796,20 +23796,52 @@
 167
 168
 169
-170</pre>
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_livecheck_result'>livecheck_result</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_skip_result'>skip_result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html" title="Homebrew::Livecheck::SkipConditions (module)">SkipConditions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_skip_information'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html#skip_information-class_method" title="Homebrew::Livecheck::SkipConditions.skip_information (method)">skip_information</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_skip_result'>skip_result</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_skip_result'>skip_result</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_skip_result'>skip_result</span><span class='lbracket'>[</span><span class='symbol'>:messages</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_result'>skip_result</span><span class='lbracket'>[</span><span class='symbol'>:messages</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_or_cask_name'><span class='object_link'><a href="Homebrew/Livecheck.html#formula_or_cask_name-class_method" title="Homebrew::Livecheck.formula_or_cask_name (method)">formula_or_cask_name</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_referenced_formula_or_cask'>referenced_formula_or_cask</span><span class='comma'>,</span> <span class='op'>=</span>
+    <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_resolve_livecheck_reference'><span class='object_link'><a href="Homebrew/Livecheck.html#resolve_livecheck_reference-class_method" title="Homebrew::Livecheck.resolve_livecheck_reference (method)">resolve_livecheck_reference</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>debug:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+
+  <span class='comment'># Check skip conditions for a referenced formula/cask
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_referenced_formula_or_cask'>referenced_formula_or_cask</span>
+    <span class='id identifier rubyid_skip_info'>skip_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html" title="Homebrew::Livecheck::SkipConditions (module)">SkipConditions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_referenced_skip_information'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html#referenced_skip_information-class_method" title="Homebrew::Livecheck::SkipConditions.referenced_skip_information (method)">referenced_skip_information</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_referenced_formula_or_cask'>referenced_formula_or_cask</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+      <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span>
+      <span class='label'>verbose:</span>   <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_skip_info'>skip_info</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html" title="Homebrew::Livecheck::SkipConditions (module)">SkipConditions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_skip_information'><span class='object_link'><a href="Homebrew/Livecheck/SkipConditions.html#skip_information-class_method" title="Homebrew::Livecheck::SkipConditions.skip_information (method)">skip_information</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_skip_info'>skip_info</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_skip_info'>skip_info</span><span class='lbracket'>[</span><span class='symbol'>:status</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> - </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_skip_info'>skip_info</span><span class='lbracket'>[</span><span class='symbol'>:messages</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_info'>skip_info</span><span class='lbracket'>[</span><span class='symbol'>:messages</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_version_info'>version_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_latest_version'><span class='object_link'><a href="Homebrew/Livecheck.html#latest_version-class_method" title="Homebrew::Livecheck.latest_version (method)">latest_version</a></span></span><span class='lparen'>(</span>
     <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span>
-    <span class='label'>json:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>debug:</span> <span class='kw'>false</span><span class='comma'>,</span>
+    <span class='label'>referenced_formula_or_cask:</span> <span class='id identifier rubyid_referenced_formula_or_cask'>referenced_formula_or_cask</span><span class='comma'>,</span>
+    <span class='label'>json:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>debug:</span> <span class='kw'>false</span>
   <span class='rparen'>)</span>
   <span class='id identifier rubyid_latest'>latest</span> <span class='op'>=</span> <span class='id identifier rubyid_version_info'>version_info</span><span class='lbracket'>[</span><span class='symbol'>:latest</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_version_info'>version_info</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
 
@@ -29370,22 +29402,6 @@
       <pre class="lines">
 
 
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
 200
 201
 202
@@ -29401,10 +29417,26 @@
 212
 213
 214
-215</pre>
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_and_display_info'>retrieve_and_display_info</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_repositories'>repositories</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>ambiguous_cask:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_version'>current_version</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span>
@@ -29458,20 +29490,20 @@
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182</pre>
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_pull_requests'>retrieve_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span> <span class='op'>||</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_full_name'>full_name</span>
