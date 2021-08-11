@@ -2817,10 +2817,6 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="lines">
 
 
-454
-455
-456
-457
 458
 459
 460
@@ -2846,10 +2842,14 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 480
 481
 482
-483</pre>
+483
+484
+485
+486
+487</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/diagnostic.rb', line 454</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/diagnostic.rb', line 458</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_broken_sdks'>check_broken_sdks</span>
   <span class='id identifier rubyid_locator'>locator</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_sdk_locator'>sdk_locator</span>
@@ -6327,7 +6327,11 @@ to ignore those as warnings rather than extremely likely breakage.</p>
 446
 447
 448
-449</pre>
+449
+450
+451
+452
+453</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/diagnostic.rb', line 428</span>
@@ -6340,9 +6344,13 @@ to ignore those as warnings rather than extremely likely breakage.</p>
   <span class='id identifier rubyid_locator'>locator</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_sdk_locator'>sdk_locator</span>
 
   <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_locator'>locator</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='op'>==</span> <span class='symbol'>:clt</span>
+    <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_below_minimum_version?'>below_minimum_version?</span> <span class='comment'># Handled by other diagnostics.
+</span>
     <span class='id identifier rubyid_update_instructions'>update_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_update_instructions'>update_instructions</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Command Line Tools (CLT)</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
+    <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_below_minimum_version?'>below_minimum_version?</span> <span class='comment'># Handled by other diagnostics.
+</span>
     <span class='id identifier rubyid_update_instructions'>update_instructions</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_update_instructions'>update_instructions</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Xcode</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
