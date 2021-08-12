@@ -1345,21 +1345,21 @@
       <pre class="lines">
 
 
-771
-772
-773
-774
-775
-776
 777
 778
 779
 780
 781
-782</pre>
+782
+783
+784
+785
+786
+787
+788</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 771</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 777</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -2844,19 +2844,19 @@
       <pre class="lines">
 
 
-752
-753
-754
-755
-756
-757
 758
 759
 760
-761</pre>
+761
+762
+763
+764
+765
+766
+767</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 752</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 758</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_prefix_has_contents'>audit_prefix_has_contents</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2903,21 +2903,21 @@
       <pre class="lines">
 
 
-739
-740
-741
-742
-743
-744
 745
 746
 747
 748
 749
-750</pre>
+750
+751
+752
+753
+754
+755
+756</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 739</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 745</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_reverse_migration'>audit_reverse_migration</span>
   <span class='comment'># Only enforce for new formula being re-added to core
@@ -2966,12 +2966,6 @@
       <pre class="lines">
 
 
-631
-632
-633
-634
-635
-636
 637
 638
 639
@@ -3053,10 +3047,16 @@
 715
 716
 717
-718</pre>
+718
+719
+720
+721
+722
+723
+724</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 631</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 637</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_revision_and_version_scheme'>audit_revision_and_version_scheme</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@git</span>
@@ -3291,7 +3291,13 @@
 626
 627
 628
-629</pre>
+629
+630
+631
+632
+633
+634
+635</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 519</span>
@@ -3303,9 +3309,15 @@
     <span class='id identifier rubyid_spec_name'>spec_name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_spec_name'>spec_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
+    <span class='id identifier rubyid_except'>except</span> <span class='op'>=</span> <span class='ivar'>@except</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_spec_name'>spec_name</span> <span class='op'>==</span> <span class='symbol'>:head</span> <span class='op'>&amp;&amp;</span>
+       <span class='id identifier rubyid_tap_audit_exception'>tap_audit_exception</span><span class='lparen'>(</span><span class='symbol'>:head_non_default_branch_allowlist</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:branch</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_except'>except</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head_branch</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
     <span class='id identifier rubyid_ra'>ra</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ResourceAuditor.html" title="Homebrew::ResourceAuditor (class)">ResourceAuditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ResourceAuditor.html#initialize-instance_method" title="Homebrew::ResourceAuditor#initialize (method)">new</a></span></span><span class='lparen'>(</span>
       <span class='id identifier rubyid_spec'>spec</span><span class='comma'>,</span> <span class='id identifier rubyid_spec_name'>spec_name</span><span class='comma'>,</span>
-      <span class='label'>online:</span> <span class='ivar'>@online</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='ivar'>@strict</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='ivar'>@only</span><span class='comma'>,</span> <span class='label'>except:</span> <span class='ivar'>@except</span>
+      <span class='label'>online:</span> <span class='ivar'>@online</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='ivar'>@strict</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='ivar'>@only</span><span class='comma'>,</span> <span class='label'>except:</span> <span class='id identifier rubyid_except'>except</span>
     <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_audit'><span class='object_link'><a href="ResourceAuditor.html#audit-instance_method" title="Homebrew::ResourceAuditor#audit (method)">audit</a></span></span>
     <span class='id identifier rubyid_ra'>ra</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_message'>message</span><span class='op'>|</span>
       <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3505,12 +3517,6 @@
       <pre class="lines">
 
 
-720
-721
-722
-723
-724
-725
 726
 727
 728
@@ -3522,10 +3528,16 @@
 734
 735
 736
-737</pre>
+737
+738
+739
+740
+741
+742
+743</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 720</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 726</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_text'>audit_text</span>
   <span class='id identifier rubyid_bin_names'>bin_names</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3710,12 +3722,12 @@
       <pre class="lines">
 
 
-767
-768
-769</pre>
+773
+774
+775</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 767</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 773</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span>
@@ -3755,12 +3767,12 @@
       <pre class="lines">
 
 
-763
-764
-765</pre>
+769
+770
+771</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 763</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 769</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quote_dep'>quote_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>

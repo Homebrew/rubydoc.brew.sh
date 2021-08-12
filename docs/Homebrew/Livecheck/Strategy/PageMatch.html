@@ -113,9 +113,8 @@ matching text using the provided regex.</p>
 strategies apply to a given URL. Though <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span> will technically
 match any HTTP URL, the strategy also requires a regex to function.</p>
 
-<p>The <span class='object_link'><a href="#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">PageMatch.find_versions</a></span> method is also used within other
-strategies, to handle the process of identifying version text in
-content.</p>
+<p>The <span class='object_link'><a href="#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">PageMatch.find_versions</a></span> method is also used within other strategies,
+to handle the process of identifying version text in content.</p>
 
 
   </div>
@@ -151,8 +150,8 @@ content.</p>
           <div class="docstring">
   <div class="discussion">
     <p>A priority of zero causes livecheck to skip the strategy. We do this
-for PageMatch so we can selectively apply the strategy only when a
-regex is provided in a <code>livecheck</code> block.</p>
+for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::PageMatch (class)">Homebrew::Livecheck::Strategy::PageMatch</a></span> so we can selectively apply it only when a regex is
+provided in a <code>livecheck</code> block.</p>
 
 
   </div>
@@ -244,7 +243,7 @@ regex is provided in a <code>livecheck</code> block.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#page_matches-class_method" title="page_matches (class method)">.<strong>page_matches</strong>(content, regex, &amp;block)  &#x21d2; Array&lt;String&gt; </a>
+      <a href="#versions_from_content-class_method" title="versions_from_content (class method)">.<strong>versions_from_content</strong>(content, regex, &amp;block)  &#x21d2; Array&lt;String&gt; </a>
     
     
   </span>
@@ -318,7 +317,7 @@ regex for matching.</p>
       
       
         &mdash;
-        <div class='inline'><p>a regex used for matching versions in content</p>
+        <div class='inline'><p>a regex used for matching versions</p>
 </div>
       
     </li>
@@ -387,6 +386,15 @@ fetching via Strategy#page_content</p>
       <pre class="lines">
 
 
+91
+92
+93
+94
+95
+96
+97
+98
+99
 100
 101
 102
@@ -395,19 +403,10 @@ fetching via Strategy#page_content</p>
 105
 106
 107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117</pre>
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>provided_content:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>matches:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
@@ -421,7 +420,7 @@ fetching via Strategy#page_content</p>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_match_data'>match_data</span> <span class='kw'>if</span> <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_page_matches'>page_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match_text'>match_text</span><span class='op'>|</span>
+  <span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match_text'>match_text</span><span class='op'>|</span>
     <span class='id identifier rubyid_match_data'>match_data</span><span class='lbracket'>[</span><span class='symbol'>:matches</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_match_text'>match_text</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_match_text'>match_text</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -444,7 +443,7 @@ fetching via Strategy#page_content</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p>Whether the strategy can be applied to the provided URL.
-PageMatch will technically match any HTTP URL but is only
+<span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::PageMatch (class)">Homebrew::Livecheck::Strategy::PageMatch</a></span> will technically match any HTTP URL but is only
 usable with a <code>livecheck</code> block containing a regex.</p>
 
 
@@ -462,6 +461,10 @@ usable with a <code>livecheck</code> block containing a regex.</p>
         <span class='type'>(<tt><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></tt>)</span>
       
       
+      
+        &mdash;
+        <div class='inline'><p>the URL to match against</p>
+</div>
       
     </li>
   
@@ -487,12 +490,12 @@ usable with a <code>livecheck</code> block containing a regex.</p>
       <pre class="lines">
 
 
-36
-37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::PageMatch::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -503,9 +506,9 @@ usable with a <code>livecheck</code> block containing a regex.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="page_matches-class_method">
+  <h3 class="signature " id="versions_from_content-class_method">
   
-    .<strong>page_matches</strong>(content, regex, &amp;block)  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>&gt;</tt> 
+    .<strong>versions_from_content</strong>(content, regex, &amp;block)  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>&gt;</tt> 
   
 
   
@@ -588,8 +591,6 @@ content</p>
       <pre class="lines">
 
 
-57
-58
 59
 60
 61
@@ -601,33 +602,13 @@ content</p>
 67
 68
 69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 59</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_matches'>page_matches</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='kw'>case</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></span>
-      <span class='kw'>return</span> <span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='rbracket'>]</span>
-    <span class='kw'>when</span> <span class='const'>Array</span>
-      <span class='kw'>return</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
-    <span class='kw'>when</span> <span class='kw'>nil</span>
-      <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Return value of `strategy :page_match` block must be a string or array of strings.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_handle_block_return'><span class='object_link'><a href="../Strategy.html#handle_block_return-class_method" title="Homebrew::Livecheck::Strategy.handle_block_return (method)">handle_block_return</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
 
   <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match'>match</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_match'>match</span>

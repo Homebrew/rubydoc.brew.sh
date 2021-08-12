@@ -114,6 +114,9 @@
 <p>The <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::ElectronBuilder (class)">ElectronBuilder</a></span> strategy fetches content at a URL and parses
 it as an electron-builder appcast in YAML format.</p>
 
+<p>This strategy is not applied automatically and it’s necessary to use
+<code>strategy :electron_builder</code> in a <code>livecheck</code> block to apply it.</p>
+
 
   </div>
 </div>
@@ -158,8 +161,7 @@ it as an electron-builder appcast in YAML format.</p>
   Third parties should avoid using this constant if possible, as it may be removed or changed without warning.
 </p>
 <p>A priority of zero causes livecheck to skip the strategy. We do this
-for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::ElectronBuilder (class)">Homebrew::Livecheck::Strategy::ElectronBuilder</a></span> so we can selectively apply the strategy using
-<code>strategy :electron_builder</code> in a <code>livecheck</code> block.</p>
+for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::ElectronBuilder (class)">Homebrew::Livecheck::Strategy::ElectronBuilder</a></span> so we can selectively apply it when appropriate.</p>
 
 
   </div>
@@ -224,7 +226,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
   
   <span class="private note title">private</span>
   
-    <span class="summary_desc"><div class='inline'><p>Checks the content at the URL for new versions.</p>
+    <span class="summary_desc"><div class='inline'><p>Checks the YAML content at the URL for new versions.</p>
 </div></span>
   
 </li>
@@ -256,7 +258,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#version_from_content-class_method" title="version_from_content (class method)">.<strong>version_from_content</strong>(content, &amp;block)  &#x21d2; String<sup>?</sup> </a>
+      <a href="#versions_from_content-class_method" title="versions_from_content (class method)">.<strong>versions_from_content</strong>(content, &amp;block)  &#x21d2; Array&lt;String&gt; </a>
     
     
   </span>
@@ -268,7 +270,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
   
   <span class="private note title">private</span>
   
-    <span class="summary_desc"><div class='inline'><p>Extract version information from page content.</p>
+    <span class="summary_desc"><div class='inline'><p>Parses YAML text and identifies versions in it.</p>
 </div></span>
   
 </li>
@@ -300,7 +302,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-<p>Checks the content at the URL for new versions.</p>
+<p>Checks the YAML content at the URL for new versions.</p>
 
 
   </div>
@@ -334,7 +336,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
       
       
         &mdash;
-        <div class='inline'><p>a regex used for matching versions in content</p>
+        <div class='inline'><p>a regex used for matching versions</p>
 </div>
       
     </li>
@@ -398,6 +400,10 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
       <pre class="lines">
 
 
+72
+73
+74
+75
 76
 77
 78
@@ -407,13 +413,10 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
 82
 83
 84
-85
-86
-87
-88</pre>
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_demodulize'>demodulize</span><span class='embexpr_end'>}</span><span class='tstring_content'> strategy does not support a regex.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_regex'>regex</span>
@@ -423,8 +426,9 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
   <span class='id identifier rubyid_match_data'>match_data</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_page_content'><span class='object_link'><a href="../Strategy.html#page_content-class_method" title="Homebrew::Livecheck::Strategy.page_content (method)">page_content</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_match_data'>match_data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:content</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='id identifier rubyid_version_from_content'>version_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_match_data'>match_data</span><span class='lbracket'>[</span><span class='symbol'>:matches</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_version'>version</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span>
+  <span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_version_text'>version_text</span><span class='op'>|</span>
+    <span class='id identifier rubyid_match_data'>match_data</span><span class='lbracket'>[</span><span class='symbol'>:matches</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_version_text'>version_text</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_version_text'>version_text</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_match_data'>match_data</span>
 <span class='kw'>end</span></pre>
@@ -495,12 +499,12 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
       <pre class="lines">
 
 
-29
-30
-31</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#URL_MATCH_REGEX-constant" title="Homebrew::Livecheck::Strategy::ElectronBuilder::URL_MATCH_REGEX (constant)">URL_MATCH_REGEX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -511,9 +515,9 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="version_from_content-class_method">
+  <h3 class="signature " id="versions_from_content-class_method">
   
-    .<strong>version_from_content</strong>(content, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></tt><sup>?</sup> 
+    .<strong>versions_from_content</strong>(content, &amp;block)  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>&gt;</tt> 
   
 
   
@@ -526,7 +530,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-<p>Extract version information from page content.</p>
+<p>Parses YAML text and identifies versions in it.</p>
 
 
   </div>
@@ -545,7 +549,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
       
       
         &mdash;
-        <div class='inline'><p>the content to check</p>
+        <div class='inline'><p>the YAML text to parse and check</p>
 </div>
       
     </li>
@@ -555,7 +559,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
         <span class='name'>block</span>
       
       
-        <span class='type'>(<tt>T.proc.params(arg0: T::Hash[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T.untyped]).returns(T.nilable(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>))</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>T.proc.params(arg0: T::Hash[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T.untyped]).returns(T.any(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], NilClass))</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -569,7 +573,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>&gt;</tt>)</span>
       
       
       
@@ -583,10 +587,6 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
       <pre class="lines">
 
 
-43
-44
-45
-46
 47
 48
 49
@@ -597,33 +597,21 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::E
 54
 55
 56
-57
-58
-59
-60
-61</pre>
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/electron_builder.rb', line 47</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_version_from_content'>version_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>yaml</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_yaml'>yaml</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_safe_load'>safe_load</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_yaml'>yaml</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_yaml'>yaml</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
-    <span class='kw'>case</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml'>yaml</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></span>
-      <span class='kw'>return</span> <span class='id identifier rubyid_value'>value</span>
-    <span class='kw'>when</span> <span class='kw'>nil</span>
-      <span class='kw'>return</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Return value of `strategy :electron_builder` block must be a string.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_handle_block_return'><span class='object_link'><a href="../Strategy.html#handle_block_return-class_method" title="Homebrew::Livecheck::Strategy.handle_block_return (method)">handle_block_return</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml'>yaml</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
 
-  <span class='id identifier rubyid_yaml'>yaml</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>version</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='id identifier rubyid_yaml'>yaml</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>version</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_version'>version</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
