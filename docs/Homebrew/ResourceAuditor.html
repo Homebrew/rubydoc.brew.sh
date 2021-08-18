@@ -664,7 +664,8 @@
 23
 24
 25
-26</pre>
+26
+27</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 11</span>
@@ -683,7 +684,8 @@
   <span class='ivar'>@strict</span>    <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:strict</span><span class='rbracket'>]</span>
   <span class='ivar'>@only</span>      <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:only</span><span class='rbracket'>]</span>
   <span class='ivar'>@except</span>    <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:except</span><span class='rbracket'>]</span>
-  <span class='ivar'>@problems</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@use_homebrew_curl</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:use_homebrew_curl</span><span class='rbracket'>]</span>
+  <span class='ivar'>@problems</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1202,7 +1204,6 @@
       <pre class="lines">
 
 
-92
 93
 94
 95
@@ -1212,10 +1213,11 @@
 99
 100
 101
-102</pre>
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_curl_openssl_and_deps'>curl_openssl_and_deps</span>
   <span class='ivar'>@curl_openssl_and_deps</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1269,7 +1271,6 @@
       <pre class="lines">
 
 
-28
 29
 30
 31
@@ -1282,10 +1283,11 @@
 38
 39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -1336,15 +1338,15 @@
       <pre class="lines">
 
 
-85
 86
 87
 88
 89
-90</pre>
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_checksum'>audit_checksum</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_spec_name'>spec_name</span> <span class='op'>==</span> <span class='symbol'>:head</span>
@@ -1387,7 +1389,6 @@
       <pre class="lines">
 
 
-55
 56
 57
 58
@@ -1415,10 +1416,11 @@
 80
 81
 82
-83</pre>
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_download_strategy'>audit_download_strategy</span>
   <span class='id identifier rubyid_url_strategy'>url_strategy</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -1484,22 +1486,22 @@
       <pre class="lines">
 
 
-127
-128
-129
-130
-131
-132
-133
-134
 135
 136
 137
 138
-139</pre>
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_head_branch'>audit_head_branch</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
@@ -1549,7 +1551,6 @@
       <pre class="lines">
 
 
-104
 105
 106
 107
@@ -1570,10 +1571,18 @@
 122
 123
 124
-125</pre>
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_urls'>audit_urls</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
@@ -1584,7 +1593,14 @@
 
     <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../CurlDownloadStrategy.html" title="CurlDownloadStrategy (class)">CurlDownloadStrategy</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_http_content_problem'>http_content_problem</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_check_http_content'><span class='object_link'><a href="../Utils/Curl.html#curl_check_http_content-class_method" title="Utils::Curl.curl_check_http_content (method)">curl_check_http_content</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source URL</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='id identifier rubyid_specs'>specs</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../HomebrewCurlDownloadStrategyError.html" title="HomebrewCurlDownloadStrategyError (class)">HomebrewCurlDownloadStrategyError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span> <span class='kw'>if</span>
+        <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../HomebrewCurlDownloadStrategy.html" title="HomebrewCurlDownloadStrategy (class)">HomebrewCurlDownloadStrategy</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>curl</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
+
+      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_http_content_problem'>http_content_problem</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_check_http_content'><span class='object_link'><a href="../Utils/Curl.html#curl_check_http_content-class_method" title="Utils::Curl.curl_check_http_content (method)">curl_check_http_content</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
+                                                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>source URL</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                                                         <span class='label'>specs:</span>             <span class='id identifier rubyid_specs'>specs</span><span class='comma'>,</span>
+                                                         <span class='label'>use_homebrew_curl:</span> <span class='ivar'>@use_homebrew_curl</span><span class='rparen'>)</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_problem'>problem</span> <span class='id identifier rubyid_http_content_problem'>http_content_problem</span>
       <span class='kw'>end</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../GitDownloadStrategy.html" title="GitDownloadStrategy (class)">GitDownloadStrategy</a></span></span>
@@ -1632,7 +1648,6 @@
       <pre class="lines">
 
 
-43
 44
 45
 46
@@ -1642,10 +1657,11 @@
 50
 51
 52
-53</pre>
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_version'>audit_version</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1693,12 +1709,12 @@
       <pre class="lines">
 
 
-141
-142
-143</pre>
+149
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@problems</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_text'>text</span>
