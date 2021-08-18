@@ -232,6 +232,28 @@ extension) from the URL basename.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#generate_input_values-class_method" title="generate_input_values (class method)">.<strong>generate_input_values</strong>(url)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Extracts information from a provided URL and uses it to generate various input values used by the strategy to check for new versions.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#match%3F-class_method" title="match? (class method)">.<strong>match?</strong>(url)  &#x21d2; Boolean </a>
     
     
@@ -357,6 +379,93 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
       <pre class="lines">
 
 
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/pypi.rb', line 95</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_unused'>unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_generated'>generated</span> <span class='op'>=</span> <span class='id identifier rubyid_generate_input_values'>generate_input_values</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+
+  <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span> <span class='id identifier rubyid_generated'>generated</span><span class='lbracket'>[</span><span class='symbol'>:url</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||</span> <span class='id identifier rubyid_generated'>generated</span><span class='lbracket'>[</span><span class='symbol'>:regex</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_unused'>unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="generate_input_values-class_method">
+  
+    .<strong>generate_input_values</strong>(url)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Extracts information from a provided URL and uses it to generate
+various input values used by the strategy to check for new versions.
+Some of these values act as defaults and can be overridden in a
+<code>livecheck</code> block.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the URL used to generate values</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
 65
 66
 67
@@ -369,31 +478,31 @@ to <span class='object_link'><a href="PageMatch.html#find_versions-class_method"
 74
 75
 76
-77
-78
-79
-80
-81</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/pypi.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/pypi.rb', line 57</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_unused'>unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_input_values'>generate_input_values</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FILENAME_REGEX-constant" title="Homebrew::Livecheck::Strategy::Pypi::FILENAME_REGEX (constant)">FILENAME_REGEX</a></span></span><span class='rparen'>)</span>
-
-  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
-</span>  <span class='id identifier rubyid_suffix'>suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:suffix</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.t(?:ar\..+|[a-z0-9]+)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_values'>values</span> <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='comment'># It&#39;s not technically necessary to have the `#files` fragment at the
 </span>  <span class='comment'># end of the URL but it makes the debug output a bit more useful.
-</span>  <span class='id identifier rubyid_page_url'>page_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://pypi.org/project/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>%20|_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>/#files</span><span class='tstring_end'>&quot;</span></span>
+</span>  <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='symbol'>:url</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://pypi.org/project/</span><span class='embexpr_beg'>#{</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>%20|_</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>/#files</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='comment'># Use `\.t` instead of specific tarball extensions (e.g. .tar.gz)
+</span>  <span class='id identifier rubyid_suffix'>suffix</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:suffix</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Strategy.html#TARBALL_EXTENSION_REGEX-constant" title="Homebrew::Livecheck::Strategy::TARBALL_EXTENSION_REGEX (constant)">TARBALL_EXTENSION_REGEX</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\.t</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_regex_suffix'>regex_suffix</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='comment'># Example regex: `%r{href=.*?/packages.*?/example[._-]v?(\d+(?:\.\d+)*(?:[._-]post\d+)?)\.t}i`
-</span>  <span class='id identifier rubyid_re_package_name'>re_package_name</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_re_suffix'>re_suffix</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_suffix'>suffix</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_regex'>regex</span> <span class='op'>||=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>href=.*?/packages.*?/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_re_package_name'>re_package_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]v?(\d+(?:\.\d+)*(?:[._-]post\d+)?)</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_re_suffix'>re_suffix</span><span class='embexpr_end'>}</span><span class='regexp_end'>}i</span></span>
+</span>  <span class='id identifier rubyid_regex_name'>regex_name</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='symbol'>:package_name</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='symbol'>:regex</span><span class='rbracket'>]</span> <span class='op'>=</span>
+    <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>href=.*?/packages.*?/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regex_name'>regex_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>[._-]v?(\d+(?:\.\d+)*(?:[._-]post\d+)?)</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_regex_suffix'>regex_suffix</span><span class='embexpr_end'>}</span><span class='regexp_end'>}i</span></span>
 
-  <span class='const'><span class='object_link'><a href="PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_versions'><span class='object_link'><a href="PageMatch.html#find_versions-class_method" title="Homebrew::Livecheck::Strategy::PageMatch.find_versions (method)">find_versions</a></span></span><span class='lparen'>(</span><span class='label'>url:</span> <span class='id identifier rubyid_page_url'>page_url</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_unused'>unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_values'>values</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
