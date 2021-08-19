@@ -199,7 +199,7 @@ provided in a <code>livecheck</code> block.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url:, regex:, provided_content: nil, **_unused, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
+      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url:, regex: nil, provided_content: nil, **_unused, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
     
     
   </span>
@@ -274,7 +274,7 @@ provided in a <code>livecheck</code> block.</p>
       <div class="method_details first">
   <h3 class="signature first" id="find_versions-class_method">
   
-    .<strong>find_versions</strong>(url:, regex:, provided_content: nil, **_unused, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
+    .<strong>find_versions</strong>(url:, regex: nil, provided_content: nil, **_unused, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
   
 
   
@@ -312,8 +312,10 @@ regex for matching.</p>
         <span class='name'>regex</span>
       
       
-        <span class='type'>(<tt>Regexp</tt>)</span>
+        <span class='type'>(<tt>Regexp</tt>, <tt>nil</tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
@@ -356,7 +358,7 @@ fetching via Strategy#page_content</p>
         <span class='name'>block</span>
       
       
-        <span class='type'>(<tt>T.proc.params(arg0: <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, arg1: Regexp).returns(T.any(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], NilClass))</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>T.proc.params(arg0: <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, arg1: T.nilable(Regexp)).returns(T.any(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], NilClass))</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -384,7 +386,6 @@ fetching via Strategy#page_content</p>
       <pre class="lines">
 
 
-91
 92
 93
 94
@@ -402,12 +403,13 @@ fetching via Strategy#page_content</p>
 106
 107
 108
-109</pre>
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 92</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span><span class='comma'>,</span> <span class='label'>provided_content:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid__unused'>_unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>provided_content:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid__unused'>_unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>matches:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_match_data'>match_data</span> <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span><span class='rparen'>)</span>
 
@@ -547,7 +549,7 @@ With either approach, an array of unique matches is returned.</p>
         <span class='name'>regex</span>
       
       
-        <span class='type'>(<tt>Regexp</tt>)</span>
+        <span class='type'>(<tt>Regexp</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -563,7 +565,7 @@ content</p>
         <span class='name'>block</span>
       
       
-        <span class='type'>(<tt>T.proc.params(arg0: <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, arg1: Regexp).returns(T.any(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], NilClass))</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>T.proc.params(arg0: <span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, arg1: T.nilable(Regexp)).returns(T.any(<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>, T::Array[<span class='object_link'><a href="../../../String.html" title="String (class)">String</a></span>], NilClass))</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -602,13 +604,15 @@ content</p>
 67
 68
 69
-70</pre>
+70
+71</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'livecheck/strategy/page_match.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_handle_block_return'><span class='object_link'><a href="../Strategy.html#handle_block_return-class_method" title="Homebrew::Livecheck::Strategy.handle_block_return (method)">handle_block_return</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_regex'>regex</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match'>match</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_match'>match</span>
