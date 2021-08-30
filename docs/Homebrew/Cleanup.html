@@ -699,6 +699,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#skip_clean_formula%3F-instance_method" title="#skip_clean_formula? (instance method)">#<strong>skip_clean_formula?</strong>(f)  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#unremovable_kegs-instance_method" title="#unremovable_kegs (instance method)">#<strong>unremovable_kegs</strong>  &#x21d2; Object </a>
     
     
@@ -1043,7 +1065,7 @@
   <span class='id identifier rubyid_cleanup'>cleanup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew::Cleanup (class)">Cleanup</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Homebrew::Cleanup#initialize (method)">new</a></span></span>
   <span class='kw'>if</span> <span class='id identifier rubyid_cleanup'>cleanup</span><span class='period'>.</span><span class='id identifier rubyid_periodic_clean_due?'>periodic_clean_due?</span>
     <span class='id identifier rubyid_cleanup'>cleanup</span><span class='period'>.</span><span class='id identifier rubyid_periodic_clean!'>periodic_clean!</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_cleanup'>cleanup</span><span class='period'>.</span><span class='id identifier rubyid_skip_clean_formula?'>skip_clean_formula?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_cleanup'>cleanup</span><span class='period'>.</span><span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1088,13 +1110,6 @@
       <pre class="lines">
 
 
-187
-188
-189
-190
-191
-192
-193
 194
 195
 196
@@ -1131,14 +1146,32 @@
 227
 228
 229
-230</pre>
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clean!'>clean!</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>periodic:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span>
+           <span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+           <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_skip_clean_formula?'>skip_clean_formula?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+           <span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
       <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='comma'>,</span> <span class='label'>ds_store:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>cache_db:</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_cleanup_cache'>cleanup_cache</span>
@@ -1175,7 +1208,12 @@
         <span class='kw'>nil</span>
       <span class='kw'>end</span>
 
-      <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_skip_clean_formula?'>skip_clean_formula?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_onoe'>onoe</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Refusing to clean </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'> because it is listed in </span><span class='tstring_end'>&quot;</span></span> \
+             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='embexpr_end'>}</span><span class='tstring_content'>HOMEBREW_NO_CLEANUP_FORMULAE</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span>
+        <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
       <span class='id identifier rubyid_cleanup_cask'>cleanup_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -1215,19 +1253,19 @@
       <pre class="lines">
 
 
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411</pre>
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 417</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_bootsnap'>cleanup_bootsnap</span>
   <span class='id identifier rubyid_bootsnap'>bootsnap</span> <span class='op'>=</span> <span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bootsnap</span><span class='tstring_end'>&quot;</span></span>
@@ -1274,21 +1312,6 @@
       <pre class="lines">
 
 
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
 316
 317
 318
@@ -1298,10 +1321,25 @@
 322
 323
 324
-325</pre>
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cache'>cleanup_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_entries'>entries</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_entries'>entries</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_cache'>cache</span><span class='comma'>,</span> <span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:children</span><span class='rparen'>)</span>
@@ -1363,27 +1401,27 @@
       <pre class="lines">
 
 
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
 428
 429
-430</pre>
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 413</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 428</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cache_db'>cleanup_cache_db</span><span class='lparen'>(</span><span class='id identifier rubyid_rack'>rack</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_rf'>rm_rf</span> <span class='lbracket'>[</span>
@@ -1438,14 +1476,14 @@
       <pre class="lines">
 
 
-245
-246
-247
-248
-249</pre>
+260
+261
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_cask'>cleanup_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>ds_store:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cleanup_cache'>cleanup_cache</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'>--*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1487,17 +1525,17 @@
       <pre class="lines">
 
 
-236
-237
-238
-239
-240
-241
-242
-243</pre>
+251
+252
+253
+254
+255
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_formula'>cleanup_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>ds_store:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>cache_db:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_eligible_kegs_for_cleanup'>eligible_kegs_for_cleanup</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='rparen'>)</span>
@@ -1542,15 +1580,15 @@
       <pre class="lines">
 
 
-251
-252
-253
-254
-255
-256</pre>
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_keg'>cleanup_keg</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cleanup_path'>cleanup_path</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'>uninstall</span><span class='lparen'>(</span><span class='label'>raise_failures:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1593,25 +1631,25 @@
       <pre class="lines">
 
 
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358</pre>
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 343</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 358</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_lockfiles'>cleanup_lockfiles</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_lockfiles'>lockfiles</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -1664,22 +1702,22 @@
       <pre class="lines">
 
 
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270</pre>
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_logs'>cleanup_logs</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_LOGS-constant" title="HOMEBREW_LOGS (constant)">HOMEBREW_LOGS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -1729,24 +1767,24 @@
       <pre class="lines">
 
 
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341</pre>
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 342</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_path'>cleanup_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -1798,21 +1836,6 @@
       <pre class="lines">
 
 
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
 375
 376
 377
@@ -1838,10 +1861,25 @@
 397
 398
 399
-400</pre>
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_portable_ruby'>cleanup_portable_ruby</span>
   <span class='id identifier rubyid_rubies'>rubies</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_PATH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
@@ -1919,21 +1957,6 @@
       <pre class="lines">
 
 
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
 287
 288
 289
@@ -1946,10 +1969,25 @@
 296
 297
 298
-299</pre>
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 287</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_unreferenced_downloads'>cleanup_unreferenced_downloads</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -2014,15 +2052,15 @@
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185</pre>
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_periodic_clean!'>periodic_clean!</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_periodic_clean_due?'>periodic_clean_due?</span>
@@ -2078,20 +2116,20 @@
       <pre class="lines">
 
 
-168
-169
-170
-171
-172
-173
-174
 175
 176
 177
-178</pre>
+178
+179
+180
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_periodic_clean_due?'>periodic_clean_due?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_cleanup?'>no_install_cleanup?</span>
@@ -2139,21 +2177,6 @@
       <pre class="lines">
 
 
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
 461
 462
 463
@@ -2181,10 +2204,25 @@
 485
 486
 487
-488</pre>
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 446</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 461</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune_prefix_symlinks_and_directories'>prune_prefix_symlinks_and_directories</span>
   <span class='const'>ObserverPathnameExtension</span><span class='period'>.</span><span class='id identifier rubyid_reset_counts!'>reset_counts!</span>
@@ -2264,22 +2302,22 @@
       <pre class="lines">
 
 
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444</pre>
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 447</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rm_ds_store'>rm_ds_store</span><span class='lparen'>(</span><span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../Keg.html" title="Keg (class)">Keg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Keg.html#MUST_EXIST_DIRECTORIES-constant" title="Keg::MUST_EXIST_DIRECTORIES (constant)">MUST_EXIST_DIRECTORIES</a></span></span> <span class='op'>+</span> <span class='lbracket'>[</span>
@@ -2293,6 +2331,70 @@
         <span class='comment'># don&#39;t care if we can&#39;t delete a .DS_Store
 </span>        <span class='kw'>nil</span>
       <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="skip_clean_formula?-instance_method">
+  
+    #<strong>skip_clean_formula?</strong>(f)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+168
+169
+170
+171
+172
+173</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 168</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_skip_clean_formula?'>skip_clean_formula?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_cleanup_formulae'>no_cleanup_formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_skip_clean_formulae'>skip_clean_formulae</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_cleanup_formulae'>no_cleanup_formulae</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_skip_clean_formulae'>skip_clean_formulae</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_skip_clean_formulae'>skip_clean_formulae</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2329,12 +2431,12 @@
       <pre class="lines">
 
 
-232
-233
-234</pre>
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cleanup.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'cleanup.rb', line 247</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unremovable_kegs'>unremovable_kegs</span>
   <span class='ivar'>@unremovable_kegs</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
