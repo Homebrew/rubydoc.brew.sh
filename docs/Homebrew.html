@@ -24703,8 +24703,6 @@
       <pre class="lines">
 
 
-27
-28
 29
 30
 31
@@ -24717,10 +24715,11 @@
 38
 39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/migrate.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'cmd/migrate.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate'>migrate</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_migrate_args'>migrate_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -24733,8 +24732,7 @@
       <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rack'>rack</span><span class='embexpr_end'>}</span><span class='tstring_content'> is a symlink</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_rack'>rack</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
     <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_migrator'>migrator</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Migrator.html#initialize-instance_method" title="Migrator#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_migrator'>migrator</span><span class='period'>.</span><span class='id identifier rubyid_migrate'>migrate</span>
+    <span class='const'><span class='object_link'><a href="Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'><span class='object_link'><a href="Migrator.html#migrate_if_needed-class_method" title="Migrator.migrate_if_needed (method)">migrate_if_needed</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -24792,7 +24790,9 @@
 22
 23
 24
-25</pre>
+25
+26
+27</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/migrate.rb', line 13</span>
@@ -24806,6 +24806,8 @@
 </span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Treat installed &lt;formula&gt; and provided &lt;formula&gt; as if they are from </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>the same taps and migrate them anyway.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--dry-run</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show what would be migrated, but do not actually migrate anything.</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:installed_formula</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
   <span class='kw'>end</span>
@@ -36143,6 +36145,7 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
+224
 225
 226
 227
@@ -36166,11 +36169,10 @@ corresponding to all the original commit messages combined.</p>
 245
 246
 247
-248
-249</pre>
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
@@ -36371,8 +36373,7 @@ corresponding to all the original commit messages combined.</p>
 218
 219
 220
-221
-222</pre>
+221</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 116</span>
@@ -36451,21 +36452,20 @@ corresponding to all the original commit messages combined.</p>
     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_formulae_upgrades'>formulae_upgrades</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
-    <span class='const'><span class='object_link'><a href="Homebrew/Upgrade.html" title="Homebrew::Upgrade (module)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_upgrade_formulae'><span class='object_link'><a href="Homebrew/Upgrade.html#upgrade_formulae-class_method" title="Homebrew::Upgrade.upgrade_formulae (method)">upgrade_formulae</a></span></span><span class='lparen'>(</span>
-      <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='comma'>,</span>
-      <span class='label'>flags:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_flags_only'>flags_only</span><span class='comma'>,</span>
-      <span class='label'>installed_on_request:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='comma'>,</span>
-      <span class='label'>force_bottle:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span>
-      <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='comma'>,</span>
-      <span class='label'>interactive:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_interactive?'>interactive?</span><span class='comma'>,</span>
-      <span class='label'>keep_tmp:</span>                   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_tmp?'>keep_tmp?</span><span class='comma'>,</span>
-      <span class='label'>force:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span>
-      <span class='label'>debug:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_debug?'>debug?</span><span class='comma'>,</span>
-      <span class='label'>quiet:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span><span class='comma'>,</span>
-      <span class='label'>verbose:</span>                    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span>
-    <span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='const'><span class='object_link'><a href="Homebrew/Upgrade.html" title="Homebrew::Upgrade (module)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_upgrade_formulae'><span class='object_link'><a href="Homebrew/Upgrade.html#upgrade_formulae-class_method" title="Homebrew::Upgrade.upgrade_formulae (method)">upgrade_formulae</a></span></span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='comma'>,</span>
+    <span class='label'>flags:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_flags_only'>flags_only</span><span class='comma'>,</span>
+    <span class='label'>dry_run:</span>                    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='comma'>,</span>
+    <span class='label'>installed_on_request:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='comma'>,</span>
+    <span class='label'>force_bottle:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span>
+    <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='comma'>,</span>
+    <span class='label'>interactive:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_interactive?'>interactive?</span><span class='comma'>,</span>
+    <span class='label'>keep_tmp:</span>                   <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_keep_tmp?'>keep_tmp?</span><span class='comma'>,</span>
+    <span class='label'>force:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span>
+    <span class='label'>debug:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_debug?'>debug?</span><span class='comma'>,</span>
+    <span class='label'>quiet:</span>                      <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span><span class='comma'>,</span>
+    <span class='label'>verbose:</span>                    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
 
   <span class='const'><span class='object_link'><a href="Homebrew/Upgrade.html" title="Homebrew::Upgrade (module)">Upgrade</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_installed_dependents'><span class='object_link'><a href="Homebrew/Upgrade.html#check_installed_dependents-class_method" title="Homebrew::Upgrade.check_installed_dependents (method)">check_installed_dependents</a></span></span><span class='lparen'>(</span>
     <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='comma'>,</span>

@@ -563,7 +563,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#migrate_if_needed-class_method" title="migrate_if_needed (class method)">.<strong>migrate_if_needed</strong>(formula, force:)  &#x21d2; Object </a>
+      <a href="#migrate_if_needed-class_method" title="migrate_if_needed (class method)">.<strong>migrate_if_needed</strong>(formula, force:, dry_run: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -1138,10 +1138,6 @@
       <pre class="lines">
 
 
-124
-125
-126
-127
 128
 129
 130
@@ -1165,10 +1161,14 @@
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@oldname</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_oldname'>oldname</span>
@@ -1923,7 +1923,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="migrate_if_needed-class_method">
   
-    .<strong>migrate_if_needed</strong>(formula, force:)  &#x21d2; <tt>Object</tt> 
+    .<strong>migrate_if_needed</strong>(formula, force:, dry_run: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1959,15 +1959,23 @@
 119
 120
 121
-122</pre>
+122
+123
+124
+125
+126</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'migrator.rb', line 113</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'>migrate_if_needed</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'>migrate_if_needed</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force:</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_needs_migration?'><span class='object_link'><a href="#needs_migration%3F-class_method" title="Migrator.needs_migration? (method)">needs_migration?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
 
   <span class='kw'>begin</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_dry_run'>dry_run</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would migrate </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_oldname'>oldname</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>return</span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_migrator'>migrator</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Migrator#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force'>force</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_migrator'>migrator</span><span class='period'>.</span><span class='id identifier rubyid_migrate'>migrate</span>
   <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
@@ -2087,12 +2095,12 @@
       <pre class="lines">
 
 
-428
-429
-430</pre>
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 428</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_old_tabs'>backup_old_tabs</span>
   <span class='id identifier rubyid_old_tabs'>old_tabs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:write</span><span class='rparen'>)</span>
@@ -2132,10 +2140,6 @@
       <pre class="lines">
 
 
-384
-385
-386
-387
 388
 389
 390
@@ -2170,10 +2174,14 @@
 419
 420
 421
-422</pre>
+422
+423
+424
+425
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 384</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 388</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_oldname'>backup_oldname</span>
   <span class='id identifier rubyid_unlink_oldname_opt'>unlink_oldname_opt</span>
@@ -2249,12 +2257,12 @@
       <pre class="lines">
 
 
-424
-425
-426</pre>
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 424</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 428</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_oldname_cellar'>backup_oldname_cellar</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mv'>mv</span><span class='lparen'>(</span><span class='id identifier rubyid_new_cellar'>new_cellar</span><span class='comma'>,</span> <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -2294,15 +2302,15 @@
       <pre class="lines">
 
 
-154
-155
-156
-157
 158
-159</pre>
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_tabs'>fix_tabs</span>
   <span class='id identifier rubyid_old_tabs'>old_tabs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tab'>tab</span><span class='op'>|</span>
@@ -2358,10 +2366,6 @@
       <pre class="lines">
 
 
-162
-163
-164
-165
 166
 167
 168
@@ -2383,10 +2387,14 @@
 184
 185
 186
-187</pre>
+187
+188
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_same_tap_user?'>from_same_tap_user?</span>
   <span class='id identifier rubyid_formula_tap_user'>formula_tap_user</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span>
@@ -2449,10 +2457,6 @@
       <pre class="lines">
 
 
-296
-297
-298
-299
 300
 301
 302
@@ -2490,10 +2494,14 @@
 334
 335
 336
-337</pre>
+337
+338
+339
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 300</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_newname'>link_newname</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Relinking </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_newname'>newname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2572,13 +2580,13 @@
       <pre class="lines">
 
 
-370
-371
-372
-373</pre>
+374
+375
+376
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 374</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_oldname_cellar'>link_oldname_cellar</span>
   <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>||</span> <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -2619,15 +2627,15 @@
       <pre class="lines">
 
 
-340
-341
-342
-343
 344
-345</pre>
+345
+346
+347
+348
+349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 344</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_oldname_opt'>link_oldname_opt</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span>
@@ -2670,16 +2678,16 @@
       <pre class="lines">
 
 
-189
-190
-191
-192
 193
 194
-195</pre>
+195
+196
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_linked_old_linked_keg'>linked_old_linked_keg</span>
   <span class='id identifier rubyid_keg_dirs'>keg_dirs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2723,15 +2731,15 @@
       <pre class="lines">
 
 
-432
-433
-434
-435
 436
-437</pre>
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 436</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lock'>lock</span>
   <span class='ivar'>@newname_lock</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="FormulaLock.html" title="FormulaLock (class)">FormulaLock</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FormulaLock.html#initialize-instance_method" title="FormulaLock#initialize (method)">new</a></span></span> <span class='id identifier rubyid_newname'>newname</span>
@@ -2774,10 +2782,6 @@
       <pre class="lines">
 
 
-201
-202
-203
-204
 205
 206
 207
@@ -2804,10 +2808,14 @@
 228
 229
 230
-231</pre>
+231
+232
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate'>migrate</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Processing </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_oldname'>oldname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> formula rename to </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_newname'>newname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2875,10 +2883,6 @@
       <pre class="lines">
 
 
-234
-235
-236
-237
 238
 239
 240
@@ -2900,10 +2904,14 @@
 256
 257
 258
-259</pre>
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_to_new_directory'>move_to_new_directory</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -2979,12 +2987,12 @@
       <pre class="lines">
 
 
-197
-198
-199</pre>
+201
+202
+203</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pinned?'>pinned?</span>
   <span class='ivar'>@pinned</span>
@@ -3024,10 +3032,6 @@
       <pre class="lines">
 
 
-261
-262
-263
-264
 265
 266
 267
@@ -3041,10 +3045,14 @@
 275
 276
 277
-278</pre>
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repin'>repin</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_pinned?'>pinned?</span>
@@ -3099,16 +3107,16 @@
       <pre class="lines">
 
 
-288
-289
-290
-291
 292
 293
-294</pre>
+294
+295
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink_newname'>unlink_newname</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Temporarily unlinking </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_newname'>newname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3152,16 +3160,16 @@
       <pre class="lines">
 
 
-280
-281
-282
-283
 284
 285
-286</pre>
+286
+287
+288
+289
+290</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink_oldname'>unlink_oldname</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unlinking </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_oldname'>oldname</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3205,15 +3213,15 @@
       <pre class="lines">
 
 
-376
-377
-378
-379
 380
-381</pre>
+381
+382
+383
+384
+385</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 376</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 380</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink_oldname_cellar'>unlink_oldname_cellar</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_cellar'>old_cellar</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> \
@@ -3256,19 +3264,19 @@
       <pre class="lines">
 
 
-358
-359
-360
-361
 362
 363
 364
 365
 366
-367</pre>
+367
+368
+369
+370
+371</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 358</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink_oldname_opt'>unlink_oldname_opt</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span>
@@ -3315,13 +3323,13 @@
       <pre class="lines">
 
 
-439
-440
-441
-442</pre>
+443
+444
+445
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 443</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlock'>unlock</span>
   <span class='ivar'>@newname_lock</span><span class='period'>.</span><span class='id identifier rubyid_unlock'>unlock</span>
@@ -3363,16 +3371,16 @@ so we must update <code>INSTALL_RECEIPT</code>s.</p>
       <pre class="lines">
 
 
-349
-350
-351
-352
 353
 354
-355</pre>
+355
+356
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'migrator.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'migrator.rb', line 353</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_tabs'>update_tabs</span>
   <span class='id identifier rubyid_new_tabs'>new_tabs</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cellar'>new_cellar</span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
