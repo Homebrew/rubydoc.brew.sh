@@ -21190,7 +21190,7 @@
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='lbracket'>[</span><span class='symbol'>:switch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--display-times</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
         <span class='label'>env:</span>         <span class='symbol'>:display_install_times</span><span class='comma'>,</span>
-        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print install times for each formula at the end of the run.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print install times for each package at the end of the run.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='lbracket'>[</span><span class='symbol'>:switch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-i</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--interactive</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download and patch &lt;formula&gt;, then open a shell. This allows the user to </span><span class='tstring_end'>&quot;</span></span> \
@@ -35847,9 +35847,7 @@ corresponding to all the original commit messages combined.</p>
 108
 109
 110
-111
-112
-113</pre>
+111</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 97</span>
@@ -35864,12 +35862,10 @@ corresponding to all the original commit messages combined.</p>
 </span>  <span class='id identifier rubyid_only_upgrade_formulae'>only_upgrade_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_only_upgrade_casks'>only_upgrade_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_display_messages'>display_messages</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_only_upgrade_casks'>only_upgrade_casks</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_force_caveats'>force_caveats</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_only_upgrade_formulae'>only_upgrade_formulae</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_only_upgrade_casks'>only_upgrade_casks</span>
+  <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_only_upgrade_formulae'>only_upgrade_formulae</span>
 
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_display_messages'>display_messages</span>
-
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages'><span class='object_link'><a href="#messages-class_method" title="Homebrew.messages (method)">messages</a></span></span><span class='period'>.</span><span class='id identifier rubyid_display_messages'>display_messages</span><span class='lparen'>(</span><span class='label'>force_caveats:</span> <span class='id identifier rubyid_force_caveats'>force_caveats</span><span class='comma'>,</span> <span class='label'>display_times:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_times?'>display_times?</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages'><span class='object_link'><a href="#messages-class_method" title="Homebrew.messages (method)">messages</a></span></span><span class='period'>.</span><span class='id identifier rubyid_display_messages'>display_messages</span><span class='lparen'>(</span><span class='label'>display_times:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_times?'>display_times?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -36045,7 +36041,7 @@ corresponding to all the original commit messages combined.</p>
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='lbracket'>[</span><span class='symbol'>:switch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--display-times</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
         <span class='label'>env:</span>         <span class='symbol'>:display_install_times</span><span class='comma'>,</span>
-        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print install times for each formula at the end of the run.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Print install times for each package at the end of the run.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_options'>options</span><span class='op'>|</span>
       <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -36139,6 +36135,8 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
+222
+223
 224
 225
 226
@@ -36161,12 +36159,10 @@ corresponding to all the original commit messages combined.</p>
 243
 244
 245
-246
-247
-248</pre>
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
@@ -36262,6 +36258,8 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
+114
+115
 116
 117
 118
@@ -36365,12 +36363,10 @@ corresponding to all the original commit messages combined.</p>
 216
 217
 218
-219
-220
-221</pre>
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
