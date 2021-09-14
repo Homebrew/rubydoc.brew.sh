@@ -306,8 +306,6 @@
       <pre class="lines">
 
 
-220
-221
 222
 223
 224
@@ -319,10 +317,12 @@
 230
 231
 232
-233</pre>
+233
+234
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'upgrade.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'upgrade.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_broken_dependents'>check_broken_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="../CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:linkage</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
@@ -373,8 +373,6 @@
       <pre class="lines">
 
 
-235
-236
 237
 238
 239
@@ -523,10 +521,12 @@
 382
 383
 384
-385</pre>
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'upgrade.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'upgrade.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_installed_dependents'>check_installed_dependents</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span>
@@ -714,6 +714,8 @@
       <pre class="lines">
 
 
+188
+189
 190
 191
 192
@@ -742,19 +744,25 @@
 215
 216
 217
-218</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'upgrade.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'upgrade.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_formula'>install_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='comma'>,</span> <span class='label'>upgrade:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span>
+
+  <span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='period'>.</span><span class='id identifier rubyid_check_installation_already_attempted'>check_installation_already_attempted</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_upgrade'>upgrade</span>
     <span class='id identifier rubyid_print_upgrade_message'>print_upgrade_message</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated_kegs'>outdated_kegs</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_linked_kegs'>linked_kegs</span> <span class='op'>=</span> <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:linked?</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_print_tap_action'>print_tap_action</span>
   <span class='kw'>end</span>
 
   <span class='comment'># first we unlink the currently active keg for this formula otherwise it is
