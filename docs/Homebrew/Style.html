@@ -536,7 +536,11 @@ Returns true if violations were found, false otherwise.</p>
 72
 73
 74
-75</pre>
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'style.rb', line 39</span>
@@ -570,12 +574,16 @@ Returns true if violations were found, false otherwise.</p>
     <span class='id identifier rubyid_run_shellcheck'>run_shellcheck</span><span class='lparen'>(</span><span class='id identifier rubyid_shell_files'>shell_files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_run_shfmt'>run_shfmt</span><span class='lparen'>(</span><span class='id identifier rubyid_shell_files'>shell_files</span><span class='comma'>,</span> <span class='label'>fix:</span> <span class='id identifier rubyid_fix'>fix</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_ruby_files'>ruby_files</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span> <span class='op'>||</span> <span class='id identifier rubyid_shell_files'>shell_files</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+  <span class='id identifier rubyid_shfmt_result'>shfmt_result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_ruby_files'>ruby_files</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_shell_files'>shell_files</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span>
+    <span class='kw'>true</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_run_shfmt'>run_shfmt</span><span class='lparen'>(</span><span class='id identifier rubyid_shell_files'>shell_files</span><span class='comma'>,</span> <span class='label'>fix:</span> <span class='id identifier rubyid_fix'>fix</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_output_type'>output_type</span> <span class='op'>==</span> <span class='symbol'>:json</span>
     <span class='const'><span class='object_link'><a href="Style/Offenses.html" title="Homebrew::Style::Offenses (class)">Offenses</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Style/Offenses.html#initialize-instance_method" title="Homebrew::Style::Offenses#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_rubocop_result'>rubocop_result</span> <span class='op'>+</span> <span class='id identifier rubyid_shellcheck_result'>shellcheck_result</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_rubocop_result'>rubocop_result</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_shellcheck_result'>shellcheck_result</span>
+    <span class='id identifier rubyid_rubocop_result'>rubocop_result</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_shellcheck_result'>shellcheck_result</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_shfmt_result'>shfmt_result</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -659,17 +667,17 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-238
-239
-240
-241
 242
 243
 244
-245</pre>
+245
+246
+247
+248
+249</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_json_result!'>json_result!</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
   <span class='comment'># An exit status of 1 just means violations were found; other numbers mean
@@ -714,10 +722,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-79
-80
-81
-82
 83
 84
 85
@@ -801,10 +805,14 @@ object parsed from its JSON output.</p>
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_rubocop'>run_rubocop</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='comma'>,</span>
                 <span class='label'>fix:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>except_cops:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>only_cops:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>display_cop_names:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reset_cache:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -929,10 +937,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-168
-169
-170
-171
 172
 173
 174
@@ -976,10 +980,14 @@ object parsed from its JSON output.</p>
 212
 213
 214
-215</pre>
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_shellcheck'>run_shellcheck</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='id identifier rubyid_output_type'>output_type</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_files'>files</span> <span class='op'>=</span> <span class='id identifier rubyid_shell_scripts'>shell_scripts</span> <span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1064,10 +1072,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-217
-218
-219
-220
 221
 222
 223
@@ -1083,10 +1087,14 @@ object parsed from its JSON output.</p>
 233
 234
 235
-236</pre>
+236
+237
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_shfmt'>run_shfmt</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='label'>fix:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_files'>files</span> <span class='op'>=</span> <span class='id identifier rubyid_shell_scripts'>shell_scripts</span> <span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1143,10 +1151,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-247
-248
-249
-250
 251
 252
 253
@@ -1154,10 +1158,14 @@ object parsed from its JSON output.</p>
 255
 256
 257
-258</pre>
+258
+259
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shell_scripts'>shell_scripts</span>
   <span class='lbracket'>[</span>
@@ -1206,10 +1214,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-260
-261
-262
-263
 264
 265
 266
@@ -1219,10 +1223,14 @@ object parsed from its JSON output.</p>
 270
 271
 272
-273</pre>
+273
+274
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shellcheck'>shellcheck</span>
   <span class='comment'># Always use the latest brewed shellcheck
@@ -1273,10 +1281,6 @@ object parsed from its JSON output.</p>
       <pre class="lines">
 
 
-275
-276
-277
-278
 279
 280
 281
@@ -1286,10 +1290,14 @@ object parsed from its JSON output.</p>
 285
 286
 287
-288</pre>
+288
+289
+290
+291
+292</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'style.rb', line 275</span>
+      <pre class="code"><span class="info file"># File 'style.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shfmt'>shfmt</span>
   <span class='comment'># Always use the latest brewed shfmt
