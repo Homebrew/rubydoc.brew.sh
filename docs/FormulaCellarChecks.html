@@ -316,6 +316,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#check_flat_namespace-instance_method" title="#check_flat_namespace (instance method)">#<strong>check_flat_namespace</strong>(formula)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#check_generic_executables-instance_method" title="#check_generic_executables (instance method)">#<strong>check_generic_executables</strong>(bin)  &#x21d2; Object </a>
     
     
@@ -710,16 +732,17 @@
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97</pre>
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/formula_cellar_checks.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/formula_cellar_checks.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='id identifier rubyid_generic_audit_installed'>generic_audit_installed</span>
@@ -727,6 +750,7 @@
   <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_openssl_links'>check_openssl_links</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_python_framework_links'>check_python_framework_links</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_linkage'>check_linkage</span>
+  <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_check_flat_namespace'>check_flat_namespace</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1244,6 +1268,78 @@
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix_bin'>prefix_bin</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; is not in your PATH.
 </span><span class='tstring_content'>    You can amend this by altering your </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Shell.html" title="Utils::Shell (module)">Shell</a></span></span><span class='period'>.</span><span class='id identifier rubyid_profile'><span class='object_link'><a href="Utils/Shell.html#profile-class_method" title="Utils::Shell.profile (method)">profile</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> file.
+</span><span class='heredoc_end'>  EOS
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check_flat_namespace-instance_method">
+  
+    #<strong>check_flat_namespace</strong>(formula)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/formula_cellar_checks.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_flat_namespace'>check_flat_namespace</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_tap_audit_exception'>tap_audit_exception</span><span class='lparen'>(</span><span class='symbol'>:flat_namespace_allowlist</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_flat_namespace_files'>flat_namespace_files</span> <span class='op'>=</span> <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span>
+
+    <span class='id identifier rubyid_macho'>macho</span> <span class='op'>=</span> <span class='const'>MachO</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_fat_magic?'>fat_magic?</span><span class='lparen'>(</span><span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_magic'>magic</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_machos'>machos</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:header</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='period'>.</span><span class='id identifier rubyid_flag?'>flag?</span> <span class='symbol'>:MH_TWOLEVEL</span> <span class='rbrace'>}</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_flag?'>flag?</span> <span class='symbol'>:MH_TWOLEVEL</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_flat_namespace_files'>flat_namespace_files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>    Libraries were compiled with a flat namespace.
+</span><span class='tstring_content'>    This can cause linker errors due to name collisions, and
+</span><span class='tstring_content'>    is often due to a bug in detecting the macOS version.
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_flat_namespace_files'>flat_namespace_files</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
     </td>
@@ -1773,7 +1869,7 @@
 </span><span class='tstring_content'>    These object files were linked against the deprecated system OpenSSL or
 </span><span class='tstring_content'>    the system&#39;s private LibreSSL.
 </span><span class='tstring_content'>    Adding `depends_on &quot;openssl&quot;` to the formula may help.
-</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_system_openssl'>system_openssl</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n        </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_system_openssl'>system_openssl</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
     </td>
@@ -1936,7 +2032,7 @@
 </span><span class='tstring_content'>    These python extension modules were linked directly to a Python
 </span><span class='tstring_content'>    framework binary. They should be linked with -undefined dynamic_lookup
 </span><span class='tstring_content'>    instead of -lpython or -framework Python.
-</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_framework_links'>framework_links</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n        </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_framework_links'>framework_links</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
     </td>
@@ -2225,7 +2321,7 @@
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Header files that shadow system header files were installed to &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_include'>include</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;
 </span><span class='tstring_content'>    The offending files are:
-</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_files'>files</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n        </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_files'>files</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
     </td>
