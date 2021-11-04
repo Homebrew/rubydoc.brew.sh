@@ -189,7 +189,14 @@
 40
 41
 42
-43</pre>
+43
+44
+45
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/search.rb', line 25</span>
@@ -203,9 +210,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_search'><span class='object_link'><a href="../../Searchable.html#search-instance_method" title="Searchable#search (method)">search</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:token</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:token</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_cask_tokens'>cask_tokens</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask_tokens</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Searchable.html" title="Searchable (module)">Searchable</a></span></span><span class='rparen'>)</span>
+                       <span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>|=</span> <span class='const'>DidYouMean</span><span class='op'>::</span><span class='const'>SpellChecker</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>dictionary:</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='rparen'>)</span>
+                                     <span class='period'>.</span><span class='id identifier rubyid_correct'>correct</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
+    <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="../../Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
       <span class='id identifier rubyid_pretty_installed'>pretty_installed</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
