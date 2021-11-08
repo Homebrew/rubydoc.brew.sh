@@ -9176,7 +9176,10 @@
 271
 272
 273
-274</pre>
+274
+275
+276
+277</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 96</span>
@@ -9294,14 +9297,17 @@
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/cmd/abstract_command</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/cmd/audit</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Audit.html" title="Cask::Cmd::Audit (class)">Audit</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit_casks'><span class='object_link'><a href="Cask/Cmd/Audit.html#audit_casks-class_method" title="Cask::Cmd::Audit.audit_casks (method)">audit_casks</a></span></span><span class='lparen'>(</span>
+    <span class='comment'># For switches, we add `|| nil` so that `nil` will be passed instead of `false` if they aren&#39;t set.
+</span>    <span class='comment'># This way, we can distinguish between &quot;not set&quot; and &quot;set to false&quot;.
+</span>    <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Audit.html" title="Cask::Cmd::Audit (class)">Audit</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit_casks'><span class='object_link'><a href="Cask/Cmd/Audit.html#audit_casks-class_method" title="Cask::Cmd::Audit.audit_casks (method)">audit_casks</a></span></span><span class='lparen'>(</span>
       <span class='op'>*</span><span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='comma'>,</span>
       <span class='label'>download:</span>              <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>appcast:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_appcast?'>appcast?</span><span class='comma'>,</span>
-      <span class='label'>online:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span><span class='comma'>,</span>
-      <span class='label'>strict:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span><span class='comma'>,</span>
-      <span class='label'>new_cask:</span>              <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span><span class='comma'>,</span>
-      <span class='label'>token_conflicts:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span><span class='comma'>,</span>
+      <span class='comment'># No need for `|| nil` for `--[no-]appcast` because boolean switches are already `nil` if not passed
+</span>      <span class='label'>appcast:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_appcast?'>appcast?</span><span class='comma'>,</span>
+      <span class='label'>online:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>strict:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>new_cask:</span>              <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>token_conflicts:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
       <span class='label'>quarantine:</span>            <span class='kw'>nil</span><span class='comma'>,</span>
       <span class='label'>any_named_args:</span>        <span class='op'>!</span><span class='id identifier rubyid_no_named_args'>no_named_args</span><span class='comma'>,</span>
       <span class='label'>language:</span>              <span class='kw'>nil</span><span class='comma'>,</span>
@@ -18441,12 +18447,12 @@
       <pre class="lines">
 
 
-281
-282
-283</pre>
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_problem'>format_problem</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_location'>location</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dup'>dup</span><span class='op'>&amp;.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>: </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n    </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -18471,13 +18477,13 @@
       <pre class="lines">
 
 
-276
-277
-278
-279</pre>
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
