@@ -234,7 +234,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::H
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url:, regex: nil, **_unused, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
+      <a href="#find_versions-class_method" title="find_versions (class method)">.<strong>find_versions</strong>(url:, regex: nil, homebrew_curl: false, **_unused, &amp;block)  &#x21d2; Hash{Symbol =&gt; T.untyped} </a>
     
     
   </span>
@@ -309,7 +309,7 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::H
       <div class="method_details first">
   <h3 class="signature first" id="find_versions-class_method">
   
-    .<strong>find_versions</strong>(url:, regex: nil, **_unused, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
+    .<strong>find_versions</strong>(url:, regex: nil, homebrew_curl: false, **_unused, &amp;block)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../../../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; T.untyped}</tt> 
   
 
   
@@ -366,6 +366,23 @@ using the provided regex for matching.</p>
   
     <li>
       
+        <span class='name'>homebrew_curl</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether to use brewed curl with the URL</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>_unused</span>
       
       
@@ -408,8 +425,6 @@ using the provided regex for matching.</p>
       <pre class="lines">
 
 
-83
-84
 85
 86
 87
@@ -422,15 +437,17 @@ using the provided regex for matching.</p>
 94
 95
 96
-97</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/header_match.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/header_match.rb', line 85</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid__unused'>_unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>homebrew_curl:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid__unused'>_unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>matches:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='id identifier rubyid_regex'>regex</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span> <span class='rbrace'>}</span>
 
-  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_page_headers'><span class='object_link'><a href="../Strategy.html#page_headers-class_method" title="Homebrew::Livecheck::Strategy.page_headers (method)">page_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Strategy.html" title="Homebrew::Livecheck::Strategy (module)">Strategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_page_headers'><span class='object_link'><a href="../Strategy.html#page_headers-class_method" title="Homebrew::Livecheck::Strategy.page_headers (method)">page_headers</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>homebrew_curl:</span> <span class='id identifier rubyid_homebrew_curl'>homebrew_curl</span><span class='rparen'>)</span>
 
   <span class='comment'># Merge the headers from all responses into one hash
 </span>  <span class='id identifier rubyid_merged_headers'>merged_headers</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:merge</span><span class='rparen'>)</span>
