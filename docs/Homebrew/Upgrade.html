@@ -557,7 +557,21 @@
 407
 408
 409
-410</pre>
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'upgrade.rb', line 248</span>
@@ -593,6 +607,20 @@
     <span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:runtime_installed_formula_dependents</span><span class='rparen'>)</span>
                       <span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
                       <span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span>
+
+  <span class='comment'># Ensure we never attempt a source build for outdated dependents of upgraded formulae.
+</span>  <span class='id identifier rubyid_outdated_dependents'>outdated_dependents</span><span class='comma'>,</span> <span class='id identifier rubyid_skipped_dependents'>skipped_dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated_dependents'>outdated_dependents</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dependent'>dependent</span><span class='op'>|</span>
+    <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_bottled?'>bottled?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:bottled?</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_skipped_dependents'>skipped_dependents</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      The following dependents of upgraded formulae are outdated but will not
+</span><span class='tstring_content'>      be upgraded because they are not bottled:
+</span><span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_skipped_dependents'>skipped_dependents</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n  </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
+
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_outdated_dependents'>outdated_dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_already_broken_dependents'>already_broken_dependents</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_outdated_dependents'>outdated_dependents</span> <span class='op'>-=</span> <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='kw'>if</span> <span class='id identifier rubyid_dry_run'>dry_run</span>
