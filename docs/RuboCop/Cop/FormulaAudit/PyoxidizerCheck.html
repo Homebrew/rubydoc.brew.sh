@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: RuboCop::Cop::FormulaAudit::SafePopenCommands
+  Class: RuboCop::Cop::FormulaAudit::PyoxidizerCheck
   
     &mdash; Homebrew Ruby API
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "RuboCop::Cop::FormulaAudit::SafePopenCommands";
+  pathId = "RuboCop::Cop::FormulaAudit::PyoxidizerCheck";
   relpath = '../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../_index.html">Index (S)</a> &raquo;
+    <a href="../../../_index.html">Index (P)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Cop.html" title="RuboCop::Cop (module)">Cop</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../FormulaAudit.html" title="RuboCop::Cop::FormulaAudit (module)">FormulaAudit</a></span></span>
      &raquo; 
-    <span class="title">SafePopenCommands</span>
+    <span class="title">PyoxidizerCheck</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: RuboCop::Cop::FormulaAudit::SafePopenCommands
+      <div id="content"><h1>Class: RuboCop::Cop::FormulaAudit::PyoxidizerCheck
   
   
   <span class="private note title">Private</span>
@@ -78,7 +78,7 @@
           
             <li class="next"><span class='object_link'><a href="../FormulaCop.html" title="RuboCop::Cop::FormulaCop (class)">RuboCop::Cop::FormulaCop</a></span></li>
           
-            <li class="next">RuboCop::Cop::FormulaAudit::SafePopenCommands</li>
+            <li class="next">RuboCop::Cop::FormulaAudit::PyoxidizerCheck</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -88,11 +88,6 @@
   
 
   
-  
-  <dl>
-      <dt>Extended by:</dt>
-      <dd>AutoCorrector</dd>
-  </dl>
   
   
   
@@ -115,7 +110,8 @@
   This class may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this class if possible, as it may be removed or changed without warning.
 </p>
-<p>This cop makes sure that the safe versions of <code>popen_*</code> calls are used.</p>
+<p>This cop makes sure that formulae do not depend on <code>pyoxidizer</code> at build-time
+or run-time.</p>
 
 
   </div>
@@ -177,7 +173,6 @@
   
   
   
-  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../FormulaCop.html" title="RuboCop::Cop::FormulaCop (class)">RuboCop::Cop::FormulaCop</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../FormulaCop.html#audit_comments-instance_method" title="RuboCop::Cop::FormulaCop#audit_comments (method)">#audit_comments</a></span>, <span class='object_link'><a href="../FormulaCop.html#audit_urls-instance_method" title="RuboCop::Cop::FormulaCop#audit_urls (method)">#audit_urls</a></span>, <span class='object_link'><a href="../FormulaCop.html#caveats_strings-instance_method" title="RuboCop::Cop::FormulaCop#caveats_strings (method)">#caveats_strings</a></span>, <span class='object_link'><a href="../FormulaCop.html#depends_on%3F-instance_method" title="RuboCop::Cop::FormulaCop#depends_on? (method)">#depends_on?</a></span>, <span class='object_link'><a href="../FormulaCop.html#depends_on_name_type%3F-instance_method" title="RuboCop::Cop::FormulaCop#depends_on_name_type? (method)">#depends_on_name_type?</a></span>, <span class='object_link'><a href="../FormulaCop.html#formula_tap-instance_method" title="RuboCop::Cop::FormulaCop#formula_tap (method)">#formula_tap</a></span>, <span class='object_link'><a href="../FormulaCop.html#get_checksum_node-instance_method" title="RuboCop::Cop::FormulaCop#get_checksum_node (method)">#get_checksum_node</a></span>, <span class='object_link'><a href="../FormulaCop.html#on_class-instance_method" title="RuboCop::Cop::FormulaCop#on_class (method)">#on_class</a></span>, <span class='object_link'><a href="../FormulaCop.html#tap_style_exception%3F-instance_method" title="RuboCop::Cop::FormulaCop#tap_style_exception? (method)">#tap_style_exception?</a></span>, <span class='object_link'><a href="../FormulaCop.html#versioned_formula%3F-instance_method" title="RuboCop::Cop::FormulaCop#versioned_formula? (method)">#versioned_formula?</a></span></p>
 
@@ -230,49 +225,45 @@
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266</pre>
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/lines.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'rubocops/lines.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_test'>test</span> <span class='op'>=</span> <span class='id identifier rubyid_find_block'>find_block</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:test</span><span class='rparen'>)</span>
+  <span class='comment'># Disallow use of PyOxidizer as a dependency in core
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula_tap'>formula_tap</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew-core</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='lbracket'>[</span><span class='symbol'>:popen_read</span><span class='comma'>,</span> <span class='symbol'>:popen_write</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_unsafe_command'>unsafe_command</span><span class='op'>|</span>
-    <span class='id identifier rubyid_test_methods'>test_methods</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:depends_on</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pyoxidizer</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not use &#39;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@offensive_node</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
-    <span class='kw'>unless</span> <span class='id identifier rubyid_test'>test</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='id identifier rubyid_find_instance_method_call'>find_instance_method_call</span><span class='lparen'>(</span><span class='id identifier rubyid_test'>test</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Utils</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_unsafe_command'>unsafe_command</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='op'>|</span>
-        <span class='id identifier rubyid_test_methods'>test_methods</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_method'>method</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_find_instance_method_call'>find_instance_method_call</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Utils</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_unsafe_command'>unsafe_command</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='op'>|</span>
-      <span class='kw'>unless</span> <span class='id identifier rubyid_test_methods'>test_methods</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use `Utils.safe_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unsafe_command'>unsafe_command</span><span class='embexpr_end'>}</span><span class='tstring_content'>` instead of `Utils.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unsafe_command'>unsafe_command</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
-          <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='ivar'>@offensive_node</span><span class='period'>.</span><span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_selector'>selector</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>safe_</span><span class='embexpr_beg'>#{</span><span class='ivar'>@offensive_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
+  <span class='lbracket'>[</span>
+    <span class='symbol'>:build</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='symbol'>:build</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='symbol'>:build</span><span class='comma'>,</span> <span class='symbol'>:test</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='symbol'>:test</span><span class='comma'>,</span> <span class='symbol'>:build</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+    <span class='id identifier rubyid_find_method_with_args'>find_method_with_args</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:depends_on</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pyoxidizer</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae in homebrew/core should not use &#39;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@offensive_node</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
