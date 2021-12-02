@@ -571,7 +571,8 @@
 421
 422
 423
-424</pre>
+424
+425</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'upgrade.rb', line 248</span>
@@ -598,7 +599,8 @@
 </span>    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_dry_run'>dry_run</span> <span class='op'>?</span> <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="../FormulaInstaller.html#installed-class_method" title="FormulaInstaller.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+  <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_dry_run'>dry_run</span> <span class='op'>?</span> <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="../FormulaInstaller.html#installed-class_method" title="FormulaInstaller.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+  <span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_versioned_formula?'>versioned_formula?</span> <span class='rbrace'>}</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_already_broken_dependents'>already_broken_dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_check_broken_dependents'>check_broken_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_formulae'>installed_formulae</span><span class='rparen'>)</span>
