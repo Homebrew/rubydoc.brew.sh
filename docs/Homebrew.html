@@ -9842,7 +9842,8 @@
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/autoremove.rb', line 33</span>
@@ -9855,7 +9856,8 @@
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_removable_formulae'>removable_formulae</span> <span class='op'>-=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
                                <span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
-                               <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_formula'>formula</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+                               <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+                               <span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_runtime_formula_dependencies'>runtime_formula_dependencies</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_removable_formulae'>removable_formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
