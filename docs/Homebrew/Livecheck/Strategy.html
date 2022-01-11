@@ -237,6 +237,9 @@ continue. This value is used to set the <code>timeout</code> argument on
         <dd><pre class="code"><span class='lbracket'>[</span>
   <span class='comment'># Follow redirections to handle mirrors, relocations, etc.
 </span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--location</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='comment'># Avoid progress bar text, so we can reliably identify `curl` error
+</span>  <span class='comment'># messages in output
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--silent</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
 <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="PAGE_HEADERS_CURL_ARGS-constant" class="">PAGE_HEADERS_CURL_ARGS =
@@ -261,8 +264,7 @@ continue. This value is used to set the <code>timeout</code> argument on
   <span class='comment'># We only need the response head (not the body)
 </span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='comment'># Some servers may not allow a HEAD request, so we use GET
-</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--request</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GET</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--silent</span><span class='tstring_end'>&quot;</span></span>
+</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--request</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GET</span><span class='tstring_end'>&quot;</span></span>
 <span class='rbracket'>]</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="#DEFAULT_CURL_ARGS-constant" title="Homebrew::Livecheck::Strategy::DEFAULT_CURL_ARGS (constant)">DEFAULT_CURL_ARGS</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="PAGE_CONTENT_CURL_ARGS-constant" class="">PAGE_CONTENT_CURL_ARGS =
@@ -588,12 +590,12 @@ an inappropriate type.</p>
       <pre class="lines">
 
 
-120
-121
-122</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_symbol'>from_symbol</span><span class='lparen'>(</span><span class='id identifier rubyid_symbol'>symbol</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_strategies'>strategies</span><span class='lbracket'>[</span><span class='id identifier rubyid_symbol'>symbol</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_symbol'>symbol</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -737,8 +739,6 @@ in the <code>livecheck</code> block</p>
       <pre class="lines">
 
 
-145
-146
 147
 148
 149
@@ -759,10 +759,12 @@ in the <code>livecheck</code> block</p>
 164
 165
 166
-167</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_url'>from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>livecheck_strategy:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>url_provided:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>regex_provided:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>block_provided:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_usable_strategies'>usable_strategies</span> <span class='op'>=</span> <span class='id identifier rubyid_strategies'>strategies</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_strategy'>strategy</span><span class='op'>|</span>
@@ -855,8 +857,6 @@ block.</p>
       <pre class="lines">
 
 
-264
-265
 266
 267
 268
@@ -866,10 +866,12 @@ block.</p>
 272
 273
 274
-275</pre>
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle_block_return'>handle_block_return</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -970,8 +972,6 @@ array with the error message instead.</p>
       <pre class="lines">
 
 
-211
-212
 213
 214
 215
@@ -1015,10 +1015,12 @@ array with the error message instead.</p>
 253
 254
 255
-256</pre>
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_content'>page_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>homebrew_curl:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_original_url'>original_url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span>
@@ -1152,8 +1154,6 @@ collected into an array of hashes.</p>
       <pre class="lines">
 
 
-177
-178
 179
 180
 181
@@ -1175,10 +1175,12 @@ collected into an array of hashes.</p>
 197
 198
 199
-200</pre>
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_page_headers'>page_headers</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>homebrew_curl:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
