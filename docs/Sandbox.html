@@ -1300,7 +1300,21 @@
 175
 176
 177
-178</pre>
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'sandbox.rb', line 94</span>
@@ -1329,17 +1343,25 @@
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_write_to_pty'>write_to_pty</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span>
+        <span class='comment'># Don&#39;t hang if stdin is not able to be used - throw EIO instead.
+</span>        <span class='id identifier rubyid_old_ttin'>old_ttin</span> <span class='op'>=</span> <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:TTIN</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IGNORE</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
         <span class='comment'># Update the window size whenever the parent terminal&#39;s window size changes.
 </span>        <span class='id identifier rubyid_old_winch'>old_winch</span> <span class='op'>=</span> <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:WINCH</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_winch'>winch</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_winch'>winch</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
 
-        <span class='id identifier rubyid_stdin_thread'>stdin_thread</span> <span class='op'>=</span> <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="IO.html" title="IO (class)">IO</a></span></span><span class='period'>.</span><span class='id identifier rubyid_copy_stream'>copy_stream</span><span class='lparen'>(</span><span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_stdin_thread'>stdin_thread</span> <span class='op'>=</span> <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+          <span class='const'><span class='object_link'><a href="IO.html" title="IO (class)">IO</a></span></span><span class='period'>.</span><span class='id identifier rubyid_copy_stream'>copy_stream</span><span class='lparen'>(</span><span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span>
+        <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EIO</span>
+          <span class='comment'># stdin is unavailable - move on.
+</span>        <span class='kw'>end</span>
 
         <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_each_char'>each_char</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_print'>print</span><span class='lparen'>(</span><span class='id identifier rubyid_c'>c</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 
         <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span><span class='lparen'>(</span><span class='id identifier rubyid_pid'>pid</span><span class='rparen'>)</span>
       <span class='kw'>ensure</span>
         <span class='id identifier rubyid_stdin_thread'>stdin_thread</span><span class='op'>&amp;.</span><span class='id identifier rubyid_kill'>kill</span>
+        <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:TTIN</span><span class='comma'>,</span> <span class='id identifier rubyid_old_ttin'>old_ttin</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:WINCH</span><span class='comma'>,</span> <span class='id identifier rubyid_old_winch'>old_winch</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
@@ -1348,7 +1370,13 @@
 </span>        <span class='comment'># mode while we copy the input/output of the process spawned in the
 </span>        <span class='comment'># PTY. After we&#39;ve finished copying to/from the PTY process, io.raw
 </span>        <span class='comment'># will restore the stdin TTY to its original state.
-</span>        <span class='gvar'>$stdin</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_write_to_pty'>write_to_pty</span><span class='rparen'>)</span>
+</span>        <span class='kw'>begin</span>
+          <span class='comment'># Ignore SIGTTOU as setting raw mode will hang if the process is in the background.
+</span>          <span class='id identifier rubyid_old_ttou'>old_ttou</span> <span class='op'>=</span> <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:TTOU</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IGNORE</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+          <span class='gvar'>$stdin</span><span class='period'>.</span><span class='id identifier rubyid_raw'>raw</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_write_to_pty'>write_to_pty</span><span class='rparen'>)</span>
+        <span class='kw'>ensure</span>
+          <span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='symbol'>:TTOU</span><span class='comma'>,</span> <span class='id identifier rubyid_old_ttou'>old_ttou</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_write_to_pty'>write_to_pty</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
       <span class='kw'>end</span>
