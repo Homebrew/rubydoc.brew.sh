@@ -127,6 +127,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#block_method_called_in_block%3F-instance_method" title="#block_method_called_in_block? (instance method)">#<strong>block_method_called_in_block?</strong>(node, method_name)  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'><p>Check if a block method is called inside a block.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#block_size-instance_method" title="#block_size (instance method)">#<strong>block_size</strong>(block)  &#x21d2; Object </a>
     
     
@@ -655,28 +677,6 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#method_called_in_block%3F-instance_method" title="#method_called_in_block? (instance method)">#<strong>method_called_in_block?</strong>(node, method_name)  &#x21d2; Boolean </a>
-    
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-  
-    <span class="summary_desc"><div class='inline'><p>Check if a method is called inside a block.</p>
-</div></span>
-  
-</li>
-
-      
-        
-<li class="public ">
-  <span class="summary_signature">
-    
       <a href="#method_name-instance_method" title="#method_name (instance method)">#<strong>method_name</strong>(node)  &#x21d2; Object </a>
     
     
@@ -926,7 +926,79 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="block_size-instance_method">
+  <h3 class="signature first" id="block_method_called_in_block?-instance_method">
+  
+    #<strong>block_method_called_in_block?</strong>(node, method_name)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+<p>Check if a block method is called inside a block.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'rubocops/shared/helper_functions.rb', line 289</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_block_method_called_in_block?'>block_method_called_in_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_each_child_node'>each_child_node</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_block_type?'>block_type?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_send_type?'>send_type?</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
+
+    <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_call_node'>call_node</span>
+    <span class='kw'>return</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="block_size-instance_method">
   
     #<strong>block_size</strong>(block)  &#x21d2; <tt>Object</tt> 
   
@@ -2337,78 +2409,6 @@ Check if the node itself is the method.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_called_ever?'>method_called_ever?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
-
-    <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_call_node'>call_node</span>
-    <span class='kw'>return</span> <span class='kw'>true</span>
-  <span class='kw'>end</span>
-  <span class='kw'>false</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="method_called_in_block?-instance_method">
-  
-    #<strong>method_called_in_block?</strong>(node, method_name)  &#x21d2; <tt>Boolean</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
-  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
-</p>
-<p>Check if a method is called inside a block.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'rubocops/shared/helper_functions.rb', line 289</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_method_called_in_block?'>method_called_in_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_block_body'>block_body</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_block_body'>block_body</span><span class='period'>.</span><span class='id identifier rubyid_each_child_node'>each_child_node</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
 
     <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_call_node'>call_node</span>
