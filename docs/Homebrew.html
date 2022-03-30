@@ -16384,10 +16384,6 @@
       <pre class="lines">
 
 
-40
-41
-42
-43
 44
 45
 46
@@ -16409,10 +16405,30 @@
 62
 63
 64
-65</pre>
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/desc.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'cmd/desc.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_desc'>desc</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_desc_args'>desc_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -16425,20 +16441,36 @@
     <span class='symbol'>:desc</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_search_type'>search_type</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_search_type'>search_type</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
     <span class='id identifier rubyid_desc'>desc</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae'>to_formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_desc'>desc</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_desc'>desc</span> <span class='rbrace'>}</span>
-    <span class='const'><span class='object_link'><a href="Descriptions.html" title="Descriptions (class)">Descriptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Descriptions.html#initialize-instance_method" title="Descriptions#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
+        <span class='id identifier rubyid_desc'>desc</span><span class='lbracket'>[</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_desc'>desc</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_desc'>desc</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning'><span class='object_link'><a href="Formatter.html#warning-class_method" title="Formatter.warning (method)">warning</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[no description]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_desc'>desc</span><span class='lbracket'>[</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>) </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_description'>description</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='const'><span class='object_link'><a href="Descriptions.html" title="Descriptions (class)">Descriptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Descriptions.html#initialize-instance_method" title="Descriptions#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_print'><span class='object_link'><a href="Descriptions.html#print-instance_method" title="Descriptions#print (method)">print</a></span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_string_or_regex'>string_or_regex</span> <span class='op'>=</span> <span class='id identifier rubyid_query_regexp'>query_regexp</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:descriptions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
-      <span class='id identifier rubyid_cache_store'>cache_store</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DescriptionCacheStore.html" title="DescriptionCacheStore (class)">DescriptionCacheStore</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CacheStore.html#initialize-instance_method" title="CacheStore#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
-      <span class='const'><span class='object_link'><a href="Descriptions.html" title="Descriptions (class)">Descriptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_search'><span class='object_link'><a href="Descriptions.html#search-class_method" title="Descriptions.search (method)">search</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='id identifier rubyid_search_type'>search_type</span><span class='comma'>,</span> <span class='id identifier rubyid_cache_store'>cache_store</span><span class='rparen'>)</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formulae</span><span class='tstring_end'>&quot;</span></span>
+      <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:descriptions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
+        <span class='id identifier rubyid_cache_store'>cache_store</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DescriptionCacheStore.html" title="DescriptionCacheStore (class)">DescriptionCacheStore</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CacheStore.html#initialize-instance_method" title="CacheStore#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
+        <span class='const'><span class='object_link'><a href="Descriptions.html" title="Descriptions (class)">Descriptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_search'><span class='object_link'><a href="Descriptions.html#search-class_method" title="Descriptions.search (method)">search</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='id identifier rubyid_search_type'>search_type</span><span class='comma'>,</span> <span class='id identifier rubyid_cache_store'>cache_store</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Casks</span><span class='tstring_end'>&quot;</span></span>
+      <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:cask_descriptions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
+        <span class='id identifier rubyid_cache_store'>cache_store</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="CaskDescriptionCacheStore.html" title="CaskDescriptionCacheStore (class)">CaskDescriptionCacheStore</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CacheStore.html#initialize-instance_method" title="CacheStore#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
+        <span class='const'><span class='object_link'><a href="Descriptions.html" title="Descriptions (class)">Descriptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_search'><span class='object_link'><a href="Descriptions.html#search-class_method" title="Descriptions.search (method)">search</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='id identifier rubyid_search_type'>search_type</span><span class='comma'>,</span> <span class='id identifier rubyid_cache_store'>cache_store</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -16504,7 +16536,11 @@
 35
 36
 37
-38</pre>
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/desc.rb', line 17</span>
@@ -16525,10 +16561,14 @@
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--description</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Search just descriptions for &lt;text&gt;. If &lt;text&gt; is flanked by slashes, </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>it is interpreted as a regular expression.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Treat all named arguments as formulae.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Treat all named arguments as casks.</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--search</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--name</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--description</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='id identifier rubyid_named_args'>named_args</span> <span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='comma'>,</span> <span class='symbol'>:text_or_regex</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_named_args'>named_args</span> <span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='comma'>,</span> <span class='symbol'>:cask</span><span class='comma'>,</span> <span class='symbol'>:text_or_regex</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -22116,10 +22156,6 @@
       <pre class="lines">
 
 
-272
-273
-274
-275
 276
 277
 278
@@ -22127,10 +22163,14 @@
 280
 281
 282
-283</pre>
+283
+284
+285
+286
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_core_tap_if_necessary'>install_core_tap_if_necessary</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_TEST</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -23420,20 +23460,20 @@
       <pre class="lines">
 
 
-285
-286
-287
-288
 289
 290
 291
 292
 293
 294
-295</pre>
+295
+296
+297
+298
+299</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 285</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_completions_manpages_and_docs'>link_completions_manpages_and_docs</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew update</span><span class='tstring_end'>&quot;</span></span>
@@ -26627,7 +26667,11 @@
 263
 264
 265
-266</pre>
+266
+267
+268
+269
+270</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 50</span>
@@ -26781,6 +26825,10 @@
       <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:descriptions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
         <span class='const'><span class='object_link'><a href="DescriptionCacheStore.html" title="DescriptionCacheStore (class)">DescriptionCacheStore</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CacheStore.html#initialize-instance_method" title="CacheStore#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
                              <span class='period'>.</span><span class='id identifier rubyid_update_from_report!'>update_from_report!</span><span class='lparen'>(</span><span class='id identifier rubyid_hub'>hub</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='const'><span class='object_link'><a href="CacheStoreDatabase.html" title="CacheStoreDatabase (class)">CacheStoreDatabase</a></span></span><span class='period'>.</span><span class='id identifier rubyid_use'><span class='object_link'><a href="CacheStoreDatabase.html#use-class_method" title="CacheStoreDatabase.use (method)">use</a></span></span><span class='lparen'>(</span><span class='symbol'>:cask_descriptions</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_db'>db</span><span class='op'>|</span>
+        <span class='const'><span class='object_link'><a href="CaskDescriptionCacheStore.html" title="CaskDescriptionCacheStore (class)">CaskDescriptionCacheStore</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CacheStore.html#initialize-instance_method" title="CacheStore#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_db'>db</span><span class='rparen'>)</span>
+                                 <span class='period'>.</span><span class='id identifier rubyid_update_from_report!'>update_from_report!</span><span class='lparen'>(</span><span class='id identifier rubyid_hub'>hub</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
       <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_preinstall?'>preinstall?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
@@ -31457,7 +31505,7 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Search online and locally for casks.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--desc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Search for formulae with a description matching &lt;text&gt; and casks with </span><span class='tstring_end'>&quot;</span></span>\
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a name matching &lt;text&gt;.</span><span class='tstring_end'>&quot;</span></span>
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a name or description matching &lt;text&gt;.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--pull-request</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Search for GitHub pull requests containing &lt;text&gt;.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--open</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -32170,12 +32218,12 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-268
-269
-270</pre>
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shorten_revision'>shorten_revision</span><span class='lparen'>(</span><span class='id identifier rubyid_revision'>revision</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rev-parse</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--short</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_revision'>revision</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
