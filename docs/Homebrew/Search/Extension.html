@@ -196,7 +196,8 @@
 45
 46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/search.rb', line 23</span>
@@ -215,7 +216,8 @@
   <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Searchable.html" title="Searchable (module)">Searchable</a></span></span><span class='rparen'>)</span>
                        <span class='period'>.</span><span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>|=</span> <span class='const'>DidYouMean</span><span class='op'>::</span><span class='const'>SpellChecker</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>dictionary:</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_cask_names'>cask_names</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="../../Cask/Cask.html#all-class_method" title="Cask::Cask.all (method)">all</a></span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:full_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_results'>results</span> <span class='op'>+=</span> <span class='const'>DidYouMean</span><span class='op'>::</span><span class='const'>SpellChecker</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>dictionary:</span> <span class='id identifier rubyid_cask_names'>cask_names</span><span class='rparen'>)</span>
                                      <span class='period'>.</span><span class='id identifier rubyid_correct'>correct</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
@@ -225,7 +227,7 @@
     <span class='kw'>else</span>
       <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
     <span class='kw'>end</span>
-  <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
