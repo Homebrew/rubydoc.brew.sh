@@ -18317,7 +18317,15 @@
 127
 128
 129
-130</pre>
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 65</span>
@@ -18326,18 +18334,26 @@
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_args'>fetch_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
   <span class='id identifier rubyid_bucket'>bucket</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_deps?'>deps?</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>prefer_loading_from_api:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
       <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
         <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
 
-        <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'>install_from_api?</span>
+          <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_dependency'>dependency</span><span class='op'>|</span>
+            <span class='const'><span class='object_link'><a href="Dependency.html" title="Dependency (class)">Dependency</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prune'><span class='object_link'><a href="Dependency.html#prune-class_method" title="Dependency.prune (method)">prune</a></span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'>install_from_api?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_dependency'>dependency</span><span class='period'>.</span><span class='id identifier rubyid_build?'>build?</span> <span class='op'>||</span> <span class='id identifier rubyid_dependency'>dependency</span><span class='period'>.</span><span class='id identifier rubyid_test?'>test?</span><span class='rparen'>)</span>
+          <span class='kw'>end</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span>
+        <span class='kw'>end</span>
+
+        <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span><span class='rbracket'>]</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span>
+    <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>prefer_loading_from_api:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
 
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetching: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bucket'>bucket</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_bucket'>bucket</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
@@ -18549,15 +18565,15 @@
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
-152</pre>
+155
+156
+157
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_download'>cask_download</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_cask_download'>cask_download</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -18585,14 +18601,6 @@
       <pre class="lines">
 
 
-173
-174
-175
-176
-177
-178
-179
-180
 181
 182
 183
@@ -18603,10 +18611,18 @@
 188
 189
 190
-191</pre>
+191
+192
+193
+194
+195
+196
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span>
@@ -18647,15 +18663,15 @@
       <pre class="lines">
 
 
-140
-141
-142
-143
-144
-145</pre>
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -18683,15 +18699,15 @@
       <pre class="lines">
 
 
-154
-155
-156
-157
-158
-159</pre>
+162
+163
+164
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -18719,16 +18735,16 @@
       <pre class="lines">
 
 
-132
-133
-134
-135
-136
-137
-138</pre>
+140
+141
+142
+143
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Resource: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -30843,20 +30859,20 @@
       <pre class="lines">
 
 
-161
-162
-163
-164
-165
-166
-167
-168
 169
 170
-171</pre>
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retry_fetch?'>retry_fetch?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='ivar'>@fetch_failed</span> <span class='op'>||=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
