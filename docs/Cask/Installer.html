@@ -488,7 +488,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, command: SystemCommand, force: false, skip_cask_deps: false, binaries: true, verbose: false, require_sha: false, upgrade: false, installed_as_dependency: false, quarantine: true, verify_download_integrity: true, quiet: false)  &#x21d2; Installer </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, command: SystemCommand, force: false, skip_cask_deps: false, binaries: true, verbose: false, zap: false, require_sha: false, upgrade: false, installed_as_dependency: false, quarantine: true, verify_download_integrity: true, quiet: false)  &#x21d2; Installer </a>
     
     
   </span>
@@ -1047,7 +1047,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(cask, command: SystemCommand, force: false, skip_cask_deps: false, binaries: true, verbose: false, require_sha: false, upgrade: false, installed_as_dependency: false, quarantine: true, verify_download_integrity: true, quiet: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></tt> 
+    #<strong>initialize</strong>(cask, command: SystemCommand, force: false, skip_cask_deps: false, binaries: true, verbose: false, zap: false, require_sha: false, upgrade: false, installed_as_dependency: false, quarantine: true, verify_download_integrity: true, quiet: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></tt> 
   
 
   
@@ -1092,14 +1092,15 @@
 45
 46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/installer.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>command:</span> <span class='const'><span class='object_link'><a href="../SystemCommand.html" title="SystemCommand (class)">SystemCommand</a></span></span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>false</span><span class='comma'>,</span>
                <span class='label'>skip_cask_deps:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>binaries:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span>
-               <span class='label'>require_sha:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>upgrade:</span> <span class='kw'>false</span><span class='comma'>,</span>
+               <span class='label'>zap:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>require_sha:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>upgrade:</span> <span class='kw'>false</span><span class='comma'>,</span>
                <span class='label'>installed_as_dependency:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>true</span><span class='comma'>,</span>
                <span class='label'>verify_download_integrity:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@cask</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span>
@@ -1108,6 +1109,7 @@
   <span class='ivar'>@skip_cask_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_skip_cask_deps'>skip_cask_deps</span>
   <span class='ivar'>@binaries</span> <span class='op'>=</span> <span class='id identifier rubyid_binaries'>binaries</span>
   <span class='ivar'>@verbose</span> <span class='op'>=</span> <span class='id identifier rubyid_verbose'>verbose</span>
+  <span class='ivar'>@zap</span> <span class='op'>=</span> <span class='id identifier rubyid_zap'>zap</span>
   <span class='ivar'>@require_sha</span> <span class='op'>=</span> <span class='id identifier rubyid_require_sha'>require_sha</span>
   <span class='ivar'>@reinstall</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='ivar'>@upgrade</span> <span class='op'>=</span> <span class='id identifier rubyid_upgrade'>upgrade</span>
@@ -1158,7 +1160,6 @@
       <pre class="lines">
 
 
-54
 55
 56
 57
@@ -1170,10 +1171,11 @@
 63
 64
 65
-66</pre>
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_caveats'>caveats</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Printing caveats</span><span class='tstring_end'>&quot;</span></span>
@@ -1242,8 +1244,6 @@
       <pre class="lines">
 
 
-282
-283
 284
 285
 286
@@ -1255,10 +1255,12 @@
 292
 293
 294
-295</pre>
+295
+296
+297</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_arch_dependencies'>arch_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1309,13 +1311,13 @@
       <pre class="lines">
 
 
-409
-410
 411
-412</pre>
+412
+413
+414</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 411</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup'>backup</span>
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='period'>.</span><span class='id identifier rubyid_rename'>rename</span> <span class='id identifier rubyid_backup_path'>backup_path</span>
@@ -1356,14 +1358,14 @@
       <pre class="lines">
 
 
-482
-483
 484
 485
-486</pre>
+486
+487
+488</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 482</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 484</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_metadata_path'>backup_metadata_path</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_metadata_versioned_path'>metadata_versioned_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1405,14 +1407,14 @@
       <pre class="lines">
 
 
-476
-477
 478
 479
-480</pre>
+480
+481
+482</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 476</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_backup_path'>backup_path</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1454,8 +1456,6 @@
       <pre class="lines">
 
 
-326
-327
 328
 329
 330
@@ -1499,10 +1499,12 @@
 368
 369
 370
-371</pre>
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 328</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_and_formula_dependencies'>cask_and_formula_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_installed_as_dependency?'>installed_as_dependency?</span>
@@ -1585,12 +1587,12 @@
       <pre class="lines">
 
 
-373
-374
-375</pre>
+375
+376
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caveats'>caveats</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_caveats'>caveats</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span>
@@ -1630,7 +1632,6 @@
       <pre class="lines">
 
 
-130
 131
 132
 133
@@ -1644,10 +1645,11 @@
 141
 142
 143
-144</pre>
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_conflicts'>check_conflicts</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_conflicts_with'>conflicts_with</span>
@@ -1712,8 +1714,6 @@
       <pre class="lines">
 
 
-297
-298
 299
 300
 301
@@ -1728,10 +1728,12 @@
 310
 311
 312
-313</pre>
+313
+314
+315</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 297</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 299</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collect_cask_and_formula_dependencies'>collect_cask_and_formula_dependencies</span>
   <span class='kw'>return</span> <span class='ivar'>@cask_and_formula_dependencies</span> <span class='kw'>if</span> <span class='ivar'>@cask_and_formula_dependencies</span>
@@ -1828,13 +1830,13 @@
       <pre class="lines">
 
 
-177
-178
 179
-180</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@download</span> <span class='op'>||=</span> <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='comma'>,</span> <span class='label'>verify_download_integrity:</span> <span class='ivar'>@verify_download_integrity</span><span class='comma'>,</span>
@@ -1888,12 +1890,12 @@
       <pre class="lines">
 
 
-172
-173
-174</pre>
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='ivar'>@downloader</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='id identifier rubyid_quarantine?'>quarantine?</span><span class='rparen'>)</span>
@@ -1933,8 +1935,6 @@
       <pre class="lines">
 
 
-199
-200
 201
 202
 203
@@ -1958,10 +1958,12 @@
 221
 222
 223
-224</pre>
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_extract_primary_container'>extract_primary_container</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_staged_path'>staged_path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Extracting primary container</span><span class='tstring_end'>&quot;</span></span>
@@ -2054,7 +2056,6 @@
       <pre class="lines">
 
 
-69
 70
 71
 72
@@ -2062,10 +2063,11 @@
 74
 75
 76
-77</pre>
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#fetch</span><span class='tstring_end'>&quot;</span></span>
@@ -2111,16 +2113,16 @@
       <pre class="lines">
 
 
-430
-431
 432
 433
 434
 435
-436</pre>
+436
+437
+438</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finalize_upgrade'>finalize_upgrade</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging files for version </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2164,12 +2166,12 @@
       <pre class="lines">
 
 
-488
-489
-490</pre>
+490
+491
+492</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 488</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_gain_permissions_remove'>gain_permissions_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Cask::Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_gain_permissions_remove'><span class='object_link'><a href="Utils.html#gain_permissions_remove-class_method" title="Cask::Utils.gain_permissions_remove (method)">gain_permissions_remove</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>command:</span> <span class='ivar'>@command</span><span class='rparen'>)</span>
@@ -2209,7 +2211,6 @@
       <pre class="lines">
 
 
-91
 92
 93
 94
@@ -2246,10 +2247,11 @@
 125
 126
 127
-128</pre>
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_start_time'>start_time</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
@@ -2324,8 +2326,6 @@
       <pre class="lines">
 
 
-226
-227
 228
 229
 230
@@ -2360,10 +2360,12 @@
 259
 260
 261
-262</pre>
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 226</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_artifacts'>install_artifacts</span>
   <span class='id identifier rubyid_artifacts'>artifacts</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_artifacts'>artifacts</span>
@@ -2450,15 +2452,15 @@
       <pre class="lines">
 
 
-275
-276
 277
 278
 279
-280</pre>
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 275</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_macos_dependencies'>macos_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_macos'>macos</span>
@@ -2501,8 +2503,6 @@
       <pre class="lines">
 
 
-315
-316
 317
 318
 319
@@ -2510,10 +2510,12 @@
 321
 322
 323
-324</pre>
+324
+325
+326</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 317</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_missing_cask_and_formula_dependencies'>missing_cask_and_formula_dependencies</span>
   <span class='id identifier rubyid_collect_cask_and_formula_dependencies'>collect_cask_and_formula_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='op'>|</span>
@@ -2560,15 +2562,15 @@
       <pre class="lines">
 
 
-192
-193
 194
 195
 196
-197</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_primary_container'>primary_container</span>
   <span class='ivar'>@primary_container</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -2611,8 +2613,6 @@
       <pre class="lines">
 
 
-492
-493
 494
 495
 496
@@ -2622,10 +2622,12 @@
 500
 501
 502
-503</pre>
+503
+504
+505</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 492</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 494</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_backed_up_versioned_files'>purge_backed_up_versioned_files</span>
   <span class='comment'># versioned staged distribution
@@ -2674,13 +2676,13 @@
       <pre class="lines">
 
 
-525
-526
 527
-528</pre>
+528
+529
+530</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 525</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 527</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_caskroom_path'>purge_caskroom_path</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging all staged versions of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2721,8 +2723,6 @@
       <pre class="lines">
 
 
-505
-506
 507
 508
 509
@@ -2739,10 +2739,12 @@
 520
 521
 522
-523</pre>
+523
+524
+525</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 505</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 507</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_purge_versioned_files'>purge_versioned_files</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Purging files for version </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> of Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2798,14 +2800,14 @@
       <pre class="lines">
 
 
-146
 147
 148
 149
-150</pre>
+150
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reinstall'>reinstall</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#reinstall</span><span class='tstring_end'>&quot;</span></span>
@@ -2847,13 +2849,13 @@
       <pre class="lines">
 
 
-399
-400
 401
-402</pre>
+402
+403
+404</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 401</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_config_file'>remove_config_file</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_f'>rm_f</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config_path'>config_path</span>
@@ -2894,18 +2896,18 @@
       <pre class="lines">
 
 
-414
-415
 416
 417
 418
 419
 420
 421
-422</pre>
+422
+423
+424</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restore_backup'>restore_backup</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_backup_path'>backup_path</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_backup_metadata_path'>backup_metadata_path</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2951,14 +2953,14 @@
       <pre class="lines">
 
 
-424
-425
 426
 427
-428</pre>
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 424</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_revert_upgrade'>revert_upgrade</span>
   <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reverting upgrade for Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3000,16 +3002,16 @@
       <pre class="lines">
 
 
-267
-268
 269
 270
 271
 272
-273</pre>
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfy_dependencies'>satisfy_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_depends_on'>depends_on</span>
@@ -3053,18 +3055,18 @@
       <pre class="lines">
 
 
-377
-378
 379
 380
 381
 382
 383
 384
-385</pre>
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 377</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 379</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_caskfile'>save_caskfile</span>
   <span class='id identifier rubyid_old_savedir'>old_savedir</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_metadata_timestamped_path'>metadata_timestamped_path</span>
@@ -3110,12 +3112,12 @@
       <pre class="lines">
 
 
-387
-388
-389</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_config_file'>save_config_file</span>
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config_path'>config_path</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span>
@@ -3155,7 +3157,6 @@
       <pre class="lines">
 
 
-79
 80
 81
 82
@@ -3165,10 +3166,11 @@
 86
 87
 88
-89</pre>
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask::Installer#stage</span><span class='tstring_end'>&quot;</span></span>
@@ -3216,13 +3218,13 @@
       <pre class="lines">
 
 
-404
-405
 406
-407</pre>
+407
+408
+409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 404</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_upgrade'>start_upgrade</span>
   <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span>
@@ -3276,15 +3278,15 @@
       <pre class="lines">
 
 
-164
-165
 166
 167
 168
-169</pre>
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summary'>summary</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -3327,16 +3329,16 @@
       <pre class="lines">
 
 
-391
-392
 393
 394
 395
 396
-397</pre>
+397
+398
+399</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 393</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall'>uninstall</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Uninstalling Cask </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="../Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3380,8 +3382,6 @@
       <pre class="lines">
 
 
-438
-439
 440
 441
 442
@@ -3401,10 +3401,12 @@
 456
 457
 458
-459</pre>
+459
+460
+461</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 440</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>clear:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_artifacts'>artifacts</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_artifacts'>artifacts</span>
@@ -3463,7 +3465,6 @@
       <pre class="lines">
 
 
-152
 153
 154
 155
@@ -3472,10 +3473,12 @@
 158
 159
 160
-161</pre>
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall_existing_cask'>uninstall_existing_cask</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
@@ -3485,7 +3488,8 @@
   <span class='id identifier rubyid_installed_cask'>installed_cask</span> <span class='op'>=</span> <span class='id identifier rubyid_installed_caskfile'>installed_caskfile</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_installed_caskfile'>installed_caskfile</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='ivar'>@cask</span>
 
   <span class='comment'># Always force uninstallation, ignore method parameter
-</span>  <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_installed_cask'>installed_cask</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>upgrade:</span> <span class='id identifier rubyid_upgrade?'>upgrade?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'><span class='object_link'><a href="#uninstall-instance_method" title="Cask::Installer#uninstall (method)">uninstall</a></span></span>
+</span>  <span class='id identifier rubyid_cask_installer'>cask_installer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_installed_cask'>installed_cask</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>upgrade:</span> <span class='id identifier rubyid_upgrade?'>upgrade?</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_zap?'>zap?</span> <span class='op'>?</span> <span class='id identifier rubyid_cask_installer'>cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_zap'>zap</span> <span class='op'>:</span> <span class='id identifier rubyid_cask_installer'>cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_uninstall'>uninstall</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3535,18 +3539,18 @@
       <pre class="lines">
 
 
-182
-183
 184
 185
 186
 187
 188
 189
-190</pre>
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify_has_sha'>verify_has_sha</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checking cask has checksum</span><span class='tstring_end'>&quot;</span></span>
@@ -3592,8 +3596,6 @@
       <pre class="lines">
 
 
-461
-462
 463
 464
 465
@@ -3605,10 +3607,12 @@
 471
 472
 473
-474</pre>
+474
+475
+476</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 461</span>
+      <pre class="code"><span class="info file"># File 'cask/installer.rb', line 463</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_zap'>zap</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Implied `brew uninstall --cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span>
