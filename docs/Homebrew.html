@@ -31340,10 +31340,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-48
-49
-50
-51
 52
 53
 54
@@ -31357,10 +31353,14 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 62
 63
 64
-65</pre>
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_buildpulse'>run_buildpulse</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span>
@@ -34254,10 +34254,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-67
-68
-69
-70
 71
 72
 73
@@ -34391,10 +34387,32 @@ corresponding to all the original commit messages combined.</p>
 201
 202
 203
-204</pre>
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tests'>tests</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_tests_args'>tests_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -34456,8 +34474,26 @@ corresponding to all the original commit messages combined.</p>
         <span class='id identifier rubyid_parallel'>parallel</span> <span class='op'>=</span> <span class='kw'>false</span>
         <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_name'>test_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spec.rb:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_line'>line</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='kw'>end</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_changed?'>changed?</span>
+      <span class='id identifier rubyid_changed_files'>changed_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--name-only</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No files have been changed from the master branch!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_changed_files'>changed_files</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+      <span class='id identifier rubyid_filestub_regex'>filestub_regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>Library/Homebrew/([\w/-]+).rb</span><span class='regexp_end'>}</span></span>
+      <span class='id identifier rubyid_changed_files'>changed_files</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='id identifier rubyid_filestub_regex'>filestub_regex</span><span class='rparen'>)</span>
+                   <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_filestub'>filestub</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filestub'>filestub</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spec.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+                   <span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:exist?</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
       <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>test/**/*_spec.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The --only= argument requires a valid file or folder name!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span>
+
+      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_changed?'>changed?</span>
+        <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No tests are directly associated with the changed files!</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>return</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_parallel_rspec_log_name'>parallel_rspec_log_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>parallel_runtime_rspec</span><span class='tstring_end'>&quot;</span></span>
@@ -34601,7 +34637,11 @@ corresponding to all the original commit messages combined.</p>
 34
 35
 36
-37</pre>
+37
+38
+39
+40
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 13</span>
@@ -34622,11 +34662,15 @@ corresponding to all the original commit messages combined.</p>
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>official external commands.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--byebug</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Enable debugging using byebug.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--changed</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only runs tests on files that were changed from the master branch.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--only=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Run only &lt;test_script&gt;`_spec.rb`. Appending `:`&lt;line_number&gt; will start at a </span><span class='tstring_end'>&quot;</span></span>\
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>specific line.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--seed=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Randomise tests with the specified &lt;value&gt; instead of a random seed.</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--changed</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--only</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:none</span>
   <span class='kw'>end</span>
@@ -37575,17 +37619,17 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-39
-40
-41
-42
 43
 44
 45
-46</pre>
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_use_buildpulse?'>use_buildpulse?</span>
   <span class='kw'>return</span> <span class='ivar'>@use_buildpulse</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@use_buildpulse</span><span class='rparen'>)</span>
