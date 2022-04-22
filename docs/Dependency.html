@@ -1066,8 +1066,6 @@
       <pre class="lines">
 
 
-140
-141
 142
 143
 144
@@ -1076,10 +1074,12 @@
 147
 148
 149
-150</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_catch'>catch</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -1168,7 +1168,9 @@ optionals and recommendeds based on what the dependent has asked for</p>
 135
 136
 137
-138</pre>
+138
+139
+140</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dependency.rb', line 101</span>
@@ -1187,6 +1189,8 @@ optionals and recommendeds based on what the dependent has asked for</p>
 
   <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='comment'># avoid downloading build dependency bottles
+</span>    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_build?'>build?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'>install_from_api?</span>
 
     <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='label'>ignore_missing:</span> <span class='id identifier rubyid_ignore_missing'>ignore_missing</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
     <span class='kw'>when</span> <span class='symbol'>:prune</span>
@@ -1246,12 +1250,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-166
-167
-168</pre>
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keep_but_prune_recursive_deps'>keep_but_prune_recursive_deps</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:keep_but_prune_recursive_deps</span><span class='rparen'>)</span>
@@ -1291,8 +1295,6 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-170
-171
 172
 173
 174
@@ -1301,10 +1303,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
 177
 178
 179
-180</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_repeats'>merge_repeats</span><span class='lparen'>(</span><span class='id identifier rubyid_all'>all</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_grouped'>grouped</span> <span class='op'>=</span> <span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
@@ -1352,12 +1356,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-154
-155
-156</pre>
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune'>prune</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:prune</span><span class='rparen'>)</span>
@@ -1397,12 +1401,12 @@ optionals and recommendeds based on what the dependent has asked for</p>
       <pre class="lines">
 
 
-160
-161
-162</pre>
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dependency.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'dependency.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip'>skip</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:action</span><span class='comma'>,</span> <span class='symbol'>:skip</span><span class='rparen'>)</span>
