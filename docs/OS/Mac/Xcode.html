@@ -766,18 +766,18 @@
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
 121
 122
 123
-124</pre>
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bundle_path'>bundle_path</span>
   <span class='comment'># Use the default location if it exists.
@@ -836,12 +836,12 @@
       <pre class="lines">
 
 
-246
-247
-248</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_prefix?'>default_prefix?</span>
   <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Applications/Xcode.app/Contents/Developer</span><span class='tstring_end'>&quot;</span></span>
@@ -894,11 +894,6 @@
       <pre class="lines">
 
 
-187
-188
-189
-190
-191
 192
 193
 194
@@ -919,10 +914,15 @@
 209
 210
 211
-212</pre>
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_version'>detect_version</span>
   <span class='comment'># This is a separate function as you can&#39;t cache the value out of a block
@@ -998,11 +998,6 @@
       <pre class="lines">
 
 
-215
-216
-217
-218
-219
 220
 221
 222
@@ -1026,10 +1021,15 @@
 240
 241
 242
-243</pre>
+243
+244
+245
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_version_from_clang_version'>detect_version_from_clang_version</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_clang_version'>clang_version</span>
@@ -1108,21 +1108,21 @@
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
 152
 153
 154
 155
 156
 157
-158</pre>
+158
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installation_instructions'>installation_instructions</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../OS.html" title="OS (module)">OS</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Mac.html" title="OS::Mac (module)">Mac</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="../Mac.html#version-class_method" title="OS::Mac.version (method)">version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prerelease?'><span class='object_link'><a href="Version.html#prerelease%3F-instance_method" title="OS::Mac::Version#prerelease? (method)">prerelease?</a></span></span>
@@ -1184,12 +1184,12 @@
       <pre class="lines">
 
 
-127
-128
-129</pre>
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed?'>installed?</span>
   <span class='kw'>false</span>
@@ -1486,13 +1486,23 @@ also in beta).</p>
 72
 73
 74
-75</pre>
+75
+76
+77
+78
+79
+80</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_needs_clt_installed?'>needs_clt_installed?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_latest_sdk_version?'>latest_sdk_version?</span>
+
+  <span class='comment'># With fake El Capitan for Portable Ruby, we want the full 10.11 SDK so that we can link
+</span>  <span class='comment'># against the correct set of libraries in the SDK sysroot rather than the system&#39;s copies.
+</span>  <span class='comment'># We therefore do not use the CLT under this setup, which installs to /usr/include.
+</span>  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_FAKE_EL_CAPITAN</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_without_clt?'>without_clt?</span>
 <span class='kw'>end</span></pre>
@@ -1544,14 +1554,14 @@ also in beta).</p>
       <pre class="lines">
 
 
-78
-79
-80
-81
-82</pre>
+83
+84
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated?'>outdated?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -1607,11 +1617,6 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
 97
 98
 99
@@ -1623,10 +1628,15 @@ directory or nil if Xcode.app is not installed.</p>
 105
 106
 107
-108</pre>
+108
+109
+110
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prefix'>prefix</span>
   <span class='kw'>return</span> <span class='ivar'>@prefix</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@prefix</span><span class='rparen'>)</span>
@@ -1710,12 +1720,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-137
-138
-139</pre>
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sdk_locator'>sdk_locator</span><span class='period'>.</span><span class='id identifier rubyid_sdk_if_applicable'>sdk_if_applicable</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span>
@@ -1768,12 +1778,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-132
-133
-134</pre>
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sdk_locator'>sdk_locator</span>
   <span class='ivar'>@sdk_locator</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="XcodeSDKLocator.html" title="OS::Mac::XcodeSDKLocator (class)">XcodeSDKLocator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1843,12 +1853,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-142
-143
-144</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sdk_path'>sdk_path</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_path'>path</span>
@@ -1901,12 +1911,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-111
-112
-113</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toolchain_path'>toolchain_path</span>
   <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>/Toolchains/XcodeDefault.xctoolchain</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1959,21 +1969,21 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-161
-162
-163
-164
-165
 166
 167
 168
 169
 170
 171
-172</pre>
+172
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_instructions'>update_instructions</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../OS.html" title="OS (module)">OS</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Mac.html" title="OS::Mac (module)">Mac</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="../Mac.html#version-class_method" title="OS::Mac.version (method)">version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prerelease?'><span class='object_link'><a href="Version.html#prerelease%3F-instance_method" title="OS::Mac::Version#prerelease? (method)">prerelease?</a></span></span>
@@ -2035,12 +2045,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-175
-176
-177</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
   <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Version.html#NULL-constant" title="Version::NULL (constant)">NULL</a></span></span>
@@ -2093,12 +2103,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-85
-86
-87</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_without_clt?'>without_clt?</span>
   <span class='op'>!</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
