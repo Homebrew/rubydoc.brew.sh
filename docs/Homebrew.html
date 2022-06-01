@@ -11841,7 +11841,14 @@
 184
 185
 186
-187</pre>
+187
+188
+189
+190
+191
+192
+193
+194</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 61</span>
@@ -11919,19 +11926,26 @@
       <span class='id identifier rubyid_tmp_cask'>tmp_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_tmp_config'>tmp_config</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_cask'>tmp_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
 
-      <span class='kw'>if</span> <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>!=</span> <span class='symbol'>:no_check</span>
-        <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-
-        <span class='kw'>if</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_other_intel'>other_intel</span> <span class='op'>=</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_intel?'><span class='object_link'><a href="Hardware/CPU.html#intel%3F-class_method" title="Hardware::CPU.intel? (method)">intel?</a></span></span>
-          <span class='id identifier rubyid_other_contents'>other_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_other_intel'>other_intel</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
-          <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
+      <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>!=</span> <span class='symbol'>:no_check</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
       <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_language'>language</span><span class='op'>|</span>
         <span class='id identifier rubyid_lang_config'>lang_config</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_config'>tmp_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='id identifier rubyid_lang_config'>lang_config</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+
+      <span class='kw'>if</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_other_intel'>other_intel</span> <span class='op'>=</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_intel?'><span class='object_link'><a href="Hardware/CPU.html#intel%3F-class_method" title="Hardware::CPU.intel? (method)">intel?</a></span></span>
+        <span class='id identifier rubyid_other_contents'>other_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_other_intel'>other_intel</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_other_cask'>other_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='rparen'>)</span>
+
+        <span class='kw'>if</span> <span class='id identifier rubyid_other_cask'>other_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span> <span class='op'>!=</span> <span class='symbol'>:no_check</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_other_cask'>other_cask</span><span class='period'>.</span><span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+          <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+
+        <span class='id identifier rubyid_other_cask'>other_cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_language'>language</span><span class='op'>|</span>
+          <span class='id identifier rubyid_lang_config'>lang_config</span> <span class='op'>=</span> <span class='id identifier rubyid_other_cask'>other_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='id identifier rubyid_lang_config'>lang_config</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -14161,16 +14175,16 @@
       <pre class="lines">
 
 
-202
-203
-204
-205
-206
-207
-208</pre>
+209
+210
+211
+212
+213
+214
+215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_open_pull_requests'>check_open_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
@@ -31464,13 +31478,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-210
-211
-212
-213
-214
-215
-216
 217
 218
 219
@@ -31489,10 +31496,17 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 232
 233
 234
-235</pre>
+235
+236
+237
+238
+239
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 217</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -31540,13 +31554,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-237
-238
-239
-240
-241
-242
-243
 244
 245
 246
@@ -31560,10 +31567,17 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 254
 255
 256
-257</pre>
+257
+258
+259
+260
+261
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
