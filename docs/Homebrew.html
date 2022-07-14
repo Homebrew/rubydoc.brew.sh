@@ -10413,7 +10413,6 @@
       <pre class="lines">
 
 
-287
 288
 289
 290
@@ -10702,10 +10701,11 @@
 573
 574
 575
-576</pre>
+576
+577</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 287</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 288</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bottle_formula'>bottle_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_bottle_json'>local_bottle_json</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_json?'>json?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -19293,7 +19293,8 @@
 282
 283
 284
-285</pre>
+285
+286</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 261</span>
@@ -19301,6 +19302,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_ignores'>formula_ignores</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ignores'>ignores</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_cellar_regex'>cellar_regex</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_prefix_regex'>prefix_regex</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='rparen'>)</span>
 
   <span class='comment'># Ignore matches to go keg, because all go binaries are statically linked.
 </span>  <span class='id identifier rubyid_any_go_deps'>any_go_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span>
@@ -19315,7 +19317,7 @@
   <span class='comment'># On Linux, GCC installation can be moved so long as the whole directory tree is moved together:
 </span>  <span class='comment'># https://gcc-help.gcc.gnu.narkive.com/GnwuCA7l/moving-gcc-from-the-installation-path-is-it-allowed.
 </span>  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_optionally_versioned_regex'><span class='object_link'><a href="Version.html#formula_optionally_versioned_regex-class_method" title="Version.formula_optionally_versioned_regex (method)">formula_optionally_versioned_regex</a></span></span><span class='lparen'>(</span><span class='symbol'>:gcc</span><span class='rparen'>)</span>
-    <span class='tstring'><span class='regexp_beg'>%r{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cellar_regex'>cellar_regex</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gcc</span><span class='regexp_end'>}</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
+    <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_union'>union</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cellar_regex'>cellar_regex</span><span class='embexpr_end'>}</span><span class='tstring_content'>/gcc</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>%r{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix_regex'>prefix_regex</span><span class='embexpr_end'>}</span><span class='tstring_content'>/opt/gcc</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
   <span class='comment'># binutils is relocatable for the same reason: https://github.com/Homebrew/brew/pull/11899#issuecomment-906804451.
 </span>  <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_formula_optionally_versioned_regex'><span class='object_link'><a href="Version.html#formula_optionally_versioned_regex-class_method" title="Version.formula_optionally_versioned_regex (method)">formula_optionally_versioned_regex</a></span></span><span class='lparen'>(</span><span class='symbol'>:binutils</span><span class='rparen'>)</span>
     <span class='tstring'><span class='regexp_beg'>%r{</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cellar_regex'>cellar_regex</span><span class='embexpr_end'>}</span><span class='tstring_content'>/binutils</span><span class='regexp_end'>}</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
@@ -24881,7 +24883,6 @@
       <pre class="lines">
 
 
-597
 598
 599
 600
@@ -25031,10 +25032,11 @@
 744
 745
 746
-747</pre>
+747
+748</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 597</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 598</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_json_files'>merge_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_parse_json_files'>parse_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -25207,7 +25209,6 @@
       <pre class="lines">
 
 
-749
 750
 751
 752
@@ -25245,10 +25246,11 @@
 784
 785
 786
-787</pre>
+787
+788</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 749</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 750</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_bottle_spec'>merge_bottle_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_old_keys'>old_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_old_bottle_spec'>old_bottle_spec</span><span class='comma'>,</span> <span class='id identifier rubyid_new_bottle_hash'>new_bottle_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -25309,7 +25311,6 @@
       <pre class="lines">
 
 
-584
 585
 586
 587
@@ -25320,10 +25321,11 @@
 592
 593
 594
-595</pre>
+595
+596</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 584</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 585</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_merge_json_files'>merge_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_json_files'>json_files</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_json_files'>json_files</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_json_file'>json_file</span><span class='op'>|</span>
@@ -25823,7 +25825,6 @@
       <pre class="lines">
 
 
-789
 790
 791
 792
@@ -25838,10 +25839,11 @@
 801
 802
 803
-804</pre>
+804
+805</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 789</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 790</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_old_checksums'>old_checksums</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle_node'>bottle_node</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_ast'>formula_ast</span><span class='period'>.</span><span class='id identifier rubyid_bottle_block'>bottle_block</span>
@@ -27065,14 +27067,14 @@
       <pre class="lines">
 
 
-578
 579
 580
 581
-582</pre>
+582
+583</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 578</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bottle.rb', line 579</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_json_files'>parse_json_files</span><span class='lparen'>(</span><span class='id identifier rubyid_filenames'>filenames</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_filename'>filename</span><span class='op'>|</span>
