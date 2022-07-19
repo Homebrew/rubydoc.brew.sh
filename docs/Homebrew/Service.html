@@ -2692,7 +2692,15 @@ also return the related instance variable when no argument is provided.</p>
 377
 378
 379
-380</pre>
+380
+381
+382
+383
+384
+385
+386
+387
+388</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'service.rb', line 333</span>
@@ -2743,6 +2751,14 @@ also return the related instance variable when no argument is provided.</p>
     <span class='id identifier rubyid_base'>base</span><span class='lbracket'>[</span><span class='symbol'>:StartCalendarInterval</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@cron</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
+  <span class='comment'># Adding all session types has as the primary effect that if you initialise it through e.g. a Background session
+</span>  <span class='comment'># and you later &quot;physically&quot; sign in to the owning account (Aqua session), things shouldn&#39;t flip out.
+</span>  <span class='comment'># Also, we&#39;re not checking @process_type here because that is used to indicate process priority and not
+</span>  <span class='comment'># necessarily if it should run in a specific session type. Like database services could run with ProcessType
+</span>  <span class='comment'># Interactive so they have no resource limitations enforced upon them, but they aren&#39;t really interactive in the
+</span>  <span class='comment'># general sense.
+</span>  <span class='id identifier rubyid_base'>base</span><span class='lbracket'>[</span><span class='symbol'>:LimitLoadToSessionType</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>Aqua</span><span class='words_sep'> </span><span class='tstring_content'>Background</span><span class='words_sep'> </span><span class='tstring_content'>LoginWindow</span><span class='words_sep'> </span><span class='tstring_content'>StandardIO</span><span class='words_sep'> </span><span class='tstring_content'>System</span><span class='tstring_end'>]</span></span>
+
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_to_plist'>to_plist</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2788,14 +2804,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-418
-419
-420
-421
-422
-423
-424
-425
 426
 427
 428
@@ -2812,10 +2820,18 @@ also return the related instance variable when no argument is provided.</p>
 439
 440
 441
-442</pre>
+442
+443
+444
+445
+446
+447
+448
+449
+450</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 418</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 426</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_systemd_timer'>to_systemd_timer</span>
   <span class='id identifier rubyid_timer'>timer</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -2885,14 +2901,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-385
-386
-387
-388
-389
-390
-391
-392
 393
 394
 395
@@ -2913,10 +2921,18 @@ also return the related instance variable when no argument is provided.</p>
 410
 411
 412
-413</pre>
+413
+414
+415
+416
+417
+418
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 393</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_systemd_unit'>to_systemd_unit</span>
   <span class='id identifier rubyid_unit'>unit</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
