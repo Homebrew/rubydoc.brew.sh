@@ -151,6 +151,12 @@
                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>disable auto-update entirely with HOMEBREW_NO_AUTO_UPDATE.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='label'>default:</span>     <span class='int'>300</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>HOMEBREW_AUTOREMOVE:</span>                       <span class='lbrace'>{</span>
+    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, calls to `brew cleanup` and `brew uninstall` will automatically </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>remove unused formula dependents and if HOMEBREW_NO_INSTALL_CLEANUP is not set, </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew cleanup` will start running `brew autoremove` periodically.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_BAT:</span>                              <span class='lbrace'>{</span>
     <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, use `bat` for the `brew cat` command.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
@@ -378,8 +384,8 @@
     <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_NO_CLEANUP_FORMULAE:</span>              <span class='lbrace'>{</span>
-    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A comma-separated list of formulae. Homebrew will refuse to clean up a </span><span class='tstring_end'>&quot;</span></span> \
-                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula if it appears on this list.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A comma-separated list of formulae. Homebrew will refuse to clean up </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>or autoremove a formula if it appears on this list.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_NO_COLOR:</span>                         <span class='lbrace'>{</span>
     <span class='label'>description:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, do not print text with colour added.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -732,12 +738,12 @@
       <pre class="lines">
 
 
-438
-439
-440</pre>
+444
+445
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 438</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 444</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts'>cask_opts</span>
   <span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_shellsplit'>shellsplit</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_CASK_OPTS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -790,17 +796,17 @@
       <pre class="lines">
 
 
-443
-444
-445
-446
-447
-448
 449
-450</pre>
+450
+451
+452
+453
+454
+455
+456</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 449</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_binaries?'>cask_opts_binaries?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -858,17 +864,17 @@
       <pre class="lines">
 
 
-453
-454
-455
-456
-457
-458
 459
-460</pre>
+460
+461
+462
+463
+464
+465
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 453</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_quarantine?'>cask_opts_quarantine?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -926,12 +932,12 @@
       <pre class="lines">
 
 
-463
-464
-465</pre>
+469
+470
+471</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 463</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 469</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_require_sha?'>cask_opts_require_sha?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--require-sha</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -971,16 +977,16 @@
       <pre class="lines">
 
 
-390
-391
-392
-393
-394
-395
-396</pre>
+396
+397
+398
+399
+400
+401
+402</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env_method_name'>env_method_name</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1037,18 +1043,18 @@
       <pre class="lines">
 
 
-427
-428
-429
-430
-431
-432
 433
 434
-435</pre>
+435
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 427</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 433</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_jobs'>make_jobs</span>
   <span class='id identifier rubyid_jobs'>jobs</span> <span class='op'>=</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MAKE_JOBS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
