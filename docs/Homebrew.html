@@ -11925,7 +11925,11 @@
 191
 192
 193
-194</pre>
+194
+195
+196
+197
+198</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 61</span>
@@ -12010,8 +12014,10 @@
         <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='id identifier rubyid_lang_config'>lang_config</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
 
-      <span class='kw'>if</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='comment'># TODO: Use SimulateSystem once all casks use on_system blocks
+</span>      <span class='kw'>if</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_other_intel'>other_intel</span> <span class='op'>=</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_intel?'><span class='object_link'><a href="Hardware/CPU.html#intel%3F-class_method" title="Hardware::CPU.intel? (method)">intel?</a></span></span>
+        <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Homebrew/SimulateSystem.html#arch-class_method" title="Homebrew::SimulateSystem.arch (method)">arch</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_other_intel'>other_intel</span> <span class='op'>?</span> <span class='symbol'>:intel</span> <span class='op'>:</span> <span class='symbol'>:arm</span>
         <span class='id identifier rubyid_other_contents'>other_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Hardware::CPU.intel?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_other_intel'>other_intel</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_other_cask'>other_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='rparen'>)</span>
 
@@ -12023,6 +12029,8 @@
           <span class='id identifier rubyid_lang_config'>lang_config</span> <span class='op'>=</span> <span class='id identifier rubyid_other_cask'>other_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_other_contents'>other_contents</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='id identifier rubyid_lang_config'>lang_config</span><span class='rparen'>)</span>
         <span class='kw'>end</span>
+
+        <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear'><span class='object_link'><a href="Homebrew/SimulateSystem.html#clear-class_method" title="Homebrew::SimulateSystem.clear (method)">clear</a></span></span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -14254,16 +14262,16 @@
       <pre class="lines">
 
 
-209
-210
-211
-212
 213
 214
-215</pre>
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_open_pull_requests'>check_open_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
@@ -32123,10 +32131,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-217
-218
-219
-220
 221
 222
 223
@@ -32148,10 +32152,14 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 239
 240
 241
-242</pre>
+242
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -32199,10 +32207,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-244
-245
-246
-247
 248
 249
 250
@@ -32219,10 +32223,14 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 261
 262
 263
-264</pre>
+264
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
