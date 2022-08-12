@@ -798,7 +798,7 @@ of this class.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#stage-instance_method" title="#stage (instance method)">#<strong>stage</strong>(target = nil, &amp;block)  &#x21d2; Object </a>
+      <a href="#stage-instance_method" title="#stage (instance method)">#<strong>stage</strong>(target = nil, debug_symbols: false, &amp;block)  &#x21d2; Object </a>
     
     
   </span>
@@ -820,7 +820,7 @@ of this class.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#unpack-instance_method" title="#unpack (instance method)">#<strong>unpack</strong>(target = nil)  &#x21d2; Object </a>
+      <a href="#unpack-instance_method" title="#unpack (instance method)">#<strong>unpack</strong>(target = nil, debug_symbols: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -2288,7 +2288,7 @@ false otherwise, and is used by livecheck.</p>
       <div class="method_details ">
   <h3 class="signature " id="stage-instance_method">
   
-    #<strong>stage</strong>(target = nil, &amp;block)  &#x21d2; <tt>Object</tt> 
+    #<strong>stage</strong>(target = nil, debug_symbols: false, &amp;block)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2339,14 +2339,14 @@ dir using <span class='object_link'><a href="Mktemp.html" title="Mktemp (class)"
     <td>
       <pre class="code"><span class="info file"># File 'resource.rb', line 92</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_stage'>stage</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>debug_symbols:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target directory or block is required</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_target'>target</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_prepare_patches'>prepare_patches</span>
   <span class='id identifier rubyid_fetch_patches'>fetch_patches</span><span class='lparen'>(</span><span class='label'>skip_downloaded:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch'>fetch</span> <span class='kw'>unless</span> <span class='id identifier rubyid_downloaded?'>downloaded?</span>
 
-  <span class='id identifier rubyid_unpack'>unpack</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_unpack'>unpack</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>debug_symbols:</span> <span class='id identifier rubyid_debug_symbols'>debug_symbols</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2356,7 +2356,7 @@ dir using <span class='object_link'><a href="Mktemp.html" title="Mktemp (class)"
       <div class="method_details ">
   <h3 class="signature " id="unpack-instance_method">
   
-    #<strong>unpack</strong>(target = nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>unpack</strong>(target = nil, debug_symbols: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -2406,9 +2406,9 @@ A target or a block must be given, but not both.</p>
     <td>
       <pre class="code"><span class="info file"># File 'resource.rb', line 123</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_unpack'>unpack</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_unpack'>unpack</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>debug_symbols:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_current_working_directory'>current_working_directory</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span>
-  <span class='id identifier rubyid_mktemp'>mktemp</span><span class='lparen'>(</span><span class='id identifier rubyid_download_name'>download_name</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_staging'>staging</span><span class='op'>|</span>
+  <span class='id identifier rubyid_stage_resource'>stage_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_download_name'>download_name</span><span class='comma'>,</span> <span class='label'>debug_symbols:</span> <span class='id identifier rubyid_debug_symbols'>debug_symbols</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_staging'>staging</span><span class='op'>|</span>
     <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_stage'>stage</span> <span class='kw'>do</span>
       <span class='ivar'>@source_modified_time</span> <span class='op'>=</span> <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span>
       <span class='id identifier rubyid_apply_patches'>apply_patches</span>
