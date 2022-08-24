@@ -121,7 +121,7 @@
   
   <h3 class="inherited">Constants included
      from <span class='object_link'><a href="../Cask/Constants.html" title="RuboCop::Cask::Constants (module)">Cask::Constants</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Cask/Constants.html#STANZA_GROUPS-constant" title="RuboCop::Cask::Constants::STANZA_GROUPS (constant)">Cask::Constants::STANZA_GROUPS</a></span>, <span class='object_link'><a href="../Cask/Constants.html#STANZA_GROUP_HASH-constant" title="RuboCop::Cask::Constants::STANZA_GROUP_HASH (constant)">Cask::Constants::STANZA_GROUP_HASH</a></span>, <span class='object_link'><a href="../Cask/Constants.html#STANZA_ORDER-constant" title="RuboCop::Cask::Constants::STANZA_ORDER (constant)">Cask::Constants::STANZA_ORDER</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="../Cask/Constants.html#ON_SYSTEM_METHODS-constant" title="RuboCop::Cask::Constants::ON_SYSTEM_METHODS (constant)">Cask::Constants::ON_SYSTEM_METHODS</a></span>, <span class='object_link'><a href="../Cask/Constants.html#STANZA_GROUPS-constant" title="RuboCop::Cask::Constants::STANZA_GROUPS (constant)">Cask::Constants::STANZA_GROUPS</a></span>, <span class='object_link'><a href="../Cask/Constants.html#STANZA_GROUP_HASH-constant" title="RuboCop::Cask::Constants::STANZA_GROUP_HASH (constant)">Cask::Constants::STANZA_GROUP_HASH</a></span>, <span class='object_link'><a href="../Cask/Constants.html#STANZA_ORDER-constant" title="RuboCop::Cask::Constants::STANZA_ORDER (constant)">Cask::Constants::STANZA_ORDER</a></span></p>
 
 
 
@@ -254,12 +254,12 @@
       <pre class="lines">
 
 
-26
-27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/extend/node.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/extend/node.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_heredoc?'>heredoc?</span>
   <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Parser</span><span class='op'>::</span><span class='const'>Source</span><span class='op'>::</span><span class='const'>Map</span><span class='op'>::</span><span class='const'>Heredoc</span><span class='rparen'>)</span>
@@ -284,15 +284,15 @@
       <pre class="lines">
 
 
-30
-31
 32
 33
 34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/extend/node.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/extend/node.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_location_expression'>location_expression</span>
   <span class='id identifier rubyid_base_expression'>base_expression</span> <span class='op'>=</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_expression'>expression</span>
@@ -347,15 +347,19 @@
 21
 22
 23
-24</pre>
+24
+25
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'rubocops/cask/extend/node.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stanza?'>stanza?</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_arch_variable?'>arch_variable?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_send_type?'>send_type?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_block_type?'>block_type?</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Cask/Constants.html#ON_SYSTEM_METHODS-constant" title="RuboCop::Cask::Constants::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
 
-  <span class='lparen'>(</span><span class='id identifier rubyid_send_type?'>send_type?</span> <span class='op'>||</span> <span class='id identifier rubyid_block_type?'>block_type?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Cask/Constants.html#STANZA_ORDER-constant" title="RuboCop::Cask::Constants::STANZA_ORDER (constant)">STANZA_ORDER</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Cask/Constants.html#STANZA_ORDER-constant" title="RuboCop::Cask::Constants::STANZA_ORDER (constant)">STANZA_ORDER</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
