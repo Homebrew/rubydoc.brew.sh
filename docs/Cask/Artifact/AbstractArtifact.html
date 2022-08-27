@@ -342,7 +342,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask)  &#x21d2; AbstractArtifact </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, *dsl_args)  &#x21d2; AbstractArtifact </a>
     
     
   </span>
@@ -367,6 +367,28 @@
   <span class="summary_signature">
     
       <a href="#staged_path_join_executable-instance_method" title="#staged_path_join_executable (instance method)">#<strong>staged_path_join_executable</strong>(path)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_args-instance_method" title="#to_args (instance method)">#<strong>to_args</strong>  &#x21d2; Object </a>
     
     
   </span>
@@ -433,7 +455,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(cask)  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Artifact::AbstractArtifact (class)">AbstractArtifact</a></span></tt> 
+    #<strong>initialize</strong>(cask, *dsl_args)  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Artifact::AbstractArtifact (class)">AbstractArtifact</a></span></tt> 
   
 
   
@@ -460,15 +482,17 @@
       <pre class="lines">
 
 
-130
-131
-132</pre>
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 132</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_dsl_args'>dsl_args</span><span class='rparen'>)</span>
   <span class='ivar'>@cask</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span>
+  <span class='ivar'>@dsl_args</span> <span class='op'>=</span> <span class='id identifier rubyid_dsl_args'>dsl_args</span><span class='period'>.</span><span class='id identifier rubyid_deep_dup'>deep_dup</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -512,12 +536,12 @@
       <pre class="lines">
 
 
-128
-129
-130</pre>
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask'>cask</span>
   <span class='ivar'>@cask</span>
@@ -564,12 +588,12 @@
       <pre class="lines">
 
 
-27
-28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dirmethod'>dirmethod</span>
   <span class='ivar'>@dirmethod</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dsl_key'>dsl_key</span><span class='embexpr_end'>}</span><span class='tstring_content'>dir</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -609,12 +633,12 @@
       <pre class="lines">
 
 
-23
-24
-25</pre>
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dsl_key'>dsl_key</span>
   <span class='ivar'>@dsl_key</span> <span class='op'>||=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*:</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.)([A-Z])</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\1_\2</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -654,12 +678,12 @@
       <pre class="lines">
 
 
-19
-20
-21</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_english_article'>english_article</span>
   <span class='ivar'>@english_article</span> <span class='op'>||=</span> <span class='lparen'>(</span><span class='id identifier rubyid_english_name'>english_name</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^[aeiou]</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>an</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span>
@@ -699,12 +723,12 @@
       <pre class="lines">
 
 
-15
-16
-17</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_english_name'>english_name</span>
   <span class='ivar'>@english_name</span> <span class='op'>||=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*:</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(.)([A-Z])</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>\1 \2</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -744,8 +768,6 @@
       <pre class="lines">
 
 
-94
-95
 96
 97
 98
@@ -776,10 +798,12 @@
 123
 124
 125
-126</pre>
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_read_script_arguments'>read_script_arguments</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_stanza'>stanza</span><span class='comma'>,</span> <span class='id identifier rubyid_default_arguments'>default_arguments</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_override_arguments'>override_arguments</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># TODO: when stanza names are harmonized with class names,
@@ -855,8 +879,6 @@
       <pre class="lines">
 
 
-50
-51
 52
 53
 54
@@ -895,10 +917,12 @@
 87
 88
 89
-90</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="" title="Cask::Artifact::AbstractArtifact (class)">AbstractArtifact</a></span></span>
@@ -976,12 +1000,12 @@
       <pre class="lines">
 
 
-134
-135
-136</pre>
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
   <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
@@ -1021,8 +1045,6 @@
       <pre class="lines">
 
 
-31
-32
 33
 34
 35
@@ -1038,10 +1060,12 @@
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_staged_path_join_executable'>staged_path_join_executable</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
@@ -1060,6 +1084,51 @@
   <span class='kw'>else</span>
     <span class='id identifier rubyid_path'>path</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_args-instance_method">
+  
+    #<strong>to_args</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_args'>to_args</span>
+  <span class='ivar'>@dsl_args</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:blank?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1109,12 +1178,12 @@
       <pre class="lines">
 
 
-139
-140
-141</pre>
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/abstract_artifact.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_summarize'>summarize</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_english_name'>english_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
