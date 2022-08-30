@@ -30485,7 +30485,13 @@
 308
 309
 310
-311</pre>
+311
+312
+313
+314
+315
+316
+317</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/deps.rb', line 277</span>
@@ -30502,8 +30508,14 @@
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_display_s'>display_s</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tree_lines'>tree_lines</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep_display_name'>dep_display_name</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_is_circular'>is_circular</span> <span class='op'>=</span> <span class='id identifier rubyid_dep_stack'>dep_stack</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_display_s'>display_s</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_display_s'>display_s</span><span class='embexpr_end'>}</span><span class='tstring_content'> (CIRCULAR DEPENDENCY)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_is_circular'>is_circular</span>
+
+    <span class='comment'># Detect circular dependencies and consider them a failure if present.
+</span>    <span class='id identifier rubyid_is_circular'>is_circular</span> <span class='op'>=</span> <span class='id identifier rubyid_dep_stack'>dep_stack</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_is_circular'>is_circular</span>
+      <span class='id identifier rubyid_display_s'>display_s</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_display_s'>display_s</span><span class='embexpr_end'>}</span><span class='tstring_content'> (CIRCULAR DEPENDENCY)</span><span class='tstring_end'>&quot;</span></span>
+      <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='kw'>end</span>
+
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_display_s'>display_s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>||</span> <span class='id identifier rubyid_is_circular'>is_circular</span>
