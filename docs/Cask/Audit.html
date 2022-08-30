@@ -197,7 +197,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#add_error-instance_method" title="#add_error (instance method)">#<strong>add_error</strong>(message, location: nil)  &#x21d2; Object </a>
+      <a href="#add_error-instance_method" title="#add_error (instance method)">#<strong>add_error</strong>(message, location: nil)  &#x21d2; void </a>
     
     
   </span>
@@ -219,7 +219,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#add_warning-instance_method" title="#add_warning (instance method)">#<strong>add_warning</strong>(message, location: nil)  &#x21d2; Object </a>
+      <a href="#add_warning-instance_method" title="#add_warning (instance method)">#<strong>add_warning</strong>(message, location: nil)  &#x21d2; void </a>
     
     
   </span>
@@ -285,7 +285,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil)  &#x21d2; Audit </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; Audit </a>
     
     
   </span>
@@ -463,7 +463,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Audit (class)">Audit</a></span></tt> 
+    #<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Audit (class)">Audit</a></span></tt> 
   
 
   
@@ -515,14 +515,16 @@
 47
 48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/audit.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>appcast:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>download:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>token_conflicts:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>online:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>signing:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-               <span class='label'>new_cask:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+               <span class='label'>new_cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>except:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
   <span class='comment'># `new_cask` implies `online`, `token_conflicts`, `strict` and `signing`
 </span>  <span class='id identifier rubyid_online'>online</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask'>new_cask</span> <span class='kw'>if</span> <span class='id identifier rubyid_online'>online</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -545,6 +547,8 @@
   <span class='ivar'>@signing</span> <span class='op'>=</span> <span class='id identifier rubyid_signing'>signing</span>
   <span class='ivar'>@new_cask</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask'>new_cask</span>
   <span class='ivar'>@token_conflicts</span> <span class='op'>=</span> <span class='id identifier rubyid_token_conflicts'>token_conflicts</span>
+  <span class='ivar'>@only</span> <span class='op'>=</span> <span class='id identifier rubyid_only'>only</span>
+  <span class='ivar'>@except</span> <span class='op'>=</span> <span class='id identifier rubyid_except'>except</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -660,7 +664,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="add_error-instance_method">
   
-    #<strong>add_error</strong>(message, location: nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>add_error</strong>(message, location: nil)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -673,13 +677,41 @@
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-
+<p class="note returns_void">This method returns an undefined value.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>location</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -687,12 +719,12 @@
       <pre class="lines">
 
 
-103
-104
-105</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_error'>add_error</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_errors'>errors</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>message:</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='id identifier rubyid_location'>location</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -705,7 +737,7 @@
       <div class="method_details ">
   <h3 class="signature " id="add_warning-instance_method">
   
-    #<strong>add_warning</strong>(message, location: nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>add_warning</strong>(message, location: nil)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -718,13 +750,41 @@
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-
+<p class="note returns_void">This method returns an undefined value.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>location</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -732,16 +792,16 @@
       <pre class="lines">
 
 
+102
+103
+104
+105
+106
 107
-108
-109
-110
-111
-112
-113</pre>
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_warning'>add_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_strict?'>strict?</span>
@@ -785,12 +845,12 @@
       <pre class="lines">
 
 
-95
-96
-97</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@errors</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -843,12 +903,12 @@
       <pre class="lines">
 
 
-115
-116
-117</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors?'>errors?</span>
   <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
@@ -888,18 +948,18 @@
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130
-131</pre>
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_result'>result</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_errors?'>errors?</span>
@@ -945,8 +1005,6 @@
       <pre class="lines">
 
 
-52
-53
 54
 55
 56
@@ -964,69 +1022,23 @@
 68
 69
 70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93</pre>
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run!'>run!</span>
-  <span class='id identifier rubyid_check_denylist'>check_denylist</span>
-  <span class='id identifier rubyid_check_reverse_migration'>check_reverse_migration</span>
-  <span class='id identifier rubyid_check_required_stanzas'>check_required_stanzas</span>
-  <span class='id identifier rubyid_check_version'>check_version</span>
-  <span class='id identifier rubyid_check_sha256'>check_sha256</span>
-  <span class='id identifier rubyid_check_desc'>check_desc</span>
-  <span class='id identifier rubyid_check_url'>check_url</span>
-  <span class='id identifier rubyid_check_unnecessary_verified'>check_unnecessary_verified</span>
-  <span class='id identifier rubyid_check_missing_verified'>check_missing_verified</span>
-  <span class='id identifier rubyid_check_no_match'>check_no_match</span>
-  <span class='id identifier rubyid_check_generic_artifacts'>check_generic_artifacts</span>
-  <span class='id identifier rubyid_check_token_valid'>check_token_valid</span>
-  <span class='id identifier rubyid_check_token_bad_words'>check_token_bad_words</span>
-  <span class='id identifier rubyid_check_token_conflicts'>check_token_conflicts</span>
-  <span class='id identifier rubyid_check_languages'>check_languages</span>
-  <span class='id identifier rubyid_check_download'>check_download</span>
-  <span class='id identifier rubyid_check_https_availability'>check_https_availability</span>
-  <span class='id identifier rubyid_check_single_pre_postflight'>check_single_pre_postflight</span>
-  <span class='id identifier rubyid_check_single_uninstall_zap'>check_single_uninstall_zap</span>
-  <span class='id identifier rubyid_check_untrusted_pkg'>check_untrusted_pkg</span>
-  <span class='id identifier rubyid_livecheck_result'>livecheck_result</span> <span class='op'>=</span> <span class='id identifier rubyid_check_livecheck_version'>check_livecheck_version</span>
-  <span class='id identifier rubyid_check_hosting_with_livecheck'>check_hosting_with_livecheck</span><span class='lparen'>(</span><span class='label'>livecheck_result:</span> <span class='id identifier rubyid_livecheck_result'>livecheck_result</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_check_appcast_and_livecheck'>check_appcast_and_livecheck</span>
-  <span class='id identifier rubyid_check_latest_with_appcast_or_livecheck'>check_latest_with_appcast_or_livecheck</span>
-  <span class='id identifier rubyid_check_latest_with_auto_updates'>check_latest_with_auto_updates</span>
-  <span class='id identifier rubyid_check_stanza_requires_uninstall'>check_stanza_requires_uninstall</span>
-  <span class='id identifier rubyid_check_appcast_contains_version'>check_appcast_contains_version</span>
-  <span class='id identifier rubyid_check_gitlab_repository'>check_gitlab_repository</span>
-  <span class='id identifier rubyid_check_gitlab_repository_archived'>check_gitlab_repository_archived</span>
-  <span class='id identifier rubyid_check_gitlab_prerelease_version'>check_gitlab_prerelease_version</span>
-  <span class='id identifier rubyid_check_github_repository'>check_github_repository</span>
-  <span class='id identifier rubyid_check_github_repository_archived'>check_github_repository_archived</span>
-  <span class='id identifier rubyid_check_github_prerelease_version'>check_github_prerelease_version</span>
-  <span class='id identifier rubyid_check_bitbucket_repository'>check_bitbucket_repository</span>
-  <span class='id identifier rubyid_check_signing'>check_signing</span>
+  <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
+  <span class='id identifier rubyid_except_audits'>except_audits</span> <span class='op'>=</span> <span class='ivar'>@except</span>
+
+  <span class='id identifier rubyid_private_methods'>private_methods</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^check_</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='op'>|</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='period'>.</span><span class='id identifier rubyid_delete_prefix'>delete_prefix</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>check_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_only_audits'>only_audits</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_only_audits'>only_audits</span><span class='op'>&amp;.</span><span class='id identifier rubyid_exclude?'>exclude?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_except_audits'>except_audits</span><span class='op'>&amp;.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_audit_method_name'>audit_method_name</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>self</span>
 <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='id identifier rubyid_e'>e</span><span class='comma'>,</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
@@ -1081,12 +1093,12 @@
       <pre class="lines">
 
 
-153
-154
-155</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_success?'>success?</span>
   <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_errors?'>errors?</span> <span class='op'>||</span> <span class='id identifier rubyid_warnings?'>warnings?</span><span class='rparen'>)</span>
@@ -1169,27 +1181,27 @@
       <pre class="lines">
 
 
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
 134
 135
 136
 137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151</pre>
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summary'>summary</span><span class='lparen'>(</span><span class='label'>include_passed:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>include_warnings:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_success?'>success?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_include_passed'>include_passed</span>
@@ -1244,12 +1256,12 @@
       <pre class="lines">
 
 
-99
-100
-101</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings'>warnings</span>
   <span class='ivar'>@warnings</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1302,12 +1314,12 @@
       <pre class="lines">
 
 
-119
-120
-121</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings?'>warnings?</span>
   <span class='id identifier rubyid_warnings'>warnings</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
