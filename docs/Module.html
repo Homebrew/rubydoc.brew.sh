@@ -170,7 +170,13 @@
 12
 13
 14
-15</pre>
+15
+16
+17
+18
+19
+20
+21</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/module.rb', line 5</span>
@@ -178,11 +184,17 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_attr_rw'>attr_rw</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_attrs'>attrs</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_attrs'>attrs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_attr'>attr</span><span class='op'>|</span>
     <span class='id identifier rubyid_module_eval'>module_eval</span> <span class='heredoc_beg'>&lt;&lt;-EOS</span><span class='comma'>,</span> <span class='kw'>__FILE__</span><span class='comma'>,</span> <span class='kw'>__LINE__</span><span class='op'>+</span><span class='int'>1</span>
-<span class='tstring_content'>      def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'>(val=nil)           # def prefix(val=nil)
-        @</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'> ||= nil             #   @prefix ||= nil
-        return @</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'> if val.nil?  #   return @prefix if val.nil?
-        @</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'> = val               #   @prefix = val
-      end                            # end
+<span class='tstring_content'>      def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'>(val=nil)                         # def prefix(val=nil)
+        if val.nil?                                #   if val.nil?
+          if instance_variable_defined?(:@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'>) #      if instance_variable_defined?(:@prefix)
+            return @</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'>                        #        return @prefix
+          else                                     #      else
+            return nil                             #        return nil
+          end                                      #      end
+        end                                        #    end
+                                                   #
+        @</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_attr'>attr</span><span class='embexpr_end'>}</span><span class='tstring_content'> = val                             #   @prefix = val
+      end                                          # end
 </span><span class='heredoc_end'>    EOS
 </span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
