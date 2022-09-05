@@ -961,11 +961,6 @@
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
 47
 48
 49
@@ -976,10 +971,15 @@
 54
 55
 56
-57</pre>
+57
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='label'>sourcefile_path:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>tap:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>allow_reassignment:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@token</span> <span class='op'>=</span> <span class='id identifier rubyid_token'>token</span>
@@ -1381,12 +1381,22 @@
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/cask.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+  <span class='comment'># TODO: uncomment for 3.7.0 and ideally avoid using ARGV by moving to e.g. CLI::Parser
+</span>  <span class='comment'># if !ARGV.include?(&quot;--eval-all&quot;) &amp;&amp; !Homebrew::EnvConfig.eval_all?
+</span>  <span class='comment'>#   odeprecated &quot;Cask::Cask#all without --all or HOMEBREW_EVAL_ALL&quot;
+</span>  <span class='comment'># end
+</span>
   <span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask_files</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='const'><span class='object_link'><a href="CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html" title="Cask::CaskLoader::FromTapPathLoader (class)">FromTapPathLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html#initialize-instance_method" title="Cask::CaskLoader::FromTapPathLoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="CaskLoader/FromPathLoader.html#load-instance_method" title="Cask::CaskLoader::FromPathLoader#load (method)">load</a></span></span><span class='lparen'>(</span><span class='label'>config:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="CaskUnreadableError.html" title="Cask::CaskUnreadableError (class)">CaskUnreadableError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
@@ -1436,12 +1446,12 @@
       <pre class="lines">
 
 
-162
-163
-164</pre>
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caskroom_path'>caskroom_path</span>
   <span class='ivar'>@caskroom_path</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_path'><span class='object_link'><a href="Caskroom.html#path-class_method" title="Cask::Caskroom.path (method)">path</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
@@ -1494,12 +1504,12 @@
       <pre class="lines">
 
 
-138
-139
-140</pre>
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checksumable?'>checksumable?</span>
   <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../AbstractFileDownloadStrategy.html" title="AbstractFileDownloadStrategy (class)">AbstractFileDownloadStrategy</a></span></span>
@@ -1539,12 +1549,12 @@
       <pre class="lines">
 
 
-134
-135
-136</pre>
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_path'>config_path</span>
   <span class='id identifier rubyid_metadata_main_container_path'>metadata_main_container_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config.json</span><span class='tstring_end'>&quot;</span></span>
@@ -1584,12 +1594,12 @@
       <pre class="lines">
 
 
-142
-143
-144</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download_sha_path'>download_sha_path</span>
   <span class='id identifier rubyid_metadata_main_container_path'>metadata_main_container_path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LATEST_DOWNLOAD_SHA256</span><span class='tstring_end'>&quot;</span></span>
@@ -1646,12 +1656,12 @@
       <pre class="lines">
 
 
-218
-219
-220</pre>
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 223</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_eql?'>eql?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_instance_of?'>instance_of?</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_token'>token</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span>
@@ -1691,15 +1701,15 @@
       <pre class="lines">
 
 
-110
-111
-112
-113
-114
-115</pre>
+115
+116
+117
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_full_name'>full_name</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_token'>token</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1742,12 +1752,12 @@
       <pre class="lines">
 
 
-214
-215
-216</pre>
+219
+220
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -1800,15 +1810,15 @@
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127</pre>
+127
+128
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_time'>install_time</span>
   <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span> <span class='op'>=</span> <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -1864,12 +1874,12 @@
       <pre class="lines">
 
 
-117
-118
-119</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed?'>installed?</span>
   <span class='op'>!</span><span class='id identifier rubyid_versions'>versions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1909,13 +1919,13 @@
       <pre class="lines">
 
 
-129
-130
-131
-132</pre>
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed_caskfile'>installed_caskfile</span>
   <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>=</span> <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
@@ -1956,17 +1966,17 @@
       <pre class="lines">
 
 
-146
-147
-148
-149
-150
 151
 152
-153</pre>
+153
+154
+155
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 146</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_download_sha'>new_download_sha</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/installer</span><span class='tstring_end'>&quot;</span></span>
@@ -2011,11 +2021,6 @@
       <pre class="lines">
 
 
-92
-93
-94
-95
-96
 97
 98
 99
@@ -2027,10 +2032,15 @@
 105
 106
 107
-108</pre>
+108
+109
+110
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_os_versions'>os_versions</span>
   <span class='comment'># TODO: use #to_hash_with_variations instead once all casks use on_system blocks
@@ -2097,13 +2107,13 @@
       <pre class="lines">
 
 
-166
-167
-168
-169</pre>
+171
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated?'>outdated?</span><span class='lparen'>(</span><span class='label'>greedy:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>greedy_latest:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>greedy_auto_updates:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='op'>!</span><span class='id identifier rubyid_outdated_versions'>outdated_versions</span><span class='lparen'>(</span><span class='label'>greedy:</span> <span class='id identifier rubyid_greedy'>greedy</span><span class='comma'>,</span> <span class='label'>greedy_latest:</span> <span class='id identifier rubyid_greedy_latest'>greedy_latest</span><span class='comma'>,</span>
@@ -2157,15 +2167,15 @@
       <pre class="lines">
 
 
-155
-156
-157
-158
-159
-160</pre>
+160
+161
+162
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated_download_sha?'>outdated_download_sha?</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_checksumable?'>checksumable?</span>
@@ -2208,11 +2218,6 @@
       <pre class="lines">
 
 
-193
-194
-195
-196
-197
 198
 199
 200
@@ -2223,10 +2228,15 @@
 205
 206
 207
-208</pre>
+208
+209
+210
+211
+212
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated_info'>outdated_info</span><span class='lparen'>(</span><span class='id identifier rubyid_greedy'>greedy</span><span class='comma'>,</span> <span class='id identifier rubyid_verbose'>verbose</span><span class='comma'>,</span> <span class='id identifier rubyid_json'>json</span><span class='comma'>,</span> <span class='id identifier rubyid_greedy_latest'>greedy_latest</span><span class='comma'>,</span> <span class='id identifier rubyid_greedy_auto_updates'>greedy_auto_updates</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_token'>token</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_verbose'>verbose</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_json'>json</span>
@@ -2279,11 +2289,6 @@
       <pre class="lines">
 
 
-171
-172
-173
-174
-175
 176
 177
 178
@@ -2299,10 +2304,15 @@
 188
 189
 190
-191</pre>
+191
+192
+193
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 176</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_outdated_versions'>outdated_versions</span><span class='lparen'>(</span><span class='label'>greedy:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>greedy_latest:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>greedy_auto_updates:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='comment'># special case: tap version is not available
@@ -2360,16 +2370,16 @@
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
 70
-71</pre>
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh'>refresh</span>
   <span class='ivar'>@dsl</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DSL.html" title="Cask::DSL (class)">DSL</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DSL.html#initialize-instance_method" title="Cask::DSL#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -2413,14 +2423,14 @@
       <pre class="lines">
 
 
-36
-37
-38
-39
-40</pre>
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tap'>tap</span>
   <span class='kw'>return</span> <span class='kw'>super</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span> <span class='comment'># Object#tap
@@ -2475,15 +2485,15 @@
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83</pre>
+83
+84
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span>
   <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_metadata_timestamped_path'>metadata_timestamped_path</span><span class='lparen'>(</span><span class='label'>version:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>timestamp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2526,11 +2536,6 @@
       <pre class="lines">
 
 
-223
-224
-225
-226
-227
 228
 229
 230
@@ -2548,10 +2553,15 @@
 242
 243
 244
-245</pre>
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 223</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_h'>to_h</span>
   <span class='lbrace'>{</span>
@@ -2611,11 +2621,6 @@
       <pre class="lines">
 
 
-247
-248
-249
-250
-251
 252
 253
 254
@@ -2644,10 +2649,15 @@
 277
 278
 279
-280</pre>
+280
+281
+282
+283
+284
+285</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash_with_variations'>to_hash_with_variations</span>
   <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='id identifier rubyid_to_h'>to_h</span>
@@ -2718,12 +2728,12 @@
       <pre class="lines">
 
 
-210
-211
-212</pre>
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='ivar'>@token</span>
@@ -2763,15 +2773,15 @@
       <pre class="lines">
 
 
-85
-86
-87
-88
-89
-90</pre>
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'cask/cask.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_versions'>versions</span>
   <span class='id identifier rubyid_timestamped_versions'>timestamped_versions</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:first</span><span class='rparen'>)</span>

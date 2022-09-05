@@ -1005,7 +1005,7 @@ name without the leading <code>homebrew-</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#install-instance_method" title="#install (instance method)">#<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil, custom_remote: false)  &#x21d2; Object </a>
+      <a href="#install-instance_method" title="#install (instance method)">#<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil, custom_remote: false, verify: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -3222,7 +3222,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <div class="method_details ">
   <h3 class="signature " id="install-instance_method">
   
-    #<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil, custom_remote: false)  &#x21d2; <tt>Object</tt> 
+    #<strong>install</strong>(quiet: false, clone_target: nil, force_auto_update: nil, custom_remote: false, verify: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -3308,6 +3308,23 @@ logic that skips non-GitHub repositories during auto-updates.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>verify</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>If set, verify all the formula, casks and aliases in the tap are valid.</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Raises:</p>
@@ -3330,7 +3347,6 @@ logic that skips non-GitHub repositories during auto-updates.</p>
       <pre class="lines">
 
 
-248
 249
 250
 251
@@ -3451,9 +3467,9 @@ logic that skips non-GitHub repositories during auto-updates.</p>
 366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 249</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>clone_target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_auto_update:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>custom_remote:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>clone_target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_auto_update:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>custom_remote:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verify:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>descriptions</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>readall</span><span class='tstring_end'>&quot;</span></span>
 
@@ -3514,9 +3530,8 @@ logic that skips non-GitHub repositories during auto-updates.</p>
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-    <span class='comment'># TODO: 3.6.0: consider if we want to actually read all contents of tap or odeprecate.
-</span>
-    <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Readall.html" title="Readall (module)">Readall</a></span></span><span class='period'>.</span><span class='id identifier rubyid_valid_tap?'><span class='object_link'><a href="Readall.html#valid_tap%3F-class_method" title="Readall.valid_tap? (method)">valid_tap?</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='label'>aliases:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_verify'>verify</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Readall.html" title="Readall (module)">Readall</a></span></span><span class='period'>.</span><span class='id identifier rubyid_valid_tap?'><span class='object_link'><a href="Readall.html#valid_tap%3F-class_method" title="Readall.valid_tap? (method)">valid_tap?</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='label'>aliases:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot tap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: invalid syntax in tap!</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>rescue</span> <span class='const'>Interrupt</span><span class='comma'>,</span> <span class='const'>RuntimeError</span>
