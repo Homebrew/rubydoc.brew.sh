@@ -960,7 +960,25 @@
 340
 341
 342
-343</pre>
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/curl.rb', line 239</span>
@@ -1019,7 +1037,25 @@
       <span class='id identifier rubyid_url_protected_by_cloudflare?'><span class='object_link'><a href="#url_protected_by_cloudflare%3F-class_method" title="Utils::Curl.url_protected_by_cloudflare? (method)">url_protected_by_cloudflare?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_url_protected_by_incapsula?'><span class='object_link'><a href="#url_protected_by_incapsula%3F-class_method" title="Utils::Curl.url_protected_by_incapsula? (method)">url_protected_by_incapsula?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
-    <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable (HTTP status code </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='comment'># https://github.com/Homebrew/brew/issues/13789
+</span>    <span class='comment'># If the `:homepage` of a formula is private, it will fail an `audit`
+</span>    <span class='comment'># since there&#39;s no way to specify a `strategy` with `using:` and
+</span>    <span class='comment'># GitHub does not authorize access to the web UI using token
+</span>    <span class='comment'>#
+</span>    <span class='comment'># Strategy:
+</span>    <span class='comment'># If the `:homepage` 404s, it&#39;s a GitHub link, and we have a token then
+</span>    <span class='comment'># check the API (which does use tokens) for the repository
+</span>    <span class='id identifier rubyid_repo_details'>repo_details</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://github\.com/(?&lt;user&gt;[^/]+)/(?&lt;repo&gt;[^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_check_github_api'>check_github_api</span> <span class='op'>=</span> <span class='id identifier rubyid_url_type'>url_type</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../SharedAudits.html" title="SharedAudits (module)">SharedAudits</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../SharedAudits.html#URL_TYPE_HOMEPAGE-constant" title="SharedAudits::URL_TYPE_HOMEPAGE (constant)">URL_TYPE_HOMEPAGE</a></span></span> <span class='op'>&amp;&amp;</span>
+                       <span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>404</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span>
+                       <span class='id identifier rubyid_repo_details'>repo_details</span> <span class='op'>&amp;&amp;</span>
+                       <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_github_api_token'>github_api_token</span>
+
+    <span class='kw'>unless</span> <span class='id identifier rubyid_check_github_api'>check_github_api</span>
+      <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url_type'>url_type</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not reachable (HTTP status code </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_details'>details</span><span class='lbracket'>[</span><span class='symbol'>:status_code</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to find homepage</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../SharedAudits.html" title="SharedAudits (module)">SharedAudits</a></span></span><span class='period'>.</span><span class='id identifier rubyid_github_repo_data'><span class='object_link'><a href="../SharedAudits.html#github_repo_data-class_method" title="SharedAudits.github_repo_data (method)">github_repo_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_repo_details'>repo_details</span><span class='lbracket'>[</span><span class='symbol'>:user</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_repo_details'>repo_details</span><span class='lbracket'>[</span><span class='symbol'>:repo</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_insecure_redirect?'>no_insecure_redirect?</span> <span class='op'>&amp;&amp;</span>
@@ -1255,24 +1291,6 @@
       <pre class="lines">
 
 
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
 363
 364
 365
@@ -1324,10 +1342,28 @@
 411
 412
 413
-414</pre>
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 363</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_http_content_headers_and_checksum'>curl_http_content_headers_and_checksum</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>hash_needed:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -1598,22 +1634,22 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489</pre>
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 477</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 495</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_response_last_location'>curl_response_last_location</span><span class='lparen'>(</span><span class='id identifier rubyid_responses'>responses</span><span class='comma'>,</span> <span class='label'>absolutize:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>base_url:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responses'>responses</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
@@ -1676,15 +1712,15 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-416
-417
-418
-419
-420
-421</pre>
+434
+435
+436
+437
+438
+439</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 434</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_supports_tls13?'>curl_supports_tls13?</span>
   <span class='ivar'>@curl_supports_tls13</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
@@ -1890,12 +1926,12 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-423
-424
-425</pre>
+441
+442
+443</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 441</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_status_ok?'>http_status_ok?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='int'>100</span><span class='op'>..</span><span class='int'>299</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -1996,29 +2032,29 @@ content, if found.</p>
       <pre class="lines">
 
 
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
 458
-459</pre>
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 440</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 458</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_curl_output'>parse_curl_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='label'>max_iterations:</span> <span class='int'>25</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responses'>responses</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
