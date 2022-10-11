@@ -1310,14 +1310,16 @@
 372
 373
 374
-375</pre>
+375
+376</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cli/parser.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_options'>cask_options</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options'>global_cask_options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='op'>|</span>
-    <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options'>global_cask_options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
+    <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+    <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
   <span class='kw'>end</span>
   <span class='ivar'>@cask_options</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1585,12 +1587,12 @@
       <pre class="lines">
 
 
-378
 379
-380</pre>
+380
+381</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 379</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_options'>formula_options</span>
   <span class='ivar'>@formula_options</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1669,12 +1671,12 @@
       <pre class="lines">
 
 
-412
 413
-414</pre>
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 412</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 413</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hide_from_man_page!'>hide_from_man_page!</span>
   <span class='ivar'>@hide_from_man_page</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1803,7 +1805,6 @@
       <pre class="lines">
 
 
-390
 391
 392
 393
@@ -1822,10 +1823,11 @@
 406
 407
 408
-409</pre>
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 390</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named_args'>named_args</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>number:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_max'>max</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span>

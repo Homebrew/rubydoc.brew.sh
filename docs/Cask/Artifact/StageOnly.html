@@ -140,7 +140,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#from_args-class_method" title="from_args (class method)">.<strong>from_args</strong>(cask, *args)  &#x21d2; Object </a>
+      <a href="#from_args-class_method" title="from_args (class method)">.<strong>from_args</strong>(cask, *args, **kwargs)  &#x21d2; Object </a>
     
     
   </span>
@@ -258,7 +258,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="from_args-class_method">
   
-    .<strong>from_args</strong>(cask, *args)  &#x21d2; <tt>Object</tt> 
+    .<strong>from_args</strong>(cask, *args, **kwargs)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -278,19 +278,6 @@
 </div>
 <div class="tags">
   
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="../CaskInvalidError.html" title="Cask::CaskInvalidError (class)">CaskInvalidError</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -302,13 +289,17 @@
 15
 16
 17
-18</pre>
+18
+19
+20</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/artifact/stage_only.rb', line 14</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_args'>from_args</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../CaskInvalidError.html" title="Cask::CaskInvalidError (class)">CaskInvalidError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../AbstractCaskErrorWithToken.html#initialize-instance_method" title="Cask::AbstractCaskErrorWithToken#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;stage_only&#39; takes only a single argument: true</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span> <span class='op'>!=</span> <span class='lbracket'>[</span><span class='kw'>true</span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_args'>from_args</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_kwargs'>kwargs</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span> <span class='op'>!=</span> <span class='lbracket'>[</span><span class='kw'>true</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_kwargs'>kwargs</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../CaskInvalidError.html" title="Cask::CaskInvalidError (class)">CaskInvalidError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../AbstractCaskErrorWithToken.html#initialize-instance_method" title="Cask::AbstractCaskErrorWithToken#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;stage_only&#39; takes only a single argument: true</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -366,12 +357,12 @@
       <pre class="lines">
 
 
-26
-27
-28</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/stage_only.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/stage_only.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summarize'>summarize</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
@@ -424,12 +415,12 @@
       <pre class="lines">
 
 
-21
-22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/artifact/stage_only.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'cask/artifact/stage_only.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_a'>to_a</span>
   <span class='lbracket'>[</span><span class='kw'>true</span><span class='rbracket'>]</span>
