@@ -1490,8 +1490,7 @@
 150
 151
 152
-153
-154</pre>
+153</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 141</span>
@@ -1504,9 +1503,8 @@
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:tag</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
 
   <span class='id identifier rubyid_branch'>branch</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ls-remote</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--symref</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HEAD</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                <span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>ref: refs/heads/(.*?)\s+HEAD</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
-
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_branch'>branch</span> <span class='op'>==</span> <span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:branch</span><span class='rbracket'>]</span>
+                <span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>ref: refs/heads/(.*?)\s+HEAD</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='op'>&amp;.</span><span class='id identifier rubyid_second'>second</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_branch'>branch</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_branch'>branch</span> <span class='op'>==</span> <span class='id identifier rubyid_specs'>specs</span><span class='lbracket'>[</span><span class='symbol'>:branch</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use `branch: \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_branch'>branch</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;` to specify the default branch</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
@@ -1723,12 +1721,12 @@
       <pre class="lines">
 
 
+155
 156
-157
-158</pre>
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@problems</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_text'>text</span>
