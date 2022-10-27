@@ -321,13 +321,13 @@
       <pre class="lines">
 
 
-109
-110
-111
-112</pre>
+117
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='ivar'>@url</span> <span class='op'>=</span> <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
@@ -375,12 +375,12 @@
       <pre class="lines">
 
 
-106
-107
-108</pre>
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span>
   <span class='ivar'>@url</span>
@@ -440,23 +440,33 @@
       <pre class="lines">
 
 
-95
-96
-97
 98
 99
 100
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_can_load?'>can_load?</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_uri_regex'>uri_regex</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>URI</span><span class='op'>::</span><span class='const'>DEFAULT_PARSER</span><span class='period'>.</span><span class='id identifier rubyid_make_regexp'>make_regexp</span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\A</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri_regex'>uri_regex</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_uri_regex'>uri_regex</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='comment'># Cache compiled regex
+</span>  <span class='ivar'>@uri_regex</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='id identifier rubyid_uri_regex'>uri_regex</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>URI</span><span class='op'>::</span><span class='const'>DEFAULT_PARSER</span><span class='period'>.</span><span class='id identifier rubyid_make_regexp'>make_regexp</span>
+    <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\A</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri_regex'>uri_regex</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_content'>\\Z</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_uri_regex'>uri_regex</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='ivar'>@uri_regex</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_uri'>uri</span> <span class='op'>=</span> <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_uri'>uri</span>
@@ -505,21 +515,21 @@
       <pre class="lines">
 
 
-114
-115
-116
-117
-118
-119
-120
-121
 122
 123
 124
-125</pre>
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='label'>config:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='period'>.</span><span class='id identifier rubyid_mkpath'>mkpath</span>
