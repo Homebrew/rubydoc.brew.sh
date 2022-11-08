@@ -879,6 +879,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#last_commit-class_method" title="last_commit (class method)">.<strong>last_commit</strong>(user, repo, ref)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#members_by_team-class_method" title="members_by_team (class method)">.<strong>members_by_team</strong>(org, team)  &#x21d2; Object </a>
     
     
@@ -902,6 +924,28 @@
   <span class="summary_signature">
     
       <a href="#merge_pull_request-class_method" title="merge_pull_request (class method)">.<strong>merge_pull_request</strong>(repo, number:, sha:, merge_method:, commit_message: nil)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#multiple_short_commits_exist%3F-class_method" title="multiple_short_commits_exist? (class method)">.<strong>multiple_short_commits_exist?</strong>(user, repo, commit)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -3051,6 +3095,79 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="last_commit-class_method">
+  
+    .<strong>last_commit</strong>(user, repo, ref)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'utils/github.rb', line 670</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_last_commit'>last_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_github_api?'>no_github_api?</span>
+
+  <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_output'><span class='object_link'><a href="Utils/Curl.html#curl_output-class_method" title="Utils::Curl.curl_output (method)">curl_output</a></span></span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--silent</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--location</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--header</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept: application/vnd.github.sha</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>commits</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+
+  <span class='id identifier rubyid_commit'>commit</span> <span class='op'>=</span> <span class='id identifier rubyid_output'>output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ETag: &quot;(\h+)&quot;</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_commit'>commit</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_update_commit'>update_commit</span><span class='lparen'>(</span><span class='id identifier rubyid_commit'>commit</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_commit'>commit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="members_by_team-class_method">
   
     .<strong>members_by_team</strong>(org, team)  &#x21d2; <tt>Object</tt> 
@@ -3203,6 +3320,86 @@
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>sha:</span> <span class='id identifier rubyid_sha'>sha</span><span class='comma'>,</span> <span class='label'>merge_method:</span> <span class='id identifier rubyid_merge_method'>merge_method</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='symbol'>:commit_message</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='kw'>if</span> <span class='id identifier rubyid_commit_message'>commit_message</span>
   <span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_rest'><span class='object_link'><a href="GitHub/API.html#open_rest-class_method" title="GitHub::API.open_rest (method)">open_rest</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='label'>request_method:</span> <span class='symbol'>:PUT</span><span class='comma'>,</span> <span class='label'>scopes:</span> <span class='const'><span class='object_link'><a href="#CREATE_ISSUE_FORK_OR_PR_SCOPES-constant" title="GitHub::CREATE_ISSUE_FORK_OR_PR_SCOPES (constant)">CREATE_ISSUE_FORK_OR_PR_SCOPES</a></span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="multiple_short_commits_exist?-class_method">
+  
+    .<strong>multiple_short_commits_exist?</strong>(user, repo, commit)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'utils/github.rb', line 688</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_multiple_short_commits_exist?'>multiple_short_commits_exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_commit'>commit</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_github_api?'>no_github_api?</span>
+
+  <span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_status'>status</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_output'><span class='object_link'><a href="Utils/Curl.html#curl_output-class_method" title="Utils::Curl.curl_output (method)">curl_output</a></span></span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--silent</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--head</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--location</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--header</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept: application/vnd.github.sha</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='id identifier rubyid_url_to'>url_to</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repos</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>commits</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_commit'>commit</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='rparen'>)</span>
+
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_output'>output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^Status: (200)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>200</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
