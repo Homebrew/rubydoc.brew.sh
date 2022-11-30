@@ -836,7 +836,8 @@
 365
 366
 367
-368</pre>
+368
+369</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 319</span>
@@ -844,8 +845,9 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_check_binary_arches'>check_binary_arches</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
   <span class='comment'># There is no `binary_executable_or_library_files` method for the generic OS
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span>
-
+</span>  <span class='comment'># TODO: Refactor and move to extend/os
+</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_linux?'><span class='object_link'><a href="OS.html#linux%3F-class_method" title="OS.linux? (method)">linux?</a></span></span> <span class='comment'># rubocop:disable Homebrew/MoveToExtendOS
+</span>
   <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mismatches'>mismatches</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_binary_executable_or_library_files'>binary_executable_or_library_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
