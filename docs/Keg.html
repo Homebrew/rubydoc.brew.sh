@@ -867,6 +867,28 @@ directories in the prefix, never symlinks.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#consistent_reproducible_symlink_permissions!-instance_method" title="#consistent_reproducible_symlink_permissions! (instance method)">#<strong>consistent_reproducible_symlink_permissions!</strong>  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'><p>Needed to make symlink permissions consistent on macOS and Linux for reproducible bottles.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#delete_pyc_files!-instance_method" title="#delete_pyc_files! (instance method)">#<strong>delete_pyc_files!</strong>  &#x21d2; Object </a>
     
     
@@ -2714,12 +2736,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-506
-507
-508</pre>
+508
+509
+510</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 506</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 508</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_aliases'>aliases</span>
   <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -3287,6 +3309,56 @@ directories in the prefix, never symlinks.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="consistent_reproducible_symlink_permissions!-instance_method">
+  
+    #<strong>consistent_reproducible_symlink_permissions!</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+<p>Needed to make symlink permissions consistent on macOS and Linux for
+reproducible bottles.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_consistent_reproducible_symlink_permissions!'>consistent_reproducible_symlink_permissions!</span>
+  <span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_lchmod'>lchmod</span> <span class='int'>0777</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="delete_pyc_files!-instance_method">
   
     #<strong>delete_pyc_files!</strong>  &#x21d2; <tt>Object</tt> 
@@ -3316,13 +3388,13 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-525
-526
 527
-528</pre>
+528
+529
+530</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 525</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 527</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_pyc_files!'>delete_pyc_files!</span>
   <span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_pn'>pn</span><span class='op'>|</span> <span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#PYC_EXTENSIONS-constant" title="Keg::PYC_EXTENSIONS (constant)">PYC_EXTENSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_pn'>pn</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -4748,8 +4820,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-510
-511
 512
 513
 514
@@ -4761,10 +4831,12 @@ expensive recursive search if possible.</p>
 520
 521
 522
-523</pre>
+523
+524
+525</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 510</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 512</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_optlink'>optlink</span><span class='lparen'>(</span><span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>overwrite:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='kw'>if</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>||</span> <span class='id identifier rubyid_opt_record'>opt_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -4995,8 +5067,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-89
-90
 91
 92
 93
@@ -5008,10 +5078,12 @@ expensive recursive search if possible.</p>
 99
 100
 101
-102</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_debug_symbols'>prepare_debug_symbols</span>
   <span class='id identifier rubyid_binary_executable_or_library_files'>binary_executable_or_library_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -5761,17 +5833,17 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-488
-489
 490
 491
 492
 493
 494
-495</pre>
+495
+496
+497</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 488</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 490</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_oldname_opt_record'>remove_oldname_opt_record</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_oldname_opt_record'>oldname_opt_record</span>
@@ -6059,13 +6131,13 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-501
-502
 503
-504</pre>
+504
+505
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 501</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 503</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span>
   <span class='const'><span class='object_link'><a href="" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cache'><span class='object_link'><a href="Cachable.html#cache-instance_method" title="Cachable#cache (method)">cache</a></span></span><span class='lbracket'>[</span><span class='symbol'>:runtime_dependencies</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -6146,12 +6218,12 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-497
-498
-499</pre>
+499
+500
+501</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'keg.rb', line 497</span>
+      <pre class="code"><span class="info file"># File 'keg.rb', line 499</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tab'>tab</span>
   <span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
