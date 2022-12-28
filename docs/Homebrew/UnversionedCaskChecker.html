@@ -278,6 +278,28 @@ contents and guessing the version from contained files.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#installers-instance_method" title="#installers (instance method)">#<strong>installers</strong>  &#x21d2; Array&lt;Cask::Artifact::Installer&gt; </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#pkgs-instance_method" title="#pkgs (instance method)">#<strong>pkgs</strong>  &#x21d2; Array&lt;Cask::Artifact::Pkg&gt; </a>
     
     
@@ -593,11 +615,6 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
 79
 80
 81
@@ -640,10 +657,16 @@ contents and guessing the version from contained files.</p>
 118
 119
 120
-121</pre>
+121
+122
+123
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_versions'>all_versions</span>
   <span class='id identifier rubyid_versions'>versions</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -662,8 +685,9 @@ contents and guessing the version from contained files.</p>
 
     <span class='id identifier rubyid_installer'>installer</span><span class='period'>.</span><span class='id identifier rubyid_extract_primary_container'>extract_primary_container</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_info_plist_paths'>info_plist_paths</span> <span class='op'>=</span> <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_qlplugins'>qlplugins</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_artifact'>artifact</span><span class='op'>|</span>
-      <span class='id identifier rubyid_top_level_info_plists'>top_level_info_plists</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Contents</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Info.plist</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
+    <span class='id identifier rubyid_info_plist_paths'>info_plist_paths</span> <span class='op'>=</span> <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_qlplugins'>qlplugins</span><span class='comma'>,</span> <span class='id identifier rubyid_installers'>installers</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_artifact'>artifact</span><span class='op'>|</span>
+      <span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact.html" title="Cask::Artifact (module)">Artifact</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact/Installer.html" title="Cask::Artifact::Installer (class)">Installer</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>:</span> <span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span>
+      <span class='id identifier rubyid_top_level_info_plists'>top_level_info_plists</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='id identifier rubyid_source'>source</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Contents</span><span class='tstring_end'>&quot;</span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Info.plist</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_info_plist_paths'>info_plist_paths</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_parse_info_plist'>parse_info_plist</span><span class='rparen'>)</span>
@@ -799,12 +823,6 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-124
-125
-126
-127
-128
-129
 130
 131
 132
@@ -888,10 +906,16 @@ contents and guessing the version from contained files.</p>
 210
 211
 212
-213</pre>
+213
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_guess_cask_version'>guess_cask_version</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_pkgs'>pkgs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_qlplugins'>qlplugins</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1047,6 +1071,64 @@ contents and guessing the version from contained files.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="installers-instance_method">
+  
+    #<strong>installers</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../Cask/Artifact/Installer.html" title="Cask::Artifact::Installer (class)">Cask::Artifact::Installer</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="../Cask/Artifact/Installer.html" title="Cask::Artifact::Installer (class)">Cask::Artifact::Installer</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_installers'>installers</span>
+  <span class='ivar'>@installers</span> <span class='op'>||=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_artifacts'>artifacts</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact.html" title="Cask::Artifact (module)">Artifact</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact/Installer.html" title="Cask::Artifact::Installer (class)">Installer</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="pkgs-instance_method">
   
     #<strong>pkgs</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="../Cask/Artifact/Pkg.html" title="Cask::Artifact::Pkg (class)">Cask::Artifact::Pkg</a></span>&gt;</tt> 
@@ -1089,12 +1171,12 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-40
-41
-42</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pkgs'>pkgs</span>
   <span class='ivar'>@pkgs</span> <span class='op'>||=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_artifacts'>artifacts</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact.html" title="Cask::Artifact (module)">Artifact</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Cask/Artifact/Pkg.html" title="Cask::Artifact::Pkg (class)">Pkg</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1205,12 +1287,12 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-45
-46
-47</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_app_cask?'>single_app_cask?</span>
   <span class='id identifier rubyid_apps'>apps</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -1263,12 +1345,12 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-55
-56
-57</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_pkg_cask?'>single_pkg_cask?</span>
   <span class='id identifier rubyid_pkgs'>pkgs</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -1321,12 +1403,12 @@ contents and guessing the version from contained files.</p>
       <pre class="lines">
 
 
-50
-51
-52</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_qlplugin_cask?'>single_qlplugin_cask?</span>
   <span class='id identifier rubyid_qlplugins'>qlplugins</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -1395,19 +1477,19 @@ to e.g. nested <code>.app</code>s are ignored.</p>
       <pre class="lines">
 
 
-62
-63
-64
-65
-66
 67
 68
 69
 70
-71</pre>
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'unversioned_cask_checker.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_top_level_info_plists'>top_level_info_plists</span><span class='lparen'>(</span><span class='id identifier rubyid_paths'>paths</span><span class='rparen'>)</span>
   <span class='comment'># Go from `./Contents/Info.plist` to `./`.
