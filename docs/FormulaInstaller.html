@@ -2086,12 +2086,12 @@
       <pre class="lines">
 
 
-1262
-1263
-1264</pre>
+1266
+1267
+1268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1262</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1266</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_locked'>locked</span>
   <span class='ivar'>@locked</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2137,16 +2137,16 @@
       <pre class="lines">
 
 
-1254
-1255
-1256
-1257
 1258
 1259
-1260</pre>
+1260
+1261
+1262
+1263
+1264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1254</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -3448,18 +3448,18 @@ being installed.</p>
       <pre class="lines">
 
 
-1192
-1193
-1194
-1195
 1196
 1197
 1198
 1199
-1200</pre>
+1200
+1201
+1202
+1203
+1204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1192</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1196</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_path'>bottle_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='rparen'>)</span>
@@ -3795,10 +3795,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1170
-1171
-1172
-1173
 1174
 1175
 1176
@@ -3815,10 +3811,14 @@ being installed.</p>
 1187
 1188
 1189
-1190</pre>
+1190
+1191
+1192
+1193
+1194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1170</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_fetched'>fetched</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
@@ -3887,7 +3887,11 @@ being installed.</p>
 1164
 1165
 1166
-1167</pre>
+1167
+1168
+1169
+1170
+1171</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1156</span>
@@ -3895,7 +3899,11 @@ being installed.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_dependencies'>fetch_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_ignore_deps?'>ignore_deps?</span>
 
-  <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span>
+  <span class='comment'># Don&#39;t output dependencies if we&#39;re explicitly installing them.
+</span>  <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='id identifier rubyid__options'>_options</span><span class='op'>|</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_fetched'>fetched</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetching dependencies for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='tstring_end'>&quot;</span></span> \
@@ -5682,10 +5690,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1203
-1204
-1205
-1206
 1207
 1208
 1209
@@ -5723,10 +5727,14 @@ being installed.</p>
 1241
 1242
 1243
-1244</pre>
+1244
+1245
+1246
+1247
+1248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1203</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour'>pour</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -6052,15 +6060,15 @@ being installed.</p>
       <pre class="lines">
 
 
-1247
-1248
-1249
-1250
 1251
-1252</pre>
+1252
+1253
+1254
+1255
+1256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1247</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_output'>output</span>
