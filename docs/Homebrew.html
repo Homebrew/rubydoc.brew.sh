@@ -17529,7 +17529,10 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 89
 90
 91
-92</pre>
+92
+93
+94
+95</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/edit.rb', line 34</span>
@@ -17567,7 +17570,10 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span>
         <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_not_exist_message'>not_exist_message</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>          This is expected with HOMEBREW_INSTALL_FROM_API set!
+</span><span class='tstring_content'>          This is expected with HOMEBREW_NO_INSTALL_FROM_API unset! To resolve please run:
+</span><span class='tstring_content'>            brew tap Homebrew/core
+</span><span class='tstring_content'>            export HOMEBREW_NO_INSTALL_FROM_API=1
+</span><span class='tstring_content'>          and retry this command.
 </span><span class='heredoc_end'>        EOS
 </span>      <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
         <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -21182,21 +21188,13 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 328
 329
 330
-331
-332
-333
-334
-335</pre>
+331</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/install.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_install_args'>install_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source?'>build_from_source?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source is not supported when using HOMEBREW_INSTALL_FROM_API.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
     <span class='comment'># Can&#39;t use `replacement: false` because `install_args` are used by
@@ -29935,21 +29933,13 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 158
 159
 160
-161
-162
-163
-164
-165</pre>
+161</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/reinstall.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reinstall'>reinstall</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_reinstall_args'>reinstall_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source?'>build_from_source?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source is not supported when using HOMEBREW_INSTALL_FROM_API.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_casks'>casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='rparen'>)</span>
                         <span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span> <span class='id identifier rubyid_o'>o</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>

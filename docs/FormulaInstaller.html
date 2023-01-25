@@ -2086,12 +2086,12 @@
       <pre class="lines">
 
 
-1265
-1266
-1267</pre>
+1271
+1272
+1273</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1265</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1271</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_locked'>locked</span>
   <span class='ivar'>@locked</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2137,16 +2137,16 @@
       <pre class="lines">
 
 
-1257
-1258
-1259
-1260
-1261
-1262
-1263</pre>
+1263
+1264
+1265
+1266
+1267
+1268
+1269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1257</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -3448,18 +3448,18 @@ being installed.</p>
       <pre class="lines">
 
 
-1195
-1196
-1197
-1198
-1199
-1200
 1201
 1202
-1203</pre>
+1203
+1204
+1205
+1206
+1207
+1208
+1209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1195</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_path'>bottle_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='rparen'>)</span>
@@ -3815,7 +3815,13 @@ being installed.</p>
 1190
 1191
 1192
-1193</pre>
+1193
+1194
+1195
+1196
+1197
+1198
+1199</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1173</span>
@@ -3831,9 +3837,15 @@ being installed.</p>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>output_warning:</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_bottle_tab'>fetch_bottle_tab</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span>
-    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unable to build </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> from source with HOMEBREW_INSTALL_FROM_API.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>else</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Unable to build </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> from source while Homebrew/homebrew-core is
+</span><span class='tstring_content'>      untapped and HOMEBREW_NO_INSTALL_FROM_API is unset! To resolve please run:
+</span><span class='tstring_content'>        brew tap Homebrew/core
+</span><span class='tstring_content'>        export HOMEBREW_NO_INSTALL_FROM_API=1
+</span><span class='tstring_content'>      and retry.
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>else</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_patches'>fetch_patches</span>
     <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:fetch</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -5694,12 +5706,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1206
-1207
-1208
-1209
-1210
-1211
 1212
 1213
 1214
@@ -5735,10 +5741,16 @@ being installed.</p>
 1244
 1245
 1246
-1247</pre>
+1247
+1248
+1249
+1250
+1251
+1252
+1253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1206</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour'>pour</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -6064,15 +6076,15 @@ being installed.</p>
       <pre class="lines">
 
 
-1250
-1251
-1252
-1253
-1254
-1255</pre>
+1256
+1257
+1258
+1259
+1260
+1261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1250</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1256</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_output'>output</span>
