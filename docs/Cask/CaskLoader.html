@@ -272,12 +272,12 @@
       <pre class="lines">
 
 
-396
-397
-398</pre>
+391
+392
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_path'>default_path</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_default_cask_tap'><span class='object_link'><a href="../Tap.html#default_cask_tap-class_method" title="Tap.default_cask_tap (method)">default_cask_tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span>
@@ -317,11 +317,6 @@
       <pre class="lines">
 
 
-356
-357
-358
-359
-360
 361
 362
 363
@@ -350,37 +345,22 @@
 386
 387
 388
-389
-390
-391
-392
-393
-394</pre>
+389</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 356</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='kw'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='label'>need_path:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span>
     <span class='const'>FromInstanceLoader</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="CaskLoader/FromContentLoader.html" title="Cask::CaskLoader::FromContentLoader (class)">FromContentLoader</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="CaskLoader/FromURILoader.html" title="Cask::CaskLoader::FromURILoader (class)">FromURILoader</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="CaskLoader/FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="CaskLoader/FromTapLoader.html" title="Cask::CaskLoader::FromTapLoader (class)">FromTapLoader</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html" title="Cask::CaskLoader::FromTapPathLoader (class)">FromTapPathLoader</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="CaskLoader/FromPathLoader.html" title="Cask::CaskLoader::FromPathLoader (class)">FromPathLoader</a></span></span><span class='comma'>,</span>
   <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_loader_class'>loader_class</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_loader_class'>loader_class</span><span class='period'>.</span><span class='id identifier rubyid_can_load?'>can_load?</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_loader_class'>loader_class</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromTapLoader.html" title="Cask::CaskLoader::FromTapLoader (class)">FromTapLoader</a></span></span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="../Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span> <span class='op'>&amp;&amp;</span>
-       <span class='id identifier rubyid_ref'>ref</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_can_load?'><span class='object_link'><a href="CaskLoader/FromAPILoader.html#can_load%3F-class_method" title="Cask::CaskLoader::FromAPILoader.can_load? (method)">can_load?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-      <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskLoader/FromAPILoader.html#initialize-instance_method" title="Cask::CaskLoader::FromAPILoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-
-    <span class='kw'>return</span> <span class='id identifier rubyid_loader_class'>loader_class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_from_api?'><span class='object_link'><a href="../Homebrew/EnvConfig.html#install_from_api%3F-class_method" title="Homebrew::EnvConfig.install_from_api? (method)">install_from_api?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_need_path'>need_path</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/API.html" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/API/Cask.html" title="Homebrew::API::Cask (module)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all_casks'><span class='object_link'><a href="../Homebrew/API/Cask.html#all_casks-class_method" title="Homebrew::API::Cask.all_casks (method)">all_casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
-    <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskLoader/FromAPILoader.html#initialize-instance_method" title="Cask::CaskLoader::FromAPILoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_loader_class'>loader_class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_loader_class'>loader_class</span><span class='period'>.</span><span class='id identifier rubyid_can_load?'>can_load?</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html" title="Cask::CaskLoader::FromTapPathLoader (class)">FromTapPathLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html#initialize-instance_method" title="Cask::CaskLoader::FromTapPathLoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_default_path'>default_path</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html" title="Cask::CaskLoader::FromTapPathLoader (class)">FromTapPathLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_can_load?'><span class='object_link'><a href="CaskLoader/FromTapPathLoader.html#can_load%3F-class_method" title="Cask::CaskLoader::FromTapPathLoader.can_load? (method)">can_load?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_default_path'>default_path</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -434,12 +414,12 @@
       <pre class="lines">
 
 
-352
-353
-354</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='label'>config:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='label'>config:</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
@@ -479,12 +459,12 @@
       <pre class="lines">
 
 
-348
-349
-350</pre>
+353
+354
+355</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 348</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 353</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='label'>need_path:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
@@ -524,13 +504,13 @@
       <pre class="lines">
 
 
-400
-401
-402
-403</pre>
+395
+396
+397
+398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 400</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tap_paths'>tap_paths</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
