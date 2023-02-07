@@ -96,7 +96,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>cask/cmd/install.rb</dd>
+    <dd>extend/os/linux/cask/cmd/install.rb<span class="defines">,<br />
+  cask/cmd/install.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -321,71 +323,27 @@
       <pre class="lines">
 
 
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116</pre>
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cmd/install.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'extend/os/linux/cask/cmd/install.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_install_casks'>install_casks</span><span class='lparen'>(</span>
-  <span class='op'>*</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span>
+  <span class='id identifier rubyid__casks'>_casks</span><span class='comma'>,</span>
   <span class='label'>verbose:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>force:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>adopt:</span> <span class='kw'>nil</span><span class='comma'>,</span>
@@ -397,51 +355,7 @@
   <span class='label'>zap:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>dry_run:</span> <span class='kw'>nil</span>
 <span class='rparen'>)</span>
-  <span class='comment'># TODO: Refactor and move to extend/os
-</span>  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing casks is supported only on macOS</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../OS.html" title="OS (module)">OS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mac?'><span class='object_link'><a href="../../OS.html#mac%3F-class_method" title="OS.mac? (method)">mac?</a></span></span> <span class='comment'># rubocop:disable Homebrew/MoveToExtendOS
-</span>
-  <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-    <span class='label'>verbose:</span>        <span class='id identifier rubyid_verbose'>verbose</span><span class='comma'>,</span>
-    <span class='label'>force:</span>          <span class='id identifier rubyid_force'>force</span><span class='comma'>,</span>
-    <span class='label'>adopt:</span>          <span class='id identifier rubyid_adopt'>adopt</span><span class='comma'>,</span>
-    <span class='label'>binaries:</span>       <span class='id identifier rubyid_binaries'>binaries</span><span class='comma'>,</span>
-    <span class='label'>skip_cask_deps:</span> <span class='id identifier rubyid_skip_cask_deps'>skip_cask_deps</span><span class='comma'>,</span>
-    <span class='label'>require_sha:</span>    <span class='id identifier rubyid_require_sha'>require_sha</span><span class='comma'>,</span>
-    <span class='label'>quarantine:</span>     <span class='id identifier rubyid_quarantine'>quarantine</span><span class='comma'>,</span>
-    <span class='label'>quiet:</span>          <span class='id identifier rubyid_quiet'>quiet</span><span class='comma'>,</span>
-    <span class='label'>zap:</span>            <span class='id identifier rubyid_zap'>zap</span><span class='comma'>,</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
-
-  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quarantine</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:quarantine</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_dry_run'>dry_run</span>
-    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_casks_to_install'>casks_to_install</span> <span class='op'>=</span> <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:installed?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_plural'>plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_casks_to_install'>casks_to_install</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_casks_to_install'>casks_to_install</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural'>plural</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_casks_to_install'>casks_to_install</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:full_name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
-      <span class='id identifier rubyid_dep_names'>dep_names</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../CaskDependent.html" title="CaskDependent (class)">CaskDependent</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../CaskDependent.html#initialize-instance_method" title="CaskDependent#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
-                               <span class='period'>.</span><span class='id identifier rubyid_runtime_dependencies'>runtime_dependencies</span>
-                               <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:installed?</span><span class='rparen'>)</span>
-                               <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span>
-                               <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
-      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep_names'>dep_names</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-
-      <span class='id identifier rubyid_plural'>plural</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependency</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_dep_names'>dep_names</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Would install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep_names'>dep_names</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_plural'>plural</span><span class='embexpr_end'>}</span><span class='tstring_content'> for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_dep_names'>dep_names</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/installer</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='id identifier rubyid_casks'>casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="../Installer.html" title="Cask::Installer (class)">Installer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Installer.html#initialize-instance_method" title="Cask::Installer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_install'><span class='object_link'><a href="../Installer.html#install-instance_method" title="Cask::Installer#install (method)">install</a></span></span>
-  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../CaskAlreadyInstalledError.html" title="Cask::CaskAlreadyInstalledError (class)">CaskAlreadyInstalledError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-    <span class='id identifier rubyid_opoo'>opoo</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Installing casks is supported only on macOS</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -478,7 +392,6 @@
       <pre class="lines">
 
 
-28
 29
 30
 31
@@ -490,10 +403,11 @@
 37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cmd/install.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'cask/cmd/install.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parser'>parser</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>super</span> <span class='kw'>do</span>
@@ -549,7 +463,6 @@
       <pre class="lines">
 
 
-43
 44
 45
 46
@@ -562,10 +475,11 @@
 53
 54
 55
-56</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cmd/install.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'cask/cmd/install.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_install_casks'>install_casks</span><span class='lparen'>(</span>
