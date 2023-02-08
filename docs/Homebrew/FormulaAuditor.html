@@ -563,6 +563,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#audit_github_issue_comment-instance_method" title="#audit_github_issue_comment (instance method)">#<strong>audit_github_issue_comment</strong>  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#audit_github_repository-instance_method" title="#audit_github_repository (instance method)">#<strong>audit_github_repository</strong>  &#x21d2; Object </a>
     
     
@@ -1390,21 +1412,21 @@
       <pre class="lines">
 
 
-851
-852
-853
-854
-855
-856
-857
-858
-859
-860
-861
-862</pre>
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 851</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 871</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -2338,6 +2360,83 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="audit_github_issue_comment-instance_method">
+  
+    #<strong>audit_github_issue_comment</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 819</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_audit_github_issue_comment'>audit_github_issue_comment</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
+
+  <span class='id identifier rubyid_matches'>matches</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_scan'>scan</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https://github.com/([-\w_]*)/([-\w_]*)/(pull|issues)/([0-9]*)</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_matches'>matches</span>
+
+  <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match'>match</span><span class='op'>|</span>
+    <span class='id identifier rubyid_owner'>owner</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span>
+
+    <span class='comment'># Do not trigger for self references
+</span>    <span class='kw'>next</span> <span class='kw'>if</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_owner'>owner</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>==</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span> <span class='op'>||</span> <span class='id identifier rubyid_owner'>owner</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_issue'>issue</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_rest'><span class='object_link'><a href="../GitHub/API.html#open_rest-class_method" title="GitHub::API.open_rest (method)">open_rest</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://api.github.com/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_owner'>owner</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/issues/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_issue'>issue</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_issue'>issue</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>state</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>open</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_issue_url'>issue_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://github.com/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_owner'>owner</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula refers to a GitHub issue or pull request that is closed: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_issue_url'>issue_url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="audit_github_repository-instance_method">
   
     #<strong>audit_github_repository</strong>  &#x21d2; <tt>Object</tt> 
@@ -2977,19 +3076,19 @@
       <pre class="lines">
 
 
-832
-833
-834
-835
-836
-837
-838
-839
-840
-841</pre>
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 832</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 852</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_prefix_has_contents'>audit_prefix_has_contents</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3036,21 +3135,21 @@
       <pre class="lines">
 
 
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830</pre>
+839
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 819</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 839</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_reverse_migration'>audit_reverse_migration</span>
   <span class='comment'># Only enforce for new formula being re-added to core
@@ -3950,12 +4049,12 @@
       <pre class="lines">
 
 
-847
-848
-849</pre>
+867
+868
+869</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 847</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 867</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span>
@@ -3995,12 +4094,12 @@
       <pre class="lines">
 
 
-843
-844
-845</pre>
+863
+864
+865</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 843</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 863</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quote_dep'>quote_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
