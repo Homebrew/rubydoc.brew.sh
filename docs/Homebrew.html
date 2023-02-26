@@ -19910,14 +19910,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 132
 133
 134
-135</pre>
+135
+136</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_csv'>generate_csv</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_results'>results</span><span class='comma'>,</span> <span class='id identifier rubyid_grand_total'>grand_total</span><span class='rparen'>)</span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_csv'>csv</span><span class='op'>|</span>
-    <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>user</span><span class='words_sep'> </span><span class='tstring_content'>repo</span><span class='words_sep'> </span><span class='tstring_content'>commits</span><span class='words_sep'> </span><span class='tstring_content'>coauthorships</span><span class='words_sep'> </span><span class='tstring_content'>signoffs</span><span class='words_sep'> </span><span class='tstring_content'>total</span><span class='tstring_end'>]</span></span>
+    <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>user</span><span class='words_sep'> </span><span class='tstring_content'>repo</span><span class='words_sep'> </span><span class='tstring_content'>commits</span><span class='words_sep'> </span><span class='tstring_content'>coauthorships</span><span class='words_sep'> </span><span class='tstring_content'>signoffs</span><span class='words_sep'> </span><span class='tstring_content'>reviews</span><span class='words_sep'> </span><span class='tstring_content'>total</span><span class='tstring_end'>]</span></span>
     <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_counts'>counts</span><span class='op'>|</span>
       <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
         <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span>
@@ -19925,6 +19926,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
         <span class='id identifier rubyid_counts'>counts</span><span class='lbracket'>[</span><span class='symbol'>:commits</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_counts'>counts</span><span class='lbracket'>[</span><span class='symbol'>:coauthorships</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_counts'>counts</span><span class='lbracket'>[</span><span class='symbol'>:signoffs</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='id identifier rubyid_counts'>counts</span><span class='lbracket'>[</span><span class='symbol'>:reviews</span><span class='rbracket'>]</span><span class='comma'>,</span>
         <span class='id identifier rubyid_counts'>counts</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span><span class='comma'>,</span>
       <span class='rbracket'>]</span>
     <span class='kw'>end</span>
@@ -20151,7 +20153,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_maintainers_csv'>generate_maintainers_csv</span><span class='lparen'>(</span><span class='id identifier rubyid_totals'>totals</span><span class='rparen'>)</span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_generate'>generate</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_csv'>csv</span><span class='op'>|</span>
-    <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>user</span><span class='words_sep'> </span><span class='tstring_content'>repo</span><span class='words_sep'> </span><span class='tstring_content'>commits</span><span class='words_sep'> </span><span class='tstring_content'>coauthorships</span><span class='words_sep'> </span><span class='tstring_content'>signoffs</span><span class='words_sep'> </span><span class='tstring_content'>total</span><span class='tstring_end'>]</span></span>
+    <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>user</span><span class='words_sep'> </span><span class='tstring_content'>repo</span><span class='words_sep'> </span><span class='tstring_content'>commits</span><span class='words_sep'> </span><span class='tstring_content'>coauthorships</span><span class='words_sep'> </span><span class='tstring_content'>signoffs</span><span class='words_sep'> </span><span class='tstring_content'>reviews</span><span class='words_sep'> </span><span class='tstring_content'>total</span><span class='tstring_end'>]</span></span>
 
     <span class='id identifier rubyid_totals'>totals</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='op'>-</span><span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_total'>total</span><span class='op'>|</span>
       <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_grand_total_row'>grand_total_row</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_total'>total</span><span class='rparen'>)</span>
@@ -20831,17 +20833,17 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-197
-198
-199
-200
-201
-202
 203
-204</pre>
+204
+205
+206
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_log_trailers_cmd'>git_log_trailers_cmd</span><span class='lparen'>(</span><span class='id identifier rubyid_repo_path'>repo_path</span><span class='comma'>,</span> <span class='id identifier rubyid_person'>person</span><span class='comma'>,</span> <span class='id identifier rubyid_trailer'>trailer</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cmd'>cmd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_repo_path'>repo_path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--oneline</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -21164,7 +21166,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-138
 139
 140
 141
@@ -21173,10 +21174,12 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 144
 145
 146
-147</pre>
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_grand_total_row'>grand_total_row</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_grand_total'>grand_total</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span>
@@ -21185,6 +21188,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <span class='id identifier rubyid_grand_total'>grand_total</span><span class='lbracket'>[</span><span class='symbol'>:commits</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id identifier rubyid_grand_total'>grand_total</span><span class='lbracket'>[</span><span class='symbol'>:coauthorships</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id identifier rubyid_grand_total'>grand_total</span><span class='lbracket'>[</span><span class='symbol'>:signoffs</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_grand_total'>grand_total</span><span class='lbracket'>[</span><span class='symbol'>:reviews</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='id identifier rubyid_grand_total'>grand_total</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span><span class='comma'>,</span>
   <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -32760,8 +32764,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-149
-150
 151
 152
 153
@@ -32791,10 +32793,13 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 177
 178
 179
-180</pre>
+180
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scan_repositories'>scan_repositories</span><span class='lparen'>(</span><span class='id identifier rubyid_repos'>repos</span><span class='comma'>,</span> <span class='id identifier rubyid_person'>person</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -32823,6 +32828,7 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <span class='label'>commits:</span>       <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_repo_commit_count_for_user'><span class='object_link'><a href="GitHub.html#repo_commit_count_for_user-class_method" title="GitHub.repo_commit_count_for_user (method)">repo_commit_count_for_user</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_repo_full_name'>repo_full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_person'>person</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='comma'>,</span>
       <span class='label'>coauthorships:</span> <span class='id identifier rubyid_git_log_trailers_cmd'>git_log_trailers_cmd</span><span class='lparen'>(</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_repo_path'>repo_path</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_person'>person</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Co-authored-by</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='comma'>,</span>
       <span class='label'>signoffs:</span>      <span class='id identifier rubyid_git_log_trailers_cmd'>git_log_trailers_cmd</span><span class='lparen'>(</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_repo_path'>repo_path</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_person'>person</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Signed-off-by</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>reviews:</span>       <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_count_issues'><span class='object_link'><a href="GitHub.html#count_issues-class_method" title="GitHub.count_issues (method)">count_issues</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>is:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pr</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>repo:</span> <span class='id identifier rubyid_repo_full_name'>repo_full_name</span><span class='comma'>,</span> <span class='label'>reviewed_by:</span> <span class='id identifier rubyid_person'>person</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
@@ -35898,9 +35904,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-183
-184
-185
 186
 187
 188
@@ -35909,22 +35912,31 @@ corresponding to all the original commit messages combined.</p>
 191
 192
 193
-194</pre>
+194
+195
+196
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/contributions.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_total'>total</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_totals'>totals</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>commits:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>coauthorships:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>signoffs:</span> <span class='int'>0</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_totals'>totals</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>commits:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>coauthorships:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>signoffs:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>reviews:</span> <span class='int'>0</span> <span class='rbrace'>}</span>
 
-  <span class='comment'># {&quot;brew&quot;=&gt;{:commits=&gt;9,:coauthorships=&gt;6,:signoffs=&gt;3},&quot;core&quot;=&gt;{:commits=&gt;15,:coauthorships=&gt;10,:signoffs=&gt;5}}
+  <span class='comment'># {
+</span>  <span class='comment'>#   &quot;brew&quot;=&gt;{:commits=&gt;9,:coauthorships=&gt;6,:signoffs=&gt;3,:reviews=&gt;1},
+</span>  <span class='comment'>#   &quot;core&quot;=&gt;{:commits=&gt;15,:coauthorships=&gt;10,:signoffs=&gt;5,:reviews=&gt;2}
+</span>  <span class='comment'># }
 </span>  <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_each_value'>each_value</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_counts'>counts</span><span class='op'>|</span>
     <span class='id identifier rubyid_counts'>counts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_kind'>kind</span><span class='comma'>,</span> <span class='id identifier rubyid_count'>count</span><span class='op'>|</span>
       <span class='id identifier rubyid_totals'>totals</span><span class='lbracket'>[</span><span class='id identifier rubyid_kind'>kind</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='id identifier rubyid_count'>count</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_totals'>totals</span> <span class='comment'># {:commits=&gt;24,:coauthorships=&gt;16,signoffs=&gt;8}
+  <span class='id identifier rubyid_totals'>totals</span> <span class='comment'># {:commits=&gt;24,:coauthorships=&gt;16,:signoffs=&gt;8,:reviews=&gt;3}
 </span><span class='kw'>end</span></pre>
     </td>
   </tr>
