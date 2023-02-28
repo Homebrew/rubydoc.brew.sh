@@ -794,25 +794,25 @@ in the <code>livecheck</code> block</p>
       <pre class="code"><span class="info file"># File 'livecheck/strategy.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_url'>from_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>livecheck_strategy:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>url_provided:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>regex_provided:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>block_provided:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_usable_strategies'>usable_strategies</span> <span class='op'>=</span> <span class='id identifier rubyid_strategies'>strategies</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_strategy'>strategy</span><span class='op'>|</span>
+  <span class='id identifier rubyid_usable_strategies'>usable_strategies</span> <span class='op'>=</span> <span class='id identifier rubyid_strategies'>strategies</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_strategy_symbol'>strategy_symbol</span><span class='comma'>,</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='op'>|</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Strategy/PageMatch.html" title="Homebrew::Livecheck::Strategy::PageMatch (class)">PageMatch</a></span></span>
       <span class='comment'># Only treat the strategy as usable if the `livecheck` block
 </span>      <span class='comment'># contains a regex and/or `strategy` block
 </span>      <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_regex_provided'>regex_provided</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_block_provided'>block_provided</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="Strategy/Json.html" title="Homebrew::Livecheck::Strategy::Json (class)">Json</a></span></span>
       <span class='comment'># Only treat the strategy as usable if the `livecheck` block
-</span>      <span class='comment'># contains a `strategy` block
-</span>      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_provided'>block_provided</span>
+</span>      <span class='comment'># specifies the strategy and contains a `strategy` block
+</span>      <span class='kw'>next</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_livecheck_strategy'>livecheck_strategy</span> <span class='op'>!=</span> <span class='id identifier rubyid_strategy_symbol'>strategy_symbol</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_block_provided'>block_provided</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='period'>.</span><span class='id identifier rubyid_const_defined?'>const_defined?</span><span class='lparen'>(</span><span class='symbol'>:PRIORITY</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
           <span class='op'>!</span><span class='id identifier rubyid_strategy'>strategy</span><span class='op'>::</span><span class='const'>PRIORITY</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span> <span class='op'>&amp;&amp;</span>
-          <span class='id identifier rubyid_from_symbol'>from_symbol</span><span class='lparen'>(</span><span class='id identifier rubyid_livecheck_strategy'>livecheck_strategy</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='id identifier rubyid_strategy'>strategy</span>
+          <span class='id identifier rubyid_livecheck_strategy'>livecheck_strategy</span> <span class='op'>!=</span> <span class='id identifier rubyid_strategy_symbol'>strategy_symbol</span>
       <span class='comment'># Ignore strategies with a priority of 0 or lower, unless the
 </span>      <span class='comment'># strategy is specified in the `livecheck` block
 </span>      <span class='kw'>next</span>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_strategy'>strategy</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:match?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
 
   <span class='comment'># Sort usable strategies in descending order by priority, using the
 </span>  <span class='comment'># DEFAULT_PRIORITY when a strategy doesn&#39;t contain a PRIORITY constant
