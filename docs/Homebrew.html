@@ -14049,8 +14049,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-72
-73
 74
 75
 76
@@ -14064,10 +14062,12 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 84
 85
 86
-87</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_changed_test_files'>changed_test_files</span>
   <span class='id identifier rubyid_changed_files'>changed_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--name-only</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>master</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -32498,7 +32498,9 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 67
 68
 69
-70</pre>
+70
+71
+72</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 52</span>
@@ -32516,11 +32518,13 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sending test results to BuildPulse</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_quiet_system'>quiet_system</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buildpulse-test-reporter</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buildpulse-test-reporter</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>submit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/test/junit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--account-id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_BUILDPULSE_ACCOUNT_ID</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
-                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--repository-id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_BUILDPULSE_REPOSITORY_ID</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to send test results to BuildPulse!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='comment'># TODO: make this use `system_command!` when https://github.com/buildpulse/buildpulse-action/issues/4 is fixed
+</span>  <span class='id identifier rubyid_system_command'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buildpulse-test-reporter</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_opt_bin'>opt_bin</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buildpulse-test-reporter</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                 <span class='label'>args:</span> <span class='lbracket'>[</span>
+                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>submit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/test/junit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--account-id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_BUILDPULSE_ACCOUNT_ID</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--repository-id</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_BUILDPULSE_REPOSITORY_ID</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+                 <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -33351,9 +33355,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-203
-204
-205
 206
 207
 208
@@ -33407,10 +33408,13 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 256
 257
 258
-259</pre>
+259
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_setup_environment!'>setup_environment!</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='comment'># Cleanup any unwanted user configuration.
@@ -35471,8 +35475,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-89
-90
 91
 92
 93
@@ -35583,10 +35585,13 @@ corresponding to all the original commit messages combined.</p>
 198
 199
 200
-201</pre>
+201
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tests'>tests</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_tests_args'>tests_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -35693,10 +35698,11 @@ corresponding to all the original commit messages combined.</p>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rspec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_bundle_args'>bundle_args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_files'>files</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
 
     <span class='id identifier rubyid_run_buildpulse'>run_buildpulse</span> <span class='kw'>if</span> <span class='id identifier rubyid_use_buildpulse?'>use_buildpulse?</span>
 
-    <span class='kw'>return</span> <span class='kw'>if</span> <span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+    <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_success'>success</span>
 
     <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='kw'>end</span>
