@@ -113,92 +113,6 @@
 
 
 
-  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
-  <ul class="summary">
-    
-      
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#current_revision-instance_method" title="#current_revision (instance method)">#<strong>current_revision</strong>  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-  
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute current_revision.</p>
-</div></span>
-  
-</li>
-
-    
-      
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initial_revision-instance_method" title="#initial_revision (instance method)">#<strong>initial_revision</strong>  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-  
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute initial_revision.</p>
-</div></span>
-  
-</li>
-
-    
-      
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#tap-instance_method" title="#tap (instance method)">#<strong>tap</strong>  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-  
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute tap.</p>
-</div></span>
-  
-</li>
-
-    
-  </ul>
-
 
 
 
@@ -214,7 +128,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(tap)  &#x21d2; Reporter </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(tap, api_names_txt: nil, api_names_before_txt: nil, api_dir_prefix: nil)  &#x21d2; Reporter </a>
     
     
   </span>
@@ -331,7 +245,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(tap)  &#x21d2; <tt><span class='object_link'><a href="" title="Reporter (class)">Reporter</a></span></tt> 
+    #<strong>initialize</strong>(tap, api_names_txt: nil, api_names_before_txt: nil, api_dir_prefix: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Reporter (class)">Reporter</a></span></tt> 
   
 
   
@@ -346,19 +260,6 @@
 </div>
 <div class="tags">
   
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Reporter/ReporterRevisionUnsetError.html" title="Reporter::ReporterRevisionUnsetError (class)">ReporterRevisionUnsetError</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -366,31 +267,45 @@
       <pre class="lines">
 
 
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329</pre>
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 349</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='label'>api_names_txt:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>api_names_before_txt:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>api_dir_prefix:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@tap</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span>
 
-  <span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_BEFORE</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_repo_var'>repo_var</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='ivar'>@initial_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Reporter/ReporterRevisionUnsetError.html" title="Reporter::ReporterRevisionUnsetError (class)">ReporterRevisionUnsetError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span> <span class='kw'>if</span> <span class='ivar'>@initial_revision</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='comment'># This is slightly involved/weird but all the #report logic is shared so it&#39;s worth it.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_installed_from_api?'>installed_from_api?</span><span class='lparen'>(</span><span class='id identifier rubyid_api_names_txt'>api_names_txt</span><span class='comma'>,</span> <span class='id identifier rubyid_api_names_before_txt'>api_names_before_txt</span><span class='comma'>,</span> <span class='id identifier rubyid_api_dir_prefix'>api_dir_prefix</span><span class='rparen'>)</span>
+    <span class='ivar'>@api_names_txt</span> <span class='op'>=</span> <span class='id identifier rubyid_api_names_txt'>api_names_txt</span>
+    <span class='ivar'>@api_names_before_txt</span> <span class='op'>=</span> <span class='id identifier rubyid_api_names_before_txt'>api_names_before_txt</span>
+    <span class='ivar'>@api_dir_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_api_dir_prefix'>api_dir_prefix</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_BEFORE</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_repo_var'>repo_var</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='ivar'>@initial_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Reporter/ReporterRevisionUnsetError.html" title="Reporter::ReporterRevisionUnsetError (class)">ReporterRevisionUnsetError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_initial_revision_var'>initial_revision_var</span> <span class='kw'>if</span> <span class='ivar'>@initial_revision</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_current_revision_var'>current_revision_var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_AFTER</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_repo_var'>repo_var</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='ivar'>@current_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_current_revision_var'>current_revision_var</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Reporter/ReporterRevisionUnsetError.html" title="Reporter::ReporterRevisionUnsetError (class)">ReporterRevisionUnsetError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_current_revision_var'>current_revision_var</span> <span class='kw'>if</span> <span class='ivar'>@current_revision</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_current_revision_var'>current_revision_var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_AFTER</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_repo_var'>repo_var</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='ivar'>@current_revision</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_current_revision_var'>current_revision_var</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Reporter/ReporterRevisionUnsetError.html" title="Reporter::ReporterRevisionUnsetError (class)">ReporterRevisionUnsetError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_current_revision_var'>current_revision_var</span> <span class='kw'>if</span> <span class='ivar'>@current_revision</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -398,137 +313,6 @@
 </div>
   
 </div>
-
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id=""></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="current_revision-instance_method">
-  
-    #<strong>current_revision</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns the value of attribute current_revision.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-317
-318
-319</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 317</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_current_revision'>current_revision</span>
-  <span class='ivar'>@current_revision</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="initial_revision-instance_method">
-  
-    #<strong>initial_revision</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns the value of attribute initial_revision.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-317
-318
-319</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 317</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_initial_revision'>initial_revision</span>
-  <span class='ivar'>@initial_revision</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="tap-instance_method">
-  
-    #<strong>tap</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Returns the value of attribute tap.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-317
-318
-319</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 317</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_tap'>tap</span>
-  <span class='ivar'>@tap</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -550,36 +334,36 @@
       <pre class="lines">
 
 
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528</pre>
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 502</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 543</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate_formula_rename'>migrate_formula_rename</span><span class='lparen'>(</span><span class='label'>force:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
@@ -628,47 +412,6 @@
       <pre class="lines">
 
 
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
 464
 465
 466
@@ -705,10 +448,51 @@
 497
 498
 499
-500</pre>
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 464</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate_tap_migration'>migrate_tap_migration</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_report'>report</span><span class='lbracket'>[</span><span class='symbol'>:D</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_report'>report</span><span class='lbracket'>[</span><span class='symbol'>:DC</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_full_name'>full_name</span><span class='op'>|</span>
@@ -808,43 +592,6 @@
       <pre class="lines">
 
 
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
 368
 369
 370
@@ -894,10 +641,47 @@
 414
 415
 416
-417</pre>
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 368</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='label'>auto_update:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@report</span> <span class='kw'>if</span> <span class='ivar'>@report</span>
@@ -1029,15 +813,23 @@
       <pre class="lines">
 
 
-419
-420
-421</pre>
+456
+457
+458
+459
+460
+461
+462</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 419</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_updated?'>updated?</span>
-  <span class='id identifier rubyid_initial_revision'>initial_revision</span> <span class='op'>!=</span> <span class='id identifier rubyid_current_revision'>current_revision</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_installed_from_api?'>installed_from_api?</span>
+    <span class='id identifier rubyid_diff'>diff</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_initial_revision'>initial_revision</span> <span class='op'>!=</span> <span class='id identifier rubyid_current_revision'>current_revision</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
