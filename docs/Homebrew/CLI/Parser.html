@@ -856,7 +856,9 @@
 147
 148
 149
-150</pre>
+150
+151
+152</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cli/parser.rb', line 111</span>
@@ -875,7 +877,9 @@
   <span class='ivar'>@args</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Args.html" title="Homebrew::CLI::Args (class)">Args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Args.html#initialize-instance_method" title="Homebrew::CLI::Args#initialize (method)">new</a></span></span>
 
   <span class='comment'># Filter out Sorbet runtime type checking method calls.
-</span>  <span class='id identifier rubyid_cmd_location'>cmd_location</span> <span class='op'>=</span> <span class='id identifier rubyid_caller_locations'>caller_locations</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_location'>location</span><span class='op'>|</span> <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_exclude?'>exclude?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/gems/sorbet-runtime-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_second'>second</span>
+</span>  <span class='id identifier rubyid_cmd_location'>cmd_location</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_caller_locations'>caller_locations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_location'>location</span><span class='op'>|</span>
+    <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_exclude?'>exclude?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/gems/sorbet-runtime-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_second'>second</span>
   <span class='ivar'>@command_name</span> <span class='op'>=</span> <span class='id identifier rubyid_cmd_location'>cmd_location</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_args</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='ivar'>@is_dev_cmd</span> <span class='op'>=</span> <span class='id identifier rubyid_cmd_location'>cmd_location</span><span class='period'>.</span><span class='id identifier rubyid_absolute_path'>absolute_path</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Commands.html" title="Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Commands.html#HOMEBREW_DEV_CMD_PATH-constant" title="Commands::HOMEBREW_DEV_CMD_PATH (constant)">HOMEBREW_DEV_CMD_PATH</a></span></span><span class='rparen'>)</span>
 
@@ -1328,17 +1332,17 @@
       <pre class="lines">
 
 
-373
-374
 375
 376
 377
 378
 379
-380</pre>
+380
+381
+382</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_options'>cask_options</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options'>global_cask_options</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
@@ -1368,17 +1372,17 @@
       <pre class="lines">
 
 
-199
-200
 201
 202
 203
 204
 205
-206</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 201</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_comma_array'>comma_array</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>hidden:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span>
@@ -1408,12 +1412,12 @@
       <pre class="lines">
 
 
-233
-234
-235</pre>
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_conflicts'>conflicts</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@conflicts</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_option'>option</span><span class='op'>|</span> <span class='id identifier rubyid_option_to_name'>option_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1438,14 +1442,14 @@
       <pre class="lines">
 
 
-185
-186
 187
 188
-189</pre>
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@description</span> <span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1495,14 +1499,14 @@
       <pre class="lines">
 
 
-179
-180
 181
 182
-183</pre>
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env?'>env?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -1529,8 +1533,6 @@
       <pre class="lines">
 
 
-208
-209
 210
 211
 212
@@ -1552,10 +1554,12 @@
 228
 229
 230
-231</pre>
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_flag'>flag</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacement:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>depends_on:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>hidden:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_required'>required</span><span class='comma'>,</span> <span class='id identifier rubyid_flag_type'>flag_type</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1611,12 +1615,12 @@
       <pre class="lines">
 
 
-383
-384
-385</pre>
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_options'>formula_options</span>
   <span class='ivar'>@formula_options</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1641,8 +1645,6 @@
       <pre class="lines">
 
 
-362
-363
 364
 365
 366
@@ -1650,10 +1652,12 @@
 368
 369
 370
-371</pre>
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 364</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_generate_help_text'>generate_help_text</span>
   <span class='const'><span class='object_link'><a href="../../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_format_help_text'><span class='object_link'><a href="../../Formatter.html#format_help_text-class_method" title="Formatter.format_help_text (method)">format_help_text</a></span></span><span class='lparen'>(</span><span class='ivar'>@parser</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='label'>width:</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#COMMAND_DESC_WIDTH-constant" title="COMMAND_DESC_WIDTH (constant)">COMMAND_DESC_WIDTH</a></span></span><span class='rparen'>)</span>
@@ -1695,12 +1699,12 @@
       <pre class="lines">
 
 
-417
-418
-419</pre>
+419
+420
+421</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 417</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 419</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hide_from_man_page!'>hide_from_man_page!</span>
   <span class='ivar'>@hide_from_man_page</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -1725,16 +1729,16 @@
       <pre class="lines">
 
 
-243
-244
 245
 246
 247
 248
-249</pre>
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name_to_option'>name_to_option</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -1773,7 +1777,7 @@
         <span class='name'>type</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>Array&lt;<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span>&gt;</tt>, <tt>Array&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt>nil</tt>, <tt><span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>, <tt>Array&lt;<span class='object_link'><a href="../../String.html" title="String (class)">String</a></span>&gt;</tt>, <tt>Array&lt;<span class='object_link'><a href="../../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -1829,8 +1833,6 @@
       <pre class="lines">
 
 
-395
-396
 397
 398
 399
@@ -1848,10 +1850,12 @@
 411
 412
 413
-414</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 397</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_named_args'>named_args</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>number:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>max:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_max'>max</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span>
@@ -1893,15 +1897,15 @@
       <pre class="lines">
 
 
-255
-256
 257
 258
 259
-260</pre>
+260
+261
+262</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_option_description'>option_description</span><span class='lparen'>(</span><span class='id identifier rubyid_description'>description</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>hidden:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HIDDEN_DESC_PLACEHOLDER-constant" title="HIDDEN_DESC_PLACEHOLDER (constant)">HIDDEN_DESC_PLACEHOLDER</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_hidden'>hidden</span>
@@ -1929,12 +1933,12 @@
       <pre class="lines">
 
 
-251
-252
-253</pre>
+253
+254
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 253</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_option_to_description'>option_to_description</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A--?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
@@ -1959,14 +1963,14 @@
       <pre class="lines">
 
 
-237
-238
 239
 240
-241</pre>
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_option_to_name'>option_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_option'>option</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\A--?(\[no-\])?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -2046,8 +2050,6 @@
       <pre class="lines">
 
 
-298
-299
 300
 301
 302
@@ -2104,10 +2106,12 @@
 353
 354
 355
-356</pre>
+356
+357
+358</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 300</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='comma'>,</span> <span class='label'>ignore_invalid_options:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Arguments were already parsed!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@args_parsed</span>
@@ -2188,8 +2192,6 @@
       <pre class="lines">
 
 
-262
-263
 264
 265
 266
@@ -2221,10 +2223,12 @@
 292
 293
 294
-295</pre>
+295
+296
+297</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_remaining'>parse_remaining</span><span class='lparen'>(</span><span class='id identifier rubyid_argv'>argv</span><span class='comma'>,</span> <span class='label'>ignore_invalid_options:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -2314,8 +2318,6 @@
       <pre class="lines">
 
 
-152
-153
 154
 155
 156
@@ -2338,10 +2340,12 @@
 173
 174
 175
-176</pre>
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_switch'>switch</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='label'>description:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacement:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>env:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>depends_on:</span> <span class='kw'>nil</span><span class='comma'>,</span>
            <span class='label'>method:</span> <span class='symbol'>:on</span><span class='comma'>,</span> <span class='label'>hidden:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -2388,12 +2392,12 @@
       <pre class="lines">
 
 
-191
-192
-193</pre>
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@usage_banner</span><span class='comma'>,</span> <span class='ivar'>@description</span> <span class='op'>=</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span>
@@ -2418,12 +2422,12 @@
       <pre class="lines">
 
 
-195
-196
-197</pre>
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'cli/parser.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_usage_banner_text'>usage_banner_text</span>
   <span class='ivar'>@parser</span><span class='period'>.</span><span class='id identifier rubyid_banner'>banner</span>
