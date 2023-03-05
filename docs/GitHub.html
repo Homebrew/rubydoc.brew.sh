@@ -290,6 +290,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#count_repo_commits-class_method" title="count_repo_commits (class method)">.<strong>count_repo_commits</strong>(nwo, user, filter, args)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#create_bump_pr-class_method" title="create_bump_pr (class method)">.<strong>create_bump_pr</strong>(info, args:)  &#x21d2; Object </a>
     
     
@@ -994,7 +1016,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#repo_commit_count_for_user-class_method" title="repo_commit_count_for_user (class method)">.<strong>repo_commit_count_for_user</strong>(nwo, user, filter, args)  &#x21d2; Object </a>
+      <a href="#repo_commits_for_user-class_method" title="repo_commits_for_user (class method)">.<strong>repo_commits_for_user</strong>(nwo, user, filter, args)  &#x21d2; Object </a>
     
     
   </span>
@@ -1688,6 +1710,69 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_count_issues'>count_issues</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_search_results_count'>search_results_count</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>issues</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_qualifiers'>qualifiers</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="count_repo_commits-class_method">
+  
+    .<strong>count_repo_commits</strong>(nwo, user, filter, args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'utils/github.rb', line 734</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_count_repo_commits'>count_repo_commits</span><span class='lparen'>(</span><span class='id identifier rubyid_nwo'>nwo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_filter'>filter</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_github_api?'>no_github_api?</span>
+
+  <span class='id identifier rubyid_author_shas'>author_shas</span> <span class='op'>=</span> <span class='id identifier rubyid_repo_commits_for_user'>repo_commits_for_user</span><span class='lparen'>(</span><span class='id identifier rubyid_nwo'>nwo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>author</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_author_shas'>author_shas</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='kw'>if</span> <span class='id identifier rubyid_filter'>filter</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>author</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_committer_shas'>committer_shas</span> <span class='op'>=</span> <span class='id identifier rubyid_repo_commits_for_user'>repo_commits_for_user</span><span class='lparen'>(</span><span class='id identifier rubyid_nwo'>nwo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>committer</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='int'>0</span> <span class='kw'>if</span> <span class='id identifier rubyid_committer_shas'>committer_shas</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='comment'># Only count commits where the author and committer are different.
+</span>  <span class='id identifier rubyid_committer_shas'>committer_shas</span><span class='period'>.</span><span class='id identifier rubyid_difference'>difference</span><span class='lparen'>(</span><span class='id identifier rubyid_author_shas'>author_shas</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3868,9 +3953,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="repo_commit_count_for_user-class_method">
+  <h3 class="signature " id="repo_commits_for_user-class_method">
   
-    .<strong>repo_commit_count_for_user</strong>(nwo, user, filter, args)  &#x21d2; <tt>Object</tt> 
+    .<strong>repo_commits_for_user</strong>(nwo, user, filter, args)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -3914,16 +3999,16 @@
     <td>
       <pre class="code"><span class="info file"># File 'utils/github.rb', line 720</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_repo_commit_count_for_user'>repo_commit_count_for_user</span><span class='lparen'>(</span><span class='id identifier rubyid_nwo'>nwo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_filter'>filter</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_repo_commits_for_user'>repo_commits_for_user</span><span class='lparen'>(</span><span class='id identifier rubyid_nwo'>nwo</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_filter'>filter</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_github_api?'>no_github_api?</span>
 
   <span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filter'>filter</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_params'>params</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>since=</span><span class='embexpr_beg'>#{</span><span class='const'>DateTime</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_iso8601'>iso8601</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span>
   <span class='id identifier rubyid_params'>params</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>until=</span><span class='embexpr_beg'>#{</span><span class='const'>DateTime</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_iso8601'>iso8601</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span>
 
-  <span class='id identifier rubyid_commits'>commits</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_commits'>commits</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_paginate_rest'><span class='object_link'><a href="GitHub/API.html#paginate_rest-class_method" title="GitHub::API.paginate_rest (method)">paginate_rest</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#API_URL-constant" title="GitHub::API_URL (constant)">API_URL</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/repos/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_nwo'>nwo</span><span class='embexpr_end'>}</span><span class='tstring_content'>/commits</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>additional_query_params:</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&amp;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_result'>result</span><span class='op'>|</span>
-    <span class='id identifier rubyid_commits'>commits</span> <span class='op'>+=</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+    <span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span> <span class='id identifier rubyid_c'>c</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sha</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_commits'>commits</span>
 <span class='kw'>end</span></pre>
