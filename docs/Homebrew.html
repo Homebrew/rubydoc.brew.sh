@@ -1626,6 +1626,28 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#clean_argv-class_method" title="clean_argv (class method)">.<strong>clean_argv</strong>  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Remove the <code>--debug</code>, <code>--verbose</code> and <code>--quiet</code> options which cause problems for IRB and have already been parsed by the CLI::Parser.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#cleanup-class_method" title="cleanup (class method)">.<strong>cleanup</strong>  &#x21d2; Object </a>
     
     
@@ -14465,6 +14487,53 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="clean_argv-class_method">
+  
+    .<strong>clean_argv</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Remove the <code>--debug</code>, <code>--verbose</code> and <code>--quiet</code> options which cause problems
+for IRB and have already been parsed by the CLI::Parser.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 94</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_clean_argv'>clean_argv</span>
+  <span class='id identifier rubyid_global_options'>global_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span>
+                   <span class='period'>.</span><span class='id identifier rubyid_global_options'>global_options</span>
+                   <span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_options'>options</span><span class='op'>|</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_global_options'>global_options</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="cleanup-class_method">
   
     .<strong>cleanup</strong>  &#x21d2; <tt>Object</tt> 
@@ -23583,7 +23652,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 79
 80
 81
-82</pre>
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 47</span>
@@ -23591,6 +23668,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_irb'>irb</span>
   <span class='comment'># work around IRB modifying ARGV.
 </span>  <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_irb_args'>irb_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_clean_argv'>clean_argv</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_examples?'>examples?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -23608,7 +23687,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_pry?'>pry?</span>
     <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_gem_setup_path!'><span class='object_link'><a href="#install_gem_setup_path!-class_method" title="Homebrew.install_gem_setup_path! (method)">install_gem_setup_path!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pry</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pry</span><span class='tstring_end'>&quot;</span></span>
-    <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_prompt_name'>prompt_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>irb</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -23619,8 +23697,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Interactive Homebrew Shell</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Example commands available with: `brew irb --examples`</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_pry?'>pry?</span>
+    <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_should_load_rc'>should_load_rc</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='comment'># skip loading .pryrc
+</span>    <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_history_file'>history_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='embexpr_end'>}</span><span class='tstring_content'>/.brew_pry_history</span><span class='tstring_end'>&quot;</span></span>
+    <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_memory_size'>memory_size</span> <span class='op'>=</span> <span class='int'>100</span> <span class='comment'># max lines to save to history file
+</span>    <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_prompt_name'>prompt_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew</span><span class='tstring_end'>&quot;</span></span>
+
     <span class='const'>Pry</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span>
   <span class='kw'>else</span>
+    <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IRBRC</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew_irbrc</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
     <span class='const'>IRB</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
