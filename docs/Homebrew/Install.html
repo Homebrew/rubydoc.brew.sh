@@ -170,7 +170,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#install_formula%3F-class_method" title="install_formula? (class method)">.<strong>install_formula?</strong>(f, head: false, fetch_head: false, only_dependencies: false, force: false, quiet: false)  &#x21d2; Boolean </a>
+      <a href="#install_formula%3F-class_method" title="install_formula? (class method)">.<strong>install_formula?</strong>(formula, head: false, fetch_head: false, only_dependencies: false, force: false, quiet: false)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -430,7 +430,7 @@
       <div class="method_details ">
   <h3 class="signature " id="install_formula?-class_method">
   
-    .<strong>install_formula?</strong>(f, head: false, fetch_head: false, only_dependencies: false, force: false, quiet: false)  &#x21d2; <tt>Boolean</tt> 
+    .<strong>install_formula?</strong>(formula, head: false, fetch_head: false, only_dependencies: false, force: false, quiet: false)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -632,13 +632,15 @@
 258
 259
 260
-261</pre>
+261
+262
+263</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'install.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_formula?'>install_formula?</span><span class='lparen'>(</span>
-  <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span>
   <span class='label'>head:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>fetch_head:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>only_dependencies:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -646,49 +648,51 @@
   <span class='label'>quiet:</span> <span class='kw'>false</span>
 <span class='rparen'>)</span>
   <span class='comment'># head-only without --HEAD is an error
-</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_stable'>stable</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+</span>  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_stable'>stable</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> is a head-only formula.
+<span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> is a head-only formula.
 </span><span class='tstring_content'>      To install it, run:
-</span><span class='tstring_content'>        brew install --HEAD </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        brew install --HEAD </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>    EOS
 </span>  <span class='kw'>end</span>
 
   <span class='comment'># --HEAD, fail with no head defined
-</span>  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No head is defined for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+</span>  <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No head is defined for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='id identifier rubyid_installed_head_version'>installed_head_version</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_latest_head_version'>latest_head_version</span>
+  <span class='id identifier rubyid_installed_head_version'>installed_head_version</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_head_version'>latest_head_version</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_installed_head_version'>installed_head_version</span> <span class='op'>&amp;&amp;</span>
-     <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_head_version_outdated?'>head_version_outdated?</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_head_version'>installed_head_version</span><span class='comma'>,</span> <span class='label'>fetch_head:</span> <span class='id identifier rubyid_fetch_head'>fetch_head</span><span class='rparen'>)</span>
+     <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head_version_outdated?'>head_version_outdated?</span><span class='lparen'>(</span><span class='id identifier rubyid_installed_head_version'>installed_head_version</span><span class='comma'>,</span> <span class='label'>fetch_head:</span> <span class='id identifier rubyid_fetch_head'>fetch_head</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_new_head_installed'>new_head_installed</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_prefix_installed'>prefix_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_prefix_installed'>prefix_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_optlinked?'>optlinked?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_optlinked?'>optlinked?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
     <span class='comment'># keg-only install is only possible when no other version is
 </span>    <span class='comment'># linked to opt, because installing without any warnings can break
 </span>    <span class='comment'># dependencies. Therefore before performing other checks we need to be
 </span>    <span class='comment'># sure --force flag is passed.
-</span>    <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span>
-      <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_upgrade?'>no_install_upgrade?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed but outdated (so it will be upgraded).</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span>
+      <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_upgrade?'>no_install_upgrade?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span>
+        <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+        <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span>
+        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed but outdated (so it will be upgraded).</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>return</span> <span class='kw'>true</span>
       <span class='kw'>end</span>
 
-      <span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unpin </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &amp;&amp; </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_optlinked_version'>optlinked_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for'><span class='object_link'><a href="../Keg.html#for-class_method" title="Keg.for (method)">for</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
+      <span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unpin </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &amp;&amp; </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_optlinked_version'>optlinked_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for'><span class='object_link'><a href="../Keg.html#for-class_method" title="Keg.for (method)">for</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
       <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_optlinked_version'>optlinked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed.
-</span><span class='tstring_content'>        To upgrade to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
-</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span><span class='embexpr_end'>}</span><span class='tstring_content'>brew upgrade </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+<span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_optlinked_version'>optlinked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed.
+</span><span class='tstring_content'>        To upgrade to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
+</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span><span class='embexpr_end'>}</span><span class='tstring_content'>brew upgrade </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_only_dependencies'>only_dependencies</span>
       <span class='kw'>return</span> <span class='kw'>true</span>
     <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_quiet'>quiet</span>
       <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed and up-to-date.
-</span><span class='tstring_content'>        To reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
-</span><span class='tstring_content'>          brew reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+<span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed and up-to-date.
+</span><span class='tstring_content'>        To reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
+</span><span class='tstring_content'>          brew reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>end</span>
   <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_head'>head</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_head_installed'>new_head_installed</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_prefix_installed'>prefix_installed</span>
@@ -697,27 +701,27 @@
 </span>    <span class='comment'># install is not already installed.
 </span>
     <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_head'>head</span>
-      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_latest_head_version'>latest_head_version</span>
+      <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_head_version'>latest_head_version</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span>
+      <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span>
     <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_installed_version'>installed_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_linked_not_equals_installed'>linked_not_equals_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span> <span class='op'>!=</span> <span class='id identifier rubyid_installed_version'>installed_version</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_linked_not_equals_installed'>linked_not_equals_installed</span>
+    <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_installed_version'>installed_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_linked_not_equals_installed'>linked_not_equals_installed</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span> <span class='op'>!=</span> <span class='id identifier rubyid_installed_version'>installed_version</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_linked_not_equals_installed'>linked_not_equals_installed</span>
       <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet'>quiet</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
         <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
-</span><span class='tstring_content'>          The currently linked version is: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>          The currently linked version is: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>        EOS
 </span>      <span class='kw'>end</span>
-    <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span> <span class='op'>||</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
+    <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span> <span class='op'>||</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
       <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_content'>, it&#39;s just not linked.
 </span><span class='tstring_content'>        To link this version, run:
-</span><span class='tstring_content'>          brew link </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>          brew link </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_only_dependencies'>only_dependencies</span>
       <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -728,13 +732,13 @@
       <span class='kw'>else</span>
         <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_content'> and up-to-date.
-</span><span class='tstring_content'>          To reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
-</span><span class='tstring_content'>            brew reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>          To reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
+</span><span class='tstring_content'>            brew reinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>        EOS
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_opoo'>opoo</span> <span class='id identifier rubyid_msg'>msg</span> <span class='kw'>if</span> <span class='id identifier rubyid_msg'>msg</span>
-  <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_formula'>old_formula</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_old_installed_formulae'>old_installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
+  <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_old_formula'>old_formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_old_installed_formulae'>old_installed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_formula'>old_formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_formula'>old_formula</span><span class='period'>.</span><span class='id identifier rubyid_any_installed_version'>any_installed_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> already installed</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_old_formula'>old_formula</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_old_formula'>old_formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
       <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -748,37 +752,37 @@
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_opoo'>opoo</span> <span class='id identifier rubyid_msg'>msg</span> <span class='kw'>if</span> <span class='id identifier rubyid_msg'>msg</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_migration_needed?'>migration_needed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_migration_needed?'>migration_needed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
     <span class='comment'># Check if the formula we try to install is the same as installed
 </span>    <span class='comment'># but not migrated one. If --force is passed then install anyway.
 </span>    <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_oldname'>oldname</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed, it&#39;s just not migrated.
+<span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_oldname'>oldname</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed, it&#39;s just not migrated.
 </span><span class='tstring_content'>      To migrate this formula, run:
-</span><span class='tstring_content'>        brew migrate </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        brew migrate </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>      Or to force-install it, run:
-</span><span class='tstring_content'>        brew install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'> --force
+</span><span class='tstring_content'>        brew install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'> --force
 </span><span class='heredoc_end'>    EOS
-</span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span>
-    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_head'>head</span>
-      <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_upgrade?'>no_install_upgrade?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span>
+</span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked?'>linked?</span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_version'>linked_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> is already installed</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_outdated?'>outdated?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_head'>head</span>
+      <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_upgrade?'>no_install_upgrade?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span>
         <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'> but outdated (so it will be upgraded).</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>return</span> <span class='kw'>true</span>
       <span class='kw'>end</span>
 
-      <span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unpin </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &amp;&amp; </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unpin </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> &amp;&amp; </span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pinned?'>pinned?</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>        To upgrade to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
-</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span><span class='embexpr_end'>}</span><span class='tstring_content'>brew upgrade </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        To upgrade to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, run:
+</span><span class='tstring_content'>          </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_unpin_cmd_if_needed'>unpin_cmd_if_needed</span><span class='embexpr_end'>}</span><span class='tstring_content'>brew upgrade </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>elsif</span> <span class='id identifier rubyid_only_dependencies'>only_dependencies</span>
       <span class='kw'>return</span> <span class='kw'>true</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>        To install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, first run:
-</span><span class='tstring_content'>          brew unlink </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>        To install </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>, first run:
+</span><span class='tstring_content'>          brew unlink </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>      EOS
 </span>    <span class='kw'>end</span>
   <span class='kw'>else</span>
@@ -789,9 +793,9 @@
 
   <span class='comment'># Even if we don&#39;t install this formula mark it as no longer just
 </span>  <span class='comment'># installed as a dependency.
-</span>  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+</span>  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
 
-  <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_opt_prefix'>opt_prefix</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tab'>tab</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="../Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_installed_on_request'>installed_on_request</span>
     <span class='id identifier rubyid_tab'>tab</span><span class='period'>.</span><span class='id identifier rubyid_installed_on_request'>installed_on_request</span> <span class='op'>=</span> <span class='kw'>true</span>
@@ -835,8 +839,6 @@
       <pre class="lines">
 
 
-263
-264
 265
 266
 267
@@ -915,10 +917,11 @@
 340
 341
 342
-343</pre>
+343
+344</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'install.rb', line 263</span>
+      <pre class="code"><span class="info file"># File 'install.rb', line 265</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_formulae'>install_formulae</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='comma'>,</span>
@@ -941,12 +944,12 @@
   <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>dry_run:</span> <span class='kw'>false</span>
 <span class='rparen'>)</span>
-  <span class='id identifier rubyid_formula_installers'>formula_installers</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-    <span class='const'><span class='object_link'><a href="../Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'><span class='object_link'><a href="../Migrator.html#migrate_if_needed-class_method" title="Migrator.migrate_if_needed (method)">migrate_if_needed</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force'>force</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_dry_run'>dry_run</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_build_options'>build_options</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+  <span class='id identifier rubyid_formula_installers'>formula_installers</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae_to_install'>formulae_to_install</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="../Migrator.html" title="Migrator (class)">Migrator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_migrate_if_needed'><span class='object_link'><a href="../Migrator.html#migrate_if_needed-class_method" title="Migrator.migrate_if_needed (method)">migrate_if_needed</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force'>force</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_dry_run'>dry_run</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_build_options'>build_options</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
 
-    <span class='id identifier rubyid_fi'>fi</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-      <span class='id identifier rubyid_f'>f</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_formula_installer'>formula_installer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../FormulaInstaller.html#initialize-instance_method" title="FormulaInstaller#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span>
       <span class='label'>options:</span>                    <span class='id identifier rubyid_build_options'>build_options</span><span class='period'>.</span><span class='id identifier rubyid_used_options'>used_options</span><span class='comma'>,</span>
       <span class='label'>build_bottle:</span>               <span class='id identifier rubyid_build_bottle'>build_bottle</span><span class='comma'>,</span>
       <span class='label'>force_bottle:</span>               <span class='id identifier rubyid_force_bottle'>force_bottle</span><span class='comma'>,</span>
@@ -969,15 +972,15 @@
 
     <span class='kw'>begin</span>
       <span class='kw'>unless</span> <span class='id identifier rubyid_dry_run'>dry_run</span>
-        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_prelude'>prelude</span>
-        <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
+        <span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='period'>.</span><span class='id identifier rubyid_prelude'>prelude</span>
+        <span class='id identifier rubyid_formula_installer'>formula_installer</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
       <span class='kw'>end</span>
-      <span class='id identifier rubyid_fi'>fi</span>
+      <span class='id identifier rubyid_formula_installer'>formula_installer</span>
     <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../CannotInstallFormulaError.html" title="CannotInstallFormulaError (class)">CannotInstallFormulaError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
       <span class='id identifier rubyid_ofail'>ofail</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
       <span class='kw'>nil</span>
     <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../UnsatisfiedRequirements.html" title="UnsatisfiedRequirements (class)">UnsatisfiedRequirements</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../DownloadError.html" title="DownloadError (class)">DownloadError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../ChecksumMismatchError.html" title="ChecksumMismatchError (class)">ChecksumMismatchError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-      <span class='id identifier rubyid_ofail'>ofail</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_ofail'>ofail</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>nil</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
@@ -989,8 +992,7 @@
       <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_formulae_name_to_install'>formulae_name_to_install</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
       <span class='id identifier rubyid_formula_installers'>formula_installers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fi'>fi</span><span class='op'>|</span>
-        <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span>
-        <span class='id identifier rubyid_print_dry_run_dependencies'>print_dry_run_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_print_dry_run_dependencies'>print_dry_run_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_fi'>fi</span><span class='period'>.</span><span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
     <span class='kw'>return</span>
@@ -1136,17 +1138,17 @@
       <pre class="lines">
 
 
-354
 355
 356
 357
 358
 359
 360
-361</pre>
+361
+362</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'install.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'install.rb', line 355</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_dry_run_dependencies'>print_dry_run_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>

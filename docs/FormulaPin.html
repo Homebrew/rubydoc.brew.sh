@@ -133,7 +133,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(f)  &#x21d2; FormulaPin </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula)  &#x21d2; FormulaPin </a>
     
     
   </span>
@@ -316,7 +316,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(f)  &#x21d2; <tt><span class='object_link'><a href="" title="FormulaPin (class)">FormulaPin</a></span></tt> 
+    #<strong>initialize</strong>(formula)  &#x21d2; <tt><span class='object_link'><a href="" title="FormulaPin (class)">FormulaPin</a></span></tt> 
   
 
   
@@ -350,8 +350,8 @@
     <td>
       <pre class="code"><span class="info file"># File 'formula_pin.rb', line 10</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='rparen'>)</span>
-  <span class='ivar'>@f</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+  <span class='ivar'>@formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -403,7 +403,7 @@
       <pre class="code"><span class="info file"># File 'formula_pin.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
-  <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PINNED_KEGS-constant" title="HOMEBREW_PINNED_KEGS (constant)">HOMEBREW_PINNED_KEGS</a></span></span><span class='op'>/</span><span class='ivar'>@f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PINNED_KEGS-constant" title="HOMEBREW_PINNED_KEGS (constant)">HOMEBREW_PINNED_KEGS</a></span></span><span class='op'>/</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -448,7 +448,7 @@
       <pre class="code"><span class="info file"># File 'formula_pin.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pin'>pin</span>
-  <span class='id identifier rubyid_pin_at'>pin_at</span><span class='lparen'>(</span><span class='ivar'>@f</span><span class='period'>.</span><span class='id identifier rubyid_installed_kegs'>installed_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_pin_at'>pin_at</span><span class='lparen'>(</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_installed_kegs'>installed_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -496,7 +496,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pin_at'>pin_at</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PINNED_KEGS-constant" title="HOMEBREW_PINNED_KEGS (constant)">HOMEBREW_PINNED_KEGS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_mkpath'>mkpath</span>
-  <span class='id identifier rubyid_version_path'>version_path</span> <span class='op'>=</span> <span class='ivar'>@f</span><span class='period'>.</span><span class='id identifier rubyid_rack'>rack</span><span class='op'>/</span><span class='id identifier rubyid_version'>version</span>
+  <span class='id identifier rubyid_version_path'>version_path</span> <span class='op'>=</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_rack'>rack</span><span class='op'>/</span><span class='id identifier rubyid_version'>version</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_make_relative_symlink'>make_relative_symlink</span><span class='lparen'>(</span><span class='id identifier rubyid_version_path'>version_path</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_pinned?'>pinned?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_version_path'>version_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -555,7 +555,7 @@
       <pre class="code"><span class="info file"># File 'formula_pin.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pinnable?'>pinnable?</span>
-  <span class='op'>!</span><span class='ivar'>@f</span><span class='period'>.</span><span class='id identifier rubyid_installed_prefixes'>installed_prefixes</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='op'>!</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_installed_prefixes'>installed_prefixes</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
