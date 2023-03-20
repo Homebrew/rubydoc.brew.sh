@@ -270,7 +270,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pluralize-class_method" title="pluralize (class method)">.<strong>pluralize</strong>(stem, count, plural: &quot;s&quot;, singular: &quot;&quot;)  &#x21d2; String </a>
+      <a href="#pluralize-class_method" title="pluralize (class method)">.<strong>pluralize</strong>(stem, count, plural: &quot;s&quot;, singular: &quot;&quot;, include_count: false)  &#x21d2; String </a>
     
     
   </span>
@@ -1101,19 +1101,19 @@
       <pre class="lines">
 
 
-136
-137
-138
-139
 140
 141
 142
 143
 144
-145</pre>
+145
+146
+147
+148
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'utils.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parse_author!'>parse_author!</span><span class='lparen'>(</span><span class='id identifier rubyid_author'>author</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match_data'>match_data</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(?&lt;name&gt;[^&lt;]+?)[ \t]*&lt;(?&lt;email&gt;[^&gt;]+?)&gt;$</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_author'>author</span><span class='rparen'>)</span>
@@ -1133,7 +1133,7 @@
       <div class="method_details ">
   <h3 class="signature " id="pluralize-class_method">
   
-    .<strong>pluralize</strong>(stem, count, plural: &quot;s&quot;, singular: &quot;&quot;)  &#x21d2; <tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt> 
+    .<strong>pluralize</strong>(stem, count, plural: &quot;s&quot;, singular: &quot;&quot;, include_count: false)  &#x21d2; <tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -1142,7 +1142,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     <p>A lightweight alternative to <code>ActiveSupport::Inflector.pluralize</code>:
-Combines <code>stem</code> with the <code>singular</code> or <code>plural</code> suffix based on <code>count</code>.</p>
+Combines <code>stem</code> with the <code>singular</code> or <code>plural</code> suffix based on <code>count</code>.
+Adds a prefix of the count value if <code>include_count</code> is set to true.</p>
 
 
   </div>
@@ -1199,6 +1200,19 @@ Combines <code>stem</code> with the <code>singular</code> or <code>plural</code>
       
     </li>
   
+    <li>
+      
+        <span class='name'>include_count</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -1221,17 +1235,19 @@ Combines <code>stem</code> with the <code>singular</code> or <code>plural</code>
       <pre class="lines">
 
 
-130
-131
-132
-133</pre>
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'utils.rb', line 133</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_stem'>stem</span><span class='comma'>,</span> <span class='id identifier rubyid_count'>count</span><span class='comma'>,</span> <span class='label'>plural:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>singular:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='lparen'>(</span><span class='id identifier rubyid_stem'>stem</span><span class='comma'>,</span> <span class='id identifier rubyid_count'>count</span><span class='comma'>,</span> <span class='label'>plural:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>singular:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>include_count:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_prefix'>prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_include_count'>include_count</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_suffix'>suffix</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_singular'>singular</span> <span class='op'>:</span> <span class='id identifier rubyid_plural'>plural</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_stem'>stem</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_suffix'>suffix</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_stem'>stem</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_suffix'>suffix</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1817,20 +1833,20 @@ Combines <code>stem</code> with the <code>singular</code> or <code>plural</code>
       <pre class="lines">
 
 
-157
-158
-159
-160
 161
 162
 163
 164
 165
 166
-167</pre>
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'utils.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='lparen'>(</span><span class='id identifier rubyid_camel_cased_word'>camel_cased_word</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_camel_cased_word'>camel_cased_word</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>unless</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[A-Z-]|::</span><span class='regexp_end'>/</span></span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_camel_cased_word'>camel_cased_word</span><span class='rparen'>)</span>
