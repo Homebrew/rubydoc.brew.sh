@@ -498,12 +498,12 @@ analysis.</p>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/ast/cask_block.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/ast/cask_block.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sorted_toplevel_stanzas'>sorted_toplevel_stanzas</span>
   <span class='ivar'>@sorted_toplevel_stanzas</span> <span class='op'>||=</span> <span class='id identifier rubyid_sort_stanzas'>sort_stanzas</span><span class='lparen'>(</span><span class='id identifier rubyid_toplevel_stanzas'>toplevel_stanzas</span><span class='rparen'>)</span>
@@ -568,13 +568,29 @@ analysis.</p>
 
 38
 39
-40</pre>
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'rubocops/cask/ast/cask_block.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toplevel_stanzas'>toplevel_stanzas</span>
-  <span class='ivar'>@toplevel_stanzas</span> <span class='op'>||=</span> <span class='id identifier rubyid_stanzas'>stanzas</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:toplevel_stanza?</span><span class='rparen'>)</span>
+  <span class='comment'># If a `cask` block only contains one stanza, it is that stanza&#39;s direct parent,
+</span>  <span class='comment'># otherwise stanzas are grouped in a block and `cask` is that block&#39;s parent.
+</span>  <span class='id identifier rubyid_is_toplevel_stanza'>is_toplevel_stanza</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask_body'>cask_body</span><span class='period'>.</span><span class='id identifier rubyid_begin_block?'>begin_block?</span>
+    <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_stanza'>stanza</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_stanza'>stanza</span><span class='period'>.</span><span class='id identifier rubyid_parent_node'>parent_node</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_cask_block?'>cask_block?</span> <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_stanza'>stanza</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_stanza'>stanza</span><span class='period'>.</span><span class='id identifier rubyid_parent_node'>parent_node</span><span class='period'>.</span><span class='id identifier rubyid_cask_block?'>cask_block?</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+
+  <span class='ivar'>@toplevel_stanzas</span> <span class='op'>||=</span> <span class='id identifier rubyid_stanzas'>stanzas</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_is_toplevel_stanza'>is_toplevel_stanza</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
