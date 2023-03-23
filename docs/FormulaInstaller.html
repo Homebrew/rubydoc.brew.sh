@@ -1056,7 +1056,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula, link_keg: false, installed_as_dependency: false, installed_on_request: true, show_header: false, build_bottle: false, force_bottle: false, bottle_arch: nil, ignore_deps: false, only_deps: false, include_test_formulae: [], build_from_source_formulae: [], env: nil, git: false, interactive: false, keep_tmp: false, debug_symbols: false, cc: nil, options: Options.new, force: false, overwrite: false, debug: false, quiet: false, verbose: false)  &#x21d2; FormulaInstaller </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(formula, link_keg: false, installed_as_dependency: false, installed_on_request: true, show_header: false, build_bottle: false, skip_post_install: false, force_bottle: false, bottle_arch: nil, ignore_deps: false, only_deps: false, include_test_formulae: [], build_from_source_formulae: [], env: nil, git: false, interactive: false, keep_tmp: false, debug_symbols: false, cc: nil, options: Options.new, force: false, overwrite: false, debug: false, quiet: false, verbose: false)  &#x21d2; FormulaInstaller </a>
     
     
   </span>
@@ -1388,6 +1388,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#skip_post_install%3F-instance_method" title="#skip_post_install? (instance method)">#<strong>skip_post_install?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#summary-instance_method" title="#summary (instance method)">#<strong>summary</strong>  &#x21d2; String </a>
     
     
@@ -1487,7 +1509,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(formula, link_keg: false, installed_as_dependency: false, installed_on_request: true, show_header: false, build_bottle: false, force_bottle: false, bottle_arch: nil, ignore_deps: false, only_deps: false, include_test_formulae: [], build_from_source_formulae: [], env: nil, git: false, interactive: false, keep_tmp: false, debug_symbols: false, cc: nil, options: Options.new, force: false, overwrite: false, debug: false, quiet: false, verbose: false)  &#x21d2; <tt><span class='object_link'><a href="" title="FormulaInstaller (class)">FormulaInstaller</a></span></tt> 
+    #<strong>initialize</strong>(formula, link_keg: false, installed_as_dependency: false, installed_on_request: true, show_header: false, build_bottle: false, skip_post_install: false, force_bottle: false, bottle_arch: nil, ignore_deps: false, only_deps: false, include_test_formulae: [], build_from_source_formulae: [], env: nil, git: false, interactive: false, keep_tmp: false, debug_symbols: false, cc: nil, options: Options.new, force: false, overwrite: false, debug: false, quiet: false, verbose: false)  &#x21d2; <tt><span class='object_link'><a href="" title="FormulaInstaller (class)">FormulaInstaller</a></span></tt> 
   
 
   
@@ -1568,7 +1590,9 @@
 96
 97
 98
-99</pre>
+99
+100
+101</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_installer.rb', line 45</span>
@@ -1580,6 +1604,7 @@
   <span class='label'>installed_on_request:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>show_header:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>build_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>skip_post_install:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>force_bottle:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>bottle_arch:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>ignore_deps:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -1611,6 +1636,7 @@
   <span class='ivar'>@only_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_only_deps'>only_deps</span>
   <span class='ivar'>@build_from_source_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span>
   <span class='ivar'>@build_bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_build_bottle'>build_bottle</span>
+  <span class='ivar'>@skip_post_install</span> <span class='op'>=</span> <span class='id identifier rubyid_skip_post_install'>skip_post_install</span>
   <span class='ivar'>@bottle_arch</span> <span class='op'>=</span> <span class='id identifier rubyid_bottle_arch'>bottle_arch</span>
   <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle'>force_bottle</span> <span class='op'>||=</span> <span class='id identifier rubyid_force_bottle'>force_bottle</span>
   <span class='ivar'>@force_bottle</span> <span class='op'>=</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle'>force_bottle</span>
@@ -1816,12 +1842,12 @@
       <pre class="lines">
 
 
-101
-102
-103</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_attempted'>attempted</span>
   <span class='ivar'>@attempted</span> <span class='op'>||=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1861,12 +1887,12 @@
       <pre class="lines">
 
 
-106
-107
-108</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear_attempted'>clear_attempted</span>
   <span class='ivar'>@attempted</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1906,12 +1932,12 @@
       <pre class="lines">
 
 
-124
-125
-126</pre>
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear_fetched'>clear_fetched</span>
   <span class='ivar'>@fetched</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1951,12 +1977,12 @@
       <pre class="lines">
 
 
-115
-116
-117</pre>
+117
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clear_installed'>clear_installed</span>
   <span class='ivar'>@installed</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1996,12 +2022,12 @@
       <pre class="lines">
 
 
-119
-120
-121</pre>
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetched'>fetched</span>
   <span class='ivar'>@fetched</span> <span class='op'>||=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -2041,12 +2067,12 @@
       <pre class="lines">
 
 
-110
-111
-112</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span>
   <span class='ivar'>@installed</span> <span class='op'>||=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -2086,12 +2112,12 @@
       <pre class="lines">
 
 
-1274
-1275
-1276</pre>
+1285
+1286
+1287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1274</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1285</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_locked'>locked</span>
   <span class='ivar'>@locked</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2137,16 +2163,16 @@
       <pre class="lines">
 
 
-1266
-1267
-1268
-1269
-1270
-1271
-1272</pre>
+1277
+1278
+1279
+1280
+1281
+1282
+1283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1266</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_installed'>audit_installed</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_keg_only?'>keg_only?</span>
@@ -2190,17 +2216,6 @@
       <pre class="lines">
 
 
-888
-889
-890
-891
-892
-893
-894
-895
-896
-897
-898
 899
 900
 901
@@ -2240,10 +2255,21 @@
 935
 936
 937
-938</pre>
+938
+939
+940
+941
+942
+943
+944
+945
+946
+947
+948
+949</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 888</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 899</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_rf'>rm_rf</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_logs'>logs</span><span class='rparen'>)</span>
@@ -2344,12 +2370,12 @@
       <pre class="lines">
 
 
-883
-884
-885</pre>
+894
+895
+896</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 883</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 894</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_argv'>build_argv</span>
   <span class='id identifier rubyid_sanitized_argv_options'>sanitized_argv_options</span> <span class='op'>+</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_as_flags'>as_flags</span>
@@ -2402,12 +2428,12 @@
       <pre class="lines">
 
 
-139
-140
-141</pre>
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
   <span class='ivar'>@build_bottle</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -2447,15 +2473,15 @@
       <pre class="lines">
 
 
-367
-368
-369
-370
-371
-372</pre>
+374
+375
+376
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 367</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 374</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bottle_postinstall'>build_bottle_postinstall</span>
   <span class='ivar'>@etc_var_postinstall</span> <span class='op'>=</span> <span class='const'>Find</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='op'>*</span><span class='ivar'>@etc_var_dirs</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
@@ -2498,13 +2524,13 @@
       <pre class="lines">
 
 
-362
-363
-364
-365</pre>
+369
+370
+371
+372</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 362</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_bottle_preinstall'>build_bottle_preinstall</span>
   <span class='ivar'>@etc_var_dirs</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>var</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -2558,12 +2584,12 @@
       <pre class="lines">
 
 
-129
-130
-131</pre>
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_from_source?'>build_from_source?</span>
   <span class='ivar'>@build_from_source_formulae</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rparen'>)</span>
@@ -2603,12 +2629,12 @@
       <pre class="lines">
 
 
-845
-846
-847</pre>
+856
+857
+858</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 845</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 856</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_time'>build_time</span>
   <span class='ivar'>@build_time</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>-</span> <span class='ivar'>@start_time</span> <span class='kw'>if</span> <span class='ivar'>@start_time</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_interactive?'>interactive?</span>
@@ -2648,13 +2674,6 @@
       <pre class="lines">
 
 
-754
-755
-756
-757
-758
-759
-760
 761
 762
 763
@@ -2662,10 +2681,17 @@
 765
 766
 767
-768</pre>
+768
+769
+770
+771
+772
+773
+774
+775</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 754</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 761</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caveats'>caveats</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_only_deps?'>only_deps?</span>
@@ -2730,13 +2756,6 @@
       <pre class="lines">
 
 
-479
-480
-481
-482
-483
-484
-485
 486
 487
 488
@@ -2757,10 +2776,17 @@
 503
 504
 505
-506</pre>
+506
+507
+508
+509
+510
+511
+512
+513</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 479</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 486</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_conflicts'>check_conflicts</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_force?'>force?</span>
@@ -2838,13 +2864,6 @@
       <pre class="lines">
 
 
-239
-240
-241
-242
-243
-244
-245
 246
 247
 248
@@ -2941,10 +2960,17 @@
 339
 340
 341
-342</pre>
+342
+343
+344
+345
+346
+347
+348
+349</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 239</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_install_sanity'>check_install_sanity</span>
   <span class='id identifier rubyid_check_installation_already_attempted'>check_installation_already_attempted</span>
@@ -3098,12 +3124,12 @@
       <pre class="lines">
 
 
-235
-236
-237</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_installation_already_attempted'>check_installation_already_attempted</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FormulaInstallationAlreadyAttemptedError.html" title="FormulaInstallationAlreadyAttemptedError (class)">FormulaInstallationAlreadyAttemptedError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_attempted'>attempted</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
@@ -3156,13 +3182,6 @@
       <pre class="lines">
 
 
-531
-532
-533
-534
-535
-536
-537
 538
 539
 540
@@ -3173,10 +3192,17 @@
 545
 546
 547
-548</pre>
+548
+549
+550
+551
+552
+553
+554
+555</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 531</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 538</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_requirements'>check_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_req_map'>req_map</span><span class='rparen'>)</span>
   <span class='ivar'>@requirement_messages</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -3231,19 +3257,19 @@
       <pre class="lines">
 
 
-1077
-1078
-1079
-1080
-1081
-1082
-1083
-1084
-1085
-1086</pre>
+1088
+1089
+1090
+1091
+1092
+1093
+1094
+1095
+1096
+1097</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1077</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1088</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clean'>clean</span>
   <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cleaning</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_verbose?'>verbose?</span>
@@ -3290,13 +3316,13 @@
       <pre class="lines">
 
 
-526
-527
-528
-529</pre>
+533
+534
+535
+536</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 526</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 533</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compute_and_install_dependencies'>compute_and_install_dependencies</span>
   <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span>
@@ -3338,16 +3364,16 @@ being installed.</p>
       <pre class="lines">
 
 
-510
-511
-512
-513
-514
-515
-516</pre>
+517
+518
+519
+520
+521
+522
+523</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 510</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 517</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_compute_dependencies'>compute_dependencies</span><span class='lparen'>(</span><span class='label'>use_cache:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@compute_dependencies</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_use_cache'>use_cache</span>
@@ -3391,18 +3417,18 @@ being installed.</p>
       <pre class="lines">
 
 
-629
-630
-631
-632
-633
-634
-635
 636
-637</pre>
+637
+638
+639
+640
+641
+642
+643
+644</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 629</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 636</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_options'>display_options</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span>
@@ -3448,18 +3474,18 @@ being installed.</p>
       <pre class="lines">
 
 
-1204
-1205
-1206
-1207
-1208
-1209
-1210
-1211
-1212</pre>
+1215
+1216
+1217
+1218
+1219
+1220
+1221
+1222
+1223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1204</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_downloader'>downloader</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_path'>bottle_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span><span class='rparen'>)</span>
@@ -3505,16 +3531,16 @@ being installed.</p>
       <pre class="lines">
 
 
-621
-622
-623
-624
-625
-626
-627</pre>
+628
+629
+630
+631
+632
+633
+634</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 621</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 628</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_effective_build_options_for'>effective_build_options_for</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_inherited_options'>inherited_options</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_args'>args</span>  <span class='op'>=</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='period'>.</span><span class='id identifier rubyid_used_options'>used_options</span>
@@ -3558,16 +3584,16 @@ being installed.</p>
       <pre class="lines">
 
 
-613
-614
-615
-616
-617
-618
-619</pre>
+620
+621
+622
+623
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 613</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 620</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_dependencies'>expand_dependencies</span>
   <span class='id identifier rubyid_inherited_options'>inherited_options</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Options.html" title="Options (class)">Options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Options.html#initialize-instance_method" title="Options#initialize (method)">new</a></span></span> <span class='rbrace'>}</span>
@@ -3611,13 +3637,6 @@ being installed.</p>
       <pre class="lines">
 
 
-590
-591
-592
-593
-594
-595
-596
 597
 598
 599
@@ -3632,10 +3651,17 @@ being installed.</p>
 608
 609
 610
-611</pre>
+611
+612
+613
+614
+615
+616
+617
+618</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 590</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 597</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_dependencies_for_formula'>expand_dependencies_for_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_inherited_options'>inherited_options</span><span class='rparen'>)</span>
   <span class='comment'># Cache for this expansion only. FormulaInstaller has a lot of inputs which can alter expansion.
@@ -3694,13 +3720,6 @@ being installed.</p>
       <pre class="lines">
 
 
-558
-559
-560
-561
-562
-563
-564
 565
 566
 567
@@ -3724,10 +3743,17 @@ being installed.</p>
 585
 586
 587
-588</pre>
+588
+589
+590
+591
+592
+593
+594
+595</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 558</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 565</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expand_requirements'>expand_requirements</span>
   <span class='id identifier rubyid_unsatisfied_reqs'>unsatisfied_reqs</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
@@ -3795,17 +3821,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1173
-1174
-1175
-1176
-1177
-1178
-1179
-1180
-1181
-1182
-1183
 1184
 1185
 1186
@@ -3824,10 +3839,21 @@ being installed.</p>
 1199
 1200
 1201
-1202</pre>
+1202
+1203
+1204
+1205
+1206
+1207
+1208
+1209
+1210
+1211
+1212
+1213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1173</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_fetched'>fetched</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
@@ -3894,25 +3920,25 @@ being installed.</p>
       <pre class="lines">
 
 
-1155
-1156
-1157
-1158
-1159
-1160
-1161
-1162
-1163
-1164
-1165
 1166
 1167
 1168
 1169
-1170</pre>
+1170
+1171
+1172
+1173
+1174
+1175
+1176
+1177
+1178
+1179
+1180
+1181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1155</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_dependencies'>fetch_dependencies</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_ignore_deps?'>ignore_deps?</span>
@@ -3980,13 +4006,6 @@ being installed.</p>
       <pre class="lines">
 
 
-664
-665
-666
-667
-668
-669
-670
 671
 672
 673
@@ -4001,10 +4020,17 @@ being installed.</p>
 682
 683
 684
-685</pre>
+685
+686
+687
+688
+689
+690
+691
+692</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 664</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 671</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_dependency'>fetch_dependency</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span>
@@ -4063,13 +4089,6 @@ being installed.</p>
       <pre class="lines">
 
 
-771
-772
-773
-774
-775
-776
-777
 778
 779
 780
@@ -4126,10 +4145,21 @@ being installed.</p>
 831
 832
 833
-834</pre>
+834
+835
+836
+837
+838
+839
+840
+841
+842
+843
+844
+845</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 771</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 778</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finish'>finish</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_only_deps?'>only_deps?</span>
@@ -4145,8 +4175,12 @@ being installed.</p>
 
   <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Install.html" title="Homebrew::Install (module)">Install</a></span></span><span class='period'>.</span><span class='id identifier rubyid_global_post_install'><span class='object_link'><a href="Homebrew/Install.html#global_post_install-class_method" title="Homebrew::Install.global_post_install (method)">global_post_install</a></span></span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not running &#39;post_install&#39; as we&#39;re building a bottle</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_build_bottle?'>build_bottle?</span> <span class='op'>||</span> <span class='id identifier rubyid_skip_post_install?'>skip_post_install?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_build_bottle?'>build_bottle?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not running &#39;post_install&#39; as we&#39;re building a bottle</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_skip_post_install?'>skip_post_install?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Skipping &#39;post_install&#39; on request</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You can run it manually using:</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  brew postinstall </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
@@ -4245,18 +4279,18 @@ being installed.</p>
       <pre class="lines">
 
 
-1066
-1067
-1068
-1069
-1070
-1071
-1072
-1073
-1074</pre>
+1077
+1078
+1079
+1080
+1081
+1082
+1083
+1084
+1085</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1066</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1077</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_keg'>keg</span><span class='period'>.</span><span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span>
@@ -4396,12 +4430,12 @@ being installed.</p>
       <pre class="lines">
 
 
-134
-135
-136</pre>
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_include_test?'>include_test?</span>
   <span class='ivar'>@include_test_formulae</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='rparen'>)</span>
@@ -4469,17 +4503,17 @@ being installed.</p>
       <pre class="lines">
 
 
-640
-641
-642
-643
-644
-645
-646
-647</pre>
+647
+648
+649
+650
+651
+652
+653
+654</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 640</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 647</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inherited_options_for'>inherited_options_for</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_inherited_options'>inherited_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Options.html" title="Options (class)">Options</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Options.html#initialize-instance_method" title="Options#initialize (method)">new</a></span></span>
@@ -4537,13 +4571,6 @@ being installed.</p>
       <pre class="lines">
 
 
-375
-376
-377
-378
-379
-380
-381
 382
 383
 384
@@ -4639,10 +4666,17 @@ being installed.</p>
 474
 475
 476
-477</pre>
+477
+478
+479
+480
+481
+482
+483
+484</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 382</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span>
   <span class='id identifier rubyid_lock'>lock</span>
@@ -4821,18 +4855,18 @@ being installed.</p>
       <pre class="lines">
 
 
-182
-183
-184
-185
-186
-187
-188
 189
-190</pre>
+190
+191
+192
+193
+194
+195
+196
+197</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bottle_for?'>install_bottle_for?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='id identifier rubyid_build'>build</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span> <span class='kw'>if</span> <span class='id identifier rubyid_dep'>dep</span> <span class='op'>==</span> <span class='id identifier rubyid_formula'>formula</span>
@@ -4893,21 +4927,21 @@ being installed.</p>
       <pre class="lines">
 
 
-650
-651
-652
-653
-654
-655
-656
 657
 658
 659
 660
-661</pre>
+661
+662
+663
+664
+665
+666
+667
+668</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 650</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 657</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_dependencies'>install_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_deps'>deps</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_only_deps?'>only_deps?</span>
@@ -4982,13 +5016,6 @@ being installed.</p>
       <pre class="lines">
 
 
-688
-689
-690
-691
-692
-693
-694
 695
 696
 697
@@ -5045,10 +5072,17 @@ being installed.</p>
 748
 749
 750
-751</pre>
+751
+752
+753
+754
+755
+756
+757
+758</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 688</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 695</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_dependency'>install_dependency</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='comma'>,</span> <span class='id identifier rubyid_inherited_options'>inherited_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_df'>df</span> <span class='op'>=</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_to_formula'>to_formula</span>
@@ -5149,20 +5183,20 @@ being installed.</p>
       <pre class="lines">
 
 
-350
-351
-352
-353
-354
-355
-356
 357
 358
 359
-360</pre>
+360
+361
+362
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 350</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_fetch_deps'>install_fetch_deps</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@compute_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -5210,17 +5244,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1028
-1029
-1030
-1031
-1032
-1033
-1034
-1035
-1036
-1037
-1038
 1039
 1040
 1041
@@ -5245,10 +5268,21 @@ being installed.</p>
 1060
 1061
 1062
-1063</pre>
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1028</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1039</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_service'>install_service</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_service?'>service?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_plist'>plist</span>
@@ -5336,17 +5370,6 @@ being installed.</p>
       <pre class="lines">
 
 
-941
-942
-943
-944
-945
-946
-947
-948
-949
-950
-951
 952
 953
 954
@@ -5420,10 +5443,21 @@ being installed.</p>
 1022
 1023
 1024
-1025</pre>
+1025
+1026
+1027
+1028
+1029
+1030
+1031
+1032
+1033
+1034
+1035
+1036</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 941</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 952</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link'>link</span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'><span class='object_link'><a href="Cachable.html#clear_cache-instance_method" title="Cachable#clear_cache (method)">clear_cache</a></span></span>
@@ -5545,17 +5579,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1089
-1090
-1091
-1092
-1093
-1094
-1095
-1096
-1097
-1098
-1099
 1100
 1101
 1102
@@ -5608,10 +5631,21 @@ being installed.</p>
 1149
 1150
 1151
-1152</pre>
+1152
+1153
+1154
+1155
+1156
+1157
+1158
+1159
+1160
+1161
+1162
+1163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1089</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_post_install'>post_install</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='lbracket'>[</span>
@@ -5712,17 +5746,6 @@ being installed.</p>
       <pre class="lines">
 
 
-1215
-1216
-1217
-1218
-1219
-1220
-1221
-1222
-1223
-1224
-1225
 1226
 1227
 1228
@@ -5753,10 +5776,21 @@ being installed.</p>
 1253
 1254
 1255
-1256</pre>
+1256
+1257
+1258
+1259
+1260
+1261
+1262
+1263
+1264
+1265
+1266
+1267</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1215</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour'>pour</span>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_CELLAR-constant" title="HOMEBREW_CELLAR (constant)">HOMEBREW_CELLAR</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
@@ -5865,13 +5899,6 @@ being installed.</p>
       <pre class="lines">
 
 
-144
-145
-146
-147
-148
-149
-150
 151
 152
 153
@@ -5900,10 +5927,17 @@ being installed.</p>
 176
 177
 178
-179</pre>
+179
+180
+181
+182
+183
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 151</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pour_bottle?'>pour_bottle?</span><span class='lparen'>(</span><span class='label'>output_warning:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag?'>bottle_tag?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_local_bottle_path'>local_bottle_path</span>
@@ -5976,13 +6010,6 @@ being installed.</p>
       <pre class="lines">
 
 
-193
-194
-195
-196
-197
-198
-199
 200
 201
 202
@@ -6001,10 +6028,17 @@ being installed.</p>
 215
 216
 217
-218</pre>
+218
+219
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prelude'>prelude</span>
   <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="DeprecateDisable.html" title="DeprecateDisable (module)">DeprecateDisable</a></span></span><span class='period'>.</span><span class='id identifier rubyid_deprecate_disable_info'><span class='object_link'><a href="DeprecateDisable.html#deprecate_disable_info-class_method" title="DeprecateDisable.deprecate_disable_info (method)">deprecate_disable_info</a></span></span> <span class='id identifier rubyid_formula'>formula</span>
@@ -6082,15 +6116,15 @@ being installed.</p>
       <pre class="lines">
 
 
-1259
-1260
-1261
-1262
-1263
-1264</pre>
+1270
+1271
+1272
+1273
+1274
+1275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1259</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 1270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_output'>output</span>
@@ -6133,16 +6167,16 @@ being installed.</p>
       <pre class="lines">
 
 
-550
-551
-552
-553
-554
-555
-556</pre>
+557
+558
+559
+560
+561
+562
+563</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 550</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 557</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_runtime_requirements'>runtime_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_runtime_deps'>runtime_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_runtime_formula_dependencies'>runtime_formula_dependencies</span><span class='lparen'>(</span><span class='label'>undeclared:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -6199,17 +6233,6 @@ being installed.</p>
       <pre class="lines">
 
 
-850
-851
-852
-853
-854
-855
-856
-857
-858
-859
-860
 861
 862
 863
@@ -6229,10 +6252,21 @@ being installed.</p>
 877
 878
 879
-880</pre>
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889
+890
+891</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 850</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 861</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sanitized_argv_options'>sanitized_argv_options</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -6264,6 +6298,64 @@ being installed.</p>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span>
 
   <span class='id identifier rubyid_args'>args</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="skip_post_install?-instance_method">
+  
+    #<strong>skip_post_install?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_skip_post_install?'>skip_post_install?</span>
+  <span class='ivar'>@skip_post_install</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -6313,16 +6405,16 @@ being installed.</p>
       <pre class="lines">
 
 
-837
-838
-839
-840
-841
-842
-843</pre>
+848
+849
+850
+851
+852
+853
+854</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 837</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 848</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summary'>summary</span>
   <span class='id identifier rubyid_s'>s</span> <span class='op'>=</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -6366,16 +6458,16 @@ being installed.</p>
       <pre class="lines">
 
 
-518
-519
-520
-521
-522
-523
-524</pre>
+525
+526
+527
+528
+529
+530
+531</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 525</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unbottled_dependencies'>unbottled_dependencies</span><span class='lparen'>(</span><span class='id identifier rubyid_deps'>deps</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:first</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_dep_f'>dep_f</span><span class='op'>|</span>
@@ -6419,22 +6511,22 @@ being installed.</p>
       <pre class="lines">
 
 
-221
-222
-223
-224
-225
-226
-227
 228
 229
 230
 231
 232
-233</pre>
+233
+234
+235
+236
+237
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'formula_installer.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify_deps_exist'>verify_deps_exist</span>
   <span class='kw'>begin</span>
