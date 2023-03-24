@@ -1626,7 +1626,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#cherry_pick_pr!-class_method" title="cherry_pick_pr! (class method)">.<strong>cherry_pick_pr!</strong>(user, repo, pr, args:, path: &quot;.&quot;)  &#x21d2; Object </a>
+      <a href="#cherry_pick_pr!-class_method" title="cherry_pick_pr! (class method)">.<strong>cherry_pick_pr!</strong>(user, repo, pull_request, args:, path: &quot;.&quot;)  &#x21d2; Object </a>
     
     
   </span>
@@ -2594,7 +2594,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#download_artifact-class_method" title="download_artifact (class method)">.<strong>download_artifact</strong>(url, dir, pr)  &#x21d2; Object </a>
+      <a href="#download_artifact-class_method" title="download_artifact (class method)">.<strong>download_artifact</strong>(url, dir, pull_request)  &#x21d2; Object </a>
     
     
   </span>
@@ -3122,7 +3122,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#formulae_need_bottles%3F-class_method" title="formulae_need_bottles? (class method)">.<strong>formulae_need_bottles?</strong>(tap, original_commit, user, repo, pr, args:)  &#x21d2; Boolean </a>
+      <a href="#formulae_need_bottles%3F-class_method" title="formulae_need_bottles? (class method)">.<strong>formulae_need_bottles?</strong>(tap, original_commit, user, repo, pull_request, args:)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -5454,7 +5454,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pr_check_conflicts-class_method" title="pr_check_conflicts (class method)">.<strong>pr_check_conflicts</strong>(repo, pr)  &#x21d2; Object </a>
+      <a href="#pr_check_conflicts-class_method" title="pr_check_conflicts (class method)">.<strong>pr_check_conflicts</strong>(repo, pull_request)  &#x21d2; Object </a>
     
     
   </span>
@@ -6884,7 +6884,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#signoff!-class_method" title="signoff! (class method)">.<strong>signoff!</strong>(path, pr: nil, dry_run: false)  &#x21d2; Object </a>
+      <a href="#signoff!-class_method" title="signoff! (class method)">.<strong>signoff!</strong>(path, pull_request: nil, dry_run: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -14762,7 +14762,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <div class="method_details ">
   <h3 class="signature " id="cherry_pick_pr!-class_method">
   
-    .<strong>cherry_pick_pr!</strong>(user, repo, pr, args:, path: &quot;.&quot;)  &#x21d2; <tt>Object</tt> 
+    .<strong>cherry_pick_pr!</strong>(user, repo, pull_request, args:, path: &quot;.&quot;)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -14793,19 +14793,19 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 291</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cherry_pick_pr!'>cherry_pick_pr!</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cherry_pick_pr!'>cherry_pick_pr!</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>path:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      git fetch --force origin +refs/pull/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr'>pr</span><span class='embexpr_end'>}</span><span class='tstring_content'>/head
+<span class='tstring_content'>      git fetch --force origin +refs/pull/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pull_request'>pull_request</span><span class='embexpr_end'>}</span><span class='tstring_content'>/head
 </span><span class='tstring_content'>      git merge-base HEAD FETCH_HEAD
 </span><span class='tstring_content'>      git cherry-pick --ff --allow-empty $merge_base..FETCH_HEAD
 </span><span class='heredoc_end'>    EOS
 </span>    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_commits'>commits</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_commits'><span class='object_link'><a href="GitHub.html#pull_request_commits-class_method" title="GitHub.pull_request_commits (method)">pull_request_commits</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_commits'>commits</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_commits'><span class='object_link'><a href="GitHub.html#pull_request_commits-class_method" title="GitHub.pull_request_commits (method)">pull_request_commits</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fetch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--quiet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>origin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
-  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Using </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> commit</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_content'> from #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr'>pr</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Using </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> commit</span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_commits'>commits</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_content'> from #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pull_request'>pull_request</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cherry_pick!'><span class='object_link'><a href="Utils/Git.html#cherry_pick!-class_method" title="Utils::Git.cherry_pick! (method)">cherry_pick!</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--ff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--allow-empty</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_commits'>commits</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>resolve:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_resolve?'>resolve?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -18358,7 +18358,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <div class="method_details ">
   <h3 class="signature " id="download_artifact-class_method">
   
-    .<strong>download_artifact</strong>(url, dir, pr)  &#x21d2; <tt>Object</tt> 
+    .<strong>download_artifact</strong>(url, dir, pull_request)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -18384,12 +18384,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 366
 367
 368
-369</pre>
+369
+370
+371
+372
+373
+374
+375</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 355</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_download_artifact'>download_artifact</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_dir'>dir</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_download_artifact'>download_artifact</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_dir'>dir</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Credentials must be set to access the Artifacts API</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_credentials_type'><span class='object_link'><a href="GitHub/API.html#credentials_type-class_method" title="GitHub::API.credentials_type (method)">credentials_type</a></span></span> <span class='op'>==</span> <span class='symbol'>:none</span>
 
   <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_credentials'><span class='object_link'><a href="GitHub/API.html#credentials-class_method" title="GitHub::API.credentials (method)">credentials</a></span></span>
@@ -18399,7 +18405,13 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 </span>  <span class='comment'># preferred over system `curl` and `tar` as this leverages the Homebrew
 </span>  <span class='comment'># cache to avoid repeated downloads of (possibly large) bottles.
 </span>  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span> <span class='id identifier rubyid_dir'>dir</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_downloader'>downloader</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHubArtifactDownloadStrategy.html" title="GitHubArtifactDownloadStrategy (class)">GitHubArtifactDownloadStrategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AbstractDownloadStrategy.html#initialize-instance_method" title="AbstractDownloadStrategy#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>artifact</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>curl_args:</span> <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="Utils/Curl.html#curl_args-class_method" title="Utils::Curl.curl_args (method)">curl_args</a></span></span><span class='comma'>,</span> <span class='label'>secrets:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_token'>token</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_downloader'>downloader</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHubArtifactDownloadStrategy.html" title="GitHubArtifactDownloadStrategy (class)">GitHubArtifactDownloadStrategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AbstractDownloadStrategy.html#initialize-instance_method" title="AbstractDownloadStrategy#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>artifact</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+      <span class='id identifier rubyid_pull_request'>pull_request</span><span class='comma'>,</span>
+      <span class='label'>curl_args:</span> <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="Utils/Curl.html#curl_args-class_method" title="Utils::Curl.curl_args (method)">curl_args</a></span></span><span class='comma'>,</span>
+      <span class='label'>secrets:</span>   <span class='lbracket'>[</span><span class='id identifier rubyid_token'>token</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
     <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
     <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_stage'>stage</span>
   <span class='kw'>end</span>
@@ -20209,7 +20221,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <div class="method_details ">
   <h3 class="signature " id="formulae_need_bottles?-class_method">
   
-    .<strong>formulae_need_bottles?</strong>(tap, original_commit, user, repo, pr, args:)  &#x21d2; <tt>Boolean</tt> 
+    .<strong>formulae_need_bottles?</strong>(tap, original_commit, user, repo, pull_request, args:)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -20259,10 +20271,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 307</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_formulae_need_bottles?'>formulae_need_bottles?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_formulae_need_bottles?'>formulae_need_bottles?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
 
-  <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_labels'><span class='object_link'><a href="GitHub.html#pull_request_labels-class_method" title="GitHub.pull_request_labels (method)">pull_request_labels</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_labels'>labels</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pull_request_labels'><span class='object_link'><a href="GitHub.html#pull_request_labels-class_method" title="GitHub.pull_request_labels (method)">pull_request_labels</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span>
 
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI-syntax-only</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_labels'>labels</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CI-no-bottles</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
@@ -29842,7 +29854,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <div class="method_details ">
   <h3 class="signature " id="pr_check_conflicts-class_method">
   
-    .<strong>pr_check_conflicts</strong>(repo, pr)  &#x21d2; <tt>Object</tt> 
+    .<strong>pr_check_conflicts</strong>(repo, pull_request)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -29854,12 +29866,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-371
-372
-373
-374
-375
-376
 377
 378
 379
@@ -29899,19 +29905,25 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 413
 414
 415
-416</pre>
+416
+417
+418
+419
+420
+421
+422</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 371</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 377</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pr_check_conflicts'>pr_check_conflicts</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pr_check_conflicts'>pr_check_conflicts</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_long_build_pr_files'>long_build_pr_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_issues'><span class='object_link'><a href="GitHub.html#issues-class_method" title="GitHub.issues (method)">issues</a></span></span><span class='lparen'>(</span>
     <span class='label'>repo:</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='label'>state:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>open</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>labels:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no long build conflict</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_long_build_pr'>long_build_pr</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_long_build_pr'>long_build_pr</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pull_request</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_number'>number</span> <span class='op'>=</span> <span class='id identifier rubyid_long_build_pr'>long_build_pr</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>number</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span> <span class='op'>==</span> <span class='id identifier rubyid_pr'>pr</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_number'>number</span> <span class='op'>==</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
 
     <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_pull_request_changed_files'><span class='object_link'><a href="GitHub.html#get_pull_request_changed_files-class_method" title="GitHub.get_pull_request_changed_files (method)">get_pull_request_changed_files</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
       <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -29922,7 +29934,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_long_build_pr_files'>long_build_pr_files</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_this_pr_files'>this_pr_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_pull_request_changed_files'><span class='object_link'><a href="GitHub.html#get_pull_request_changed_files-class_method" title="GitHub.get_pull_request_changed_files (method)">get_pull_request_changed_files</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_this_pr_files'>this_pr_files</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_get_pull_request_changed_files'><span class='object_link'><a href="GitHub.html#get_pull_request_changed_files-class_method" title="GitHub.get_pull_request_changed_files (method)">get_pull_request_changed_files</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='op'>=</span> <span class='id identifier rubyid_this_pr_files'>this_pr_files</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -30137,12 +30149,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-418
-419
-420
-421
-422
-423
 424
 425
 426
@@ -30227,10 +30233,16 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 505
 506
 507
-508</pre>
+508
+509
+510
+511
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 418</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 424</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pr_pull'>pr_pull</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pr_pull_args'>pr_pull_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -30280,7 +30292,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
             <span class='id identifier rubyid_autosquash!'>autosquash!</span><span class='lparen'>(</span><span class='id identifier rubyid_original_commit'>original_commit</span><span class='comma'>,</span> <span class='label'>tap:</span> <span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span>
                         <span class='label'>verbose:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>resolve:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_resolve?'>resolve?</span><span class='comma'>,</span> <span class='label'>reason:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
           <span class='kw'>end</span>
-          <span class='id identifier rubyid_signoff!'>signoff!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>pr:</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_clean?'>clean?</span>
+          <span class='id identifier rubyid_signoff!'>signoff!</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>pull_request:</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_clean?'>clean?</span>
         <span class='kw'>end</span>
 
         <span class='kw'>unless</span> <span class='id identifier rubyid_formulae_need_bottles?'>formulae_need_bottles?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_original_commit'>original_commit</span><span class='comma'>,</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
@@ -35417,7 +35429,7 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <div class="method_details ">
   <h3 class="signature " id="signoff!-class_method">
   
-    .<strong>signoff!</strong>(path, pr: nil, dry_run: false)  &#x21d2; <tt>Object</tt> 
+    .<strong>signoff!</strong>(path, pull_request: nil, dry_run: false)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -35458,19 +35470,19 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/pr-pull.rb', line 85</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_signoff!'>signoff!</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>pr:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_signoff!'>signoff!</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>pull_request:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>dry_run:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_subject'>subject</span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='comma'>,</span> <span class='id identifier rubyid_trailers'>trailers</span> <span class='op'>=</span> <span class='id identifier rubyid_separate_commit_message'>separate_commit_message</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_git_commit_message'>git_commit_message</span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_pr'>pr</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_pull_request'>pull_request</span>
     <span class='comment'># This is a tap pull request and approving reviewers should also sign-off.
 </span>    <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_path'><span class='object_link'><a href="Tap.html#from_path-class_method" title="Tap.from_path (method)">from_path</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_review_trailers'>review_trailers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_approved_reviews'><span class='object_link'><a href="GitHub.html#approved_reviews-class_method" title="GitHub.approved_reviews (method)">approved_reviews</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='id identifier rubyid_pr'>pr</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+    <span class='id identifier rubyid_review_trailers'>review_trailers</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_approved_reviews'><span class='object_link'><a href="GitHub.html#approved_reviews-class_method" title="GitHub.approved_reviews (method)">approved_reviews</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='comma'>,</span> <span class='id identifier rubyid_pull_request'>pull_request</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Signed-off-by: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_r'>r</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_r'>r</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>email</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_trailers'>trailers</span> <span class='op'>=</span> <span class='id identifier rubyid_trailers'>trailers</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_review_trailers'>review_trailers</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
     <span class='comment'># Append the close message as well, unless the commit body already includes it.
-</span>    <span class='id identifier rubyid_close_message'>close_message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Closes #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pr'>pr</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_close_message'>close_message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Closes #</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pull_request'>pull_request</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_body'>body</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_close_message'>close_message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_close_message'>close_message</span>
   <span class='kw'>end</span>
 
