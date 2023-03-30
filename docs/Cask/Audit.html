@@ -285,7 +285,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; Audit </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; Audit </a>
     
     
   </span>
@@ -463,7 +463,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(cask, appcast: nil, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Audit (class)">Audit</a></span></tt> 
+    #<strong>initialize</strong>(cask, download: nil, quarantine: nil, token_conflicts: nil, online: nil, strict: nil, signing: nil, new_cask: nil, only: [], except: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Audit (class)">Audit</a></span></tt> 
   
 
   
@@ -514,19 +514,14 @@
 46
 47
 48
-49
-50
-51
-52
-53
-54</pre>
+49</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/audit.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span>
-  <span class='label'>appcast:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>download:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>download:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>token_conflicts:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>online:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>signing:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>new_cask:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>except:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='rparen'>)</span>
@@ -536,15 +531,10 @@
   <span class='id identifier rubyid_signing'>signing</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask'>new_cask</span> <span class='kw'>if</span> <span class='id identifier rubyid_signing'>signing</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_token_conflicts'>token_conflicts</span> <span class='op'>=</span> <span class='id identifier rubyid_new_cask'>new_cask</span> <span class='kw'>if</span> <span class='id identifier rubyid_token_conflicts'>token_conflicts</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='comment'># `online` implies `appcast` and `download`
-</span>  <span class='id identifier rubyid_appcast'>appcast</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span> <span class='kw'>if</span> <span class='id identifier rubyid_appcast'>appcast</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-  <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span> <span class='kw'>if</span> <span class='id identifier rubyid_download'>download</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-
-  <span class='comment'># `signing` implies `download`
-</span>  <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_signing'>signing</span> <span class='kw'>if</span> <span class='id identifier rubyid_download'>download</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='comment'># `online` and `signing` imply `download`
+</span>  <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span> <span class='op'>||</span> <span class='id identifier rubyid_signing'>signing</span> <span class='kw'>if</span> <span class='id identifier rubyid_download'>download</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='ivar'>@cask</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span>
-  <span class='ivar'>@appcast</span> <span class='op'>=</span> <span class='id identifier rubyid_appcast'>appcast</span>
   <span class='ivar'>@download</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_download'>download</span>
   <span class='ivar'>@online</span> <span class='op'>=</span> <span class='id identifier rubyid_online'>online</span>
   <span class='ivar'>@strict</span> <span class='op'>=</span> <span class='id identifier rubyid_strict'>strict</span>
@@ -723,12 +713,12 @@
       <pre class="lines">
 
 
-99
-100
-101</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_error'>add_error</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_errors'>errors</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>message:</span> <span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='id identifier rubyid_location'>location</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -796,16 +786,16 @@
       <pre class="lines">
 
 
+99
+100
+101
+102
+103
 104
-105
-106
-107
-108
-109
-110</pre>
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_warning'>add_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_strict?'>strict?</span>
@@ -849,12 +839,12 @@
       <pre class="lines">
 
 
-75
-76
-77</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@errors</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -907,12 +897,12 @@
       <pre class="lines">
 
 
-84
-85
-86</pre>
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors?'>errors?</span>
   <span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
@@ -952,18 +942,18 @@
       <pre class="lines">
 
 
+107
+108
+109
+110
+111
 112
 113
 114
-115
-116
-117
-118
-119
-120</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_result'>result</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_errors?'>errors?</span>
@@ -1009,6 +999,11 @@
       <pre class="lines">
 
 
+51
+52
+53
+54
+55
 56
 57
 58
@@ -1021,15 +1016,10 @@
 65
 66
 67
-68
-69
-70
-71
-72
-73</pre>
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run!'>run!</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -1097,12 +1087,12 @@
       <pre class="lines">
 
 
-94
-95
-96</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_success?'>success?</span>
   <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_errors?'>errors?</span> <span class='op'>||</span> <span class='id identifier rubyid_warnings?'>warnings?</span><span class='rparen'>)</span>
@@ -1185,6 +1175,11 @@
       <pre class="lines">
 
 
+118
+119
+120
+121
+122
 123
 124
 125
@@ -1197,15 +1192,10 @@
 132
 133
 134
-135
-136
-137
-138
-139
-140</pre>
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_summary'>summary</span><span class='lparen'>(</span><span class='label'>include_passed:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>include_warnings:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_success?'>success?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_include_passed'>include_passed</span>
@@ -1260,12 +1250,12 @@
       <pre class="lines">
 
 
-79
-80
-81</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings'>warnings</span>
   <span class='ivar'>@warnings</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1318,12 +1308,12 @@
       <pre class="lines">
 
 
-89
-90
-91</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'cask/audit.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings?'>warnings?</span>
   <span class='id identifier rubyid_warnings'>warnings</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
