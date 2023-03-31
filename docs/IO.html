@@ -176,7 +176,9 @@
 18
 19
 20
-21</pre>
+21
+22
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/io.rb', line 5</span>
@@ -185,18 +187,20 @@
   <span class='id identifier rubyid_line'>line</span> <span class='op'>=</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>=</span> <span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
 
-  <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
-    <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>==</span> <span class='id identifier rubyid_sep'>sep</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>
+      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_buffer'>buffer</span> <span class='op'>==</span> <span class='id identifier rubyid_sep'>sep</span>
 
-    <span class='id identifier rubyid_read_nonblock'>read_nonblock</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_read_nonblock'>read_nonblock</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='id identifier rubyid_buffer'>buffer</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="" title="IO (class)">IO</a></span></span><span class='op'>::</span><span class='const'>WaitReadable</span><span class='comma'>,</span> <span class='const'>EOFError</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+    <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
   <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="" title="IO (class)">IO</a></span></span><span class='op'>::</span><span class='const'>WaitReadable</span><span class='comma'>,</span> <span class='const'>EOFError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_e'>e</span> <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-
-  <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
