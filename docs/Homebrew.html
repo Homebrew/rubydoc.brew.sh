@@ -12288,7 +12288,27 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 193
 194
 195
-196</pre>
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 61</span>
@@ -12312,12 +12332,28 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This cask is not in a tap!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This cask&#39;s tap is not a Git repository!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
 
-  <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
-  <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='symbol'>:latest</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>latest</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:latest</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_new_version'>new_version</span>
-  <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/DSL.html" title="Cask::DSL (class)">DSL</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/DSL/Version.html" title="Cask::DSL::Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/DSL/Version.html#initialize-instance_method" title="Cask::DSL::Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-  <span class='id identifier rubyid_new_base_url'>new_base_url</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span>
-  <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span>
-  <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='symbol'>:no_check</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no_check</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:no_check</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_new_hash'>new_hash</span>
+  <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--version` must not be empty.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='symbol'>:latest</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>latest</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:latest</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/DSL.html" title="Cask::DSL (class)">DSL</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/DSL/Version.html" title="Cask::DSL::Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/DSL/Version.html#initialize-instance_method" title="Cask::DSL::Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_sha265'>sha265</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--sha256` must not be empty.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>no_check</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:no_check</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_new_hash'>new_hash</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:no_check</span> <span class='op'>:</span> <span class='id identifier rubyid_new_hash'>new_hash</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_new_base_url'>new_base_url</span> <span class='op'>=</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_new_base_url'>new_base_url</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--url` must not be empty.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_base_url'>new_base_url</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+    <span class='kw'>begin</span>
+      <span class='const'>URI</span><span class='lparen'>(</span><span class='id identifier rubyid_new_base_url'>new_base_url</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>URI</span><span class='op'>::</span><span class='const'>InvalidURIError</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`--url` is not valid.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_base_url'>new_base_url</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No `--version`, `--url` or `--sha256` argument specified!</span><span class='tstring_end'>&quot;</span></span>
@@ -12333,8 +12369,18 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='id identifier rubyid_old_contents'>old_contents</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_branch_name'>branch_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bump-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span>
+    <span class='id identifier rubyid_branch_name'>branch_name</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_commit_message_version'>commit_message_version</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span> <span class='op'>==</span> <span class='id identifier rubyid_old_version'>old_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
+      <span class='id identifier rubyid_new_version'>new_version</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_commit_message_version'>commit_message_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
     <span class='id identifier rubyid_old_version_regex'>old_version_regex</span> <span class='op'>=</span> <span class='id identifier rubyid_old_version'>old_version</span><span class='period'>.</span><span class='id identifier rubyid_latest?'>latest?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:latest</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[\&quot;&#39;]</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_escape'>escape</span><span class='lparen'>(</span><span class='id identifier rubyid_old_version'>old_version</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>[\&quot;&#39;]</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
@@ -12342,12 +12388,12 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>version </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_latest?'>latest?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:latest</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_version'>new_version</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='rbracket'>]</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_latest?'>latest?</span> <span class='op'>||</span> <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>==</span> <span class='symbol'>:no_check</span>
-      <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ignoring specified `--sha256=` argument.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span>
+      <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ignoring specified `--sha256=` argument.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
       <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_hash'>old_hash</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:no_check</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>!=</span> <span class='symbol'>:no_check</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>!=</span> <span class='symbol'>:no_check</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-          <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple hash replacements required; ignoring specified `--sha256=` argument.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+          <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple checksum replacements required; ignoring specified `--sha256` argument.</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>end</span>
         <span class='id identifier rubyid_tmp_contents'>tmp_contents</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Inreplace.html" title="Utils::Inreplace (module)">Inreplace</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inreplace_pairs'><span class='object_link'><a href="Utils/Inreplace.html#inreplace_pairs-class_method" title="Utils::Inreplace.inreplace_pairs (method)">inreplace_pairs</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='comma'>,</span>
                                                         <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='comma'>,</span>
@@ -12382,14 +12428,16 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
         <span class='kw'>ensure</span>
           <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear'><span class='object_link'><a href="Homebrew/SimulateSystem.html#clear-class_method" title="Homebrew::SimulateSystem.clear (method)">clear</a></span></span>
         <span class='kw'>end</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_new_hash'>new_hash</span>
         <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask contains multiple hashes; only updating hash for current arch.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_on_system_blocks_exist?'>on_system_blocks_exist?</span>
         <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_old_hash'>old_hash</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='rbracket'>]</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_new_base_url'>new_base_url</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_new_base_url'>new_base_url</span>
+    <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'>: update URL</span><span class='tstring_end'>&quot;</span></span>
+
     <span class='id identifier rubyid_m'>m</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ +url &quot;(.+?)&quot;\n</span><span class='regexp_end'>/m</span></span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='id identifier rubyid_old_contents'>old_contents</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Could not find old URL in cask!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
@@ -12401,6 +12449,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
+  <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'>: update checksum</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_new_hash'>new_hash</span>
+
   <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Inreplace.html" title="Utils::Inreplace (module)">Inreplace</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inreplace_pairs'><span class='object_link'><a href="Utils/Inreplace.html#inreplace_pairs-class_method" title="Utils::Inreplace.inreplace_pairs (method)">inreplace_pairs</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='comma'>,</span>
                                    <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='comma'>,</span>
                                    <span class='label'>read_only_run:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='comma'>,</span>
@@ -12409,16 +12459,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_branch_name'>branch_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bump-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Update </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span> <span class='op'>!=</span> <span class='id identifier rubyid_old_version'>old_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
-      <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
-      <span class='id identifier rubyid_old_version'>old_version</span> <span class='op'>=</span> <span class='id identifier rubyid_old_version'>old_version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_branch_name'>branch_name</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_version'>new_version</span><span class='period'>.</span><span class='id identifier rubyid_tr'>tr</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_commit_message'>commit_message</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_version'>old_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_version'>new_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
   <span class='id identifier rubyid_pr_info'>pr_info</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>sourcefile_path:</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='comma'>,</span>
     <span class='label'>old_contents:</span>    <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span>
@@ -14717,17 +14757,17 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-198
-199
-200
-201
-202
-203
-204
-205</pre>
+218
+219
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_pull_requests'>check_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span>
@@ -34272,35 +34312,35 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
 227
 228
 229
 230
 231
-232</pre>
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -34348,30 +34388,30 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254</pre>
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
