@@ -1984,7 +1984,7 @@ Make sure you check with <code>brew search</code> that the name is free!</p>
   
   
   
-    <span class="summary_desc"><div class='inline'>
+    <span class="summary_desc"><div class='inline'><p>Replaces a universal binary with its native slice.</p>
 </div></span>
   
 </li>
@@ -3898,7 +3898,7 @@ Make sure you check with <code>brew search</code> that the name is free!</p>
   
   
   
-    <span class="summary_desc"><div class='inline'>
+    <span class="summary_desc"><div class='inline'><p>Shared library names according to platform conventions.</p>
 </div></span>
   
 </li>
@@ -8662,7 +8662,10 @@ Returns <code>nil</code> if no reason is specified or the formula is not depreca
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Replaces a universal binary with its native slice.</p>
+
+<p>If called with no parameters, does this with all compatible
+universal binaries in a <span class='object_link'><a href="" title="Formula (class)">Formula</a></span>’s <span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span>.</p>
 
 
   </div>
@@ -13145,7 +13148,19 @@ This is symlinked into <code>HOMEBREW_PREFIX</code> after installation or with
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>Shared library names according to platform conventions.</p>
+
+<p>Optionally specify a <code>version</code> to restrict the shared library to a specific
+version. The special string “*” matches any version.</p>
+
+<p>If <code>name</code> is specified as “*”, match any shared library of any version.</p>
+
+<pre class="code ruby"><code class="ruby">
+<span class='id identifier rubyid_shared_library'>shared_library</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>      <span class='comment'>#=&gt; foo.dylib
+</span><span class='id identifier rubyid_shared_library'>shared_library</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>   <span class='comment'>#=&gt; foo.1.dylib
+</span><span class='id identifier rubyid_shared_library'>shared_library</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'>#=&gt; foo.2.dylib, foo.1.dylib, foo.dylib
+</span><span class='id identifier rubyid_shared_library'>shared_library</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>        <span class='comment'>#=&gt; foo.dylib, bar.dylib
+</span></code></pre>
 
 
   </div>
