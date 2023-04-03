@@ -4590,7 +4590,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <span class='id identifier rubyid_real_tmp'>real_tmp</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp'>tmp</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
       <span class='id identifier rubyid_where_tmp'>where_tmp</span> <span class='op'>=</span> <span class='id identifier rubyid_volumes'>volumes</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span> <span class='id identifier rubyid_real_tmp'>real_tmp</span>
     <span class='kw'>ensure</span>
-      <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_tmp'>tmp</span>
+      <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_tmp'>tmp</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
     <span class='kw'>end</span>
   <span class='kw'>rescue</span>
     <span class='kw'>return</span>
@@ -6789,7 +6789,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#!/bin/sh\n</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_chmod'>chmod</span> <span class='int'>0700</span>
   <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_system'>system</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_system'>system</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    The directory </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_TEMP-constant" title="HOMEBREW_TEMP (constant)">HOMEBREW_TEMP</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'> does not permit executing
@@ -6799,7 +6799,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 </span><span class='tstring_content'>      echo &#39;export HOMEBREW_TEMP=~/tmp&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_shell_profile'>shell_profile</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>ensure</span>
-  <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
+  <span class='id identifier rubyid_f'>f</span><span class='op'>&amp;.</span><span class='id identifier rubyid_unlink'>unlink</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -7508,8 +7508,8 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="code"><span class="info file"># File 'extend/os/linux/diagnostic.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xdg_data_dirs'>check_xdg_data_dirs</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XDG_DATA_DIRS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XDG_DATA_DIRS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XDG_DATA_DIRS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Homebrew&#39;s share was not found in your XDG_DATA_DIRS but you have
