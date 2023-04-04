@@ -190,11 +190,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.3.26</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
-        <dt id="VALID_GEM_GROUPS-constant" class="">VALID_GEM_GROUPS =
-          
-        </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-      
         <dt id="UNBREWED_EXCLUDE_FILES-constant" class="">UNBREWED_EXCLUDE_FILES =
           
         </dt>
@@ -19795,14 +19790,14 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+112
+113
 114
 115
-116
-117
-118</pre>
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_in_path'>find_in_path</span><span class='lparen'>(</span><span class='id identifier rubyid_executable'>executable</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
@@ -23456,18 +23451,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+118
+119
 120
 121
 122
 123
 124
 125
-126
-127
-128</pre>
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
   <span class='id identifier rubyid_setup_gem_environment!'>setup_gem_environment!</span>
@@ -23505,12 +23500,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 28
 29
 30
-31
-32
-33
-34
-35
-36</pre>
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/install-bundler-gems.rb', line 24</span>
@@ -23518,15 +23508,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bundler_gems'>install_bundler_gems</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_install_bundler_gems_args'>install_bundler_gems_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span>
-
   <span class='comment'># Clear previous settings. We want to fully replace - not append.
-</span>  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delete'><span class='object_link'><a href="Homebrew/Settings.html#delete-class_method" title="Homebrew::Settings.delete (method)">delete</a></span></span><span class='lparen'>(</span><span class='symbol'>:gemgroups</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_groups'>groups</span>
+</span>  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delete'><span class='object_link'><a href="Homebrew/Settings.html#delete-class_method" title="Homebrew::Settings.delete (method)">delete</a></span></span><span class='lparen'>(</span><span class='symbol'>:gemgroups</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span>
 
-  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>|=</span> <span class='const'><span class='object_link'><a href="#VALID_GEM_GROUPS-constant" title="Homebrew::VALID_GEM_GROUPS (constant)">VALID_GEM_GROUPS</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span><span class='lparen'>(</span><span class='label'>groups:</span> <span class='id identifier rubyid_groups'>groups</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span><span class='lparen'>(</span><span class='label'>groups:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -23548,6 +23533,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+128
+129
 130
 131
 132
@@ -23616,15 +23603,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 195
 196
 197
-198
-199
-200
-201
-202
-203</pre>
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_bundler_gems!'>install_bundler_gems!</span><span class='lparen'>(</span><span class='label'>only_warn_on_failure:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>setup_path:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>groups:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_path'>old_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -23634,9 +23616,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
   <span class='id identifier rubyid_old_bundle_with'>old_bundle_with</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_WITH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_bundle_frozen'>old_bundle_frozen</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_FROZEN</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_sdkroot'>old_sdkroot</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SDKROOT</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_invalid_groups'>invalid_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_groups'>groups</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="#VALID_GEM_GROUPS-constant" title="Homebrew::VALID_GEM_GROUPS (constant)">VALID_GEM_GROUPS</a></span></span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid gem groups: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_invalid_groups'>invalid_groups</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_invalid_groups'>invalid_groups</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
 
@@ -23835,6 +23814,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+75
+76
 77
 78
 79
@@ -23858,12 +23839,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 97
 98
 99
-100
-101
-102</pre>
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_gem!'>install_gem!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>setup_gem_environment:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_setup_gem_environment!'>setup_gem_environment!</span> <span class='kw'>if</span> <span class='id identifier rubyid_setup_gem_environment'>setup_gem_environment</span>
@@ -23911,18 +23890,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+102
+103
 104
 105
 106
 107
 108
 109
-110
-111
-112</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_gem_setup_path!'>install_gem_setup_path!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>executable:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>setup_gem_environment:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_install_gem!'>install_gem!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='label'>setup_gem_environment:</span> <span class='id identifier rubyid_setup_gem_environment'>setup_gem_environment</span><span class='rparen'>)</span>
@@ -27685,17 +27664,17 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+37
+38
 39
 40
 41
 42
 43
-44
-45
-46</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_odie_if_defined'>odie_if_defined</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='id identifier rubyid_odie'>odie</span><span class='rparen'>)</span>
@@ -27725,16 +27704,16 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+21
+22
 23
 24
 25
 26
-27
-28
-29</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ohai_if_defined'>ohai_if_defined</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='id identifier rubyid_ohai'>ohai</span><span class='rparen'>)</span>
@@ -27819,16 +27798,16 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+29
+30
 31
 32
 33
 34
-35
-36
-37</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_opoo_if_defined'>opoo_if_defined</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='id identifier rubyid_opoo'>opoo</span><span class='rparen'>)</span>
@@ -31972,15 +31951,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 61
 62
 63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/prof.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prof'>prof</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_prof_args'>prof_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
-
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span><span class='lparen'>(</span><span class='label'>groups:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_brew_rb'>brew_rb</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_resolved_path'>resolved_path</span>
   <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mkdir_p'>mkdir_p</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof</span><span class='tstring_end'>&quot;</span></span>
@@ -31999,12 +31978,16 @@ for IRB and have already been parsed by the CLI::Parser.</p>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_stackprof?'>stackprof?</span>
+    <span class='comment'># Already installed from Gemfile but use this to setup PATH and LOADPATH
+</span>    <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_gem_setup_path!'><span class='object_link'><a href="#install_gem_setup_path!-class_method" title="Homebrew.install_gem_setup_path! (method)">install_gem_setup_path!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stackprof</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_with_env'>with_env</span> <span class='label'>HOMEBREW_STACKPROF:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
       <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_RUBY_EXEC_ARGS-constant" title="HOMEBREW_RUBY_EXEC_ARGS (constant)">HOMEBREW_RUBY_EXEC_ARGS</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_brew_rb'>brew_rb</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_output_filename'>output_filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof/d3-flamegraph.html</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stackprof --d3-flamegraph prof/stackprof.dump &gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_output_filename'>output_filename</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
+    <span class='comment'># Already installed from Gemfile but use this to setup PATH and LOADPATH
+</span>    <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_gem_setup_path!'><span class='object_link'><a href="#install_gem_setup_path!-class_method" title="Homebrew.install_gem_setup_path! (method)">install_gem_setup_path!</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby-prof</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_output_filename'>output_filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof/call_stack.html</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ruby-prof</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--printer=call_stack</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--file=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_output_filename'>output_filename</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_brew_rb'>brew_rb</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span>
   <span class='kw'>end</span>
@@ -34132,12 +34115,12 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-19
-20
-21</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ruby_bindir'>ruby_bindir</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>RbConfig</span><span class='op'>::</span><span class='const'>CONFIG</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prefix</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>/bin</span><span class='tstring_end'>&quot;</span></span>
@@ -35245,6 +35228,8 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
+46
+47
 48
 49
 50
@@ -35270,12 +35255,10 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 70
 71
 72
-73
-74
-75</pre>
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'utils/gems.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_setup_gem_environment!'>setup_gem_environment!</span><span class='lparen'>(</span><span class='label'>setup_path:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rubygems</span><span class='tstring_end'>&quot;</span></span>
@@ -37351,7 +37334,7 @@ corresponding to all the original commit messages combined.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_tests'>tests</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_tests_args'>tests_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span><span class='lparen'>(</span><span class='label'>groups:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>prof</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span>
 
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>byebug</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_byebug?'>byebug?</span>
 
@@ -41139,7 +41122,7 @@ corresponding to all the original commit messages combined.</p>
 
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler!'><span class='object_link'><a href="#install_bundler!-class_method" title="Homebrew.install_bundler! (method)">install_bundler!</a></span></span>
 
-  <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_WITH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#VALID_GEM_GROUPS-constant" title="Homebrew::VALID_GEM_GROUPS (constant)">VALID_GEM_GROUPS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_WITH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='comment'># System Ruby does not pick up the correct SDK by default.
 </span>  <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SDKROOT</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_sdk_path'>sdk_path</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MACOS_SYSTEM_RUBY_NEW_ENOUGH</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
