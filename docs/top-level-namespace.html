@@ -1103,12 +1103,18 @@ during the migration from linuxbrew-core to homebrew-core.</p>
 7
 8
 9
-10</pre>
+10
+11
+12
+13</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'yard/templates/default/docstring/html/setup.rb', line 4</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_init'>init</span>
+  <span class='comment'># `sorbet` is available transitively through the `yard-sorbet` plugin, but we&#39;re
+</span>  <span class='comment'># outside of the standalone sorbet config, so `checked` is enabled by default
+</span>  <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>YARD</span><span class='op'>::</span><span class='const'>Templates</span><span class='op'>::</span><span class='const'>Template</span><span class='comma'>,</span> <span class='label'>checked:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_sections'>sections</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1135,14 +1141,16 @@ during the migration from linuxbrew-core to homebrew-core.</p>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'yard/templates/default/docstring/html/setup.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'yard/templates/default/docstring/html/setup.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_internal'>internal</span>
+  <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='const'>YARD</span><span class='op'>::</span><span class='const'>Templates</span><span class='op'>::</span><span class='const'>Template</span><span class='comma'>,</span> <span class='label'>checked:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_erb'>erb</span><span class='lparen'>(</span><span class='symbol'>:internal</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_has_tag?'>has_tag?</span><span class='lparen'>(</span><span class='symbol'>:api</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_tag'>tag</span><span class='lparen'>(</span><span class='symbol'>:api</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_text'>text</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>internal</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
