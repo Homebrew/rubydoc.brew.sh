@@ -3279,14 +3279,14 @@
       <pre class="code"><span class="info file"># File 'migrator.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unlink_oldname_opt'>unlink_oldname_opt</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_new_linked_keg_record'>new_linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_linked_keg_record'>new_linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span> <span class='op'>!=</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> \
-      <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_linked_keg_record'>new_linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> \
-      <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_linked_keg_record'>new_linked_keg_record</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span> <span class='op'>==</span> <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span>
-    <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
-    <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_rmdir_if_possible'>rmdir_if_possible</span>
-  <span class='kw'>end</span>
+  <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
+  <span class='id identifier rubyid_old_opt_record'>old_opt_record</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_rmdir_if_possible'>rmdir_if_possible</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
