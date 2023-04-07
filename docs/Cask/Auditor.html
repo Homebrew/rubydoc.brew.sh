@@ -276,7 +276,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, audit_download: nil, audit_online: nil, audit_strict: nil, audit_signing: nil, audit_token_conflicts: nil, audit_new_cask: nil, quarantine: nil, any_named_args: nil, language: nil, display_passes: nil, display_failures_only: nil, only: [], except: [])  &#x21d2; Auditor </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(cask, audit_download: nil, audit_online: nil, audit_strict: nil, audit_signing: nil, audit_token_conflicts: nil, audit_new_cask: nil, quarantine: nil, any_named_args: nil, language: nil, only: [], except: [])  &#x21d2; Auditor </a>
     
     
   </span>
@@ -305,7 +305,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(cask, audit_download: nil, audit_online: nil, audit_strict: nil, audit_signing: nil, audit_token_conflicts: nil, audit_new_cask: nil, quarantine: nil, any_named_args: nil, language: nil, display_passes: nil, display_failures_only: nil, only: [], except: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Auditor (class)">Auditor</a></span></tt> 
+    #<strong>initialize</strong>(cask, audit_download: nil, audit_online: nil, audit_strict: nil, audit_signing: nil, audit_token_conflicts: nil, audit_new_cask: nil, quarantine: nil, any_named_args: nil, language: nil, only: [], except: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Cask::Auditor (class)">Auditor</a></span></tt> 
   
 
   
@@ -358,11 +358,7 @@
 40
 41
 42
-43
-44
-45
-46
-47</pre>
+43</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/auditor.rb', line 17</span>
@@ -378,8 +374,6 @@
   <span class='label'>quarantine:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>any_named_args:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>language:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-  <span class='label'>display_passes:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-  <span class='label'>display_failures_only:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>only:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
   <span class='label'>except:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='rparen'>)</span>
@@ -393,8 +387,6 @@
   <span class='ivar'>@audit_token_conflicts</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_token_conflicts'>audit_token_conflicts</span>
   <span class='ivar'>@any_named_args</span> <span class='op'>=</span> <span class='id identifier rubyid_any_named_args'>any_named_args</span>
   <span class='ivar'>@language</span> <span class='op'>=</span> <span class='id identifier rubyid_language'>language</span>
-  <span class='ivar'>@display_passes</span> <span class='op'>=</span> <span class='id identifier rubyid_display_passes'>display_passes</span>
-  <span class='ivar'>@display_failures_only</span> <span class='op'>=</span> <span class='id identifier rubyid_display_failures_only'>display_failures_only</span>
   <span class='ivar'>@only</span> <span class='op'>=</span> <span class='id identifier rubyid_only'>only</span>
   <span class='ivar'>@except</span> <span class='op'>=</span> <span class='id identifier rubyid_except'>except</span>
 <span class='kw'>end</span></pre>
@@ -590,6 +582,10 @@
       <pre class="lines">
 
 
+47
+48
+49
+50
 51
 52
 53
@@ -613,22 +609,12 @@
 71
 72
 73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83</pre>
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/auditor.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'cask/auditor.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
-  <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
 
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_language'>language</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_language_blocks'>language_blocks</span>
@@ -642,23 +628,19 @@
 
     <span class='id identifier rubyid_sample_languages'>sample_languages</span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span>
       <span class='id identifier rubyid_audit'>audit</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_languages'>audit_languages</span><span class='lparen'>(</span><span class='id identifier rubyid_l'>l</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_summary'>summary</span> <span class='op'>=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span><span class='lparen'>(</span><span class='label'>include_passed:</span> <span class='id identifier rubyid_output_passed?'>output_passed?</span><span class='comma'>,</span> <span class='label'>include_warnings:</span> <span class='id identifier rubyid_output_warnings?'>output_warnings?</span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_summary'>summary</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_output_summary?'>output_summary?</span><span class='lparen'>(</span><span class='id identifier rubyid_audit'>audit</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_output_summary?'>output_summary?</span><span class='lparen'>(</span><span class='id identifier rubyid_audit'>audit</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing language: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_lang'>lang</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_lang'>lang</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_sentence'>to_sentence</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_output_summary?'>output_summary?</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_summary'>summary</span>
+        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span>
       <span class='kw'>end</span>
-      <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>+=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_warnings'>warnings</span>
       <span class='id identifier rubyid_errors'>errors</span> <span class='op'>+=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_audit'>audit</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_cask_instance'>audit_cask_instance</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_summary'>summary</span> <span class='op'>=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span><span class='lparen'>(</span><span class='label'>include_passed:</span> <span class='id identifier rubyid_output_passed?'>output_passed?</span><span class='comma'>,</span> <span class='label'>include_warnings:</span> <span class='id identifier rubyid_output_warnings?'>output_warnings?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_summary'>summary</span> <span class='kw'>if</span> <span class='id identifier rubyid_summary'>summary</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_output_summary?'>output_summary?</span><span class='lparen'>(</span><span class='id identifier rubyid_audit'>audit</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>+=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_warnings'>warnings</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span> <span class='kw'>if</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_summary'>summary</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_output_summary?'>output_summary?</span><span class='lparen'>(</span><span class='id identifier rubyid_audit'>audit</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_errors'>errors</span> <span class='op'>+=</span> <span class='id identifier rubyid_audit'>audit</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>
   <span class='kw'>end</span>
 
-  <span class='lbrace'>{</span> <span class='label'>warnings:</span> <span class='id identifier rubyid_warnings'>warnings</span><span class='comma'>,</span> <span class='label'>errors:</span> <span class='id identifier rubyid_errors'>errors</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_errors'>errors</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

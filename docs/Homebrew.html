@@ -9683,7 +9683,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-105
 106
 107
 108
@@ -9895,10 +9894,13 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 314
 315
 316
-317</pre>
+317
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_args'>audit_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -10040,24 +10042,26 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/cmd/abstract_command</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/cmd/audit</span><span class='tstring_end'>&quot;</span></span>
 
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_failures_only?'>display_failures_only?</span>
+      <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew audit &lt;cask&gt; --display-failures-only`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew audit &lt;cask&gt;` without the argument</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
     <span class='comment'># For switches, we add `|| nil` so that `nil` will be passed instead of `false` if they aren&#39;t set.
 </span>    <span class='comment'># This way, we can distinguish between &quot;not set&quot; and &quot;set to false&quot;.
 </span>    <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd.html" title="Cask::Cmd (class)">Cmd</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cmd/Audit.html" title="Cask::Cmd::Audit (class)">Audit</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit_casks'><span class='object_link'><a href="Cask/Cmd/Audit.html#audit_casks-class_method" title="Cask::Cmd::Audit.audit_casks (method)">audit_casks</a></span></span><span class='lparen'>(</span>
       <span class='op'>*</span><span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='comma'>,</span>
-      <span class='label'>download:</span>              <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>download:</span>        <span class='kw'>nil</span><span class='comma'>,</span>
       <span class='comment'># No need for `|| nil` for `--[no-]signing` because boolean switches are already `nil` if not passed
-</span>      <span class='label'>signing:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_signing?'>signing?</span><span class='comma'>,</span>
-      <span class='label'>online:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>strict:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>new_cask:</span>              <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>token_conflicts:</span>       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>quarantine:</span>            <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>any_named_args:</span>        <span class='op'>!</span><span class='id identifier rubyid_no_named_args'>no_named_args</span><span class='comma'>,</span>
-      <span class='label'>language:</span>              <span class='kw'>nil</span><span class='comma'>,</span>
-      <span class='label'>display_passes:</span>        <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>1</span><span class='comma'>,</span>
-      <span class='label'>display_failures_only:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_failures_only?'>display_failures_only?</span><span class='comma'>,</span>
-      <span class='label'>only:</span>                  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
-      <span class='label'>except:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
+</span>      <span class='label'>signing:</span>         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_signing?'>signing?</span><span class='comma'>,</span>
+      <span class='label'>online:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>strict:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>new_cask:</span>        <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>token_conflicts:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>quarantine:</span>      <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>any_named_args:</span>  <span class='op'>!</span><span class='id identifier rubyid_no_named_args'>no_named_args</span><span class='comma'>,</span>
+      <span class='label'>language:</span>        <span class='kw'>nil</span><span class='comma'>,</span>
+      <span class='label'>only:</span>            <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
+      <span class='label'>except:</span>          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -10065,7 +10069,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 
   <span class='id identifier rubyid_cask_count'>cask_count</span> <span class='op'>=</span> <span class='id identifier rubyid_failed_casks'>failed_casks</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
 
-  <span class='id identifier rubyid_cask_problem_count'>cask_problem_count</span> <span class='op'>=</span> <span class='id identifier rubyid_failed_casks'>failed_casks</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='op'>|</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:warnings</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>+</span> <span class='id identifier rubyid_result'>result</span><span class='lbracket'>[</span><span class='symbol'>:errors</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_cask_problem_count'>cask_problem_count</span> <span class='op'>=</span> <span class='id identifier rubyid_failed_casks'>failed_casks</span><span class='period'>.</span><span class='id identifier rubyid_sum'>sum</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='op'>|</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
   <span class='id identifier rubyid_total_problems_count'>total_problems_count</span> <span class='op'>=</span> <span class='id identifier rubyid_problem_count'>problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_new_formula_problem_count'>new_formula_problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_cask_problem_count'>cask_problem_count</span> <span class='op'>+</span> <span class='id identifier rubyid_tap_problem_count'>tap_problem_count</span>
 
@@ -10232,7 +10236,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 99
 100
 101
-102</pre>
+102
+103</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 26</span>
@@ -10279,7 +10284,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Prefix every line of output with the file or formula name being audited, to </span><span class='tstring_end'>&quot;</span></span> \
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>make output easy to grep.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--display-failures-only</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only display casks that fail the audit. This is the default for formulae.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only display casks that fail the audit. This is the default for formulae and casks.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>hidden:</span>      <span class='kw'>true</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--skip-style</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Skip running non-RuboCop style checks. Useful if you plan on running </span><span class='tstring_end'>&quot;</span></span> \
                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew style` separately. Enabled by default unless a formula is specified by name.</span><span class='tstring_end'>&quot;</span></span>
@@ -19896,12 +19902,12 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-324
-325
-326</pre>
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 327</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_problem'>format_problem</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_location'>location</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dup'>dup</span><span class='op'>&amp;.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>: </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n    </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -19926,13 +19932,13 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-319
-320
-321
-322</pre>
+322
+323
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 322</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
@@ -41311,14 +41317,14 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-328
-329
-330
 331
-332</pre>
+332
+333
+334
+335</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 328</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_without_api'>without_api</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>yield</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
