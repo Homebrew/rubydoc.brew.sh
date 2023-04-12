@@ -227,7 +227,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#search_names-class_method" title="search_names (class method)">.<strong>search_names</strong>(query, string_or_regex, args)  &#x21d2; Object </a>
+      <a href="#search_names-class_method" title="search_names (class method)">.<strong>search_names</strong>(string_or_regex, args)  &#x21d2; Object </a>
     
     
   </span>
@@ -272,28 +272,6 @@
   <span class="summary_signature">
     
       <a href="#search_string-class_method" title="search_string (class method)">.<strong>search_string</strong>(selectable, string)  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#search_taps-class_method" title="search_taps (class method)">.<strong>search_taps</strong>(query, silent: false)  &#x21d2; Object </a>
     
     
   </span>
@@ -429,17 +407,17 @@
       <pre class="lines">
 
 
-173
-174
-175
-176
-177
-178
-179
-180</pre>
+125
+126
+127
+128
+129
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_selectable'>selectable</span><span class='comma'>,</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span>
@@ -484,39 +462,38 @@
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151</pre>
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_casks'>search_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_TAP_CASK_REGEX-constant" title="HOMEBREW_TAP_CASK_REGEX (constant)">HOMEBREW_TAP_CASK_REGEX</a></span></span><span class='rparen'>)</span>
@@ -528,12 +505,11 @@
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_cask_tokens'>cask_tokens</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:cask_tokens</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_c'>c</span><span class='op'>|</span>
-    <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^homebrew/cask.*/</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
 
-  <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
-    <span class='id identifier rubyid_cask_tokens'>cask_tokens</span> <span class='op'>+=</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="API.html" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="API/Cask.html" title="Homebrew::API::Cask (module)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all_casks'><span class='object_link'><a href="API/Cask.html#all_casks-class_method" title="Homebrew::API::Cask.all_casks (method)">all_casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
-  <span class='kw'>end</span>
+    <span class='id identifier rubyid_c'>c</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^homebrew/cask.*/</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+  <span class='id identifier rubyid_cask_tokens'>cask_tokens</span> <span class='op'>|=</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="API.html" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="API/Cask.html" title="Homebrew::API::Cask (module)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all_casks'><span class='object_link'><a href="API/Cask.html#all_casks-class_method" title="Homebrew::API::Cask.all_casks (method)">all_casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
 
   <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_search'>search</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='comma'>,</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_results'>results</span> <span class='op'>+=</span> <span class='const'>DidYouMean</span><span class='op'>::</span><span class='const'>SpellChecker</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>dictionary:</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span><span class='rparen'>)</span>
@@ -664,40 +640,40 @@
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120</pre>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_formulae'>search_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_TAP_FORMULA_REGEX-constant" title="HOMEBREW_TAP_FORMULA_REGEX (constant)">HOMEBREW_TAP_FORMULA_REGEX</a></span></span><span class='rparen'>)</span>
@@ -738,7 +714,7 @@
       <div class="method_details ">
   <h3 class="signature " id="search_names-class_method">
   
-    .<strong>search_names</strong>(query, string_or_regex, args)  &#x21d2; <tt>Object</tt> 
+    .<strong>search_names</strong>(string_or_regex, args)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -765,42 +741,38 @@
       <pre class="lines">
 
 
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171</pre>
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 107</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_search_names'>search_names</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_search_names'>search_names</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_both'>both</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
 
-  <span class='id identifier rubyid_remote_results'>remote_results</span> <span class='op'>=</span> <span class='id identifier rubyid_search_taps'>search_taps</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-
   <span class='id identifier rubyid_all_formulae'>all_formulae</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span> <span class='op'>||</span> <span class='id identifier rubyid_both'>both</span>
-    <span class='id identifier rubyid_search_formulae'>search_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_remote_results'>remote_results</span><span class='lbracket'>[</span><span class='symbol'>:formulae</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_search_formulae'>search_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_all_casks'>all_casks</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span> <span class='op'>||</span> <span class='id identifier rubyid_both'>both</span>
-    <span class='id identifier rubyid_search_casks'>search_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_remote_results'>remote_results</span><span class='lbracket'>[</span><span class='symbol'>:casks</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_search_casks'>search_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_regex'>string_or_regex</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -842,16 +814,16 @@
       <pre class="lines">
 
 
-186
-187
-188
-189
-190
-191
-192</pre>
+138
+139
+140
+141
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_regex'>search_regex</span><span class='lparen'>(</span><span class='id identifier rubyid_selectable'>selectable</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_selectable'>selectable</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
@@ -895,17 +867,17 @@
       <pre class="lines">
 
 
-194
-195
-196
-197
-198
-199
-200
-201</pre>
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_search_string'>search_string</span><span class='lparen'>(</span><span class='id identifier rubyid_selectable'>selectable</span><span class='comma'>,</span> <span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_simplified_string'>simplified_string</span> <span class='op'>=</span> <span class='id identifier rubyid_simplify_string'>simplify_string</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
@@ -914,133 +886,6 @@
     <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_simplify_string'>simplify_string</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_simplified_string'>simplified_string</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="search_taps-class_method">
-  
-    .<strong>search_taps</strong>(query, silent: false)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
-  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 45</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_search_taps'>search_taps</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_union'>union</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_TAP_FORMULA_REGEX-constant" title="HOMEBREW_TAP_FORMULA_REGEX (constant)">HOMEBREW_TAP_FORMULA_REGEX</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_TAP_CASK_REGEX-constant" title="HOMEBREW_TAP_CASK_REGEX (constant)">HOMEBREW_TAP_CASK_REGEX</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='id identifier rubyid_query'>query</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='int'>3</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>formulae:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>casks:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-
-  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_github_api?'>no_github_api?</span>
-
-  <span class='kw'>unless</span> <span class='id identifier rubyid_silent'>silent</span>
-    <span class='comment'># Use stderr to avoid breaking parsed output
-</span>    <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_headline'><span class='object_link'><a href="../Formatter.html#headline-class_method" title="Formatter.headline (method)">headline</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Searching taps on GitHub...</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='symbol'>:blue</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_matches'>matches</span> <span class='op'>=</span> <span class='kw'>begin</span>
-    <span class='const'><span class='object_link'><a href="../GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_search_code'><span class='object_link'><a href="../GitHub.html#search_code-class_method" title="GitHub.search_code (method)">search_code</a></span></span><span class='lparen'>(</span>
-      <span class='label'>user:</span>      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>path:</span>      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>filename:</span>  <span class='id identifier rubyid_query'>query</span><span class='comma'>,</span>
-      <span class='label'>extension:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-    <span class='rparen'>)</span>
-  <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../GitHub/API.html" title="GitHub::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../GitHub/API/Error.html" title="GitHub::API::Error (class)">Error</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-    <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error searching on GitHub: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>nil</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>return</span> <span class='id identifier rubyid_results'>results</span> <span class='kw'>if</span> <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-
-  <span class='id identifier rubyid_matches'>matches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_match'>match</span><span class='op'>|</span>
-    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.rb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repository</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>full_name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Casks/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:casks</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:casks</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_full_name'>full_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:formulae</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:formulae</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_full_name'>full_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_results'>results</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1077,12 +922,12 @@
       <pre class="lines">
 
 
-182
-183
-184</pre>
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'search.rb', line 182</span>
+      <pre class="code"><span class="info file"># File 'search.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simplify_string'>simplify_string</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>[^a-z\d]</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
