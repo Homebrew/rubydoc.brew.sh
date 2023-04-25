@@ -440,13 +440,13 @@
       <pre class="lines">
 
 
-449
-450
 451
-452</pre>
+452
+453
+454</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 449</span>
+      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 451</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_cache'>clear_cache</span>
   <span class='kw'>super</span>
@@ -535,7 +535,9 @@
 444
 445
 446
-447</pre>
+447
+448
+449</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'download_strategy.rb', line 394</span>
@@ -553,20 +555,22 @@
 
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Downloading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='id identifier rubyid_resolved_url'>resolved_url</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_url_time'>url_time</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_is_redirection'>is_redirection</span> <span class='op'>=</span>
+    <span class='id identifier rubyid_use_cached_location'>use_cached_location</span> <span class='op'>=</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
+    <span class='id identifier rubyid_use_cached_location'>use_cached_location</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:latest?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_latest?'>latest?</span>
+
+    <span class='id identifier rubyid_resolved_url'>resolved_url</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_last_modified'>last_modified</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_is_redirection'>is_redirection</span> <span class='op'>=</span> <span class='kw'>begin</span>
       <span class='id identifier rubyid_resolve_url_basename_time_file_size'>resolve_url_basename_time_file_size</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='id identifier rubyid_end_time'>end_time</span><span class='op'>&amp;.</span><span class='id identifier rubyid_remaining!'>remaining!</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>unless</span> <span class='id identifier rubyid_use_cached_location'>use_cached_location</span>
+    <span class='kw'>end</span>
+
     <span class='comment'># Authorization is no longer valid after redirects
 </span>    <span class='id identifier rubyid_meta'>meta</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_header'>header</span><span class='op'>|</span> <span class='id identifier rubyid_header'>header</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_redirection'>is_redirection</span>
 
-    <span class='id identifier rubyid_fresh'>fresh</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_url_time'>url_time</span>
-      <span class='id identifier rubyid_url_time'>url_time</span> <span class='op'>&lt;=</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_mtime'>mtime</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:latest?</span><span class='rparen'>)</span>
-      <span class='op'>!</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_latest?'>latest?</span>
-    <span class='kw'>else</span>
-      <span class='kw'>true</span>
-    <span class='kw'>end</span>
+    <span class='comment'># The cached location is no longer fresh if Last-Modified is after the file&#39;s timestamp
+</span>    <span class='id identifier rubyid_use_cached_location'>use_cached_location</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_last_modified'>last_modified</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_mtime'>mtime</span>
 
-    <span class='kw'>if</span> <span class='id identifier rubyid_cached_location'>cached_location</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_fresh'>fresh</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_use_cached_location'>use_cached_location</span>
       <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Already downloaded: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cached_location'>cached_location</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>else</span>
       <span class='kw'>begin</span>
@@ -624,13 +628,13 @@
       <pre class="lines">
 
 
-454
-455
 456
-457</pre>
+457
+458
+459</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 454</span>
+      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 456</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_time_file_size'>resolved_time_file_size</span><span class='lparen'>(</span><span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span> <span class='op'>=</span> <span class='id identifier rubyid_resolve_url_basename_time_file_size'>resolve_url_basename_time_file_size</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
