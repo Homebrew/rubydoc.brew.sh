@@ -985,7 +985,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_block_method_called_in_block?'>block_method_called_in_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_each_child_node'>each_child_node</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_block_type?'>block_type?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_send_type?'>send_type?</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_method_name'>method_name</span>
 
     <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_call_node'>call_node</span>
     <span class='kw'>return</span> <span class='kw'>true</span>
@@ -1544,7 +1544,7 @@ If block given, yield matching nodes.</p>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='symbol'>:const</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_const_node'>const_node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_const_node'>const_node</span><span class='period'>.</span><span class='id identifier rubyid_const_name'>const_name</span> <span class='op'>==</span> <span class='id identifier rubyid_const_name'>const_name</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_const_node'>const_node</span><span class='period'>.</span><span class='id identifier rubyid_const_name'>const_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_const_name'>const_name</span>
 
     <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_const_node'>const_node</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_const_node'>const_node</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -2068,7 +2068,7 @@ matching method passed as a parameter to the block.</p>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_child_node'>each_child_node</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method_node'>method_node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_method_node'>method_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_method_node'>method_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_method_name'>method_name</span>
 
     <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_method_node'>method_node</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_method_node'>method_node</span>
@@ -2367,7 +2367,7 @@ Check if the node itself is the method.</p>
     <span class='kw'>return</span> <span class='kw'>true</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_child_node'>each_child_node</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_method_name'>method_name</span>
 
     <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_call_node'>call_node</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='kw'>true</span>
@@ -2437,7 +2437,7 @@ Check if the node itself is the method.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_called_ever?'>method_called_ever?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_each_descendant'>each_descendant</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_call_node'>call_node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='id identifier rubyid_method_name'>method_name</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_call_node'>call_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_method_name'>method_name</span>
 
     <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_call_node'>call_node</span>
     <span class='kw'>return</span> <span class='kw'>true</span>

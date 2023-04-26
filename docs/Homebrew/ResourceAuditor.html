@@ -1204,16 +1204,16 @@
       <pre class="lines">
 
 
-93
-94
 95
 96
 97
 98
-99</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_curl_deps'>curl_deps</span>
   <span class='ivar'>@curl_deps</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1335,15 +1335,19 @@
 88
 89
 90
-91</pre>
+91
+92
+93</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_checksum'>audit_checksum</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_spec_name'>spec_name</span> <span class='op'>==</span> <span class='symbol'>:head</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../CurlDownloadStrategy.html" title="CurlDownloadStrategy (class)">CurlDownloadStrategy</a></span></span>
-
+  <span class='comment'># rubocop:disable Style/InvertibleUnlessCondition (non-invertible)
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../CurlDownloadStrategy.html" title="CurlDownloadStrategy (class)">CurlDownloadStrategy</a></span></span>
+  <span class='comment'># rubocop:enable Style/InvertibleUnlessCondition
+</span>
   <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checksum is missing</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_checksum'>checksum</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1439,7 +1443,7 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_url_strategy'>url_strategy</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_url_strategy'>url_strategy</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="../DownloadStrategyDetector.html" title="DownloadStrategyDetector (class)">DownloadStrategyDetector</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../DownloadStrategyDetector.html#detect-class_method" title="DownloadStrategyDetector.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_using'>using</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Redundant :using value in URL</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
@@ -1478,8 +1482,6 @@
       <pre class="lines">
 
 
-141
-142
 143
 144
 145
@@ -1490,10 +1492,12 @@
 150
 151
 152
-153</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_head_branch'>audit_head_branch</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
@@ -1543,8 +1547,6 @@
       <pre class="lines">
 
 
-101
-102
 103
 104
 105
@@ -1581,10 +1583,12 @@
 136
 137
 138
-139</pre>
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_urls'>audit_urls</span>
   <span class='id identifier rubyid_urls'>urls</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_url'>url</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_mirrors'>mirrors</span>
@@ -1721,12 +1725,12 @@
       <pre class="lines">
 
 
-155
-156
-157</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@problems</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_text'>text</span>
