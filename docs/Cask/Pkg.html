@@ -669,17 +669,27 @@
       <pre class="lines">
 
 
-60
-61
 62
-63</pre>
+63
+64
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_forget'>forget</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unregistering pkg receipt (aka forgetting)</span><span class='tstring_end'>&quot;</span></span>
-  <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/sbin/pkgutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--forget</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_package_id'>package_id</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>sudo:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/sbin/pkgutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>args:</span>         <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--forget</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_package_id'>package_id</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>sudo:</span>         <span class='kw'>true</span><span class='comma'>,</span>
+    <span class='label'>sudo_as_root:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -716,13 +726,13 @@
       <pre class="lines">
 
 
-94
-95
-96
-97</pre>
+101
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_info'>info</span>
   <span class='ivar'>@info</span> <span class='op'>||=</span> <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/sbin/pkgutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--pkg-info-plist</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_package_id'>package_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -776,16 +786,16 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87</pre>
+88
+89
+90
+91
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pkgutil_bom_all'>pkgutil_bom_all</span>
   <span class='ivar'>@pkgutil_bom_all</span> <span class='op'>||=</span> <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/sbin/pkgutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--files</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_package_id'>package_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -842,12 +852,12 @@
       <pre class="lines">
 
 
-76
-77
-78</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pkgutil_bom_dirs'>pkgutil_bom_dirs</span>
   <span class='ivar'>@pkgutil_bom_dirs</span> <span class='op'>||=</span> <span class='id identifier rubyid_pkgutil_bom_all'>pkgutil_bom_all</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_pkgutil_bom_specials'>pkgutil_bom_specials</span>
@@ -900,12 +910,12 @@
       <pre class="lines">
 
 
-66
-67
-68</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pkgutil_bom_files'>pkgutil_bom_files</span>
   <span class='ivar'>@pkgutil_bom_files</span> <span class='op'>||=</span> <span class='id identifier rubyid_pkgutil_bom_all'>pkgutil_bom_all</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:file?</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='id identifier rubyid_pkgutil_bom_specials'>pkgutil_bom_specials</span>
@@ -958,12 +968,12 @@
       <pre class="lines">
 
 
-71
-72
-73</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pkgutil_bom_specials'>pkgutil_bom_specials</span>
   <span class='ivar'>@pkgutil_bom_specials</span> <span class='op'>||=</span> <span class='id identifier rubyid_pkgutil_bom_all'>pkgutil_bom_all</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:special?</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1016,12 +1026,12 @@
       <pre class="lines">
 
 
-90
-91
-92</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span>
   <span class='ivar'>@root</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>volume</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_info'>info</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>install-location</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1090,7 +1100,9 @@
 54
 55
 56
-57</pre>
+57
+58
+59</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/pkg.rb', line 28</span>
@@ -1100,9 +1112,10 @@
     <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Deleting pkg files</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>args:</span>  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/bin/rm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>input:</span> <span class='id identifier rubyid_pkgutil_bom_files'>pkgutil_bom_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='label'>sudo:</span>  <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='label'>args:</span>         <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/bin/rm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>input:</span>        <span class='id identifier rubyid_pkgutil_bom_files'>pkgutil_bom_files</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>sudo:</span>         <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='label'>sudo_as_root:</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -1110,9 +1123,10 @@
     <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Deleting pkg symlinks and special files</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/xargs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-      <span class='label'>args:</span>  <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/bin/rm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>input:</span> <span class='id identifier rubyid_pkgutil_bom_specials'>pkgutil_bom_specials</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
-      <span class='label'>sudo:</span>  <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='label'>args:</span>         <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/bin/rm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>input:</span>        <span class='id identifier rubyid_pkgutil_bom_specials'>pkgutil_bom_specials</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\0</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>sudo:</span>         <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='label'>sudo_as_root:</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
 
