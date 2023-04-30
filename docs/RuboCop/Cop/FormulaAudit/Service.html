@@ -124,6 +124,44 @@
   
 
 </div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CELLAR_PATH_AUDIT_CORRECTIONS-constant" class="">CELLAR_PATH_AUDIT_CORRECTIONS =
+          <div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This constant is part of a private API.</strong>
+  This constant may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this constant if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='label'>bin:</span>      <span class='symbol'>:opt_bin</span><span class='comma'>,</span>
+  <span class='label'>libexec:</span>  <span class='symbol'>:opt_libexec</span><span class='comma'>,</span>
+  <span class='label'>pkgshare:</span> <span class='symbol'>:opt_pkgshare</span><span class='comma'>,</span>
+  <span class='label'>prefix:</span>   <span class='symbol'>:opt_prefix</span><span class='comma'>,</span>
+  <span class='label'>sbin:</span>     <span class='symbol'>:opt_sbin</span><span class='comma'>,</span>
+  <span class='label'>share:</span>    <span class='symbol'>:opt_share</span><span class='comma'>,</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -231,33 +269,39 @@
       <pre class="lines">
 
 
-15
-16
-17
-18
-19
-20
-21
-22
-23
 24
 25
 26
-27</pre>
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/service.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'rubocops/service.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service_node'>service_node</span> <span class='op'>=</span> <span class='id identifier rubyid_find_block'>find_block</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:service</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_service_node'>service_node</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='comment'># This check ensures that `bin` is not referenced because
-</span>  <span class='comment'># `opt_bin` is more portable and works with the API.
-</span>  <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_service_node'>service_node</span><span class='comma'>,</span> <span class='symbol'>:bin</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bin_node'>bin_node</span><span class='op'>|</span>
-    <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_bin_node'>bin_node</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use `opt_bin` instead of `bin` in service blocks.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
-      <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_bin_node'>bin_node</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>opt_bin</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># This check ensures that cellar paths like `bin` are not referenced
+</span>  <span class='comment'># because their `opt_` variants are more portable and work with the
+</span>  <span class='comment'># API.
+</span>  <span class='const'><span class='object_link'><a href="#CELLAR_PATH_AUDIT_CORRECTIONS-constant" title="RuboCop::Cop::FormulaAudit::Service::CELLAR_PATH_AUDIT_CORRECTIONS (constant)">CELLAR_PATH_AUDIT_CORRECTIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opt_path'>opt_path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_service_node'>service_node</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+      <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opt_path'>opt_path</span><span class='embexpr_end'>}</span><span class='tstring_content'>` instead of `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>` in service blocks.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_corrector'>corrector</span><span class='op'>|</span>
+        <span class='id identifier rubyid_corrector'>corrector</span><span class='period'>.</span><span class='id identifier rubyid_replace'>replace</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_source_range'>source_range</span><span class='comma'>,</span> <span class='id identifier rubyid_opt_path'>opt_path</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
