@@ -340,22 +340,22 @@
     <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
 
     <span class='comment'># Move the old cask&#39;s artifacts back to staging
-</span>    <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_start_upgrade'>start_upgrade</span>
+</span>    <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_start_upgrade'>start_upgrade</span><span class='lparen'>(</span><span class='label'>successor:</span> <span class='id identifier rubyid_new_cask'>new_cask</span><span class='rparen'>)</span>
     <span class='comment'># And flag it so in case of error
 </span>    <span class='id identifier rubyid_started_upgrade'>started_upgrade</span> <span class='op'>=</span> <span class='kw'>true</span>
 
     <span class='comment'># Install the new cask
 </span>    <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_stage'>stage</span>
 
-    <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_install_artifacts'>install_artifacts</span>
+    <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_install_artifacts'>install_artifacts</span><span class='lparen'>(</span><span class='label'>predecessor:</span> <span class='id identifier rubyid_old_cask'>old_cask</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_new_artifacts_installed'>new_artifacts_installed</span> <span class='op'>=</span> <span class='kw'>true</span>
 
     <span class='comment'># If successful, wipe the old cask from staging
 </span>    <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_finalize_upgrade'>finalize_upgrade</span>
   <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-    <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_artifacts_installed'>new_artifacts_installed</span>
+    <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>successor:</span> <span class='id identifier rubyid_old_cask'>old_cask</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_artifacts_installed'>new_artifacts_installed</span>
     <span class='id identifier rubyid_new_cask_installer'>new_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_purge_versioned_files'>purge_versioned_files</span>
-    <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_revert_upgrade'>revert_upgrade</span> <span class='kw'>if</span> <span class='id identifier rubyid_started_upgrade'>started_upgrade</span>
+    <span class='id identifier rubyid_old_cask_installer'>old_cask_installer</span><span class='period'>.</span><span class='id identifier rubyid_revert_upgrade'>revert_upgrade</span><span class='lparen'>(</span><span class='label'>predecessor:</span> <span class='id identifier rubyid_new_cask'>new_cask</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_started_upgrade'>started_upgrade</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_e'>e</span>
   <span class='kw'>end</span>
 
