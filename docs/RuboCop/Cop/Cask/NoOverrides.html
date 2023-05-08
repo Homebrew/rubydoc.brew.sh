@@ -115,11 +115,6 @@
 
     <dl class="constants">
       
-        <dt id="ON_SYSTEM_METHODS-constant" class="">ON_SYSTEM_METHODS =
-          
-        </dt>
-        <dd><pre class="code"><span class='const'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="RuboCop::Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html" title="RuboCop::Cask::Constants (module)">Constants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html#ON_SYSTEM_METHODS-constant" title="RuboCop::Cask::Constants::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span></pre></dd>
-      
         <dt id="OVERRIDEABLE_METHODS-constant" class="">OVERRIDEABLE_METHODS =
           <div class="docstring">
   <div class="discussion">
@@ -286,7 +281,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="CaskHelp.html" title="RuboCop::Cop::Cask::CaskHelp (module)">CaskHelp</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="CaskHelp.html#on_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_block (method)">#on_block</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="CaskHelp.html#find_end_line-instance_method" title="RuboCop::Cop::Cask::CaskHelp#find_end_line (method)">#find_end_line</a></span>, <span class='object_link'><a href="CaskHelp.html#inner_stanzas-instance_method" title="RuboCop::Cop::Cask::CaskHelp#inner_stanzas (method)">#inner_stanzas</a></span>, <span class='object_link'><a href="CaskHelp.html#on_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_block (method)">#on_block</a></span>, <span class='object_link'><a href="CaskHelp.html#on_cask_stanza_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_cask_stanza_block (method)">#on_cask_stanza_block</a></span>, <span class='object_link'><a href="CaskHelp.html#on_system_methods-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_system_methods (method)">#on_system_methods</a></span></p>
 
   
   
@@ -333,12 +328,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inside_livecheck_block?'>inside_livecheck_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_single_stanza_livecheck_block?'>single_stanza_livecheck_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_multi_stanza_livecheck_block?'>multi_stanza_livecheck_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
@@ -386,13 +381,13 @@
       <pre class="lines">
 
 
-71
-72
-73
-74</pre>
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multi_stanza_livecheck_block?'>multi_stanza_livecheck_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_grandparent_node'>grandparent_node</span> <span class='op'>=</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span>
@@ -418,6 +413,7 @@
       <pre class="lines">
 
 
+21
 22
 23
 24
@@ -432,18 +428,15 @@
 33
 34
 35
-36
-37
-38</pre>
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_cask'>on_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_block'>cask_block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_block'>cask_block</span><span class='period'>.</span><span class='id identifier rubyid_toplevel_stanzas'>toplevel_stanzas</span>
 
-  <span class='comment'># Skip if there are no `on_*` blocks.
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_on_blocks'>on_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="#ON_SYSTEM_METHODS-constant" title="RuboCop::Cop::Cask::NoOverrides::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_stanza_name'>stanza_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_on_blocks'>on_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_on_system_methods'>on_system_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span>
 
   <span class='id identifier rubyid_stanzas_in_blocks'>stanzas_in_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_on_system_stanzas'>on_system_stanzas</span><span class='lparen'>(</span><span class='id identifier rubyid_on_blocks'>on_blocks</span><span class='rparen'>)</span>
 
@@ -476,6 +469,8 @@
       <pre class="lines">
 
 
+38
+39
 40
 41
 42
@@ -493,21 +488,15 @@
 54
 55
 56
-57
-58
-59
-60
-61</pre>
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_system_stanzas'>on_system_stanzas</span><span class='lparen'>(</span><span class='id identifier rubyid_on_system'>on_system</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_method_nodes'>method_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_on_system'>on_system</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:method_node</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_method_nodes'>method_nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_block_type?'>block_type?</span>
-
+  <span class='id identifier rubyid_method_nodes'>method_nodes</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:block_type?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
     <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_child_nodes'>child_nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_child'>child</span><span class='op'>|</span>
       <span class='id identifier rubyid_child'>child</span><span class='period'>.</span><span class='id identifier rubyid_each_node'>each_node</span><span class='lparen'>(</span><span class='symbol'>:send</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_send_node'>send_node</span><span class='op'>|</span>
         <span class='comment'># Skip (nested) livecheck blocks as its `url` is different to a download `url`.
@@ -516,7 +505,7 @@
 </span>        <span class='kw'>if</span> <span class='id identifier rubyid_send_node'>send_node</span><span class='period'>.</span><span class='id identifier rubyid_ancestors'>ancestors</span><span class='period'>.</span><span class='id identifier rubyid_drop_while'>drop_while</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='op'>!</span><span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_begin_type?'>begin_type?</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_dstr_type?'>dstr_type?</span> <span class='op'>||</span> <span class='id identifier rubyid_a'>a</span><span class='period'>.</span><span class='id identifier rubyid_regexp_type?'>regexp_type?</span> <span class='rbrace'>}</span>
           <span class='kw'>next</span>
         <span class='kw'>end</span>
-        <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#ON_SYSTEM_METHODS-constant" title="RuboCop::Cop::Cask::NoOverrides::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_send_node'>send_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="RuboCop::Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html" title="RuboCop::Cask::Constants (module)">Constants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html#ON_SYSTEM_METHODS-constant" title="RuboCop::Cask::Constants::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_send_node'>send_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
 
         <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_send_node'>send_node</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
@@ -567,12 +556,12 @@
       <pre class="lines">
 
 
-67
-68
-69</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/no_overrides.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_stanza_livecheck_block?'>single_stanza_livecheck_block?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_block_type?'>block_type?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='symbol'>:livecheck</span>

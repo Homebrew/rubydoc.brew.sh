@@ -113,7 +113,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>This cop checks that a cask’s stanzas are grouped correctly.</p>
+    <p>This cop checks that a cask’s stanzas are grouped correctly, including nested within <code>on_*</code> blocks.</p>
 
 
   </div>
@@ -136,11 +136,6 @@
     </h2>
 
     <dl class="constants">
-      
-        <dt id="ON_SYSTEM_METHODS-constant" class="">ON_SYSTEM_METHODS =
-          
-        </dt>
-        <dd><pre class="code"><span class='const'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="RuboCop::Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html" title="RuboCop::Cask::Constants (module)">Constants</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Constants.html#ON_SYSTEM_METHODS-constant" title="RuboCop::Cask::Constants::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span></pre></dd>
       
         <dt id="MISSING_LINE_MSG-constant" class="">MISSING_LINE_MSG =
           
@@ -207,7 +202,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="CaskHelp.html" title="RuboCop::Cop::Cask::CaskHelp (module)">CaskHelp</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="CaskHelp.html#on_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_block (method)">#on_block</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="CaskHelp.html#find_end_line-instance_method" title="RuboCop::Cop::Cask::CaskHelp#find_end_line (method)">#find_end_line</a></span>, <span class='object_link'><a href="CaskHelp.html#inner_stanzas-instance_method" title="RuboCop::Cop::Cask::CaskHelp#inner_stanzas (method)">#inner_stanzas</a></span>, <span class='object_link'><a href="CaskHelp.html#on_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_block (method)">#on_block</a></span>, <span class='object_link'><a href="CaskHelp.html#on_cask_stanza_block-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_cask_stanza_block (method)">#on_cask_stanza_block</a></span>, <span class='object_link'><a href="CaskHelp.html#on_system_methods-instance_method" title="RuboCop::Cop::Cask::CaskHelp#on_system_methods (method)">#on_system_methods</a></span></p>
 
   
   
@@ -231,6 +226,7 @@
       <pre class="lines">
 
 
+20
 21
 22
 23
@@ -242,17 +238,10 @@
 29
 30
 31
-32
-33
-34
-35
-36
-37
-38
-39</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/cask/stanza_grouping.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'rubocops/cask/stanza_grouping.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_cask'>on_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_block'>cask_block</span><span class='rparen'>)</span>
   <span class='ivar'>@cask_block</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_block'>cask_block</span>
@@ -260,17 +249,11 @@
   <span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_block'>cask_block</span><span class='period'>.</span><span class='id identifier rubyid_toplevel_stanzas'>toplevel_stanzas</span>
   <span class='id identifier rubyid_add_offenses'>add_offenses</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span><span class='rparen'>)</span>
 
-  <span class='comment'># If present, check grouping of stanzas within `on_*` blocks.
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_on_blocks'>on_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="#ON_SYSTEM_METHODS-constant" title="RuboCop::Cop::Cask::StanzaGrouping::ON_SYSTEM_METHODS (constant)">ON_SYSTEM_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_stanza_name'>stanza_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_on_blocks'>on_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_on_system_methods'>on_system_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_stanzas'>cask_stanzas</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span>
 
-  <span class='id identifier rubyid_on_blocks'>on_blocks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:method_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_on_block'>on_block</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_on_block'>on_block</span><span class='period'>.</span><span class='id identifier rubyid_block_type?'>block_type?</span>
-
-    <span class='id identifier rubyid_block_contents'>block_contents</span> <span class='op'>=</span> <span class='id identifier rubyid_on_block'>on_block</span><span class='period'>.</span><span class='id identifier rubyid_child_nodes'>child_nodes</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:begin_type?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_inner_nodes'>inner_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_block_contents'>block_contents</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:child_nodes</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:send_type?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_inner_stanzas'>inner_stanzas</span> <span class='op'>=</span> <span class='id identifier rubyid_inner_nodes'>inner_nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../../RuboCop.html" title="RuboCop (module)">RuboCop</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="RuboCop::Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/AST.html" title="RuboCop::Cask::AST (module)">AST</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/AST/Stanza.html" title="RuboCop::Cask::AST::Stanza (class)">Stanza</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Cask/AST/Stanza.html#initialize-instance_method" title="RuboCop::Cask::AST::Stanza#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-
-    <span class='id identifier rubyid_add_offenses'>add_offenses</span><span class='lparen'>(</span><span class='id identifier rubyid_inner_stanzas'>inner_stanzas</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_on_blocks'>on_blocks</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:method_node</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:block_type?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_on_block'>on_block</span><span class='op'>|</span>
+    <span class='id identifier rubyid_stanzas'>stanzas</span> <span class='op'>=</span> <span class='id identifier rubyid_inner_stanzas'>inner_stanzas</span><span class='lparen'>(</span><span class='id identifier rubyid_on_block'>on_block</span><span class='comma'>,</span> <span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_offenses'>add_offenses</span><span class='lparen'>(</span><span class='id identifier rubyid_stanzas'>stanzas</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
