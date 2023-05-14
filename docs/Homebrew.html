@@ -10586,15 +10586,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-17
 18
 19
 20
 21
-22</pre>
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_auto_update_header'>auto_update_header</span><span class='lparen'>(</span><span class='label'>args:</span><span class='rparen'>)</span>
   <span class='ivar'>@auto_update_header</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -12455,9 +12455,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 211
 212
 213
-214
-215
-216</pre>
+214</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 59</span>
@@ -12554,30 +12552,28 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
         <span class='id identifier rubyid_tmp_cask'>tmp_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_tmp_config'>tmp_config</span> <span class='op'>=</span> <span class='id identifier rubyid_tmp_cask'>tmp_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
 
-        <span class='lbracket'>[</span><span class='symbol'>:arm</span><span class='comma'>,</span> <span class='symbol'>:intel</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
-          <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Homebrew/SimulateSystem.html#arch-class_method" title="Homebrew::SimulateSystem.arch (method)">arch</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_arch'>arch</span>
+        <span class='const'><span class='object_link'><a href="OnSystem.html" title="OnSystem (module)">OnSystem</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="OnSystem.html#ARCH_OPTIONS-constant" title="OnSystem::ARCH_OPTIONS (constant)">ARCH_OPTIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+          <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_languages'>languages</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span>
+            <span class='id identifier rubyid_languages'>languages</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+            <span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_language'>language</span><span class='op'>|</span>
+              <span class='id identifier rubyid_new_hash_config'>new_hash_config</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+                <span class='id identifier rubyid_tmp_config'>tmp_config</span>
+              <span class='kw'>else</span>
+                <span class='id identifier rubyid_tmp_config'>tmp_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
+              <span class='kw'>end</span>
 
-          <span class='id identifier rubyid_languages'>languages</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_languages'>languages</span>
-          <span class='id identifier rubyid_languages'>languages</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-          <span class='id identifier rubyid_languages'>languages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_language'>language</span><span class='op'>|</span>
-            <span class='id identifier rubyid_new_hash_config'>new_hash_config</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_language'>language</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-              <span class='id identifier rubyid_tmp_config'>tmp_config</span>
-            <span class='kw'>else</span>
-              <span class='id identifier rubyid_tmp_config'>tmp_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Config.html" title="Cask::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Config.html#initialize-instance_method" title="Cask::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>explicit:</span> <span class='lbrace'>{</span> <span class='label'>languages:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_language'>language</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
+              <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
+              <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_new_hash_config'>new_hash_config</span>
+              <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+
+              <span class='id identifier rubyid_cask_download'>cask_download</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+              <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_download'>cask_download</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>verify_download_integrity:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+              <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Tar.html" title="Utils::Tar (module)">Tar</a></span></span><span class='period'>.</span><span class='id identifier rubyid_validate_file'><span class='object_link'><a href="Utils/Tar.html#validate_file-class_method" title="Utils::Tar.validate_file (method)">validate_file</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_download'>download</span><span class='rparen'>)</span>
+
+              <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_download'>download</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='rbracket'>]</span>
             <span class='kw'>end</span>
-
-            <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_contents'>tmp_contents</span><span class='rparen'>)</span>
-            <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_new_hash_config'>new_hash_config</span>
-            <span class='id identifier rubyid_old_hash'>old_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
-
-            <span class='id identifier rubyid_cask_download'>cask_download</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-            <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='id identifier rubyid_cask_download'>cask_download</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>verify_download_integrity:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-            <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Tar.html" title="Utils::Tar (module)">Tar</a></span></span><span class='period'>.</span><span class='id identifier rubyid_validate_file'><span class='object_link'><a href="Utils/Tar.html#validate_file-class_method" title="Utils::Tar.validate_file (method)">validate_file</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_download'>download</span><span class='rparen'>)</span>
-
-            <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='id identifier rubyid_new_hash_cask'>new_hash_cask</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_download'>download</span><span class='period'>.</span><span class='id identifier rubyid_sha256'>sha256</span><span class='rbracket'>]</span>
           <span class='kw'>end</span>
-        <span class='kw'>ensure</span>
-          <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear'><span class='object_link'><a href="Homebrew/SimulateSystem.html#clear-class_method" title="Homebrew::SimulateSystem.clear (method)">clear</a></span></span>
         <span class='kw'>end</span>
       <span class='kw'>elsif</span> <span class='id identifier rubyid_new_hash'>new_hash</span>
         <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask contains multiple hashes; only updating hash for current arch.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_on_system_blocks_exist?'>on_system_blocks_exist?</span>
@@ -14908,17 +14904,17 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
+216
+217
 218
 219
 220
 221
 222
-223
-224
-225</pre>
+223</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_pull_requests'>check_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span>
@@ -24272,7 +24268,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-314
 315
 316
 317
@@ -24282,10 +24277,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 321
 322
 323
-324</pre>
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_core_tap_if_necessary'>install_core_tap_if_necessary</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_TEST</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -25618,7 +25614,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-326
 327
 328
 329
@@ -25628,10 +25623,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 333
 334
 335
-336</pre>
+336
+337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 327</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_completions_manpages_and_docs'>link_completions_manpages_and_docs</span><span class='lparen'>(</span><span class='id identifier rubyid_repository'>repository</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew update</span><span class='tstring_end'>&quot;</span></span>
@@ -29058,7 +29054,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-48
 49
 50
 51
@@ -29314,10 +29309,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 301
 302
 303
-304</pre>
+304
+305</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_output_update_report'>output_update_report</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_update_report_args'>update_report_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -34937,6 +34933,8 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
+225
+226
 227
 228
 229
@@ -34960,12 +34958,10 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 247
 248
 249
-250
-251
-252</pre>
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -35013,6 +35009,8 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
+252
+253
 254
 255
 256
@@ -35031,12 +35029,10 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 269
 270
 271
-272
-273
-274</pre>
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -36222,12 +36218,12 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-310
 311
-312</pre>
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shorten_revision'>shorten_revision</span><span class='lparen'>(</span><span class='id identifier rubyid_revision'>revision</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-C</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rev-parse</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--short</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_revision'>revision</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span>
@@ -38808,8 +38804,8 @@ corresponding to all the original commit messages combined.</p>
     <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='period'>.</span><span class='id identifier rubyid_tag'><span class='object_link'><a href="Utils/Bottles.html#tag-class_method" title="Utils::Bottles.tag (method)">tag</a></span></span>
   <span class='kw'>end</span>
 
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_os'><span class='object_link'><a href="Homebrew/SimulateSystem.html#os-class_method" title="Homebrew::SimulateSystem.os (method)">os</a></span></span> <span class='op'>=</span> <span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_system'>system</span>
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Homebrew/SimulateSystem.html#arch-class_method" title="Homebrew::SimulateSystem.arch (method)">arch</a></span></span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html#INTEL_ARCHS-constant" title="Hardware::CPU::INTEL_ARCHS (constant)">INTEL_ARCHS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_os'>os</span> <span class='op'>=</span> <span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_system'>system</span>
+  <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html#INTEL_ARCHS-constant" title="Hardware::CPU::INTEL_ARCHS (constant)">INTEL_ARCHS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
     <span class='symbol'>:intel</span>
   <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html#ARM_ARCHS-constant" title="Hardware::CPU::ARM_ARCHS (constant)">ARM_ARCHS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
     <span class='symbol'>:arm</span>
@@ -38817,46 +38813,46 @@ corresponding to all the original commit messages combined.</p>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unknown arch </span><span class='embexpr_beg'>#{</span><span class='ivar'>@bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_all'>all</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_total?'>total?</span>
-    <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_all'>all</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
-      <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unbottled --total</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unbottled --total --eval-all or HOMEBREW_EVAL_ALL</span><span class='tstring_end'>&quot;</span></span>
+  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_all'>all</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_total?'>total?</span>
+      <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_all'>all</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
+        <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unbottled --total</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew unbottled --total --eval-all or HOMEBREW_EVAL_ALL</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_all'>all</span> <span class='op'>=</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_all'>all</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting formulae...</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot specify formulae when using `--eval-all`/`--total`.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_all_formulae'>all_formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_installs'>formula_installs</span> <span class='op'>=</span>
+      <span class='id identifier rubyid_formulae_all_installs_from_args'>formulae_all_installs_from_args</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='id identifier rubyid_all'>all</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_deps_hash'>deps_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_uses_hash'>uses_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_deps_uses_from_formulae'>deps_uses_from_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_all_formulae'>all_formulae</span><span class='rparen'>)</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dependents?'>dependents?</span>
+      <span class='id identifier rubyid_formula_dependents'>formula_dependents</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+        <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_uses_hash'>uses_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>||</span> <span class='int'>0</span>
+        <span class='id identifier rubyid_formula_dependents'>formula_dependents</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_dependents'>dependents</span>
+      <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
+      <span class='id identifier rubyid_output_total'>output_total</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='rparen'>)</span>
+      <span class='kw'>return</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_noun'>noun</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+      <span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dependents?'>dependents?</span>
+      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependents</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula_dependents'>formula_dependents</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>installs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula_installs'>formula_installs</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_output_unbottled'>output_unbottled</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_deps_hash'>deps_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_noun'>noun</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Getting formulae...</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot specify formulae when using `--eval-all`/`--total`.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_all_formulae'>all_formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_installs'>formula_installs</span> <span class='op'>=</span>
-    <span class='id identifier rubyid_formulae_all_installs_from_args'>formulae_all_installs_from_args</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='id identifier rubyid_all'>all</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_deps_hash'>deps_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_uses_hash'>uses_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_deps_uses_from_formulae'>deps_uses_from_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_all_formulae'>all_formulae</span><span class='rparen'>)</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dependents?'>dependents?</span>
-    <span class='id identifier rubyid_formula_dependents'>formula_dependents</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-      <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_uses_hash'>uses_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>||</span> <span class='int'>0</span>
-      <span class='id identifier rubyid_formula_dependents'>formula_dependents</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_dependents'>dependents</span>
-    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
-    <span class='id identifier rubyid_output_total'>output_total</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_noun'>noun</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='lbracket'>[</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dependents?'>dependents?</span>
-    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dependents</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula_dependents'>formula_dependents</span><span class='rbracket'>]</span>
-  <span class='kw'>else</span>
-    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>installs</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_formula_installs'>formula_installs</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_output_unbottled'>output_unbottled</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_deps_hash'>deps_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_noun'>noun</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span>
-<span class='kw'>ensure</span>
-  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear'><span class='object_link'><a href="Homebrew/SimulateSystem.html#clear-class_method" title="Homebrew::SimulateSystem.clear (method)">clear</a></span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -40209,16 +40205,16 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-40
 41
 42
 43
 44
 45
-46</pre>
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_report'>update_report</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_output_update_report'>output_update_report</span> <span class='kw'>if</span> <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
@@ -40270,7 +40266,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-25
 26
 27
 28
@@ -40283,10 +40278,11 @@ corresponding to all the original commit messages combined.</p>
 35
 36
 37
-38</pre>
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_report_args'>update_report_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
