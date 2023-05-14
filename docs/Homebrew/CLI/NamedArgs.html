@@ -279,7 +279,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_formulae_and_casks-instance_method" title="#to_formulae_and_casks (instance method)">#<strong>to_formulae_and_casks</strong>(only: parent&amp;.only_formula_or_cask, ignore_unavailable: nil, method: nil, uniq: true)  &#x21d2; Array&lt;Formula, Keg, Cask::Cask&gt; </a>
+      <a href="#to_formulae_and_casks-instance_method" title="#to_formulae_and_casks (instance method)">#<strong>to_formulae_and_casks</strong>(only: parent&amp;.only_formula_or_cask, ignore_unavailable: nil, method: nil, uniq: true, warn: true)  &#x21d2; Array&lt;Formula, Keg, Cask::Cask&gt; </a>
     
     
   </span>
@@ -707,12 +707,12 @@
       <pre class="lines">
 
 
-289
-290
-291</pre>
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_homebrew_tap_cask_names'>homebrew_tap_cask_names</span>
   <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_CASK_TAP_CASK_REGEX-constant" title="HOMEBREW_CASK_TAP_CASK_REGEX (constant)">HOMEBREW_CASK_TAP_CASK_REGEX</a></span></span><span class='rparen'>)</span>
@@ -810,8 +810,6 @@
       <pre class="lines">
 
 
-228
-229
 230
 231
 232
@@ -819,10 +817,12 @@
 234
 235
 236
-237</pre>
+237
+238
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_default_kegs'>to_default_kegs</span>
   <span class='ivar'>@to_default_kegs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -887,7 +887,7 @@
       <div class="method_details ">
   <h3 class="signature " id="to_formulae_and_casks-instance_method">
   
-    #<strong>to_formulae_and_casks</strong>(only: parent&amp;.only_formula_or_cask, ignore_unavailable: nil, method: nil, uniq: true)  &#x21d2; <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span>, <span class='object_link'><a href="../../Keg.html" title="Keg (class)">Keg</a></span>, <span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask::Cask</a></span>&gt;</tt> 
+    #<strong>to_formulae_and_casks</strong>(only: parent&amp;.only_formula_or_cask, ignore_unavailable: nil, method: nil, uniq: true, warn: true)  &#x21d2; <tt><span class='object_link'><a href="../../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span>, <span class='object_link'><a href="../../Keg.html" title="Keg (class)">Keg</a></span>, <span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask::Cask</a></span>&gt;</tt> 
   
 
   
@@ -963,6 +963,19 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>warn</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -985,7 +998,6 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-52
 53
 54
 55
@@ -1004,15 +1016,18 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
 68
 69
 70
-71</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 53</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>ignore_unavailable:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>uniq:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>ignore_unavailable:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>uniq:</span> <span class='kw'>true</span><span class='comma'>,</span>
+                          <span class='label'>warn:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@to_formulae_and_casks</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@to_formulae_and_casks</span><span class='lbracket'>[</span><span class='id identifier rubyid_only'>only</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
-    <span class='id identifier rubyid_load_formula_or_cask'>load_formula_or_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_load_formula_or_cask'>load_formula_or_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='label'>warn:</span> <span class='id identifier rubyid_warn'>warn</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../../FormulaUnreadableError.html" title="FormulaUnreadableError (class)">FormulaUnreadableError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../FormulaClassUnavailableError.html" title="FormulaClassUnavailableError (class)">FormulaClassUnavailableError</a></span></span><span class='comma'>,</span>
          <span class='const'><span class='object_link'><a href="../../TapFormulaUnreadableError.html" title="TapFormulaUnreadableError (class)">TapFormulaUnreadableError</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../../TapFormulaClassUnavailableError.html" title="TapFormulaClassUnavailableError (class)">TapFormulaClassUnavailableError</a></span></span><span class='comma'>,</span>
          <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/CaskUnreadableError.html" title="Cask::CaskUnreadableError (class)">CaskUnreadableError</a></span></span>
@@ -1064,17 +1079,17 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
 85
 86
-87</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_and_casks_and_unavailable'>to_formulae_and_casks_and_unavailable</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@to_formulae_casks_unknowns</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1119,15 +1134,15 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-73
-74
 75
 76
 77
-78</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_formulae_to_casks'>to_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@to_formulae_to_casks</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1183,14 +1198,14 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-282
-283
 284
 285
-286</pre>
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_installed_taps'>to_installed_taps</span>
   <span class='ivar'>@to_installed_taps</span> <span class='op'>||=</span> <span class='id identifier rubyid_to_taps'>to_taps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>|</span>
@@ -1245,8 +1260,6 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-252
-253
 254
 255
 256
@@ -1254,10 +1267,12 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
 258
 259
 260
-261</pre>
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_kegs'>to_kegs</span>
   <span class='ivar'>@to_kegs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1360,17 +1375,17 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-267
-268
 269
 270
 271
 272
 273
-274</pre>
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_kegs_to_casks'>to_kegs_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>ignore_unavailable:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>all_kegs:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method'>method</span> <span class='op'>=</span> <span class='id identifier rubyid_all_kegs'>all_kegs</span> <span class='op'>?</span> <span class='symbol'>:kegs</span> <span class='op'>:</span> <span class='symbol'>:default_kegs</span>
@@ -1428,8 +1443,6 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-240
-241
 242
 243
 244
@@ -1437,10 +1450,12 @@ the formula and prints a warning unless <code>only</code> is specified.</p>
 246
 247
 248
-249</pre>
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_latest_kegs'>to_latest_kegs</span>
   <span class='ivar'>@to_latest_kegs</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -1532,8 +1547,6 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-196
-197
 198
 199
 200
@@ -1561,10 +1574,12 @@ unless <code>only</code> is specified.</p>
 222
 223
 224
-225</pre>
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 196</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_paths'>to_paths</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='comma'>,</span> <span class='label'>recurse_tap:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@to_paths</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1661,13 +1676,13 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-183
-184
 185
-186</pre>
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_resolved_formulae'>to_resolved_formulae</span><span class='lparen'>(</span><span class='label'>uniq:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@to_resolved_formulae</span> <span class='op'>||=</span> <span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='symbol'>:formula</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='comma'>,</span> <span class='label'>uniq:</span> <span class='id identifier rubyid_uniq'>uniq</span><span class='rparen'>)</span>
@@ -1708,12 +1723,12 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-188
-189
-190</pre>
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_resolved_formulae_to_casks'>to_resolved_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_parent'>parent</span><span class='op'>&amp;.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_formulae_to_casks'>to_formulae_to_casks</span><span class='lparen'>(</span><span class='label'>only:</span> <span class='id identifier rubyid_only'>only</span><span class='comma'>,</span> <span class='label'>method:</span> <span class='symbol'>:resolve</span><span class='rparen'>)</span>
@@ -1766,12 +1781,12 @@ unless <code>only</code> is specified.</p>
       <pre class="lines">
 
 
-277
-278
-279</pre>
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'cli/named_args.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_taps'>to_taps</span>
   <span class='ivar'>@to_taps</span> <span class='op'>||=</span> <span class='id identifier rubyid_downcased_unique_named'>downcased_unique_named</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../Tap.html" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../Tap.html#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
