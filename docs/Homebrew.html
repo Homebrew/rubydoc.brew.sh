@@ -5718,7 +5718,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#print_formula_cache-class_method" title="print_formula_cache (class method)">.<strong>print_formula_cache</strong>(formula, args:)  &#x21d2; void </a>
+      <a href="#print_formula_cache-class_method" title="print_formula_cache (class method)">.<strong>print_formula_cache</strong>(formula, os:, arch:, args:)  &#x21d2; void </a>
     
     
   </span>
@@ -8642,14 +8642,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-40
-41
-42
-43
-44
-45
-46
-47
 48
 49
 50
@@ -8659,10 +8651,39 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 54
 55
 56
-57</pre>
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid___cache'>__cache</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid___cache_args'>__cache_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -8673,12 +8694,33 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span>
+  <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span>
 
   <span class='id identifier rubyid_formulae_or_casks'>formulae_or_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
-      <span class='id identifier rubyid_print_formula_cache'>print_formula_cache</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
+      <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_cast'>cast</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_loaded_from_api?'>loaded_from_api?</span> <span class='op'>?</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>:</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+
+      <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+        <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+          <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'><span class='object_link'><a href="Formulary.html#clear_cache-class_method" title="Formulary.clear_cache (method)">clear_cache</a></span></span>
+          <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_print_formula_cache'>print_formula_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_print_cask_cache'>print_cask_cache</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+      <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+      <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_loaded_from_api?'>loaded_from_api?</span> <span class='op'>?</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_token'>full_token</span> <span class='op'>:</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span>
+
+      <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_os'>os</span> <span class='op'>==</span> <span class='symbol'>:linux</span>
+
+        <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+          <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_print_cask_cache'>print_cask_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -8750,7 +8792,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 34
 35
 36
-37</pre>
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 12</span>
@@ -8762,7 +8812,13 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>      If &lt;formula&gt; is provided, display the file or directory used to cache &lt;formula&gt;.
 </span><span class='heredoc_end'>    EOS
-</span>    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+</span>    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--os=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show cache file for the given operating system.</span><span class='tstring_end'>&quot;</span></span> \
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Pass `all` to show cache files for all operating systems.)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show cache file for the given CPU architecture.</span><span class='tstring_end'>&quot;</span></span> \
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Pass `all` to show cache files for all architectures.)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-s</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show the cache file used when building from source.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Show the cache file used when pouring a bottle.</span><span class='tstring_end'>&quot;</span></span>
@@ -8777,6 +8833,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--build-from-source</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--os</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='comma'>,</span> <span class='symbol'>:cask</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -10006,7 +10064,32 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 322
 323
 324
-325</pre>
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 106</span>
@@ -10014,9 +10097,9 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_args'>audit_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Homebrew/SimulateSystem.html#arch-class_method" title="Homebrew::SimulateSystem.arch (method)">arch</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='kw'>end</span>
+  <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_enable_factory_cache!'><span class='object_link'><a href="Formulary.html#enable_factory_cache!-class_method" title="Formulary.enable_factory_cache! (method)">enable_factory_cache!</a></span></span>
+
+  <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span>
 
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_auditing'>auditing</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_inject_dump_stats!'>inject_dump_stats!</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Homebrew/FormulaAuditor.html" title="Homebrew::FormulaAuditor (class)">FormulaAuditor</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^audit_</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_audit_debug?'>audit_debug?</span>
@@ -10108,7 +10191,12 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 </span>  <span class='id identifier rubyid_spdx_license_data'>spdx_license_data</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_license_data'><span class='object_link'><a href="SPDX.html#license_data-class_method" title="SPDX.license_data (method)">license_data</a></span></span>
   <span class='id identifier rubyid_spdx_exception_data'>spdx_exception_data</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="SPDX.html" title="SPDX (module)">SPDX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_exception_data'><span class='object_link'><a href="SPDX.html#exception_data-class_method" title="SPDX.exception_data (method)">exception_data</a></span></span>
   <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Array</span><span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_formula_results'>formula_results</span> <span class='op'>=</span> <span class='id identifier rubyid_audit_formulae'>audit_formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+
+  <span class='id identifier rubyid_formula_results'>formula_results</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_audit_formulae'>audit_formulae</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
+    <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
+
     <span class='id identifier rubyid_only'>only</span> <span class='op'>=</span> <span class='id identifier rubyid_only_cops'>only_cops</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>style</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span>
     <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
       <span class='label'>new_formula:</span>         <span class='id identifier rubyid_new_formula'>new_formula</span><span class='comma'>,</span>
@@ -10122,63 +10210,83 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <span class='label'>style_offenses:</span>      <span class='id identifier rubyid_style_offenses'>style_offenses</span><span class='op'>&amp;.</span><span class='id identifier rubyid_for_path'>for_path</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
 
-    <span class='id identifier rubyid_audit_proc'>audit_proc</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="Homebrew/FormulaAuditor.html" title="Homebrew::FormulaAuditor (class)">FormulaAuditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/FormulaAuditor.html#initialize-instance_method" title="Homebrew::FormulaAuditor#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'><span class='object_link'><a href="#tap-class_method" title="Homebrew.tap (method)">tap</a></span></span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:audit</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+      <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing Formula </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='embexpr_end'>}</span><span class='tstring_content'> on os </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_os'>os</span><span class='embexpr_end'>}</span><span class='tstring_content'> and arch </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='comment'># Audit requires full Ruby source so disable API.
-</span>    <span class='comment'># We shouldn&#39;t do this for taps however so that we don&#39;t unnecessarily require a full Homebrew/core clone.
-</span>    <span class='id identifier rubyid_fa'>fa</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span>
-      <span class='id identifier rubyid_without_api'>without_api</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_audit_proc'>audit_proc</span><span class='rparen'>)</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_audit_proc'>audit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
-    <span class='kw'>end</span>
+        <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'><span class='object_link'><a href="Formulary.html#clear_cache-class_method" title="Formulary.clear_cache (method)">clear_cache</a></span></span>
+        <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 
-    <span class='kw'>if</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>||</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
-      <span class='id identifier rubyid_formula_count'>formula_count</span> <span class='op'>+=</span> <span class='int'>1</span>
-      <span class='id identifier rubyid_problem_count'>problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
-      <span class='id identifier rubyid_problem_lines'>problem_lines</span> <span class='op'>=</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_corrected_problem_count'>corrected_problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:style_offenses</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:corrected?</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span> <span class='op'>+=</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_filename?'>display_filename?</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_problem_lines'>problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_problem_lines'>problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_audit_proc'>audit_proc</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="Homebrew/FormulaAuditor.html" title="Homebrew::FormulaAuditor (class)">FormulaAuditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/FormulaAuditor.html#initialize-instance_method" title="Homebrew::FormulaAuditor#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'><span class='object_link'><a href="#tap-class_method" title="Homebrew.tap (method)">tap</a></span></span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:audit</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+        <span class='comment'># Audit requires full Ruby source so disable API.
+</span>        <span class='comment'># We shouldn&#39;t do this for taps however so that we don&#39;t unnecessarily require a full Homebrew/core clone.
+</span>        <span class='id identifier rubyid_fa'>fa</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_core_formula?'>core_formula?</span>
+          <span class='id identifier rubyid_without_api'>without_api</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_audit_proc'>audit_proc</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_audit_proc'>audit_proc</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>if</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>||</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+          <span class='id identifier rubyid_formula_count'>formula_count</span> <span class='op'>+=</span> <span class='int'>1</span>
+          <span class='id identifier rubyid_problem_count'>problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span>
+          <span class='id identifier rubyid_problem_lines'>problem_lines</span> <span class='op'>=</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_corrected_problem_count'>corrected_problem_count</span> <span class='op'>+=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:style_offenses</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:corrected?</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_new_formula_problem_lines'>new_formula_problem_lines</span> <span class='op'>+=</span> <span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span><span class='rparen'>)</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_filename?'>display_filename?</span>
+            <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_problem_lines'>problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+          <span class='kw'>else</span>
+            <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_problem_lines'>problem_lines</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_s'>s</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+
+        <span class='id identifier rubyid_formula_results'>formula_results</span><span class='period'>.</span><span class='id identifier rubyid_deep_merge!'>deep_merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span> <span class='op'>+</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
-
-    <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_problems'>problems</span> <span class='op'>+</span> <span class='id identifier rubyid_fa'>fa</span><span class='period'>.</span><span class='id identifier rubyid_new_formula_problems'>new_formula_problems</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_cask_results'>cask_results</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='kw'>else</span>
+  <span class='id identifier rubyid_cask_results'>cask_results</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/auditor</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_display_failures_only?'>display_failures_only?</span>
       <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew audit &lt;cask&gt; --display-failures-only`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew audit &lt;cask&gt;` without the argument</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
+  <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask/auditor</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
+    <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span>
 
-    <span class='id identifier rubyid_audit_casks'>audit_casks</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
-      <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing Cask </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Auditor.html" title="Cask::Auditor (class)">Auditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit'><span class='object_link'><a href="Cask/Auditor.html#audit-class_method" title="Cask::Auditor.audit (method)">audit</a></span></span><span class='lparen'>(</span>
-        <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span>
-        <span class='comment'># For switches, we add `|| nil` so that `nil` will be passed
-</span>        <span class='comment'># instead of `false` if they aren&#39;t set.
-</span>        <span class='comment'># This way, we can distinguish between &quot;not set&quot; and &quot;set to false&quot;.
-</span>        <span class='label'>audit_online:</span>          <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
-        <span class='label'>audit_strict:</span>          <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_os'>os</span> <span class='op'>==</span> <span class='symbol'>:linux</span>
 
-        <span class='comment'># No need for `|| nil` for `--[no-]signing`
-</span>        <span class='comment'># because boolean switches are already `nil` if not passed
-</span>        <span class='label'>audit_signing:</span>         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_signing?'>signing?</span><span class='comma'>,</span>
-        <span class='label'>audit_new_cask:</span>        <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
-        <span class='label'>audit_token_conflicts:</span> <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
-        <span class='label'>quarantine:</span>            <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='label'>any_named_args:</span>        <span class='op'>!</span><span class='id identifier rubyid_no_named_args'>no_named_args</span><span class='comma'>,</span>
-        <span class='label'>only:</span>                  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
-        <span class='label'>except:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
-      <span class='rparen'>)</span>
-      <span class='lbracket'>[</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span><span class='comma'>,</span> <span class='id identifier rubyid_errors'>errors</span><span class='rbracket'>]</span>
+      <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+        <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Auditing Cask </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='embexpr_end'>}</span><span class='tstring_content'> on os </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_os'>os</span><span class='embexpr_end'>}</span><span class='tstring_content'> and arch </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arch'>arch</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+
+        <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+
+        <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Auditor.html" title="Cask::Auditor (class)">Auditor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_audit'><span class='object_link'><a href="Cask/Auditor.html#audit-class_method" title="Cask::Auditor.audit (method)">audit</a></span></span><span class='lparen'>(</span>
+          <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span>
+          <span class='comment'># For switches, we add `|| nil` so that `nil` will be passed
+</span>          <span class='comment'># instead of `false` if they aren&#39;t set.
+</span>          <span class='comment'># This way, we can distinguish between &quot;not set&quot; and &quot;set to false&quot;.
+</span>          <span class='label'>audit_online:</span>          <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='label'>audit_strict:</span>          <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_strict?'>strict?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
+
+          <span class='comment'># No need for `|| nil` for `--[no-]signing`
+</span>          <span class='comment'># because boolean switches are already `nil` if not passed
+</span>          <span class='label'>audit_signing:</span>         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_signing?'>signing?</span><span class='comma'>,</span>
+          <span class='label'>audit_new_cask:</span>        <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_new_cask?'>new_cask?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='label'>audit_token_conflicts:</span> <span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_token_conflicts?'>token_conflicts?</span> <span class='op'>||</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='label'>quarantine:</span>            <span class='kw'>true</span><span class='comma'>,</span>
+          <span class='label'>any_named_args:</span>        <span class='op'>!</span><span class='id identifier rubyid_no_named_args'>no_named_args</span><span class='comma'>,</span>
+          <span class='label'>only:</span>                  <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only'>only</span><span class='comma'>,</span>
+          <span class='label'>except:</span>                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='comma'>,</span>
+        <span class='rparen'>)</span>
+
+        <span class='id identifier rubyid_cask_results'>cask_results</span><span class='period'>.</span><span class='id identifier rubyid_deep_merge!'>deep_merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_errors'>errors</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
@@ -10366,10 +10474,10 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 </span><span class='tstring_content'>      locally available formulae and casks and skip style checks. Will exit with a
 </span><span class='tstring_content'>      non-zero status if any errors are found.
 </span><span class='heredoc_end'>    EOS
-</span>    <span class='comment'># This is needed for auditing ARM casks in CI.
-</span>    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit the given CPU architecture.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>hidden:</span>      <span class='kw'>true</span>
+</span>    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--os=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit the given operating system. (Pass `all` to audit all operating systems.)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Audit the given CPU architecture. (Pass `all` to audit all architectures.)</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--strict</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Run additional, stricter style checks.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -14685,7 +14793,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_check_bottled_formulae!'>check_bottled_formulae!</span><span class='lparen'>(</span><span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottles_hash'>bottles_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_formula_path'>formula_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_REPOSITORY-constant" title="HOMEBREW_REPOSITORY (constant)">HOMEBREW_REPOSITORY</a></span></span><span class='op'>/</span><span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>path</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_formula_version'>formula_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span>
+    <span class='id identifier rubyid_formula_version'>formula_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_path'>formula_path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'><span class='object_link'><a href="Formula.html#pkg_version-instance_method" title="Formula#pkg_version (method)">pkg_version</a></span></span>
     <span class='id identifier rubyid_bottle_version'>bottle_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PkgVersion.html" title="PkgVersion (class)">PkgVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="PkgVersion.html#parse-class_method" title="PkgVersion.parse (method)">parse</a></span></span> <span class='id identifier rubyid_bottle_hash'>bottle_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pkg_version</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_version'>formula_version</span> <span class='op'>==</span> <span class='id identifier rubyid_bottle_version'>bottle_version</span>
 
@@ -15029,15 +15137,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-91
 92
 93
 94
 95
-96</pre>
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clean_argv'>clean_argv</span>
   <span class='id identifier rubyid_global_options'>global_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span>
@@ -19185,7 +19293,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_realpath'>realpath</span>
       <span class='id identifier rubyid_rev'>rev</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HEAD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_nilable'>nilable</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
+      <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="Formula.html#version-class_method" title="Formula.version (method)">version</a></span></span>
       <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
@@ -19378,10 +19486,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-68
-69
-70
-71
 72
 73
 74
@@ -19448,25 +19552,63 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 135
 136
 137
-138</pre>
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_fetch_args'>fetch_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch'><span class='object_link'><a href="Homebrew/SimulateSystem.html#arch-class_method" title="Homebrew::SimulateSystem.arch (method)">arch</a></span></span> <span class='op'>=</span> <span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='kw'>end</span>
+  <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_enable_factory_cache!'><span class='object_link'><a href="Formulary.html#enable_factory_cache!-class_method" title="Formulary.enable_factory_cache! (method)">enable_factory_cache!</a></span></span>
 
   <span class='id identifier rubyid_bucket'>bucket</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_deps?'>deps?</span>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
       <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
-        <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
-
-        <span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+        <span class='lbracket'>[</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_recursive_dependencies'>recursive_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_formula</span><span class='rparen'>)</span><span class='rbracket'>]</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
       <span class='kw'>end</span>
@@ -19475,52 +19617,92 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span>
   <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
 
+  <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span>
+
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetching: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bucket'>bucket</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_bucket'>bucket</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
   <span class='id identifier rubyid_bucket'>bucket</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
     <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span>
-      <span class='id identifier rubyid_f'>f</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+      <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_cast'>cast</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_loaded_from_api?'>loaded_from_api?</span> <span class='op'>?</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>:</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
 
-      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_print_tap_action'>print_tap_action</span> <span class='label'>verb:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetching</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+        <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+          <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'><span class='object_link'><a href="Formulary.html#clear_cache-class_method" title="Formulary.clear_cache (method)">clear_cache</a></span></span>
+          <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_factory'><span class='object_link'><a href="Formulary.html#factory-class_method" title="Formulary.factory (method)">factory</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
 
-      <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span> <span class='op'>=</span> <span class='kw'>false</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_fetch_bottle?'>fetch_bottle?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span> <span class='label'>bottle_tag:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
-                       <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='rparen'>)</span>
-        <span class='kw'>begin</span>
-          <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span>
-          <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_fetch_bottle_tab'>fetch_bottle_tab</span>
-          <span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_bottle_for_tag'>bottle_for_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-        <span class='kw'>rescue</span> <span class='const'>Interrupt</span>
-          <span class='id identifier rubyid_raise'>raise</span>
-        <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-          <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
+          <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_print_tap_action'>print_tap_action</span> <span class='label'>verb:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetching</span><span class='tstring_end'>&quot;</span></span>
 
           <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span> <span class='op'>=</span> <span class='kw'>false</span>
-          <span class='id identifier rubyid_onoe'>onoe</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
-          <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bottle fetch failed, fetching the source instead.</span><span class='tstring_end'>&quot;</span></span>
-        <span class='kw'>else</span>
-          <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span> <span class='op'>=</span> <span class='kw'>true</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_fetch_bottle?'>fetch_bottle?</span><span class='lparen'>(</span>
+            <span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span>
+            <span class='label'>force_bottle:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span>
+            <span class='label'>bottle_tag:</span>                 <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+            <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='comma'>,</span>
+            <span class='label'>os:</span>                         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+            <span class='label'>arch:</span>                       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+          <span class='rparen'>)</span>
+            <span class='kw'>begin</span>
+              <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span>
+
+              <span class='comment'># TODO: Deprecate `--bottle-tag`.
+</span>              <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+                <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_symbol'><span class='object_link'><a href="Utils/Bottles/Tag.html#from_symbol-class_method" title="Utils::Bottles::Tag.from_symbol (method)">from_symbol</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
+              <span class='kw'>else</span>
+                <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Utils/Bottles/Tag.html#initialize-instance_method" title="Utils::Bottles::Tag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>system:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
+              <span class='kw'>end</span>
+
+              <span class='id identifier rubyid_bottle'>bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_for_tag'>bottle_for_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
+
+              <span class='kw'>if</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+                <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bottle for tag </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is unavailable.</span><span class='tstring_end'>&quot;</span></span>
+                <span class='kw'>next</span>
+              <span class='kw'>end</span>
+
+              <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_fetch_bottle_tab'>fetch_bottle_tab</span>
+              <span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle'>bottle</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+            <span class='kw'>rescue</span> <span class='const'>Interrupt</span>
+              <span class='id identifier rubyid_raise'>raise</span>
+            <span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+              <span class='id identifier rubyid_raise'>raise</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
+
+              <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span> <span class='op'>=</span> <span class='kw'>false</span>
+              <span class='id identifier rubyid_onoe'>onoe</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span>
+              <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bottle fetch failed, fetching the source instead.</span><span class='tstring_end'>&quot;</span></span>
+            <span class='kw'>else</span>
+              <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span> <span class='op'>=</span> <span class='kw'>true</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+
+          <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span>
+
+          <span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+
+          <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
+            <span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+            <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_patches'>patches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_external?'>external?</span> <span class='rbrace'>}</span>
+          <span class='kw'>end</span>
+
+          <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_patchlist'>patchlist</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_external?'>external?</span> <span class='rbrace'>}</span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
-
-      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_fetched_bottle'>fetched_bottle</span>
-
-      <span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-
-      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_resources'>resources</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='op'>|</span>
-        <span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_patches'>patches</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_external?'>external?</span> <span class='rbrace'>}</span>
-      <span class='kw'>end</span>
-
-      <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_patchlist'>patchlist</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_external?'>external?</span> <span class='rbrace'>}</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span>
+      <span class='id identifier rubyid_ref'>ref</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_loaded_from_api?'>loaded_from_api?</span> <span class='op'>?</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_token'>full_token</span> <span class='op'>:</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_sourcefile_path'>sourcefile_path</span>
 
-      <span class='id identifier rubyid_quarantine'>quarantine</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quarantine?'>quarantine?</span>
-      <span class='id identifier rubyid_quarantine'>quarantine</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_os'>os</span> <span class='op'>==</span> <span class='symbol'>:linux</span>
 
-      <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_download'>download</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='const'><span class='object_link'><a href="Homebrew/SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="Homebrew/SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span> <span class='label'>os:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span> <span class='kw'>do</span>
+          <span class='id identifier rubyid_cask'>cask</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/CaskLoader.html" title="Cask::CaskLoader (module)">CaskLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Cask/CaskLoader.html#load-class_method" title="Cask::CaskLoader.load (method)">load</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+
+          <span class='id identifier rubyid_quarantine'>quarantine</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_quarantine?'>quarantine?</span>
+          <span class='id identifier rubyid_quarantine'>quarantine</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+          <span class='id identifier rubyid_download'>download</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>quarantine:</span> <span class='id identifier rubyid_quarantine'>quarantine</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_download'>download</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -19618,7 +19800,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 63
 64
 65
-66</pre>
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 15</span>
@@ -19629,12 +19815,14 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 <span class='tstring_content'>      Download a bottle (if available) or source packages for &lt;formula&gt;e
 </span><span class='tstring_content'>      and binaries for &lt;cask&gt;s. For files, also print SHA-256 checksums.
 </span><span class='heredoc_end'>    EOS
-</span>    <span class='comment'># This is needed for downloading ARM casks in CI.
-</span>    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download for the given CPU architecture.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>hidden:</span>      <span class='kw'>true</span>
-    <span class='id identifier rubyid_flag'>flag</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download a bottle for given tag.</span><span class='tstring_end'>&quot;</span></span>
+</span>    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--os=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download for the given operating system.</span><span class='tstring_end'>&quot;</span></span> \
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Pass `all` to download for all operating systems.)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download for the given CPU architecture.</span><span class='tstring_end'>&quot;</span></span> \
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Pass `all` to download for all architectures.)</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_flag'>flag</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Download a bottle for given tag.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--HEAD</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Fetch HEAD version instead of stable version.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -19671,6 +19859,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force-bottle</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--os</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_conflicts'>conflicts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--arch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--bottle-tag</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='lbracket'>[</span><span class='symbol'>:formula</span><span class='comma'>,</span> <span class='symbol'>:cask</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
   <span class='kw'>end</span>
@@ -19695,15 +19885,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-155
-156
-157
-158
-159
-160</pre>
+196
+197
+198
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 196</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch_cask'>fetch_cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_download'>cask_download</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_cask_download'>cask_download</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -19731,28 +19921,28 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206</pre>
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_clear_cache'>clear_cache</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force?'>force?</span>
@@ -19793,15 +19983,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-148
-149
-150
-151
-152
-153</pre>
+189
+190
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 189</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch_formula'>fetch_formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -19829,15 +20019,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-162
-163
-164
-165
-166
-167</pre>
+203
+204
+205
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch_patch'>fetch_patch</span><span class='lparen'>(</span><span class='id identifier rubyid_patch'>patch</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fetch_fetchable'>fetch_fetchable</span> <span class='id identifier rubyid_patch'>patch</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_args'>args</span>
@@ -19865,16 +20055,16 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-140
-141
-142
-143
-144
-145
-146</pre>
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_fetch_resource'>fetch_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Resource: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -20131,12 +20321,12 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-332
-333
-334</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_problem'>format_problem</span><span class='lparen'>(</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_location'>location</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='op'>&amp;.</span><span class='id identifier rubyid_dup'>dup</span><span class='op'>&amp;.</span><span class='id identifier rubyid_concat'>concat</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>: </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n    </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -20161,13 +20351,13 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-327
-328
-329
-330</pre>
+352
+353
+354
+355</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 327</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 352</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_problem_lines'>format_problem_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_problems'>problems</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problems'>problems</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
@@ -20407,7 +20597,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_contents'>contents</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_contents'><span class='object_link'><a href="Formulary.html#from_contents-class_method" title="Formulary.from_contents (method)">from_contents</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
+    <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_contents'><span class='object_link'><a href="Formulary.html#from_contents-class_method" title="Formulary.from_contents (method)">from_contents</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="Formula.html#version-class_method" title="Formula.version (method)">version</a></span></span>
   <span class='kw'>else</span>
     <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Formulary/FormulaLoader.html" title="Formulary::FormulaLoader (class)">FormulaLoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Formulary/FormulaLoader.html#initialize-instance_method" title="Formulary::FormulaLoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_get_formula'><span class='object_link'><a href="Formulary/FormulaLoader.html#get_formula-instance_method" title="Formulary::FormulaLoader#get_formula (method)">get_formula</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
   <span class='kw'>end</span>
@@ -24590,7 +24780,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-45
 46
 47
 48
@@ -24632,10 +24821,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 84
 85
 86
-87</pre>
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_irb'>irb</span>
   <span class='comment'># work around IRB modifying ARGV.
@@ -24723,7 +24913,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-32
 33
 34
 35
@@ -24734,10 +24923,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 40
 41
 42
-43</pre>
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/irb.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_irb_args'>irb_args</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI.html" title="Homebrew::CLI (module)">CLI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/CLI/Parser.html" title="Homebrew::CLI::Parser (class)">Parser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/CLI/Parser.html#initialize-instance_method" title="Homebrew::CLI::Parser#initialize (method)">new</a></span></span> <span class='kw'>do</span>
@@ -31541,12 +31731,12 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-72
-73
-74</pre>
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_print_cask_cache'>print_cask_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Download.html" title="Cask::Download (class)">Download</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Cask/Download.html#initialize-instance_method" title="Cask::Download#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_downloader'><span class='object_link'><a href="Downloadable.html#downloader-instance_method" title="Downloadable#downloader (method)">downloader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cached_location'><span class='object_link'><a href="AbstractDownloadStrategy.html#cached_location-instance_method" title="AbstractDownloadStrategy#cached_location (method)">cached_location</a></span></span>
@@ -31559,7 +31749,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <div class="method_details ">
   <h3 class="signature " id="print_formula_cache-class_method">
   
-    .<strong>print_formula_cache</strong>(formula, args:)  &#x21d2; <tt>void</tt> 
+    .<strong>print_formula_cache</strong>(formula, os:, arch:, args:)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -31589,6 +31779,28 @@ for IRB and have already been parsed by the CLI::Parser.</p>
   
     <li>
       
+        <span class='name'>os</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arch</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>args</span>
       
       
@@ -31607,24 +31819,64 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'cmd/--cache.rb', line 89</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_print_formula_cache'>print_formula_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_fetch_bottle?'>fetch_bottle?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>force_bottle:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span> <span class='label'>bottle_tag:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
-                   <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_for_tag'>bottle_for_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_cached_download'>cached_download</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_print_formula_cache'>print_formula_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>os:</span><span class='comma'>,</span> <span class='label'>arch:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_fetch_bottle?'>fetch_bottle?</span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span>
+    <span class='label'>force_bottle:</span>               <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_force_bottle?'>force_bottle?</span><span class='comma'>,</span>
+    <span class='label'>bottle_tag:</span>                 <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+    <span class='label'>build_from_source_formulae:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_build_from_source_formulae'>build_from_source_formulae</span><span class='comma'>,</span>
+    <span class='label'>os:</span>                         <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+    <span class='label'>arch:</span>                       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
+    <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+      <span class='comment'># TODO: odeprecate &quot;--bottle-tag&quot;
+</span>      <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_symbol'><span class='object_link'><a href="Utils/Bottles/Tag.html#from_symbol-class_method" title="Utils::Bottles::Tag.from_symbol (method)">from_symbol</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Utils/Bottles/Tag.html#initialize-instance_method" title="Utils::Bottles::Tag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>system:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_bottle'>bottle</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_bottle_for_tag'>bottle_for_tag</span><span class='lparen'>(</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='rparen'>)</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bottle for tag </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is unavailable.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>return</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_bottle'>bottle</span><span class='period'>.</span><span class='id identifier rubyid_cached_download'>cached_download</span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head'>head</span><span class='period'>.</span><span class='id identifier rubyid_cached_download'>cached_download</span>
   <span class='kw'>else</span>
@@ -32026,7 +32278,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
           <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
         <span class='kw'>end</span>
 
-        <span class='id identifier rubyid_outdated_versions'>outdated_versions</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated_kegs'>outdated_kegs</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_keg'><span class='object_link'><a href="Formulary.html#from_keg-class_method" title="Formulary.from_keg (method)">from_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_outdated_versions'>outdated_versions</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated_kegs'>outdated_kegs</span><span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_keg'>keg</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_keg'><span class='object_link'><a href="Formulary.html#from_keg-class_method" title="Formulary.from_keg (method)">from_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_keg'>keg</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_full_name'><span class='object_link'><a href="Formula.html#full_name-instance_method" title="Formula#full_name (method)">full_name</a></span></span> <span class='rbrace'>}</span>
                                          <span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='id identifier rubyid__kegs'>_kegs</span><span class='op'>|</span> <span class='id identifier rubyid_full_name'>full_name</span> <span class='rbrace'>}</span>
                                          <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_full_name'>full_name</span><span class='comma'>,</span> <span class='id identifier rubyid_kegs'>kegs</span><span class='op'>|</span>
           <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:version</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
@@ -34356,27 +34608,27 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186</pre>
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'cmd/fetch.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_retry_fetch?'>retry_fetch?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='ivar'>@fetch_tries</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_h'>h</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>1</span> <span class='rbrace'>}</span>
@@ -42088,14 +42340,14 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-336
-337
-338
-339
-340</pre>
+361
+362
+363
+364
+365</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 336</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/audit.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_without_api'>without_api</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>yield</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
