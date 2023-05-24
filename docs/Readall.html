@@ -207,7 +207,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#valid_tap%3F-class_method" title="valid_tap? (class method)">.<strong>valid_tap?</strong>(tap, options = {})  &#x21d2; Boolean </a>
+      <a href="#valid_tap%3F-class_method" title="valid_tap? (class method)">.<strong>valid_tap?</strong>(tap, aliases: false, no_simulate: false, os_arch_combinations: nil)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -605,7 +605,7 @@
       <div class="method_details ">
   <h3 class="signature " id="valid_tap?-class_method">
   
-    .<strong>valid_tap?</strong>(tap, options = {})  &#x21d2; <tt>Boolean</tt> 
+    .<strong>valid_tap?</strong>(tap, aliases: false, no_simulate: false, os_arch_combinations: nil)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -669,24 +669,28 @@
 90
 91
 92
-93</pre>
+93
+94
+95</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'readall.rb', line 69</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_valid_tap?'>valid_tap?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_valid_tap?'>valid_tap?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='label'>aliases:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>no_simulate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>os_arch_combinations:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='kw'>true</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:aliases</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_aliases'>aliases</span>
     <span class='id identifier rubyid_valid_aliases'>valid_aliases</span> <span class='op'>=</span> <span class='id identifier rubyid_valid_aliases?'>valid_aliases?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_alias_dir'>alias_dir</span><span class='comma'>,</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_formula_dir'>formula_dir</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_aliases'>valid_aliases</span>
   <span class='kw'>end</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:no_simulate</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_no_simulate'>no_simulate</span>
     <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_formulae?'>valid_formulae?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_formula_files'>formula_files</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_success'>success</span> <span class='op'>=</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_casks?'>valid_casks?</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_cask_files'>cask_files</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_os_names'>os_names</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='const'><span class='object_link'><a href="MacOSVersion.html" title="MacOSVersion (class)">MacOSVersion</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MacOSVersion.html#SYMBOLS-constant" title="MacOSVersion::SYMBOLS (constant)">SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='symbol'>:linux</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_os_names'>os_names</span><span class='period'>.</span><span class='id identifier rubyid_product'>product</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OnSystem.html" title="OnSystem (module)">OnSystem</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="OnSystem.html#ARCH_OPTIONS-constant" title="OnSystem::ARCH_OPTIONS (constant)">ARCH_OPTIONS</a></span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
+    <span class='comment'># TODO: Remove this default case once `--os` and `--arch` are passed explicitly to `brew readall` in CI.
+</span>    <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='const'><span class='object_link'><a href="MacOSVersion.html" title="MacOSVersion (class)">MacOSVersion</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MacOSVersion.html#SYMBOLS-constant" title="MacOSVersion::SYMBOLS (constant)">SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='symbol'>:linux</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_product'>product</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="OnSystem.html" title="OnSystem (module)">OnSystem</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="OnSystem.html#ARCH_OPTIONS-constant" title="OnSystem::ARCH_OPTIONS (constant)">ARCH_OPTIONS</a></span></span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span><span class='op'>|</span>
       <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Utils/Bottles/Tag.html#initialize-instance_method" title="Utils::Bottles::Tag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>system:</span> <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='label'>arch:</span> <span class='id identifier rubyid_arch'>arch</span><span class='rparen'>)</span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_valid_combination?'>valid_combination?</span>
 
