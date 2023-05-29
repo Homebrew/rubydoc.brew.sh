@@ -188,6 +188,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#app_management_permissions_granted%3F-class_method" title="app_management_permissions_granted? (class method)">.<strong>app_management_permissions_granted?</strong>(app:, command:)  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'><p>Ensures that Homebrew has permission to update apps on macOS Ventura.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#available%3F-class_method" title="available? (class method)">.<strong>available?</strong>  &#x21d2; Boolean </a>
     
     
@@ -392,7 +414,205 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="available?-class_method">
+  <h3 class="signature first" id="app_management_permissions_granted?-class_method">
+  
+    .<strong>app_management_permissions_granted?</strong>(app:, command:)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+<p>Ensures that Homebrew has permission to update apps on macOS Ventura.
+This may be granted either through the App Management toggle or the Full Disk Access toggle.
+The system will only show a prompt for App Management, so we ask the user to grant that.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>app</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>command</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>T</span>.class_of(<span class='object_link'><a href="../SystemCommand.html" title="SystemCommand (class)">SystemCommand</a></span>)</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'cask/quarantine.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_app_management_permissions_granted?'>app_management_permissions_granted?</span><span class='lparen'>(</span><span class='label'>app:</span><span class='comma'>,</span> <span class='label'>command:</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
+
+  <span class='comment'># To get macOS to prompt the user for permissions, we need to actually attempt to
+</span>  <span class='comment'># modify a file in the app.
+</span>  <span class='id identifier rubyid_test_file'>test_file</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.homebrew-write-test</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='comment'># We can&#39;t use app.writable? here because that conflates several access checks,
+</span>  <span class='comment'># including both file ownership and whether system permissions are granted.
+</span>  <span class='comment'># Here we just want to check whether sudo would be needed.
+</span>  <span class='id identifier rubyid_looks_writable_without_sudo'>looks_writable_without_sudo</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_owned?'>owned?</span>
+    <span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_lstat'>lstat</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='op'>&amp;</span> <span class='int'>0200</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='int'>0</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_grpowned?'>grpowned?</span>
+    <span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_lstat'>lstat</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='op'>&amp;</span> <span class='int'>0020</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='int'>0</span>
+  <span class='kw'>else</span>
+    <span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_lstat'>lstat</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='op'>&amp;</span> <span class='int'>0002</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='int'>0</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_looks_writable_without_sudo'>looks_writable_without_sudo</span>
+    <span class='kw'>begin</span>
+      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_test_file'>test_file</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_test_file'>test_file</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span>
+      <span class='kw'>return</span> <span class='kw'>true</span>
+    <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span>
+      <span class='comment'># Using error handler below
+</span>    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>touch</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>args:</span>         <span class='lbracket'>[</span>
+          <span class='id identifier rubyid_test_file'>test_file</span><span class='comma'>,</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='label'>sudo:</span>         <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='rparen'>)</span>
+      <span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_run!'>run!</span><span class='lparen'>(</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>args:</span>         <span class='lbracket'>[</span>
+          <span class='id identifier rubyid_test_file'>test_file</span><span class='comma'>,</span>
+        <span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span>
+        <span class='label'>sudo:</span>         <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='rparen'>)</span>
+      <span class='kw'>return</span> <span class='kw'>true</span>
+    <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="../ErrorDuringExecution.html" title="ErrorDuringExecution (class)">ErrorDuringExecution</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='comment'># We only want to handle &quot;touch&quot; errors here; propagate &quot;sudo&quot; errors up
+</span>      <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_e'>e</span> <span class='kw'>unless</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_stderr'>stderr</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>touch: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test_file'>test_file</span><span class='embexpr_end'>}</span><span class='tstring_content'>: Operation not permitted</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOF</span>
+<span class='tstring_content'>    Your terminal does not have App Management permissions, so Homebrew will delete and reinstall the app.
+</span><span class='tstring_content'>    This may result in some configurations (like notification settings or location in the Dock/Launchpad) being lost.
+</span><span class='tstring_content'>    To fix this, go to Settings &gt; Security and Privacy &gt; App Management and turn on the switch for your terminal.
+</span><span class='heredoc_end'>  EOF
+</span>
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="available?-class_method">
   
     .<strong>available?</strong>  &#x21d2; <tt>Boolean</tt> 
   
