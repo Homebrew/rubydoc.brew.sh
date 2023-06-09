@@ -1407,21 +1407,21 @@
       <pre class="lines">
 
 
-859
-860
-861
-862
-863
-864
-865
-866
-867
-868
-869
-870</pre>
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 859</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 875</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit'>audit</span>
   <span class='id identifier rubyid_only_audits'>only_audits</span> <span class='op'>=</span> <span class='ivar'>@only</span>
@@ -1470,18 +1470,18 @@
       <pre class="lines">
 
 
-573
-574
-575
-576
-577
-578
-579
-580
-581</pre>
+589
+590
+591
+592
+593
+594
+595
+596
+597</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 573</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 589</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_bitbucket_repository'>audit_bitbucket_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://bitbucket\.org/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span>
@@ -1527,18 +1527,18 @@
       <pre class="lines">
 
 
-518
-519
-520
-521
-522
-523
-524
-525
-526</pre>
+534
+535
+536
+537
+538
+539
+540
+541
+542</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 518</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 534</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_bottle_spec'>audit_bottle_spec</span>
   <span class='comment'># special case: new versioned formulae should be audited
@@ -1584,22 +1584,6 @@
       <pre class="lines">
 
 
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
 395
 396
 397
@@ -1618,10 +1602,26 @@
 410
 411
 412
-413</pre>
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 379</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_conflicts'>audit_conflicts</span>
   <span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span>
@@ -1818,7 +1818,23 @@
 374
 375
 376
-377</pre>
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 252</span>
@@ -1919,12 +1935,28 @@
 </span>  <span class='comment'># TODO: remove this and check these there too.
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_simulating_or_running_on_linux?'><span class='object_link'><a href="SimulateSystem.html#simulating_or_running_on_linux%3F-class_method" title="Homebrew::SimulateSystem.simulating_or_running_on_linux? (method)">simulating_or_running_on_linux?</a></span></span>
 
+  <span class='comment'># Skip the versioned dependencies conflict audit on the OpenSSL migration branch.
+</span>  <span class='comment'># TODO: Remove this when OpenSSL migration is complete.
+</span>  <span class='id identifier rubyid_ignore_openssl_conflict'>ignore_openssl_conflict</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_github_event_path'>github_event_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GITHUB_EVENT_PATH</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_event_payload'>event_payload</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_github_event_path'>github_event_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_head_info'>head_info</span> <span class='op'>=</span> <span class='id identifier rubyid_event_payload'>event_payload</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pull_request</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>head</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='comment'># We need to read the head ref from `GITHUB_EVENT_PATH` because
+</span>    <span class='comment'># `git branch --show-current` returns `master` on PR branches.
+</span>    <span class='id identifier rubyid_openssl_migration_branch'>openssl_migration_branch</span> <span class='op'>=</span> <span class='id identifier rubyid_head_info'>head_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ref</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl-migration</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_homebrew_owned_repo'>homebrew_owned_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_head_info'>head_info</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>owner</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_homebrew_core_pr'>homebrew_core_pr</span> <span class='op'>=</span> <span class='id identifier rubyid_head_info'>head_info</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>repo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew-core</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_openssl_migration_branch'>openssl_migration_branch</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_homebrew_owned_repo'>homebrew_owned_repo</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_homebrew_core_pr'>homebrew_core_pr</span>
+  <span class='kw'>end</span>
+
   <span class='id identifier rubyid_recursive_runtime_formulae'>recursive_runtime_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_runtime_formula_dependencies'>runtime_formula_dependencies</span><span class='lparen'>(</span><span class='label'>undeclared:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_version_hash'>version_hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_version_conflicts'>version_conflicts</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_recursive_runtime_formulae'>recursive_runtime_formulae</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
     <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
     <span class='id identifier rubyid_unversioned_name'>unversioned_name</span><span class='comma'>,</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_unversioned_name'>unversioned_name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>openssl</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_ignore_openssl_conflict'>ignore_openssl_conflict</span>
     <span class='comment'># Allow use of the full versioned name (e.g. `python@3.99`) or an unversioned alias (`python`).
 </span>    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_audit_exception'>audit_exception</span> <span class='symbol'>:versioned_formula_dependent_conflicts_allowlist</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_audit_exception'>audit_exception</span> <span class='symbol'>:versioned_formula_dependent_conflicts_allowlist</span><span class='comma'>,</span> <span class='id identifier rubyid_unversioned_name'>unversioned_name</span>
@@ -1984,17 +2016,17 @@
       <pre class="lines">
 
 
-458
-459
-460
-461
-462
-463
-464
-465</pre>
+474
+475
+476
+477
+478
+479
+480
+481</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 458</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 474</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_elasticsearch_kibana'>audit_elasticsearch_kibana</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>elasticsearch</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kibana</span><span class='tstring_end'>&quot;</span></span>
@@ -2317,23 +2349,23 @@
       <pre class="lines">
 
 
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424
-425
-426
-427
-428</pre>
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 415</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 431</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_gcc_dependency'>audit_gcc_dependency</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
@@ -2384,19 +2416,19 @@
       <pre class="lines">
 
 
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561</pre>
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 568</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_github_repository'>audit_github_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://github\.com/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span>
@@ -2443,20 +2475,20 @@
       <pre class="lines">
 
 
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538</pre>
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 528</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 544</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_github_repository_archived'>audit_github_repository_archived</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecated?'>deprecated?</span> <span class='op'>||</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span>
@@ -2504,18 +2536,18 @@
       <pre class="lines">
 
 
-563
-564
-565
-566
-567
-568
-569
-570
-571</pre>
+579
+580
+581
+582
+583
+584
+585
+586
+587</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 563</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 579</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_gitlab_repository'>audit_gitlab_repository</span>
   <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>https?://gitlab\.com/([^/]+)/([^/]+)/?.*</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span>
@@ -2561,20 +2593,20 @@
       <pre class="lines">
 
 
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550</pre>
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 540</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 556</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_gitlab_repository_archived'>audit_gitlab_repository_archived</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecated?'>deprecated?</span> <span class='op'>||</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span>
@@ -2622,19 +2654,19 @@
       <pre class="lines">
 
 
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454</pre>
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 445</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 461</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_glibc'>audit_glibc</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
@@ -2681,22 +2713,6 @@
       <pre class="lines">
 
 
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505
-506
 507
 508
 509
@@ -2706,10 +2722,26 @@
 513
 514
 515
-516</pre>
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 491</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 507</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_homepage'>audit_homepage</span>
   <span class='id identifier rubyid_homepage'>homepage</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_homepage'>homepage</span>
@@ -2772,18 +2804,18 @@
       <pre class="lines">
 
 
-467
-468
-469
-470
-471
-472
-473
-474
-475</pre>
+483
+484
+485
+486
+487
+488
+489
+490
+491</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 467</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 483</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_keg_only_reason'>audit_keg_only_reason</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
@@ -2984,23 +3016,23 @@
       <pre class="lines">
 
 
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443</pre>
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_postgresql'>audit_postgresql</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>postgresql</span><span class='tstring_end'>&quot;</span></span>
@@ -3051,19 +3083,19 @@
       <pre class="lines">
 
 
-840
-841
-842
-843
-844
-845
-846
-847
-848
-849</pre>
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 840</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 856</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_prefix_has_contents'>audit_prefix_has_contents</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3110,21 +3142,21 @@
       <pre class="lines">
 
 
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838</pre>
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 827</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 843</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_reverse_migration'>audit_reverse_migration</span>
   <span class='comment'># Only enforce for new formula being re-added to core
@@ -3173,22 +3205,6 @@
       <pre class="lines">
 
 
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731
-732
 733
 734
 735
@@ -3262,10 +3278,26 @@
 803
 804
 805
-806</pre>
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 717</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 733</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_revision_and_version_scheme'>audit_revision_and_version_scheme</span>
   <span class='id identifier rubyid_new_formula_problem'>new_formula_problem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New formulae should not define a revision.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@new_formula</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_revision'>revision</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
@@ -3392,22 +3424,6 @@
       <pre class="lines">
 
 
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
-609
-610
-611
-612
 613
 614
 615
@@ -3510,10 +3526,26 @@
 712
 713
 714
-715</pre>
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 597</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 613</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_specs'>audit_specs</span>
   <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Head-only (no stable download)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_head_only?'>head_only?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
@@ -3815,27 +3847,27 @@
       <pre class="lines">
 
 
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
 824
-825</pre>
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836
+837
+838
+839
+840
+841</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 808</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 824</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_text'>audit_text</span>
   <span class='id identifier rubyid_bin_names'>bin_names</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3890,22 +3922,22 @@
       <pre class="lines">
 
 
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489</pre>
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 477</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 493</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_versioned_keg_only'>audit_versioned_keg_only</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@versioned_formula</span>
@@ -3955,22 +3987,22 @@
       <pre class="lines">
 
 
-583
-584
-585
-586
-587
-588
-589
-590
-591
-592
-593
-594
-595</pre>
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 583</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 599</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_repo_data'>get_repo_data</span><span class='lparen'>(</span><span class='id identifier rubyid_regex'>regex</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@core_tap</span>
@@ -4020,12 +4052,12 @@
       <pre class="lines">
 
 
-855
-856
-857</pre>
+871
+872
+873</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 855</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 871</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem_if_output'>problem_if_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_output'>output</span>
@@ -4065,12 +4097,12 @@
       <pre class="lines">
 
 
-851
-852
-853</pre>
+867
+868
+869</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 851</span>
+      <pre class="code"><span class="info file"># File 'formula_auditor.rb', line 867</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quote_dep'>quote_dep</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
