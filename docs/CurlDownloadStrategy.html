@@ -353,14 +353,12 @@
 393
 394
 395
-396
-397</pre>
+396</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'download_strategy.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_meta'>meta</span><span class='rparen'>)</span>
-  <span class='kw'>super</span>
   <span class='ivar'>@try_partial</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='ivar'>@mirrors</span> <span class='op'>=</span> <span class='id identifier rubyid_meta'>meta</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:mirrors</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
@@ -456,13 +454,13 @@
       <pre class="lines">
 
 
-459
-460
-461
-462</pre>
+462
+463
+464
+465</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 462</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_cache'>clear_cache</span>
   <span class='kw'>super</span>
@@ -498,6 +496,7 @@
       <pre class="lines">
 
 
+401
 402
 403
 404
@@ -553,10 +552,13 @@
 454
 455
 456
-457</pre>
+457
+458
+459
+460</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 401</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_end_time'>end_time</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>+</span> <span class='id identifier rubyid_timeout'>timeout</span> <span class='kw'>if</span> <span class='id identifier rubyid_timeout'>timeout</span>
@@ -568,6 +570,10 @@
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_urls'>urls</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span>
+
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_domain'>domain</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_artifact_domain'>artifact_domain</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^https?://</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="GitHubPackages.html" title="GitHubPackages (class)">GitHubPackages</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="GitHubPackages.html#URL_DOMAIN-constant" title="GitHubPackages::URL_DOMAIN (constant)">URL_DOMAIN</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='regexp_end'>}o</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_domain'>domain</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Downloading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
@@ -644,13 +650,13 @@
       <pre class="lines">
 
 
-464
-465
-466
-467</pre>
+467
+468
+469
+470</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 464</span>
+      <pre class="code"><span class="info file"># File 'download_strategy.rb', line 467</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_time_file_size'>resolved_time_file_size</span><span class='lparen'>(</span><span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span> <span class='op'>=</span> <span class='id identifier rubyid_resolve_url_basename_time_file_size'>resolve_url_basename_time_file_size</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
