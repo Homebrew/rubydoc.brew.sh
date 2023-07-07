@@ -143,7 +143,9 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='symbol'>:yosemite</span><span class='comma'>,</span>
+<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="DEPRECATED_MACOS_VERSIONS-constant" class="">DEPRECATED_MACOS_VERSIONS =
           <div class="docstring">
@@ -163,9 +165,7 @@
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='lbracket'>[</span>
-  <span class='symbol'>:yosemite</span><span class='comma'>,</span>
-<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -547,7 +547,9 @@
 46
 47
 48
-49</pre>
+49
+50
+51</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 21</span>
@@ -561,9 +563,11 @@
     <span class='kw'>end</span>
   <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="MacOSVersion.html" title="MacOSVersion (class)">MacOSVersion</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MacOSVersion/Error.html" title="MacOSVersion::Error (class)">Error</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
     <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#DISABLED_MACOS_VERSIONS-constant" title="MacOSRequirement::DISABLED_MACOS_VERSIONS (constant)">DISABLED_MACOS_VERSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on :macos =&gt; :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># This odisabled should stick around indefinitely.
+</span>      <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`depends_on macos: :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="#DEPRECATED_MACOS_VERSIONS-constant" title="MacOSRequirement::DEPRECATED_MACOS_VERSIONS (constant)">DEPRECATED_MACOS_VERSIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on :macos =&gt; :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># This odeprecated should stick around indefinitely.
+</span>      <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`depends_on macos: :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_raise'>raise</span>
     <span class='kw'>end</span>
@@ -726,12 +730,12 @@
       <pre class="lines">
 
 
-90
-91
-92</pre>
+92
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_comparator'>comparator</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_comparator'>comparator</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_version'>version</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span>
@@ -784,8 +788,6 @@
       <pre class="lines">
 
 
-105
-106
 107
 108
 109
@@ -794,10 +796,12 @@
 112
 113
 114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_s'>display_s</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version_specified?'>version_specified?</span>
@@ -845,12 +849,12 @@
       <pre class="lines">
 
 
-95
-96
-97</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
   <span class='lbracket'>[</span><span class='kw'>super</span><span class='comma'>,</span> <span class='id identifier rubyid_comparator'>comparator</span><span class='comma'>,</span> <span class='id identifier rubyid_version'>version</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
@@ -903,12 +907,12 @@
       <pre class="lines">
 
 
-100
-101
-102</pre>
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: version</span><span class='embexpr_beg'>#{</span><span class='ivar'>@comparator</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='ivar'>@version</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tags'>tags</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
@@ -948,8 +952,6 @@
       <pre class="lines">
 
 
-64
-65
 66
 67
 68
@@ -972,10 +974,12 @@
 85
 86
 87
-88</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span><span class='label'>type:</span> <span class='symbol'>:formula</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>macOS is required for this software.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_version_specified?'>version_specified?</span>
@@ -1037,15 +1041,15 @@
       <pre class="lines">
 
 
-117
-118
 119
 120
 121
-122</pre>
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_comp'>comp</span> <span class='op'>=</span> <span class='ivar'>@comparator</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -1101,12 +1105,12 @@
       <pre class="lines">
 
 
-51
-52
-53</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'requirements/macos_requirement.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version_specified?'>version_specified?</span>
   <span class='ivar'>@version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
