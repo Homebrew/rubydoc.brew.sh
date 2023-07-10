@@ -524,7 +524,8 @@
 33
 34
 35
-36</pre>
+36
+37</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 15</span>
@@ -548,6 +549,7 @@
   <span class='ivar'>@unwanted_system_dylibs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@version_conflict_deps</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@files_missing_rpaths</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@executable_path_dylibs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_check_dylibs'>check_dylibs</span><span class='lparen'>(</span><span class='label'>rebuild_cache:</span> <span class='id identifier rubyid_rebuild_cache'>rebuild_cache</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -786,9 +788,6 @@
       <pre class="lines">
 
 
-117
-118
-119
 120
 121
 122
@@ -796,10 +795,13 @@
 124
 125
 126
-127</pre>
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_dylibs_with_expectations'>broken_dylibs_with_expectations</span>
   <span class='id identifier rubyid_output'>output</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -903,19 +905,19 @@
       <pre class="lines">
 
 
-78
-79
-80
 81
 82
 83
 84
 85
 86
-87</pre>
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_broken_library_linkage?'>broken_library_linkage?</span><span class='lparen'>(</span><span class='label'>test:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Strict linkage checking requires test mode to be enabled.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_strict'>strict</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_test'>test</span>
@@ -923,7 +925,7 @@
   <span class='id identifier rubyid_issues'>issues</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='ivar'>@broken_deps</span><span class='comma'>,</span> <span class='id identifier rubyid_unexpected_broken_dylibs'>unexpected_broken_dylibs</span><span class='rbracket'>]</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_test'>test</span>
     <span class='id identifier rubyid_issues'>issues</span> <span class='op'>+=</span> <span class='lbracket'>[</span><span class='ivar'>@unwanted_system_dylibs</span><span class='comma'>,</span> <span class='ivar'>@version_conflict_deps</span><span class='comma'>,</span> <span class='id identifier rubyid_unexpected_present_dylibs'>unexpected_present_dylibs</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_issues'>issues</span> <span class='op'>+=</span> <span class='lbracket'>[</span><span class='ivar'>@undeclared_deps</span><span class='comma'>,</span> <span class='ivar'>@files_missing_rpaths</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_strict'>strict</span>
+    <span class='id identifier rubyid_issues'>issues</span> <span class='op'>+=</span> <span class='lbracket'>[</span><span class='ivar'>@undeclared_deps</span><span class='comma'>,</span> <span class='ivar'>@files_missing_rpaths</span><span class='comma'>,</span> <span class='ivar'>@executable_path_dylibs</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_strict'>strict</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_issues'>issues</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:present?</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -962,7 +964,6 @@
       <pre class="lines">
 
 
-38
 39
 40
 41
@@ -973,22 +974,25 @@
 46
 47
 48
-49</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_normal_output'>display_normal_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>System libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@system_dylibs</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@brewed_dylibs</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Indirect dependencies with linkage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@indirect_deps</span>
-  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Variable-referenced libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@variable_dylibs</span>
+  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@rpath-referenced libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@variable_dylibs</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@broken_dylibs</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Broken dependencies</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@broken_deps</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Undeclared dependencies with linkage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@undeclared_deps</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Dependencies with no linkage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@unnecessary_deps</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unwanted system libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@unwanted_system_dylibs</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Files with missing rpath</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@files_missing_rpaths</span>
+  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@executable_path references in libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@executable_path_dylibs</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1025,8 +1029,6 @@
       <pre class="lines">
 
 
-51
-52
 53
 54
 55
@@ -1037,10 +1039,12 @@
 60
 61
 62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_reverse_output'>display_reverse_output</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@reverse_links</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1090,8 +1094,6 @@
       <pre class="lines">
 
 
-65
-66
 67
 68
 69
@@ -1100,10 +1102,13 @@
 72
 73
 74
-75</pre>
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_test_output'>display_test_output</span><span class='lparen'>(</span><span class='label'>puts_output:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Missing libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_broken_dylibs_with_expectations'>broken_dylibs_with_expectations</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
@@ -1115,6 +1120,7 @@
 
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Undeclared dependencies with linkage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@undeclared_deps</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
   <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Files with missing rpath</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@files_missing_rpaths</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
+  <span class='id identifier rubyid_display_items'>display_items</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@executable_path references in libraries</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@executable_path_dylibs</span><span class='comma'>,</span> <span class='label'>puts_output:</span> <span class='id identifier rubyid_puts_output'>puts_output</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1151,9 +1157,6 @@
       <pre class="lines">
 
 
-89
-90
-91
 92
 93
 94
@@ -1164,10 +1167,13 @@
 99
 100
 101
-102</pre>
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unexpected_broken_dylibs'>unexpected_broken_dylibs</span>
   <span class='kw'>return</span> <span class='ivar'>@unexpected_broken_dylibs</span> <span class='kw'>if</span> <span class='ivar'>@unexpected_broken_dylibs</span>
@@ -1218,9 +1224,6 @@
       <pre class="lines">
 
 
-104
-105
-106
 107
 108
 109
@@ -1229,10 +1232,13 @@
 112
 113
 114
-115</pre>
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'linkage_checker.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unexpected_present_dylibs'>unexpected_present_dylibs</span>
   <span class='ivar'>@unexpected_present_dylibs</span> <span class='op'>||=</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_allowed_missing_libraries'>allowed_missing_libraries</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_allowed_missing_lib'>allowed_missing_lib</span><span class='op'>|</span>
