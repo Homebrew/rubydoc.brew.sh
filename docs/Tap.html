@@ -123,7 +123,7 @@ name without the leading <code>homebrew-</code>.</p>
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></p>
+  <p class="children"><span class='object_link'><a href="AbstractCoreTap.html" title="AbstractCoreTap (class)">AbstractCoreTap</a></span></p>
 </div>
 
   
@@ -428,7 +428,7 @@ name without the leading <code>homebrew-</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#default_cask_tap-class_method" title="default_cask_tap (class method)">.<strong>default_cask_tap</strong>  &#x21d2; T.attached_class </a>
+      <a href="#default_cask_tap-class_method" title="default_cask_tap (class method)">.<strong>default_cask_tap</strong>  &#x21d2; CoreCaskTap </a>
     
     
   </span>
@@ -912,6 +912,28 @@ name without the leading <code>homebrew-</code>.</p>
   
   
     <span class="summary_desc"><div class='inline'><p>The default remote path to this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ensure_installed!-instance_method" title="#ensure_installed! (instance method)">#<strong>ensure_installed!</strong>  &#x21d2; void </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -1537,12 +1559,12 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-94
-95
-96</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_full_name'>full_name</span>
   <span class='ivar'>@full_name</span>
@@ -1592,12 +1614,12 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-103
-104
-105</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_repo'>git_repo</span>
   <span class='ivar'>@git_repo</span>
@@ -1636,12 +1658,12 @@ e.g. <code>user/repo</code></p>
       <pre class="lines">
 
 
-89
-90
-91</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@name</span>
@@ -1692,12 +1714,12 @@ e.g. <code>/usr/local/Library/Taps/user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-99
-100
-101</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@path</span>
@@ -1734,12 +1756,12 @@ e.g. <code>/usr/local/Library/Taps/user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo'>repo</span>
   <span class='ivar'>@repo</span>
@@ -1777,12 +1799,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-81
-82
-83</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user'>user</span>
   <span class='ivar'>@user</span>
@@ -1852,30 +1874,20 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564</pre>
+573
+574
+575
+576
+577
+578</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 554</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 573</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cask_files_by_name'>cask_files_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cache_key'>cache_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask_files_by_name_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-
   <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_cache_key'>cache_key</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
-    <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_cask_files'>cask_files</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
-      <span class='comment'># If there&#39;s more than one file with the same basename: intentionally
-</span>      <span class='comment'># ignore the later ones here.
-</span>      <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_file'>file</span>
-    <span class='kw'>end</span>
+    <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_cask_files_by_name'>cask_files_by_name</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1921,12 +1933,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-783
-784
-785</pre>
+799
+800
+801</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 783</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 799</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cmd_directories'>cmd_directories</span>
   <span class='const'><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span> <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*/*/cmd</span><span class='tstring_end'>&quot;</span></span>
@@ -1939,7 +1951,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <div class="method_details ">
   <h3 class="signature " id="default_cask_tap-class_method">
   
-    .<strong>default_cask_tap</strong>  &#x21d2; <tt><span class='object_link'>T</span>.attached_class</tt> 
+    .<strong>default_cask_tap</strong>  &#x21d2; <tt><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></tt> 
   
 
   
@@ -1960,7 +1972,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'>T</span>.attached_class</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></tt>)</span>
       
       
       
@@ -1974,15 +1986,19 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-68
 69
-70</pre>
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span>
-  <span class='ivar'>@default_cask_tap</span> <span class='op'>||=</span> <span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tap.default_cask_tap</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CoreCaskTap.instance</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='const'><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2004,20 +2020,20 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-763
-764
-765
-766
-767
-768
-769
-770
-771
-772
-773</pre>
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 763</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 779</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2069,7 +2085,8 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 55
 56
 57
-58</pre>
+58
+59</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'tap.rb', line 39</span>
@@ -2089,7 +2106,8 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 </span>  <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>linuxbrew</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_user'>user</span>
   <span class='id identifier rubyid_repo'>repo</span> <span class='op'>=</span> <span class='id identifier rubyid_repo'>repo</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_OFFICIAL_REPO_PREFIXES_REGEX-constant" title="HOMEBREW_OFFICIAL_REPO_PREFIXES_REGEX (constant)">HOMEBREW_OFFICIAL_REPO_PREFIXES_REGEX</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
-  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="CoreTap.html#instance-class_method" title="CoreTap.instance (method)">instance</a></span></span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Linuxbrew</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>core</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Linuxbrew</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>core</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span> <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_repo'>repo</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='id identifier rubyid_cache_key'>cache_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_user'>user</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repo'>repo</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
   <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_cache_key'>cache_key</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_repo'>repo</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -2152,15 +2170,15 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-525
-526
-527
-528
-529
-530</pre>
+544
+545
+546
+547
+548
+549</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 525</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 544</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_formula_files_by_name'>formula_files_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cache_key'>cache_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula_files_by_name_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tap'>tap</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -2188,15 +2206,15 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-60
 61
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_path'>from_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_TAP_PATH_REGEX-constant" title="HOMEBREW_TAP_PATH_REGEX (constant)">HOMEBREW_TAP_PATH_REGEX</a></span></span><span class='rparen'>)</span>
@@ -2272,18 +2290,24 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 10
 11
 12
-13</pre>
+13
+14
+15
+16</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/tap.rb', line 5</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_install_default_cask_tap_if_necessary'>install_default_cask_tap_if_necessary</span><span class='lparen'>(</span><span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tap.install_default_cask_tap_if_necessary</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CoreCaskTap.ensure_installed!</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_cask_tap'>cask_tap</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask_tap'>cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_automatically_set_no_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#automatically_set_no_install_from_api%3F-class_method" title="Homebrew::EnvConfig.automatically_set_no_install_from_api? (method)">automatically_set_no_install_from_api?</a></span></span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_untapped_official_taps'><span class='object_link'><a href="#untapped_official_taps-class_method" title="Tap.untapped_official_taps (method)">untapped_official_taps</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_untapped_official_taps'><span class='object_link'><a href="#untapped_official_taps-class_method" title="Tap.untapped_official_taps (method)">untapped_official_taps</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_tap'>cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_default_cask_tap'>default_cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
+  <span class='id identifier rubyid_cask_tap'>cask_tap</span><span class='period'>.</span><span class='id identifier rubyid_install'>install</span>
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2329,12 +2353,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-777
-778
-779</pre>
+793
+794
+795</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 777</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 793</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_names'>names</span>
   <span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
@@ -2382,12 +2406,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-789
-790
-791</pre>
+805
+806
+807</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 789</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 805</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_untapped_official_taps'>untapped_official_taps</span>
   <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_read'><span class='object_link'><a href="Homebrew/Settings.html#read-class_method" title="Homebrew::Settings.read (method)">read</a></span></span><span class='lparen'>(</span><span class='symbol'>:untapped</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2456,13 +2480,13 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-758
-759
-760
-761</pre>
+774
+775
+776
+777</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 758</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 774</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Tap (class)">Tap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="#fetch-class_method" title="Tap.fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
@@ -2488,25 +2512,25 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820</pre>
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831
+832
+833
+834
+835
+836</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 805</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 821</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_exception'>audit_exception</span><span class='lparen'>(</span><span class='id identifier rubyid_list'>list</span><span class='comma'>,</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_audit_exceptions'>audit_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -2567,12 +2591,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-734
-735
-736</pre>
+752
+753
+754</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 734</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 752</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_exceptions'>audit_exceptions</span>
   <span class='ivar'>@audit_exceptions</span> <span class='op'>=</span> <span class='id identifier rubyid_read_formula_list_directory'>read_formula_list_directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#HOMEBREW_TAP_AUDIT_EXCEPTIONS_DIR-constant" title="Tap::HOMEBREW_TAP_AUDIT_EXCEPTIONS_DIR (constant)">HOMEBREW_TAP_AUDIT_EXCEPTIONS_DIR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/*</span><span class='tstring_end'>&quot;</span></span>
@@ -2620,12 +2644,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-485
-486
-487</pre>
+504
+505
+506</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 485</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 504</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_dir'>cask_dir</span>
   <span class='ivar'>@cask_dir</span> <span class='op'>||=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Casks</span><span class='tstring_end'>&quot;</span></span>
@@ -2673,16 +2697,16 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-544
-545
-546
-547
-548
-549
-550</pre>
+563
+564
+565
+566
+567
+568
+569</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 544</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 563</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_files'>cask_files</span>
   <span class='ivar'>@cask_files</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2734,23 +2758,19 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-698
-699
-700
-701
-702
-703
-704
-705
-706</pre>
+722
+723
+724
+725
+726
+727
+728</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 698</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 722</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_renames'>cask_renames</span>
-  <span class='ivar'>@cask_renames</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
-    <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/API.html" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/API/Cask.html" title="Homebrew::API::Cask (module)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all_renames'><span class='object_link'><a href="Homebrew/API/Cask.html#all_renames-class_method" title="Homebrew::API::Cask.all_renames (method)">all_renames</a></span></span>
-  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_rename_file'>rename_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_CASK_RENAMES_FILE</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
+  <span class='ivar'>@cask_renames</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_rename_file'>rename_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_CASK_RENAMES_FILE</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
     <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_rename_file'>rename_file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -2799,12 +2819,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-606
-607
-608</pre>
+630
+631
+632</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 606</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 630</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span>
   <span class='ivar'>@cask_tokens</span> <span class='op'>||=</span> <span class='id identifier rubyid_cask_files'>cask_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:formula_file_to_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -2839,11 +2859,6 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
 123
 124
 125
@@ -2860,10 +2875,16 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 136
 137
 138
-139</pre>
+139
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_cache'>clear_cache</span>
   <span class='ivar'>@remote</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -2872,6 +2893,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
   <span class='ivar'>@cask_dir</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@command_dir</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@formula_files</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@cask_files</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@alias_dir</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@alias_files</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@aliases</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -2930,12 +2952,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-657
-658
-659</pre>
+681
+682
+683</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 657</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 681</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_command_dir'>command_dir</span>
   <span class='ivar'>@command_dir</span> <span class='op'>||=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cmd</span><span class='tstring_end'>&quot;</span></span>
@@ -2983,16 +3005,16 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-663
-664
-665
-666
-667
-668
-669</pre>
+687
+688
+689
+690
+691
+692
+693</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 663</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 687</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_command_files'>command_files</span>
   <span class='ivar'>@command_files</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_command_dir'>command_dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3031,16 +3053,16 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-224
-225
-226
-227
-228
-229
-230</pre>
+237
+238
+239
+240
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
   <span class='ivar'>@config</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -3069,26 +3091,26 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-489
-490
-491
-492
-493
-494
-495
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505</pre>
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 489</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 508</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_contents'>contents</span>
   <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -3150,14 +3172,14 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-461
-462
-463
-464
-465</pre>
+480
+481
+482
+483
+484</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 461</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 480</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_custom_remote?'>custom_remote?</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_remote'>remote</span>
@@ -3207,15 +3229,59 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-161
-162
-163</pre>
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_remote'>default_remote</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://github.com/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ensure_installed!-instance_method">
+  
+    #<strong>ensure_installed!</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+148
+149
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 148</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ensure_installed!'>ensure_installed!</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_installed?'>installed?</span>
+
+  <span class='id identifier rubyid_install'>install</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3237,25 +3303,6 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409
-410
-411
-412
-413
 414
 415
 416
@@ -3264,10 +3311,29 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 419
 420
 421
-422</pre>
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 414</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_remote_configuration'>fix_remote_configuration</span><span class='lparen'>(</span><span class='label'>requested_remote:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>quiet:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_requested_remote'>requested_remote</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -3340,17 +3406,17 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-469
-470
-471
-472
-473
-474
-475
-476</pre>
+488
+489
+490
+491
+492
+493
+494
+495</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 469</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 488</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_dir'>formula_dir</span>
   <span class='comment'># Official formulae taps always use this directory, saves time to hardcode.
@@ -3403,22 +3469,22 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518
-519
-520
-521</pre>
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 509</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 528</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_files'>formula_files</span>
   <span class='ivar'>@formula_files</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_dir'>formula_dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3476,12 +3542,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-600
-601
-602</pre>
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 600</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 624</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_names'>formula_names</span>
   <span class='ivar'>@formula_names</span> <span class='op'>||=</span> <span class='id identifier rubyid_formula_files'>formula_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:formula_file_to_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3529,16 +3595,16 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-710
-711
-712
-713
-714
-715
-716</pre>
+732
+733
+734
+735
+736
+737
+738</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 710</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 732</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_renames'>formula_renames</span>
   <span class='ivar'>@formula_renames</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_rename_file'>rename_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_FORMULA_RENAMES_FILE</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
@@ -3590,12 +3656,12 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-173
-174
-175</pre>
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 173</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 186</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git?'>git?</span>
   <span class='id identifier rubyid_git_repo'>git_repo</span><span class='period'>.</span><span class='id identifier rubyid_git_repo?'>git_repo?</span>
@@ -3643,14 +3709,14 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-178
-179
-180
-181
-182</pre>
+191
+192
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_branch'>git_branch</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="TapUnavailableError.html" title="TapUnavailableError (class)">TapUnavailableError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -3700,14 +3766,14 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-185
-186
-187
-188
-189</pre>
+198
+199
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_head'>git_head</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="TapUnavailableError.html" title="TapUnavailableError (class)">TapUnavailableError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -3757,14 +3823,14 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="lines">
 
 
-192
-193
-194
-195
-196</pre>
+205
+206
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 205</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_git_last_commit'>git_last_commit</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="TapUnavailableError.html" title="TapUnavailableError (class)">TapUnavailableError</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -3921,25 +3987,6 @@ logic that skips non-GitHub repositories during auto-updates.</p>
       <pre class="lines">
 
 
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
 276
 277
 278
@@ -4045,10 +4092,29 @@ logic that skips non-GitHub repositories during auto-updates.</p>
 378
 379
 380
-381</pre>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 276</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install'>install</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>clone_target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>force_auto_update:</span> <span class='kw'>nil</span><span class='comma'>,</span>
             <span class='label'>custom_remote:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verify:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -4095,7 +4161,7 @@ logic that skips non-GitHub repositories during auto-updates.</p>
     <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet'>quiet</span>
     <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rbrace'>}</span>
     <span class='kw'>return</span>
-  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_core_tap?'>core_tap?</span> <span class='op'>||</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
+  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_core_tap?'>core_tap?</span> <span class='op'>||</span> <span class='id identifier rubyid_core_cask_tap?'>core_cask_tap?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force'>force</span>
     <span class='comment'># odeprecated: move to odie in the next minor release. This may break some CI so we should give notice.
 </span>    <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tapping </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> is no longer typically necessary.\n</span><span class='tstring_end'>&quot;</span></span> \
          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Add </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_option'><span class='object_link'><a href="Formatter.html#option-class_method" title="Formatter.option (method)">option</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> if you are sure you need one.</span><span class='tstring_end'>&quot;</span></span>
@@ -4218,12 +4284,12 @@ logic that skips non-GitHub repositories during auto-updates.</p>
       <pre class="lines">
 
 
-233
-234
-235</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_installed?'>installed?</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -4272,14 +4338,14 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-201
-202
-203
-204
-205</pre>
+214
+215
+216
+217
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_issues_url'>issues_url</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_official?'>official?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_custom_remote?'>custom_remote?</span>
@@ -4306,20 +4372,20 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393</pre>
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 402</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_link_completions_and_manpages'>link_completions_and_manpages</span>
   <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew tap --repair</span><span class='tstring_end'>&quot;</span></span>
@@ -4375,12 +4441,12 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-212
-213
-214</pre>
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_official?'>official?</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span>
@@ -4428,12 +4494,12 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-479
-480
-481</pre>
+498
+499
+500</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 479</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 498</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_potential_formula_dirs'>potential_formula_dirs</span>
   <span class='ivar'>@potential_formula_dirs</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HomebrewFormula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
@@ -4481,14 +4547,14 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-217
-218
-219
-220
-221</pre>
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_private?'>private?</span>
   <span class='kw'>return</span> <span class='ivar'>@private</span> <span class='kw'>if</span> <span class='id identifier rubyid_instance_variable_defined?'>instance_variable_defined?</span><span class='lparen'>(</span><span class='symbol'>:@private</span><span class='rparen'>)</span>
@@ -4525,12 +4591,12 @@ e.g. <code>https://github.com/user/homebrew-repo/issues</code></p>
       <pre class="lines">
 
 
-745
-746
-747</pre>
+763
+764
+765</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 745</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 763</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pypi_formula_mappings'>pypi_formula_mappings</span>
   <span class='ivar'>@pypi_formula_mappings</span> <span class='op'>=</span> <span class='id identifier rubyid_read_formula_list'>read_formula_list</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_PYPI_FORMULA_MAPPINGS</span>
@@ -4566,14 +4632,14 @@ e.g. <code>https://github.com/user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-143
-144
-145
-146
-147</pre>
+156
+157
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remote'>remote</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_default_remote'>default_remote</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed?'>installed?</span>
@@ -4611,16 +4677,16 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-151
-152
-153
-154
-155
-156
-157</pre>
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remote_repo'>remote_repo</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_remote'>remote</span>
@@ -4649,15 +4715,15 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170</pre>
+178
+179
+180
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_var'>repo_var</span>
   <span class='ivar'>@repo_var</span> <span class='op'>||=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -4708,12 +4774,12 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-238
-239
-240</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shallow?'>shallow?</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.git/shallow</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
@@ -4761,12 +4827,12 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-740
-741
-742</pre>
+758
+759
+760</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 740</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 758</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_style_exceptions'>style_exceptions</span>
   <span class='ivar'>@style_exceptions</span> <span class='op'>=</span> <span class='id identifier rubyid_read_formula_list_directory'>read_formula_list_directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#HOMEBREW_TAP_STYLE_EXCEPTIONS_DIR-constant" title="Tap::HOMEBREW_TAP_STYLE_EXCEPTIONS_DIR (constant)">HOMEBREW_TAP_STYLE_EXCEPTIONS_DIR</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/*</span><span class='tstring_end'>&quot;</span></span>
@@ -4814,27 +4880,19 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730</pre>
+742
+743
+744
+745
+746
+747
+748</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 720</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 742</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tap_migrations'>tap_migrations</span>
-  <span class='ivar'>@tap_migrations</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew/cask</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
-    <span class='id identifier rubyid_migrations'>migrations</span><span class='comma'>,</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/API.html" title="Homebrew::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch_json_api_file'><span class='object_link'><a href="Homebrew/API.html#fetch_json_api_file-class_method" title="Homebrew::API.fetch_json_api_file (method)">fetch_json_api_file</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask_tap_migrations.jws.json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                                                    <span class='label'>stale_seconds:</span> <span class='const'><span class='object_link'><a href="#TAP_MIGRATIONS_STALE_SECONDS-constant" title="Tap::TAP_MIGRATIONS_STALE_SECONDS (constant)">TAP_MIGRATIONS_STALE_SECONDS</a></span></span>
-    <span class='id identifier rubyid_migrations'>migrations</span>
-  <span class='kw'>elsif</span> <span class='lparen'>(</span><span class='id identifier rubyid_migration_file'>migration_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_MIGRATIONS_FILE</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
+  <span class='ivar'>@tap_migrations</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_migration_file'>migration_file</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>HOMEBREW_TAP_MIGRATIONS_FILE</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
     <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_migration_file'>migration_file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -4883,32 +4941,32 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-672
-673
-674
-675
-676
-677
-678
-679
-680
-681
-682
-683
-684
-685
-686
-687
-688
-689
-690
-691
-692
-693
-694</pre>
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 672</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 696</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -4953,12 +5011,12 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-207
-208
-209</pre>
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_name'>name</span>
@@ -5006,25 +5064,6 @@ e.g. <code>user/homebrew-repo</code></p>
       <pre class="lines">
 
 
-425
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
-440
-441
-442
-443
 444
 445
 446
@@ -5039,10 +5078,29 @@ e.g. <code>user/homebrew-repo</code></p>
 455
 456
 457
-458</pre>
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'tap.rb', line 425</span>
+      <pre class="code"><span class="info file"># File 'tap.rb', line 444</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall'>uninstall</span><span class='lparen'>(</span><span class='label'>manual:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>descriptions</span><span class='tstring_end'>&quot;</span></span>
