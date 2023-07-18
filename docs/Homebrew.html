@@ -10034,19 +10034,22 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 355
 356
 357
-358
-359
-360
-361</pre>
+358</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_analytics_message'>analytics_message</span>
-  <span class='kw'>if</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages_displayed?'><span class='object_link'><a href="Utils/Analytics.html#messages_displayed%3F-class_method" title="Utils::Analytics.messages_displayed? (method)">messages_displayed?</a></span></span> <span class='op'>&amp;&amp;</span>
-     <span class='op'>!</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disabled?'><span class='object_link'><a href="Utils/Analytics.html#disabled%3F-class_method" title="Utils::Analytics.disabled? (method)">disabled?</a></span></span> <span class='op'>&amp;&amp;</span>
-     <span class='op'>!</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_message_output?'><span class='object_link'><a href="Utils/Analytics.html#no_message_output%3F-class_method" title="Utils::Analytics.no_message_output? (method)">no_message_output?</a></span></span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages_displayed?'><span class='object_link'><a href="Utils/Analytics.html#messages_displayed%3F-class_method" title="Utils::Analytics.messages_displayed? (method)">messages_displayed?</a></span></span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_message_output?'><span class='object_link'><a href="Utils/Analytics.html#no_message_output%3F-class_method" title="Utils::Analytics.no_message_output? (method)">no_message_output?</a></span></span>
 
+  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disabled?'><span class='object_link'><a href="Utils/Analytics.html#disabled%3F-class_method" title="Utils::Analytics.disabled? (method)">disabled?</a></span></span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_influx_message_displayed?'><span class='object_link'><a href="Utils/Analytics.html#influx_message_displayed%3F-class_method" title="Utils::Analytics.influx_message_displayed? (method)">influx_message_displayed?</a></span></span>
+    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew&#39;s analytics have entirely moved to our InfluxDB instance in the EU.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>We gather less data than before and have destroyed all Google Analytics data:</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_url'><span class='object_link'><a href="Formatter.html#url-class_method" title="Formatter.url (method)">url</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://docs.brew.sh/Analytics</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please reconsider re-enabling analytics to help our volunteer maintainers with:</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  brew analytics on</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>elsif</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disabled?'><span class='object_link'><a href="Utils/Analytics.html#disabled%3F-class_method" title="Utils::Analytics.disabled? (method)">disabled?</a></span></span>
     <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_NO_ANALYTICS_THIS_RUN</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span>
     <span class='comment'># Use the shell&#39;s audible bell.
 </span>    <span class='id identifier rubyid_print'>print</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\a</span><span class='tstring_end'>&quot;</span></span>
@@ -10059,19 +10062,10 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 </span><span class='tstring_content'>      No analytics have been recorded yet (nor will be during this `brew` run).
 </span><span class='tstring_content'>
 </span><span class='heredoc_end'>    EOS
-</span>
-    <span class='comment'># Consider the messages possibly missed if not a TTY.
-</span>    <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages_displayed!'><span class='object_link'><a href="Utils/Analytics.html#messages_displayed!-class_method" title="Utils::Analytics.messages_displayed! (method)">messages_displayed!</a></span></span> <span class='kw'>if</span> <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
-  <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_disabled?'><span class='object_link'><a href="Utils/Analytics.html#disabled%3F-class_method" title="Utils::Analytics.disabled? (method)">disabled?</a></span></span>
-    <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew&#39;s analytics have entirely moved to our InfluxDB instance in the EU.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>We gather less data than before and have destroyed all Google Analytics data:</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_url'><span class='object_link'><a href="Formatter.html#url-class_method" title="Formatter.url (method)">url</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://docs.brew.sh/Analytics</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Tty.html" title="Tty (module)">Tty</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please reconsider re-enabling analytics to help our volunteer maintainers with:</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  brew analytics on</span><span class='tstring_end'>&quot;</span></span>
+</span>  <span class='kw'>end</span>
 
-    <span class='comment'># Consider the message possibly missed if not a TTY.
-</span>    <span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_write'><span class='object_link'><a href="Homebrew/Settings.html#write-class_method" title="Homebrew::Settings.write (method)">write</a></span></span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>influxanalyticsmessage</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
-  <span class='kw'>end</span>
+  <span class='comment'># Consider the messages possibly missed if not a TTY.
+</span>  <span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_messages_displayed!'><span class='object_link'><a href="Utils/Analytics.html#messages_displayed!-class_method" title="Utils::Analytics.messages_displayed! (method)">messages_displayed!</a></span></span> <span class='kw'>if</span> <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -18994,18 +18988,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+360
+361
+362
 363
 364
 365
 366
 367
-368
-369
-370
-371</pre>
+368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 360</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_donation_message'>donation_message</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_read'><span class='object_link'><a href="Homebrew/Settings.html#read-class_method" title="Homebrew::Settings.read (method)">read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>donationmessage</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
@@ -24776,6 +24770,9 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+370
+371
+372
 373
 374
 375
@@ -24796,13 +24793,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 390
 391
 392
-393
-394
-395
-396</pre>
+393</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 373</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 370</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_install_from_api_message'>install_from_api_message</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="Homebrew/Settings.html" title="Homebrew::Settings (module)">Settings</a></span></span><span class='period'>.</span><span class='id identifier rubyid_read'><span class='object_link'><a href="Homebrew/Settings.html#read-class_method" title="Homebrew::Settings.read (method)">read</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>installfromapimessage</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
@@ -40670,6 +40664,9 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
+395
+396
+397
 398
 399
 400
@@ -40681,13 +40678,10 @@ corresponding to all the original commit messages combined.</p>
 406
 407
 408
-409
-410
-411
-412</pre>
+409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 395</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_untap_message'>untap_message</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span>
