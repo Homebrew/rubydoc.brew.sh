@@ -327,13 +327,15 @@ in the <span class='object_link'><a href="../DATAPatch.html" title="DATAPatch (c
 68
 69
 70
-71</pre>
+71
+72</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/inreplace.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inreplace'>inreplace</span><span class='lparen'>(</span><span class='id identifier rubyid_paths'>paths</span><span class='comma'>,</span> <span class='id identifier rubyid_before'>before</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_after'>after</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_audit_result'>audit_result</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='comment'># rubocop:disable Style/OptionalBooleanParameter
 </span>  <span class='id identifier rubyid_after'>after</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_after'>after</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_before'>before</span> <span class='op'>=</span> <span class='id identifier rubyid_before'>before</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='id identifier rubyid_before'>before</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_errors'>errors</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 
@@ -346,7 +348,7 @@ in the <span class='object_link'><a href="../DATAPatch.html" title="DATAPatch (c
     <span class='kw'>if</span> <span class='id identifier rubyid_before'>before</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_after'>after</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
       <span class='kw'>yield</span> <span class='id identifier rubyid_s'>s</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_before'>before</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_after'>after</span><span class='comma'>,</span> <span class='id identifier rubyid_audit_result'>audit_result</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_before'>before</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_after'>after</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_audit_result'>audit_result</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_errors'>errors</span><span class='lbracket'>[</span><span class='id identifier rubyid_path'>path</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span> <span class='kw'>unless</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -404,7 +406,6 @@ in the <span class='object_link'><a href="../DATAPatch.html" title="DATAPatch (c
       <pre class="lines">
 
 
-74
 75
 76
 77
@@ -420,10 +421,11 @@ in the <span class='object_link'><a href="../DATAPatch.html" title="DATAPatch (c
 87
 88
 89
-90</pre>
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/inreplace.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'utils/inreplace.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inreplace_pairs'>inreplace_pairs</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='comma'>,</span> <span class='label'>read_only_run:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>silent:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_binread'>binread</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
