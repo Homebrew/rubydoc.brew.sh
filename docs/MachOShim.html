@@ -799,11 +799,11 @@
     <span class='id identifier rubyid_resolve_variable_name'>resolve_variable_name</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_resolve_variable_name'>resolve_variable_name</span><span class='lparen'>(</span><span class='id identifier rubyid_rpath'>rpath</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># TODO: Add `last: true` to `options` and replace `delete_command` with `delete_rpath`
-</span>  <span class='comment'>#       when the PR linked below is merged and release for ruby-macho.
-</span>  <span class='comment'># https://github.com/Homebrew/ruby-macho/pull/555
-</span>  <span class='id identifier rubyid_command_to_delete'>command_to_delete</span> <span class='op'>=</span> <span class='id identifier rubyid_candidates'>candidates</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='comment'># .path.to_s (when switching to `MachOFile#delete_rpath`)
-</span>  <span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_delete_command'>delete_command</span><span class='lparen'>(</span><span class='id identifier rubyid_command_to_delete'>command_to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='comment'># Delete the last instance to avoid changing the order in which rpaths are searched.
+</span>  <span class='id identifier rubyid_rpath_to_delete'>rpath_to_delete</span> <span class='op'>=</span> <span class='id identifier rubyid_candidates'>candidates</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:last</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
+
+  <span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_delete_rpath'>delete_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_rpath_to_delete'>rpath_to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_macho'>macho</span><span class='period'>.</span><span class='id identifier rubyid_write!'>write!</span>
 <span class='kw'>end</span></pre>
     </td>
