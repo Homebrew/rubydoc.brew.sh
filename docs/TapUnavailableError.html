@@ -220,7 +220,17 @@
 307
 308
 309
-310</pre>
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'exceptions.rb', line 304</span>
@@ -228,10 +238,20 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
 
-  <span class='kw'>super</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    No available tap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.
-</span><span class='heredoc_end'>  EOS
-</span><span class='kw'>end</span></pre>
+  <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No available tap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="CoreTap.html" title="CoreTap (class)">CoreTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="CoreCaskTap.html" title="CoreCaskTap (class)">CoreCaskTap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance'><span class='object_link'><a href="AbstractCoreTap.html#instance-class_method" title="AbstractCoreTap.instance (method)">instance</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew tap --force </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>+=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Run </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> to tap </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>!
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>else</span>
+    <span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew tap-new </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_message'>message</span> <span class='op'>+=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Run </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> to create a new </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> tap!
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_message'>message</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
