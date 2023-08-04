@@ -553,7 +553,9 @@
 420
 421
 422
-423</pre>
+423
+424
+425</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'upgrade.rb', line 243</span>
@@ -574,11 +576,13 @@
   <span class='label'>verbose:</span> <span class='kw'>false</span>
 <span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_installed_dependents_check?'>no_installed_dependents_check?</span>
-    <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>      HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK is set: not checking for outdated
-</span><span class='tstring_content'>      dependents or dependents with broken linkage!
-</span><span class='heredoc_end'>    EOS
-</span>    <span class='kw'>return</span>
+    <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_env_hints?'>no_env_hints?</span>
+      <span class='id identifier rubyid_opoo'>opoo</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>        HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK is set: not checking for outdated
+</span><span class='tstring_content'>        dependents or dependents with broken linkage!
+</span><span class='heredoc_end'>      EOS
+</span>    <span class='kw'>end</span>
+    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_installed_formulae'>installed_formulae</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_dry_run'>dry_run</span> <span class='op'>?</span> <span class='id identifier rubyid_formulae'>formulae</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../FormulaInstaller.html" title="FormulaInstaller (class)">FormulaInstaller</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="../FormulaInstaller.html#installed-class_method" title="FormulaInstaller.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
