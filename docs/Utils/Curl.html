@@ -598,14 +598,14 @@
       <pre class="lines">
 
 
-166
-167
-168
-169
-170</pre>
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl'>curl</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_with_workarounds'><span class='object_link'><a href="#curl_with_workarounds-class_method" title="Utils::Curl.curl_with_workarounds (method)">curl_with_workarounds</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>print_stdout:</span> <span class='id identifier rubyid_print_stdout'>print_stdout</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -833,7 +833,16 @@
 111
 112
 113
-114</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/curl.rb', line 60</span>
@@ -852,7 +861,16 @@
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='comment'># do not load .curlrc unless requested (must be the first argument)
-</span>  <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--disable</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_curlrc?'>curlrc?</span>
+</span>  <span class='id identifier rubyid_curlrc'>curlrc</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_curlrc'>curlrc</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_curlrc'>curlrc</span><span class='op'>&amp;.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='comment'># If the file exists, we still want to disable loading the default curlrc.
+</span>    <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--disable</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--config</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_curlrc'>curlrc</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_curlrc'>curlrc</span>
+    <span class='comment'># This matches legacy behavior: `HOMEBREW_CURLRC` was a bool,
+</span>    <span class='comment'># omitting `--disable` when present.
+</span>  <span class='kw'>else</span>
+    <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--disable</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
   <span class='comment'># echo any cookies received on a redirect
 </span>  <span class='id identifier rubyid_args'>args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cookie</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/dev/null</span><span class='tstring_end'>&quot;</span></span>
@@ -928,15 +946,6 @@
       <pre class="lines">
 
 
-261
-262
-263
-264
-265
-266
-267
-268
-269
 270
 271
 272
@@ -1052,10 +1061,19 @@
 382
 383
 384
-385</pre>
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_check_http_content'>curl_check_http_content</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_url_type'>url_type</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>user_agents:</span> <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>referer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                             <span class='label'>check_content:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>use_homebrew_curl:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -1217,15 +1235,6 @@
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177
-178
-179
-180
 181
 182
 183
@@ -1248,10 +1257,19 @@
 200
 201
 202
-203</pre>
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_download'>curl_download</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>try_partial:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_destination'>destination</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
@@ -1369,15 +1387,6 @@
       <pre class="lines">
 
 
-209
-210
-211
-212
-213
-214
-215
-216
-217
 218
 219
 220
@@ -1394,10 +1403,19 @@
 231
 232
 233
-234</pre>
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_headers'>curl_headers</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>wanted_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--request</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GET</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_request_args'>request_args</span><span class='op'>|</span>
@@ -1460,15 +1478,6 @@
       <pre class="lines">
 
 
-387
-388
-389
-390
-391
-392
-393
-394
-395
 396
 397
 398
@@ -1530,10 +1539,19 @@
 454
 455
 456
-457</pre>
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_http_content_headers_and_checksum'>curl_http_content_headers_and_checksum</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='label'>specs:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>hash_needed:</span> <span class='kw'>false</span><span class='comma'>,</span>
@@ -1641,12 +1659,12 @@
       <pre class="lines">
 
 
-205
-206
-207</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 205</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_output'>curl_output</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_curl_with_workarounds'><span class='object_link'><a href="#curl_with_workarounds-class_method" title="Utils::Curl.curl_with_workarounds (method)">curl_with_workarounds</a></span></span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>show_output:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -1783,21 +1801,21 @@ status information and headers from <code>#parse_curl_response</code>.</p>
       <pre class="lines">
 
 
-545
-546
-547
-548
-549
-550
-551
-552
-553
 554
 555
-556</pre>
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 545</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 554</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_response_follow_redirections'>curl_response_follow_redirections</span><span class='lparen'>(</span><span class='id identifier rubyid_responses'>responses</span><span class='comma'>,</span> <span class='id identifier rubyid_base_url'>base_url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responses'>responses</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
@@ -1920,22 +1938,22 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-520
-521
-522
-523
-524
-525
-526
-527
-528
 529
 530
 531
-532</pre>
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 520</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 529</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_response_last_location'>curl_response_last_location</span><span class='lparen'>(</span><span class='id identifier rubyid_responses'>responses</span><span class='comma'>,</span> <span class='label'>absolutize:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>base_url:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responses'>responses</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
@@ -1998,15 +2016,15 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-459
-460
-461
-462
-463
-464</pre>
+468
+469
+470
+471
+472
+473</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 468</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_supports_tls13?'>curl_supports_tls13?</span>
   <span class='ivar'>@curl_supports_tls13</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_h'>h</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
@@ -2062,15 +2080,6 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122
-123
-124
 125
 126
 127
@@ -2110,10 +2119,19 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
 161
 162
 163
-164</pre>
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_curl_with_workarounds'>curl_with_workarounds</span><span class='lparen'>(</span>
   <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span>
@@ -2212,12 +2230,12 @@ in the responses or <code>nil</code> (if no <code>location</code> headers found)
       <pre class="lines">
 
 
-466
-467
-468</pre>
+475
+476
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 466</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 475</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_status_ok?'>http_status_ok?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='rparen'>)</span>
   <span class='lparen'>(</span><span class='int'>100</span><span class='op'>..</span><span class='int'>299</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cover?'>cover?</span><span class='lparen'>(</span><span class='id identifier rubyid_status'>status</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -2318,15 +2336,6 @@ content, if found.</p>
       <pre class="lines">
 
 
-483
-484
-485
-486
-487
-488
-489
-490
-491
 492
 493
 494
@@ -2337,10 +2346,19 @@ content, if found.</p>
 499
 500
 501
-502</pre>
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 483</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 492</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_curl_output'>parse_curl_output</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='label'>max_iterations:</span> <span class='int'>25</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responses'>responses</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2434,15 +2452,15 @@ the URL is protected by Cloudflare.</p>
       <pre class="lines">
 
 
-241
-242
-243
-244
-245
-246</pre>
+250
+251
+252
+253
+254
+255</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 241</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url_protected_by_cloudflare?'>url_protected_by_cloudflare?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -2522,16 +2540,16 @@ the URL is protected by Incapsula.</p>
       <pre class="lines">
 
 
-253
-254
-255
-256
-257
-258
-259</pre>
+262
+263
+264
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 253</span>
+      <pre class="code"><span class="info file"># File 'utils/curl.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url_protected_by_incapsula?'>url_protected_by_incapsula?</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_response'>response</span><span class='lbracket'>[</span><span class='symbol'>:headers</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
