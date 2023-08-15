@@ -356,14 +356,14 @@
       <pre class="lines">
 
 
-659
-660
-661
-662
-663</pre>
+670
+671
+672
+673
+674</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 659</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 670</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate_cask_rename'>migrate_cask_rename</span>
   <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
@@ -390,17 +390,6 @@
       <pre class="lines">
 
 
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
 676
 677
 678
@@ -409,10 +398,21 @@
 681
 682
 683
-684</pre>
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 665</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 676</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate_formula_rename'>migrate_formula_rename</span><span class='lparen'>(</span><span class='label'>force:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_formula'>formula</span><span class='op'>|</span>
@@ -454,17 +454,6 @@
       <pre class="lines">
 
 
-580
-581
-582
-583
-584
-585
-586
-587
-588
-589
-590
 591
 592
 593
@@ -531,10 +520,21 @@
 654
 655
 656
-657</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 580</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 591</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_migrate_tap_migration'>migrate_tap_migration</span>
   <span class='lparen'>(</span><span class='id identifier rubyid_report'>report</span><span class='lbracket'>[</span><span class='symbol'>:D</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_report'>report</span><span class='lbracket'>[</span><span class='symbol'>:DC</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_full_name'>full_name</span><span class='op'>|</span>
@@ -763,7 +763,18 @@
 567
 568
 569
-570</pre>
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 441</span>
@@ -896,6 +907,17 @@
     <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:R</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_renamed_formulae'>renamed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
   <span class='kw'>end</span>
 
+  <span class='comment'># If any formulae/casks are marked as added and deleted, remove them from
+</span>  <span class='comment'># the report as we&#39;ve not detected things correctly.
+</span>  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_added_and_deleted_formulae'>added_and_deleted_formulae</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:A</span><span class='rbracket'>]</span> <span class='op'>&amp;</span> <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:D</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
+    <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:A</span><span class='rbracket'>]</span> <span class='op'>-=</span> <span class='id identifier rubyid_added_and_deleted_formulae'>added_and_deleted_formulae</span>
+    <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:D</span><span class='rbracket'>]</span> <span class='op'>-=</span> <span class='id identifier rubyid_added_and_deleted_formulae'>added_and_deleted_formulae</span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_added_and_deleted_casks'>added_and_deleted_casks</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:AC</span><span class='rbracket'>]</span> <span class='op'>&amp;</span> <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:DC</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
+    <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:AC</span><span class='rbracket'>]</span> <span class='op'>-=</span> <span class='id identifier rubyid_added_and_deleted_casks'>added_and_deleted_casks</span>
+    <span class='ivar'>@report</span><span class='lbracket'>[</span><span class='symbol'>:DC</span><span class='rbracket'>]</span> <span class='op'>-=</span> <span class='id identifier rubyid_added_and_deleted_casks'>added_and_deleted_casks</span>
+  <span class='kw'>end</span>
+
   <span class='ivar'>@report</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -941,16 +963,16 @@
       <pre class="lines">
 
 
-572
-573
-574
-575
-576
-577
-578</pre>
+583
+584
+585
+586
+587
+588
+589</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 572</span>
+      <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 583</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_updated?'>updated?</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_installed_from_api?'>installed_from_api?</span>
