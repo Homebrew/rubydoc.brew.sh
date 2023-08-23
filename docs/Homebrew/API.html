@@ -575,7 +575,17 @@
 116
 117
 118
-119</pre>
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'api.rb', line 40</span>
@@ -601,6 +611,9 @@
   <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="../Utils/Curl.html#curl_args-class_method" title="Utils::Curl.curl_args (method)">curl_args</a></span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--verbose</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_curl_verbose?'>curl_verbose?</span>
   <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="../Utils/Curl.html#curl_args-class_method" title="Utils::Curl.curl_args (method)">curl_args</a></span></span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--silent</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../Context.html" title="Context (module)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current'><span class='object_link'><a href="../Context.html#current-class_method" title="Context.current (method)">current</a></span></span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
 
+  <span class='id identifier rubyid_insecure_download'>insecure_download</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_SYSTEM_CA_CERTIFICATES_TOO_OLD</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span>
+                       <span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_FORCE_BREWED_CA_CERTIFICATES</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+                      <span class='op'>!</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>etc/ca-certificates/cert.pem</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
   <span class='id identifier rubyid_skip_download'>skip_download</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span>
                   <span class='op'>!</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span>
                   <span class='lparen'>(</span><span class='op'>!</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_auto_update_command?'><span class='object_link'><a href="../Homebrew.html#auto_update_command%3F-class_method" title="Homebrew.auto_update_command? (method)">auto_update_command?</a></span></span> <span class='op'>||</span>
@@ -612,6 +625,12 @@
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_curl_args'><span class='object_link'><a href="../Utils/Curl.html#curl_args-class_method" title="Utils::Curl.curl_args (method)">curl_args</a></span></span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
       <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_prepend'>prepend</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--time-cond</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_insecure_download'>insecure_download</span>
+        <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Using --insecure with curl to download </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_endpoint'>endpoint</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> \
+             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>because we need it to run `brew install ca-certificates`. </span><span class='tstring_end'>&quot;</span></span> \
+             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Checksums will still be verified.</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_append'>append</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--insecure</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
       <span class='kw'>unless</span> <span class='id identifier rubyid_skip_download'>skip_download</span>
         <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Downloading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='gvar'>$stdout</span><span class='period'>.</span><span class='id identifier rubyid_tty?'>tty?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="../Context.html" title="Context (module)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current'><span class='object_link'><a href="../Context.html#current-class_method" title="Context.current (method)">current</a></span></span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
         <span class='comment'># Disable retries here, we handle them ourselves below.
@@ -634,7 +653,8 @@
       <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='embexpr_end'>}</span><span class='tstring_content'>: update failed, falling back to cached version.</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
 
-    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_touch'>touch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_skip_download'>skip_download</span>
+    <span class='id identifier rubyid_mtime'>mtime</span> <span class='op'>=</span> <span class='id identifier rubyid_insecure_download'>insecure_download</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>1970</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'><span class='object_link'><a href="../Time.html" title="Time (class)">Time</a></span></span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+    <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_touch'>touch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>mtime:</span> <span class='id identifier rubyid_mtime'>mtime</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_skip_download'>skip_download</span>
     <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
   <span class='kw'>rescue</span> <span class='const'>JSON</span><span class='op'>::</span><span class='const'>ParserError</span>
     <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_unlink'>unlink</span>
@@ -723,20 +743,20 @@
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132</pre>
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'api.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'api.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_merge_variations'>merge_variations</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Utils/Bottles/Tag.html#initialize-instance_method" title="Utils::Bottles::Tag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>system:</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current_os'><span class='object_link'><a href="SimulateSystem.html#current_os-class_method" title="Homebrew::SimulateSystem.current_os (method)">current_os</a></span></span><span class='comma'>,</span>
@@ -812,18 +832,18 @@
       <pre class="lines">
 
 
-172
-173
-174
-175
-176
-177
-178
-179
-180</pre>
+182
+183
+184
+185
+186
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'api.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'api.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tap_from_source_download'>tap_from_source_download</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_source_relative_path'>source_relative_path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#HOMEBREW_CACHE_API_SOURCE-constant" title="Homebrew::API::HOMEBREW_CACHE_API_SOURCE (constant)">HOMEBREW_CACHE_API_SOURCE</a></span></span><span class='rparen'>)</span>
@@ -919,18 +939,18 @@
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre>
+145
+146
+147
+148
+149
+150
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'api.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'api.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_write_names_file'>write_names_file</span><span class='lparen'>(</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>regenerate:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names_path'>names_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#HOMEBREW_CACHE_API-constant" title="Homebrew::API::HOMEBREW_CACHE_API (constant)">HOMEBREW_CACHE_API</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'>_names.txt</span><span class='tstring_end'>&quot;</span></span>
