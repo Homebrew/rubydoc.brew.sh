@@ -1204,7 +1204,13 @@ optionals and recommends based on what the dependent has asked for.</p>
 241
 242
 243
-244</pre>
+244
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'requirement.rb', line 223</span>
@@ -1228,7 +1234,13 @@ optionals and recommends based on what the dependent has asked for.</p>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_cache_key'>cache_key</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_cache_id'>cache_id</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_reqs'>reqs</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span> <span class='kw'>if</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_cache_key'>cache_key</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='comment'># Even though we setup the cache above
+</span>    <span class='comment'># &#39;dependent.recursive_dependencies.map(&amp;:to_formula)&#39;
+</span>    <span class='comment'># is invalidating the singleton cache
+</span>    <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_cache_key'>cache_key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='id identifier rubyid_cache_key'>cache_key</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_cache_id'>cache_id</span> <span class='id identifier rubyid_dependent'>dependent</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_reqs'>reqs</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_reqs'>reqs</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1266,12 +1278,12 @@ optionals and recommends based on what the dependent has asked for.</p>
       <pre class="lines">
 
 
-258
-259
-260</pre>
+264
+265
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirement.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'requirement.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune'>prune</span>
   <span class='id identifier rubyid_throw'>throw</span><span class='lparen'>(</span><span class='symbol'>:prune</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -1324,18 +1336,18 @@ optionals and recommends based on what the dependent has asked for.</p>
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251
 252
 253
-254</pre>
+254
+255
+256
+257
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'requirement.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'requirement.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune?'>prune?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependent'>dependent</span><span class='comma'>,</span> <span class='id identifier rubyid_req'>req</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_catch'>catch</span><span class='lparen'>(</span><span class='symbol'>:prune</span><span class='rparen'>)</span> <span class='kw'>do</span>
