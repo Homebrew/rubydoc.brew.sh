@@ -12724,7 +12724,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 168
 169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 67</span>
@@ -12732,7 +12733,8 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_bump_cask_pr'>bump_cask_pr</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_bump_cask_pr_args'>bump_cask_pr_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
 
-  <span class='comment'># This will be run by `brew audit` or `brew style` later so run it first to
+  <span class='comment'># odeprecated &quot;brew bump-cask-pr --online&quot; if args.online?
+</span>  <span class='comment'># This will be run by `brew audit` or `brew style` later so run it first to
 </span>  <span class='comment'># not start spamming during normal output.
 </span>  <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_audit?'>no_audit?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_style?'>no_style?</span>
 
@@ -12951,7 +12953,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-audit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Don&#39;t run `brew audit` before opening the PR.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--online</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-           <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Run `brew audit --online` before opening the PR.</span><span class='tstring_end'>&quot;</span></span>
+           <span class='label'>hidden:</span>      <span class='kw'>true</span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-style</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
            <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Don&#39;t run `brew style --fix` before opening the PR.</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_switch'>switch</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-browse</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -15181,7 +15183,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-241
 242
 243
 244
@@ -15204,10 +15205,11 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 261
 262
 263
-264</pre>
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 241</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_pull_requests'>check_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>new_version:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span>
@@ -35643,7 +35645,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-181
 182
 183
 184
@@ -35700,10 +35701,11 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 235
 236
 237
-238</pre>
+238
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_version_and_checksum'>replace_version_and_checksum</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='comma'>,</span> <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='rparen'>)</span>
   <span class='comment'># When blocks are absent, arch is not relevant. For consistency, we simulate the arm architecture.
@@ -37171,7 +37173,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-267
 268
 269
 270
@@ -37192,34 +37193,25 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 285
 286
 287
-288
-289
-290
-291
-292</pre>
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_audit?'>no_audit?</span>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Skipping `brew audit`</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span>
-      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew audit --cask --online </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew audit --cask </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew audit --cask --online </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
     <span class='kw'>return</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_failed_audit'>failed_audit</span> <span class='op'>=</span> <span class='kw'>false</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_audit?'>no_audit?</span>
     <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Skipping `brew audit`</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_online?'>online?</span>
-    <span class='id identifier rubyid_system'>system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>audit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--online</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
-    <span class='id identifier rubyid_failed_audit'>failed_audit</span> <span class='op'>=</span> <span class='op'>!</span><span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_system'>system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>audit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
+    <span class='id identifier rubyid_system'>system</span> <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_BREW_FILE-constant" title="HOMEBREW_BREW_FILE (constant)">HOMEBREW_BREW_FILE</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>audit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--online</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span>
     <span class='id identifier rubyid_failed_audit'>failed_audit</span> <span class='op'>=</span> <span class='op'>!</span><span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_failed_audit'>failed_audit</span>
@@ -37294,6 +37286,10 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
+291
+292
+293
+294
 295
 296
 297
@@ -37310,14 +37306,10 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 308
 309
 310
-311
-312
-313
-314
-315</pre>
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
