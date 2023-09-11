@@ -762,7 +762,7 @@ directories in the prefix, never symlinks.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#change_dylib_id-instance_method" title="#change_dylib_id (instance method)">#<strong>change_dylib_id</strong>(id, file)  &#x21d2; Object </a>
+      <a href="#change_dylib_id-instance_method" title="#change_dylib_id (instance method)">#<strong>change_dylib_id</strong>(id, file)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -784,7 +784,7 @@ directories in the prefix, never symlinks.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#change_install_name-instance_method" title="#change_install_name (instance method)">#<strong>change_install_name</strong>(old, new, file)  &#x21d2; Object </a>
+      <a href="#change_install_name-instance_method" title="#change_install_name (instance method)">#<strong>change_install_name</strong>(old, new, file)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -806,7 +806,7 @@ directories in the prefix, never symlinks.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#change_rpath-instance_method" title="#change_rpath (instance method)">#<strong>change_rpath</strong>(old, new, file)  &#x21d2; Object </a>
+      <a href="#change_rpath-instance_method" title="#change_rpath (instance method)">#<strong>change_rpath</strong>(file, old_prefix, new_prefix)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -916,7 +916,7 @@ directories in the prefix, never symlinks.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#delete_rpath-instance_method" title="#delete_rpath (instance method)">#<strong>delete_rpath</strong>(rpath, file)  &#x21d2; Object </a>
+      <a href="#delete_rpath-instance_method" title="#delete_rpath (instance method)">#<strong>delete_rpath</strong>(rpath, file)  &#x21d2; Boolean </a>
     
     
   </span>
@@ -2945,19 +2945,67 @@ directories in the prefix, never symlinks.</p>
       <div class="method_details ">
   <h3 class="signature " id="change_dylib_id-instance_method">
   
-    #<strong>change_dylib_id</strong>(id, file)  &#x21d2; <tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt> 
+    #<strong>change_dylib_id</strong>(id, file)  &#x21d2; <tt>Boolean</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-5
 6
 7
 8
@@ -2971,18 +3019,19 @@ directories in the prefix, never symlinks.</p>
 16
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 6</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib_id'>dylib_id</span> <span class='op'>==</span> <span class='id identifier rubyid_id'>id</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib_id'>dylib_id</span> <span class='op'>==</span> <span class='id identifier rubyid_id'>id</span>
 
   <span class='ivar'>@require_relocation</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Changing dylib ID of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n  from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib_id'>dylib_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n    to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>rescue</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>MachOError</span>
   <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Failed changing dylib ID of </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
@@ -2999,20 +3048,78 @@ directories in the prefix, never symlinks.</p>
       <div class="method_details ">
   <h3 class="signature " id="change_install_name-instance_method">
   
-    #<strong>change_install_name</strong>(old, new, file)  &#x21d2; <tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt> 
+    #<strong>change_install_name</strong>(old, new, file)  &#x21d2; <tt>Boolean</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>old</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-21
-22
 23
 24
 25
@@ -3025,18 +3132,20 @@ directories in the prefix, never symlinks.</p>
 32
 33
 34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_old'>old</span> <span class='op'>==</span> <span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_old'>old</span> <span class='op'>==</span> <span class='id identifier rubyid_new'>new</span>
 
   <span class='ivar'>@require_relocation</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Changing install name in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n  from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old'>old</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n    to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new'>new</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>rescue</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>MachOError</span>
   <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Failed changing install name in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
@@ -3053,13 +3162,73 @@ directories in the prefix, never symlinks.</p>
       <div class="method_details ">
   <h3 class="signature " id="change_rpath-instance_method">
   
-    #<strong>change_rpath</strong>(old, new, file)  &#x21d2; <tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt> 
+    #<strong>change_rpath</strong>(file, old_prefix, new_prefix)  &#x21d2; <tt>Boolean</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>old</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="MachOShim.html" title="MachOShim (module)">MachOShim</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
@@ -3099,13 +3268,14 @@ directories in the prefix, never symlinks.</p>
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_old_prefix'>old_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_new_prefix'>new_prefix</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_elf?'>elf?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamic_elf?'>dynamic_elf?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_elf?'>elf?</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dynamic_elf?'>dynamic_elf?</span>
 
   <span class='id identifier rubyid_updated'>updated</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_old_rpath'>old_rpath</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_rpath'>rpath</span>
@@ -3138,6 +3308,7 @@ directories in the prefix, never symlinks.</p>
   <span class='id identifier rubyid_updated'>updated</span><span class='lbracket'>[</span><span class='symbol'>:interpreter</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_new_interpreter'>new_interpreter</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_interpreter'>old_interpreter</span> <span class='op'>!=</span> <span class='id identifier rubyid_new_interpreter'>new_interpreter</span>
 
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_patch!'>patch!</span><span class='lparen'>(</span><span class='label'>interpreter:</span> <span class='id identifier rubyid_updated'>updated</span><span class='lbracket'>[</span><span class='symbol'>:interpreter</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>rpath:</span> <span class='id identifier rubyid_updated'>updated</span><span class='lbracket'>[</span><span class='symbol'>:rpath</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3439,36 +3610,85 @@ reproducible bottles.</p>
       <div class="method_details ">
   <h3 class="signature " id="delete_rpath-instance_method">
   
-    #<strong>delete_rpath</strong>(rpath, file)  &#x21d2; <tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt> 
+    #<strong>delete_rpath</strong>(rpath, file)  &#x21d2; <tt>Boolean</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rpath</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="MachOShim.html" title="MachOShim (module)">MachOShim</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-53
-54
-55
-56
 57
 58
 59
 60
 61
-62</pre>
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'os/mac/keg.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_rpath'>delete_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_rpath'>rpath</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Deleting rpath </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rpath'>rpath</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_delete_rpath'>delete_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_rpath'>rpath</span><span class='comma'>,</span> <span class='label'>strict:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>true</span>
 <span class='kw'>rescue</span> <span class='const'>MachO</span><span class='op'>::</span><span class='const'>MachOError</span>
   <span class='id identifier rubyid_onoe'>onoe</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Failed deleting rpath </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rpath'>rpath</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_content'>
@@ -3495,7 +3715,6 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-56
 57
 58
 59
@@ -3507,10 +3726,11 @@ reproducible bottles.</p>
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_cxx_stdlibs'>detect_cxx_stdlibs</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_skip_executables'>skip_executables</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:skip_executables</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -3545,16 +3765,16 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127
-128</pre>
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dylib_id_for'>dylib_id_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='comment'># The new dylib ID should have the same basename as the old dylib ID, not
@@ -3583,14 +3803,14 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-116
-117
-118
-119
-120</pre>
+135
+136
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_linkage_type'>linkage_type</span><span class='comma'>,</span> <span class='label'>resolve_variable_references:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='id identifier rubyid_linkage_type'>linkage_type</span><span class='comma'>,</span> <span class='label'>resolve_variable_references:</span> <span class='id identifier rubyid_resolve_variable_references'>resolve_variable_references</span><span class='rparen'>)</span>
@@ -3675,14 +3895,14 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-209
-210
-211
-212
-213</pre>
+228
+229
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_egrep_args'>egrep_args</span>
   <span class='id identifier rubyid_grep_bin'>grep_bin</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>egrep</span><span class='tstring_end'>&quot;</span></span>
@@ -3709,7 +3929,6 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-70
 71
 72
 73
@@ -3724,10 +3943,11 @@ reproducible bottles.</p>
 82
 83
 84
-85</pre>
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'extend/os/linux/keg_relocate.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_elf_files'>elf_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3905,15 +4125,15 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-153
-154
-155
-156
-157
-158</pre>
+172
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib'>find_dylib</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lib'>lib</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -3941,16 +4161,16 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151</pre>
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_dylib_suffix_from'>find_dylib_suffix_from</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_framework'>framework</span> <span class='op'>=</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#FRAMEWORK_RX-constant" title="Keg::FRAMEWORK_RX (constant)">FRAMEWORK_RX</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3983,15 +4203,6 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49
-50
 51
 52
 53
@@ -4019,15 +4230,38 @@ reproducible bottles.</p>
 75
 76
 77
-78</pre>
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fix_dynamic_linkage'>fix_dynamic_linkage</span>
   <span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
     <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_ensure_writable'>ensure_writable</span> <span class='kw'>do</span>
-      <span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib_id_for'>dylib_id_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span>
+      <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>false</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>false</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+
+      <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_dylib_id_for'>dylib_id_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span>
+      <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
 
       <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='symbol'>:dynamically_linked_libraries</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='op'>|</span>
         <span class='comment'># Don&#39;t fix absolute paths unless they are rooted in the build directory.
@@ -4037,7 +4271,8 @@ reproducible bottles.</p>
           <span class='id identifier rubyid_fixed_name'>fixed_name</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
         <span class='kw'>end</span>
         <span class='id identifier rubyid_loader_name'>loader_name</span> <span class='op'>=</span> <span class='id identifier rubyid_loader_name_for'>loader_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_loader_name'>loader_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_loader_name'>loader_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_bad_name'>bad_name</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_loader_name'>loader_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_loader_name'>loader_name</span> <span class='op'>!=</span> <span class='id identifier rubyid_bad_name'>bad_name</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='symbol'>:rpaths</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='op'>|</span>
@@ -4045,7 +4280,8 @@ reproducible bottles.</p>
         <span class='id identifier rubyid_loader_name'>loader_name</span> <span class='op'>=</span> <span class='id identifier rubyid_loader_name_for'>loader_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='rparen'>)</span>
         <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_loader_name'>loader_name</span> <span class='op'>==</span> <span class='id identifier rubyid_bad_name'>bad_name</span>
 
-        <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_loader_name'>loader_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_loader_name'>loader_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
 
       <span class='comment'># Strip duplicate rpaths and rpaths rooted in the build directory.
@@ -4054,8 +4290,12 @@ reproducible bottles.</p>
 </span>      <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='symbol'>:rpaths</span><span class='comma'>,</span> <span class='label'>resolve_variable_references:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='op'>|</span>
         <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_rooted_in_build_directory?'>rooted_in_build_directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_rpaths'>rpaths</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='int'>1</span>
 
-        <span class='id identifier rubyid_delete_rpath'>delete_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_rpath'>delete_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_bad_name'>bad_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
+
+      <span class='comment'># codesign the file if needed
+</span>      <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
@@ -4093,27 +4333,27 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112</pre>
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fixed_name'>fixed_name</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_bad_name'>bad_name</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span> <span class='const'><span class='object_link'><a href="#PREFIX_PLACEHOLDER-constant" title="Keg::PREFIX_PLACEHOLDER (constant)">PREFIX_PLACEHOLDER</a></span></span>
@@ -4650,20 +4890,20 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90</pre>
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_loader_name_for'>loader_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span>
   <span class='comment'># Use @loader_path-relative install names for other Homebrew-installed binaries.
@@ -4757,24 +4997,24 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174</pre>
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mach_o_files'>mach_o_files</span>
   <span class='id identifier rubyid_hardlinks'>hardlinks</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -5228,35 +5468,35 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
 195
 196
 197
 198
 199
 200
-201</pre>
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 195</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_relocation_to_locations'>prepare_relocation_to_locations</span>
   <span class='id identifier rubyid_relocation'>relocation</span> <span class='op'>=</span> <span class='id identifier rubyid_generic_prepare_relocation_to_locations'>generic_prepare_relocation_to_locations</span>
@@ -5531,14 +5771,14 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-203
-204
-205
-206
-207</pre>
+222
+223
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 222</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recursive_fgrep_args'>recursive_fgrep_args</span>
   <span class='comment'># Don&#39;t recurse into symlinks; the man page says this is the default, but
@@ -5684,7 +5924,16 @@ expensive recursive search if possible.</p>
 37
 38
 39
-40</pre>
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 21</span>
@@ -5692,20 +5941,29 @@ expensive recursive search if possible.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_relocate_dynamic_linkage'>relocate_dynamic_linkage</span><span class='lparen'>(</span><span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mach_o_files'>mach_o_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
     <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_ensure_writable'>ensure_writable</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>false</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>false</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+
       <span class='kw'>if</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib?'>dylib?</span>
         <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_relocated_name_for'>relocated_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_dylib_id'>dylib_id</span><span class='comma'>,</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_dylib_id'>change_dylib_id</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='symbol'>:dynamically_linked_libraries</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_old_name'>old_name</span><span class='op'>|</span>
         <span class='id identifier rubyid_new_name'>new_name</span> <span class='op'>=</span> <span class='id identifier rubyid_relocated_name_for'>relocated_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_name'>new_name</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_install_name'>change_install_name</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_name'>new_name</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_each_linkage_for'>each_linkage_for</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='symbol'>:rpaths</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_old_name'>old_name</span><span class='op'>|</span>
         <span class='id identifier rubyid_new_name'>new_name</span> <span class='op'>=</span> <span class='id identifier rubyid_relocated_name_for'>relocated_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_name'>new_name</span>
+        <span class='id identifier rubyid_modified'>modified</span> <span class='op'>=</span> <span class='id identifier rubyid_change_rpath'>change_rpath</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_new_name'>new_name</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_name'>new_name</span>
+        <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span> <span class='op'>||=</span> <span class='id identifier rubyid_modified'>modified</span>
       <span class='kw'>end</span>
+
+      <span class='comment'># codesign the file if needed
+</span>      <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_needs_codesigning'>needs_codesigning</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -5729,19 +5987,19 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139</pre>
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg_relocate.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_relocated_name_for'>relocated_name_for</span><span class='lparen'>(</span><span class='id identifier rubyid_old_name'>old_name</span><span class='comma'>,</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_prefix'>old_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_new_prefix'>new_prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_relocation'>relocation</span><span class='period'>.</span><span class='id identifier rubyid_replacement_pair_for'>replacement_pair_for</span><span class='lparen'>(</span><span class='symbol'>:prefix</span><span class='rparen'>)</span>
