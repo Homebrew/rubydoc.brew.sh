@@ -760,18 +760,18 @@
       <pre class="lines">
 
 
+117
+118
+119
+120
 121
 122
 123
 124
-125
-126
-127
-128
-129</pre>
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bundle_path'>bundle_path</span>
   <span class='comment'># Use the default location if it exists.
@@ -830,12 +830,12 @@
       <pre class="lines">
 
 
-254
-255
-256</pre>
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_prefix?'>default_prefix?</span>
   <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Applications/Xcode.app/Contents/Developer</span><span class='tstring_end'>&quot;</span></span>
@@ -888,6 +888,10 @@
       <pre class="lines">
 
 
+188
+189
+190
+191
 192
 193
 194
@@ -909,14 +913,10 @@
 210
 211
 212
-213
-214
-215
-216
-217</pre>
+213</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_detect_version'>detect_version</span>
   <span class='comment'># This is a separate function as you can&#39;t cache the value out of a block
@@ -992,6 +992,10 @@
       <pre class="lines">
 
 
+216
+217
+218
+219
 220
 221
 222
@@ -1019,14 +1023,10 @@
 244
 245
 246
-247
-248
-249
-250
-251</pre>
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 216</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_detect_version_from_clang_version'>detect_version_from_clang_version</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_clang_version'>clang_version</span>
@@ -1108,6 +1108,10 @@
       <pre class="lines">
 
 
+148
+149
+150
+151
 152
 153
 154
@@ -1115,14 +1119,10 @@
 156
 157
 158
-159
-160
-161
-162
-163</pre>
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_installation_instructions'>installation_instructions</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../OS.html" title="OS (module)">OS</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Mac.html" title="OS::Mac (module)">Mac</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="../Mac.html#version-class_method" title="OS::Mac.version (method)">version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prerelease?'><span class='object_link'><a href="../../MacOSVersion.html#prerelease%3F-instance_method" title="MacOSVersion#prerelease? (method)">prerelease?</a></span></span>
@@ -1637,31 +1637,23 @@ directory or nil if Xcode.app is not installed.</p>
 106
 107
 108
-109
-110
-111
-112
-113</pre>
+109</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span>
-  <span class='kw'>return</span> <span class='ivar'>@prefix</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@prefix</span><span class='rparen'>)</span>
+  <span class='ivar'>@prefix</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_active_developer_dir'>active_developer_dir</span>
 
-  <span class='ivar'>@prefix</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='ivar'>@prefix</span><span class='comma'>,</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_nilable'>nilable</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='ivar'>@prefix</span> <span class='op'>||=</span>
-    <span class='kw'>begin</span>
-      <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_active_developer_dir'>active_developer_dir</span>
-
-      <span class='kw'>if</span> <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_dir'>dir</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="CLT.html" title="OS::Mac::CLT (module)">CLT</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLT.html#PKG_PATH-constant" title="OS::Mac::CLT::PKG_PATH (constant)">PKG_PATH</a></span></span> <span class='op'>||</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_bundle_path'>bundle_path</span>
-        <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Contents/Developer</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span>
-      <span class='kw'>else</span>
-        <span class='comment'># Use cleanpath to avoid pathological trailing slash
-</span>        <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cleanpath'>cleanpath</span>
-      <span class='kw'>end</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_dir'>dir</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="CLT.html" title="OS::Mac::CLT (module)">CLT</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="CLT.html#PKG_PATH-constant" title="OS::Mac::CLT::PKG_PATH (constant)">PKG_PATH</a></span></span> <span class='op'>||</span> <span class='op'>!</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='id identifier rubyid_bundle_path'>bundle_path</span>
+      <span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Contents/Developer</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span>
+    <span class='kw'>else</span>
+      <span class='comment'># Use cleanpath to avoid pathological trailing slash
+</span>      <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_cleanpath'>cleanpath</span>
     <span class='kw'>end</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1728,12 +1720,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-142
-143
-144</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sdk_locator'>sdk_locator</span><span class='period'>.</span><span class='id identifier rubyid_sdk_if_applicable'>sdk_if_applicable</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span>
@@ -1786,12 +1778,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-137
-138
-139</pre>
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sdk_locator'>sdk_locator</span>
   <span class='ivar'>@sdk_locator</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="XcodeSDKLocator.html" title="OS::Mac::XcodeSDKLocator (class)">XcodeSDKLocator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -1861,12 +1853,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-147
-148
-149</pre>
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sdk_path'>sdk_path</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sdk'>sdk</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_path'>path</span>
@@ -1919,12 +1911,12 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
-116
-117
-118</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_toolchain_path'>toolchain_path</span>
   <span class='const'><span class='object_link'><a href="../../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>/Toolchains/XcodeDefault.xctoolchain</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1977,6 +1969,10 @@ directory or nil if Xcode.app is not installed.</p>
       <pre class="lines">
 
 
+162
+163
+164
+165
 166
 167
 168
@@ -1984,14 +1980,10 @@ directory or nil if Xcode.app is not installed.</p>
 170
 171
 172
-173
-174
-175
-176
-177</pre>
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update_instructions'>update_instructions</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../OS.html" title="OS (module)">OS</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Mac.html" title="OS::Mac (module)">Mac</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="../Mac.html#version-class_method" title="OS::Mac.version (method)">version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_prerelease?'><span class='object_link'><a href="../../MacOSVersion.html#prerelease%3F-instance_method" title="MacOSVersion#prerelease? (method)">prerelease?</a></span></span>
