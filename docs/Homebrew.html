@@ -7236,6 +7236,28 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#skip_ineligible_formulae-class_method" title="skip_ineligible_formulae (class method)">.<strong>skip_ineligible_formulae</strong>(formula)  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#sorted_dependents-class_method" title="sorted_dependents (class method)">.<strong>sorted_dependents</strong>(formulae_or_casks)  &#x21d2; Object </a>
     
     
@@ -23099,6 +23121,9 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
+153
+154
+155
 156
 157
 158
@@ -23155,11 +23180,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 209
 210
 211
-212
-213</pre>
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_api_response'>handle_api_response</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_limit'>limit</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -23209,6 +23233,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <span class='kw'>end</span>
 
       <span class='id identifier rubyid_puts'>puts</span> <span class='kw'>if</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_skip_ineligible_formulae'>skip_ineligible_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
+
       <span class='id identifier rubyid_retrieve_and_display_info_and_open_pr'>retrieve_and_display_info_and_open_pr</span><span class='lparen'>(</span>
         <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span>
         <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
@@ -23324,10 +23350,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 147
 148
 149
-150
-151
-152
-153</pre>
+150</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 101</span>
@@ -23360,10 +23383,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='id identifier rubyid_use_full_name'>use_full_name</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_full_name?'>full_name?</span> <span class='op'>||</span> <span class='id identifier rubyid_ambiguous_names'>ambiguous_names</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_package_or_resource_name'><span class='object_link'><a href="Homebrew/Livecheck.html#package_or_resource_name-class_method" title="Homebrew::Livecheck.package_or_resource_name (method)">package_or_resource_name</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='id identifier rubyid_use_full_name'>use_full_name</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_repository'>repository</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_head_only?'>head_only?</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula is HEAD-only.</span><span class='tstring_end'>&quot;</span></span>
-        <span class='kw'>next</span>
-      <span class='kw'>end</span>
+      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_ineligible_formulae'>skip_ineligible_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
 
       <span class='const'><span class='object_link'><a href="Repology.html" title="Repology (module)">Repology</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Repology.html#HOMEBREW_CORE-constant" title="Repology::HOMEBREW_CORE (constant)">HOMEBREW_CORE</a></span></span>
     <span class='kw'>else</span>
@@ -25211,7 +25231,12 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 270
 271
 272
-273</pre>
+273
+274
+275
+276
+277
+278</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/gems.rb', line 184</span>
@@ -25236,10 +25261,15 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 
   <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
 
-  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>settings</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_user_gem_groups'>user_gem_groups</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_valid_gem_groups'>valid_gem_groups</span>
+  <span class='kw'>if</span> <span class='const'>RUBY_PLATFORM</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-darwin23</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sorbet is not currently supported under system Ruby on macOS Sonoma.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='comment'># Combine the passed groups with the ones stored in settings
-</span>  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>|=</span> <span class='lparen'>(</span><span class='id identifier rubyid_user_gem_groups'>user_gem_groups</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_valid_gem_groups'>valid_gem_groups</span><span class='rparen'>)</span>
+</span>  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>|=</span> <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span>
   <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span>
 
   <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_GEMFILE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_gemfile'>gemfile</span>
@@ -28029,16 +28059,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
 228
 229
 230
@@ -28070,10 +28090,20 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 256
 257
 258
-259</pre>
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_livecheck_result'>livecheck_result</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_package_or_resource_name'><span class='object_link'><a href="Homebrew/Livecheck.html#package_or_resource_name-class_method" title="Homebrew::Livecheck.package_or_resource_name (method)">package_or_resource_name</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='rparen'>)</span>
@@ -36114,16 +36144,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402
 403
 404
 405
@@ -36195,10 +36215,22 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 471
 472
 473
-474</pre>
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_and_display_info_and_open_pr'>retrieve_and_display_info_and_open_pr</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_repositories'>repositories</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>ambiguous_cask:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_version_info'>version_info</span> <span class='op'>=</span> <span class='id identifier rubyid_retrieve_versions_by_arch'>retrieve_versions_by_arch</span><span class='lparen'>(</span><span class='label'>formula_or_cask:</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span>
@@ -36246,7 +36278,9 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 <span class='tstring_content'>    Current </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version_label'>version_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_versions'>current_versions</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>    Latest livecheck version: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_new_versions'>new_versions</span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>    Latest Repology version:  </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_repology_latest'>repology_latest</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='tstring_content'>    Open pull requests:       </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_open_pull_requests'>open_pull_requests</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>  EOS
+</span>  <span class='id identifier rubyid_puts'>puts</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_pull_requests?'>no_pull_requests?</span>
+<span class='tstring_content'>    Open pull requests:       </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_open_pull_requests'>open_pull_requests</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='tstring_content'>    Closed pull requests:     </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_closed_pull_requests'>closed_pull_requests</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>none</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span>
@@ -36375,18 +36409,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-269
-270
-271
-272
-273
-274
-275
-276
-277</pre>
+279
+280
+281
+282
+283
+284
+285
+286
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_pull_requests'>retrieve_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>state:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span> <span class='op'>||</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>&amp;.</span><span class='id identifier rubyid_full_name'>full_name</span>
@@ -36488,16 +36522,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
 297
 298
 299
@@ -36583,10 +36607,20 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 379
 380
 381
-382</pre>
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 287</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_retrieve_versions_by_arch'>retrieve_versions_by_arch</span><span class='lparen'>(</span><span class='label'>formula_or_cask:</span><span class='comma'>,</span> <span class='label'>repositories:</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>name:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_is_cask_with_blocks'>is_cask_with_blocks</span> <span class='op'>=</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula_or_cask'>formula_or_cask</span><span class='period'>.</span><span class='id identifier rubyid_on_system_blocks_exist?'>on_system_blocks_exist?</span>
@@ -38720,6 +38754,82 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
   <span class='kw'>else</span>
     <span class='id identifier rubyid_safe_system'>safe_system</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_git_args'>git_args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="skip_ineligible_formulae-class_method">
+  
+    .<strong>skip_ineligible_formulae</strong>(formula)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>formula</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+217
+218
+219
+220
+221
+222
+223</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump.rb', line 217</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_skip_ineligible_formulae'>skip_ineligible_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_head_only?'>head_only?</span>
+
+  <span class='id identifier rubyid_ohai'>ohai</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Formula is </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_disabled?'>disabled?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>disabled</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HEAD-only</span><span class='tstring_end'>&quot;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>.\n</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
