@@ -34648,16 +34648,13 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 64
 65
 66
-67
-68</pre>
+67</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/readall.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_readall'>readall</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_readall_args'>readall_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
-
-  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--no-simulate</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>nothing (i.e. not passing `--os` or `--arch`)</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_simulate?'>no_simulate?</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_syntax?'>syntax?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
     <span class='id identifier rubyid_scan_files'>scan_files</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/**/*.rb</span><span class='tstring_end'>&quot;</span></span>
@@ -34670,8 +34667,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='label'>aliases:</span>     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_aliases?'>aliases?</span><span class='comma'>,</span>
     <span class='label'>no_simulate:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_simulate?'>no_simulate?</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
-  <span class='comment'># TODO: Always pass this once `--os` and `--arch` are passed explicitly to `brew readall` in CI.
-</span>  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:os_arch_combinations</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span>
+  <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:os_arch_combinations</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span>
+
   <span class='id identifier rubyid_taps'>taps</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
     <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew readall` needs a tap or `--eval-all` passed or `HOMEBREW_EVAL_ALL` set!</span><span class='tstring_end'>&quot;</span></span>
@@ -34681,6 +34678,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_installed_taps'>to_installed_taps</span>
   <span class='kw'>end</span>
+
   <span class='id identifier rubyid_taps'>taps</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tap'>tap</span><span class='op'>|</span>
     <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_failed'>failed</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Readall.html" title="Readall (module)">Readall</a></span></span><span class='period'>.</span><span class='id identifier rubyid_valid_tap?'><span class='object_link'><a href="Readall.html#valid_tap%3F-class_method" title="Readall.valid_tap? (method)">valid_tap?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
