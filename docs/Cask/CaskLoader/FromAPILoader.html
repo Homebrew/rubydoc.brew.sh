@@ -630,14 +630,14 @@
       <pre class="lines">
 
 
-357
-358
-359
-360
-361</pre>
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 363</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_h_array_gsubs'>from_h_array_gsubs</span><span class='lparen'>(</span><span class='id identifier rubyid_array'>array</span><span class='comma'>,</span> <span class='id identifier rubyid_appdir'>appdir</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_array'>array</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
@@ -679,12 +679,6 @@
       <pre class="lines">
 
 
-369
-370
-371
-372
-373
-374
 375
 376
 377
@@ -692,10 +686,16 @@
 379
 380
 381
-382</pre>
+382
+383
+384
+385
+386
+387
+388</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 375</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_h_gsubs'>from_h_gsubs</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_appdir'>appdir</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -746,14 +746,14 @@
       <pre class="lines">
 
 
-363
-364
-365
-366
-367</pre>
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_h_hash_gsubs'>from_h_hash_gsubs</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_appdir'>appdir</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_transform_values'>transform_values</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
@@ -795,16 +795,16 @@
       <pre class="lines">
 
 
-349
-350
-351
-352
-353
-354
-355</pre>
+355
+356
+357
+358
+359
+360
+361</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 355</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_h_string_gsubs'>from_h_string_gsubs</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='comma'>,</span> <span class='id identifier rubyid_appdir'>appdir</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -943,7 +943,13 @@
 344
 345
 346
-347</pre>
+347
+348
+349
+350
+351
+352
+353</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 252</span>
@@ -1032,7 +1038,13 @@
         <span class='comment'># for artifacts with blocks that can&#39;t be loaded from the API
 </span>        <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='comment'># empty on purpose
 </span>      <span class='kw'>else</span>
-        <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_artifact'>artifact</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_artifact'>artifact</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
+        <span class='id identifier rubyid_kwargs'>kwargs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+        <span class='kw'>else</span>
+          <span class='lbrace'>{</span><span class='rbrace'>}</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_kwargs'>kwargs</span><span class='rparen'>)</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
 
