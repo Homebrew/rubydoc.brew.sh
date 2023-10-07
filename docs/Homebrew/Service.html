@@ -170,6 +170,11 @@ also return the related instance variable when no argument is provided.</p>
         </dt>
         <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:always</span><span class='comma'>,</span> <span class='symbol'>:successful_exit</span><span class='comma'>,</span> <span class='symbol'>:crashed</span><span class='comma'>,</span> <span class='symbol'>:path</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
+        <dt id="SOCKET_STRING_REGEX-constant" class="">SOCKET_STRING_REGEX =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>^([a-z]+)://(.+):([0-9]+)$</span><span class='regexp_end'>}i</span></span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
     </dl>
   
 
@@ -928,7 +933,7 @@ also return the related instance variable when no argument is provided.</p>
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sockets-instance_method" title="#sockets (instance method)">#<strong>sockets</strong>(value = nil)  &#x21d2; Hash{Symbol =&gt; String}<sup>?</sup> </a>
+      <a href="#sockets-instance_method" title="#sockets (instance method)">#<strong>sockets</strong>(value = nil)  &#x21d2; Hash{Symbol =&gt; Hash{Symbol =&gt; String}}<sup>?</sup> </a>
     
     
   </span>
@@ -1121,16 +1126,16 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-26
 27
 28
 29
 30
 31
-32</pre>
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@formula</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span>
@@ -1204,37 +1209,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567
-568
-569
-570
 571
 572
 573
@@ -1259,10 +1233,49 @@ also return the related instance variable when no argument is provided.</p>
 592
 593
 594
-595</pre>
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 540</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 571</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_deserialize'>deserialize</span><span class='lparen'>(</span><span class='id identifier rubyid_api_hash'>api_hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1292,8 +1305,6 @@ also return the related instance variable when no argument is provided.</p>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unexpected run command: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_api_hash'>api_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>run</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:keep_alive</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>keep_alive</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_transform_keys'>transform_keys</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>keep_alive</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
   <span class='kw'>if</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>environment_variables</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:environment_variables</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>environment_variables</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='id identifier rubyid_replace_placeholders'>replace_placeholders</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rbracket'>]</span>
@@ -1312,10 +1323,20 @@ also return the related instance variable when no argument is provided.</p>
     <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_replace_placeholders'>replace_placeholders</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='qwords_beg'>%w[</span><span class='tstring_content'>interval</span><span class='words_sep'> </span><span class='tstring_content'>cron</span><span class='words_sep'> </span><span class='tstring_content'>launch_only_once</span><span class='words_sep'> </span><span class='tstring_content'>require_root</span><span class='words_sep'> </span><span class='tstring_content'>restart_delay</span><span class='words_sep'> </span><span class='tstring_content'>macos_legacy_timers</span><span class='words_sep'> </span><span class='tstring_content'>sockets</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+  <span class='qwords_beg'>%w[</span><span class='tstring_content'>interval</span><span class='words_sep'> </span><span class='tstring_content'>cron</span><span class='words_sep'> </span><span class='tstring_content'>launch_only_once</span><span class='words_sep'> </span><span class='tstring_content'>require_root</span><span class='words_sep'> </span><span class='tstring_content'>restart_delay</span><span class='words_sep'> </span><span class='tstring_content'>macos_legacy_timers</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
     <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='kw'>end</span>
+
+  <span class='qwords_beg'>%w[</span><span class='tstring_content'>sockets</span><span class='words_sep'> </span><span class='tstring_content'>keep_alive</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_api_hash'>api_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_transform_keys'>transform_keys</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_value'>value</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_hash'>hash</span>
@@ -1378,14 +1399,14 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-599
-600
-601
-602
-603</pre>
+638
+639
+640
+641
+642</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 599</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 638</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_replace_placeholders'>replace_placeholders</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_string'>string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX_PLACEHOLDER-constant" title="HOMEBREW_PREFIX_PLACEHOLDER (constant)">HOMEBREW_PREFIX_PLACEHOLDER</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='rparen'>)</span>
@@ -1441,12 +1462,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-349
-350
-351</pre>
+366
+367
+368</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 349</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 366</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_command'>command</span>
   <span class='ivar'>@run</span><span class='op'>&amp;.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span> <span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_arg'>arg</span> <span class='rbrace'>}</span>
@@ -1494,12 +1515,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-354
-355
-356</pre>
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 354</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 371</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_command?'>command?</span>
   <span class='ivar'>@run</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -1564,17 +1585,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-268
-269
-270
-271
-272
-273
-274
-275</pre>
+285
+286
+287
+288
+289
+290
+291
+292</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 285</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cron'>cron</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -1627,18 +1648,18 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-278
-279
-280
-281
-282
-283
-284
-285
-286</pre>
+295
+296
+297
+298
+299
+300
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 295</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_cron_values'>default_cron_values</span>
   <span class='lbrace'>{</span>
@@ -1692,12 +1713,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_plist_name'>default_plist_name</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew.mxcl.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1745,12 +1766,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_service_name'>default_service_name</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>homebrew.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1815,15 +1836,15 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-324
-325
-326
-327
-328
-329</pre>
+341
+342
+343
+344
+345
+346</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_environment_variables'>environment_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_variables'>variables</span>
@@ -1891,17 +1912,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-134
 135
 136
 137
 138
 139
 140
-141</pre>
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_error_log_path'>error_log_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
@@ -1954,12 +1975,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-35
 36
-37</pre>
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_f'>f</span>
   <span class='ivar'>@formula</span>
@@ -2024,17 +2045,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-114
 115
 116
 117
 118
 119
 120
-121</pre>
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_input_path'>input_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
@@ -2104,17 +2125,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-258
-259
-260
-261
-262
-263
-264
-265</pre>
+275
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 258</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_interval'>interval</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -2184,7 +2205,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-147
 148
 149
 150
@@ -2198,10 +2218,11 @@ also return the related instance variable when no argument is provided.</p>
 158
 159
 160
-161</pre>
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keep_alive'>keep_alive</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -2261,12 +2282,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-207
-208
-209</pre>
+224
+225
+226</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_keep_alive?'>keep_alive?</span>
   <span class='ivar'>@keep_alive</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@keep_alive</span><span class='lbracket'>[</span><span class='symbol'>:always</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='kw'>false</span>
@@ -2331,17 +2352,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217
-218
-219</pre>
+229
+230
+231
+232
+233
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_launch_only_once'>launch_only_once</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -2411,17 +2432,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-124
 125
 126
 127
 128
 129
 130
-131</pre>
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_log_path'>log_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
@@ -2491,17 +2512,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-332
-333
-334
-335
-336
-337
-338
-339</pre>
+349
+350
+351
+352
+353
+354
+355
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 349</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_macos_legacy_timers'>macos_legacy_timers</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -2554,16 +2575,16 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-361
-362
-363
-364
-365
-366
-367</pre>
+378
+379
+380
+381
+382
+383
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 361</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_manual_command'>manual_command</span>
   <span class='id identifier rubyid_vars'>vars</span> <span class='op'>=</span> <span class='ivar'>@environment_variables</span><span class='period'>.</span><span class='id identifier rubyid_except'>except</span><span class='lparen'>(</span><span class='symbol'>:PATH</span><span class='rparen'>)</span>
@@ -2645,15 +2666,15 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-60
 61
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span><span class='lparen'>(</span><span class='label'>macos:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>linux:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Service#name expects at least one String</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='id identifier rubyid_macos'>macos</span><span class='comma'>,</span> <span class='id identifier rubyid_linux'>linux</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_none?'>none?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
@@ -2719,23 +2740,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
 306
 307
 308
@@ -2751,10 +2755,27 @@ also return the related instance variable when no argument is provided.</p>
 318
 319
 320
-321</pre>
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 306</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_cron'>parse_cron</span><span class='lparen'>(</span><span class='id identifier rubyid_cron_statement'>cron_statement</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parsed'>parsed</span> <span class='op'>=</span> <span class='id identifier rubyid_default_cron_values'>default_cron_values</span>
@@ -2832,12 +2853,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-45
 46
-47</pre>
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plist_name'>plist_name</span>
   <span class='ivar'>@plist_name</span> <span class='op'>||=</span> <span class='id identifier rubyid_default_plist_name'>default_plist_name</span>
@@ -2902,21 +2923,21 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243</pre>
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process_type'>process_type</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -2990,17 +3011,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-164
 165
 166
 167
 168
 169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_require_root'>require_root</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3053,12 +3074,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-176
 177
-178</pre>
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_root?'>requires_root?</span>
   <span class='ivar'>@require_root</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@require_root</span> <span class='op'>==</span> <span class='kw'>true</span>
@@ -3123,17 +3144,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-222
-223
-224
-225
-226
-227
-228
-229</pre>
+239
+240
+241
+242
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 222</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_restart_delay'>restart_delay</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3203,17 +3224,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-104
 105
 106
 107
 108
 109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_dir'>root_dir</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
@@ -3309,7 +3330,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-74
 75
 76
 77
@@ -3326,10 +3346,11 @@ also return the related instance variable when no argument is provided.</p>
 88
 89
 90
-91</pre>
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>macos:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>linux:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Save parameters for serialization
@@ -3409,17 +3430,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-181
 182
 183
 184
 185
 186
 187
-188</pre>
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_at_load'>run_at_load</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3489,19 +3510,19 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255</pre>
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_type'>run_type</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3556,24 +3577,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-500
-501
-502
-503
-504
-505
-506
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
 518
 519
 520
@@ -3592,10 +3595,41 @@ also return the related instance variable when no argument is provided.</p>
 533
 534
 535
-536</pre>
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 500</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 518</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_serialize'>serialize</span>
   <span class='id identifier rubyid_name_params'>name_params</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -3611,7 +3645,20 @@ also return the related instance variable when no argument is provided.</p>
       <span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='id identifier rubyid_sockets_string'>sockets_string</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>://</span><span class='embexpr_beg'>#{</span><span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@sockets</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='id identifier rubyid_sockets_var'>sockets_var</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@sockets</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='ivar'>@sockets</span><span class='period'>.</span><span class='id identifier rubyid_transform_values'>transform_values</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_info'>info</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>://</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+            <span class='period'>.</span><span class='id identifier rubyid_then'>then</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_sockets_hash'>sockets_hash</span><span class='op'>|</span>
+              <span class='comment'># TODO: Remove this code when all users are running on versions of Homebrew
+</span>              <span class='comment'># that can process sockets hashes (this commit or later).
+</span>              <span class='kw'>if</span> <span class='id identifier rubyid_sockets_hash'>sockets_hash</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_sockets_hash'>sockets_hash</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:listeners</span><span class='rparen'>)</span>
+                <span class='comment'># When original #sockets argument was a string: `sockets &quot;tcp://127.0.0.1:80&quot;`
+</span>                <span class='id identifier rubyid_sockets_hash'>sockets_hash</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:listeners</span><span class='rparen'>)</span>
+              <span class='kw'>else</span>
+                <span class='comment'># When original #sockets argument was a hash: `sockets http: &quot;tcp://0.0.0.0:80&quot;`
+</span>                <span class='id identifier rubyid_sockets_hash'>sockets_hash</span>
+              <span class='kw'>end</span>
+            <span class='kw'>end</span>
+  <span class='kw'>end</span>
 
   <span class='lbrace'>{</span>
     <span class='label'>name:</span>                  <span class='id identifier rubyid_name_params'>name_params</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='comma'>,</span>
@@ -3631,7 +3678,7 @@ also return the related instance variable when no argument is provided.</p>
     <span class='label'>restart_delay:</span>         <span class='ivar'>@restart_delay</span><span class='comma'>,</span>
     <span class='label'>process_type:</span>          <span class='ivar'>@process_type</span><span class='comma'>,</span>
     <span class='label'>macos_legacy_timers:</span>   <span class='ivar'>@macos_legacy_timers</span><span class='comma'>,</span>
-    <span class='label'>sockets:</span>               <span class='id identifier rubyid_sockets_string'>sockets_string</span><span class='comma'>,</span>
+    <span class='label'>sockets:</span>               <span class='id identifier rubyid_sockets_var'>sockets_var</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3677,12 +3724,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_service_name'>service_name</span>
   <span class='ivar'>@service_name</span> <span class='op'>||=</span> <span class='id identifier rubyid_default_service_name'>default_service_name</span>
@@ -3695,7 +3742,7 @@ also return the related instance variable when no argument is provided.</p>
       <div class="method_details ">
   <h3 class="signature " id="sockets-instance_method">
   
-    #<strong>sockets</strong>(value = nil)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt><sup>?</sup> 
+    #<strong>sockets</strong>(value = nil)  &#x21d2; <tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}}</tt><sup>?</sup> 
   
 
   
@@ -3717,7 +3764,7 @@ also return the related instance variable when no argument is provided.</p>
         <span class='name'>value</span>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>, <tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>, <tt>nil</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -3733,7 +3780,7 @@ also return the related instance variable when no argument is provided.</p>
     <li>
       
       
-        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}</tt>, <tt>nil</tt>)</span>
+        <span class='type'>(<tt>Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; Hash{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'><a href="../String.html" title="String (class)">String</a></span>}}</tt>, <tt>nil</tt>)</span>
       
       
       
@@ -3747,32 +3794,54 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-191
-192
-193
-194
-195
-196
 197
 198
 199
 200
 201
-202</pre>
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 191</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sockets'>sockets</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='kw'>when</span> <span class='kw'>nil</span>
-    <span class='ivar'>@sockets</span>
+  <span class='kw'>return</span> <span class='ivar'>@sockets</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+
+  <span class='ivar'>@sockets</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></span>
-    <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>([a-z]+)://([a-z0-9.]+):([0-9]+)</span><span class='regexp_end'>}i</span></span><span class='rparen'>)</span>
+    <span class='lbrace'>{</span> <span class='label'>listeners:</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+  <span class='kw'>when</span> <span class='const'>Hash</span>
+    <span class='id identifier rubyid_value'>value</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_transform_values'>transform_values</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_socket_string'>socket_string</span><span class='op'>|</span>
+    <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_socket_string'>socket_string</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#SOCKET_STRING_REGEX-constant" title="Homebrew::Service::SOCKET_STRING_REGEX (constant)">SOCKET_STRING_REGEX</a></span></span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Service#sockets a formatted socket definition as &lt;type&gt;://&lt;host&gt;:&lt;port&gt;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
     <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_captures'>captures</span>
-    <span class='ivar'>@sockets</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='label'>host:</span> <span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='label'>port:</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='id identifier rubyid_type'>type</span> <span class='rbrace'>}</span>
+
+    <span class='kw'>begin</span>
+      <span class='const'>IPAddr</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='rparen'>)</span>
+    <span class='kw'>rescue</span> <span class='const'>IPAddr</span><span class='op'>::</span><span class='const'>InvalidAddressError</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Service#sockets expects a valid ipv4 or ipv6 host address</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+
+    <span class='lbrace'>{</span> <span class='label'>host:</span> <span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='label'>port:</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='id identifier rubyid_type'>type</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3818,12 +3887,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-344
-345
-346</pre>
+361
+362
+363</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_std_service_path_env'>std_service_path_env</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/bin:</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/sbin:/usr/bin:/bin:/usr/sbin:/sbin</span><span class='tstring_end'>&quot;</span></span>
@@ -3871,12 +3940,12 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-372
-373
-374</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 372</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_timed?'>timed?</span>
   <span class='ivar'>@run_type</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#RUN_TYPE_CRON-constant" title="Homebrew::Service::RUN_TYPE_CRON (constant)">RUN_TYPE_CRON</a></span></span> <span class='op'>||</span> <span class='ivar'>@run_type</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#RUN_TYPE_INTERVAL-constant" title="Homebrew::Service::RUN_TYPE_INTERVAL (constant)">RUN_TYPE_INTERVAL</a></span></span>
@@ -3924,23 +3993,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
 396
 397
 398
@@ -3979,10 +4031,28 @@ also return the related instance variable when no argument is provided.</p>
 431
 432
 433
-434</pre>
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 379</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_plist'>to_plist</span>
   <span class='comment'># command needs to be first because it initializes all other values
@@ -4018,12 +4088,13 @@ also return the related instance variable when no argument is provided.</p>
 
   <span class='kw'>if</span> <span class='ivar'>@sockets</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
     <span class='id identifier rubyid_base'>base</span><span class='lbracket'>[</span><span class='symbol'>:Sockets</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-    <span class='id identifier rubyid_base'>base</span><span class='lbracket'>[</span><span class='symbol'>:Sockets</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:Listeners</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
-      <span class='label'>SockNodeName:</span>    <span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>SockServiceName:</span> <span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span><span class='comma'>,</span>
-      <span class='label'>SockProtocol:</span>    <span class='ivar'>@sockets</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='comma'>,</span>
-      <span class='label'>SockFamily:</span>      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>IPv4v6</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-    <span class='rbrace'>}</span>
+    <span class='ivar'>@sockets</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_info'>info</span><span class='op'>|</span>
+      <span class='id identifier rubyid_base'>base</span><span class='lbracket'>[</span><span class='symbol'>:Sockets</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+        <span class='label'>SockNodeName:</span>    <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:host</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>SockServiceName:</span> <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:port</span><span class='rbracket'>]</span><span class='comma'>,</span>
+        <span class='label'>SockProtocol:</span>    <span class='id identifier rubyid_info'>info</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='ivar'>@cron</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@run_type</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="#RUN_TYPE_CRON-constant" title="Homebrew::Service::RUN_TYPE_CRON (constant)">RUN_TYPE_CRON</a></span></span>
@@ -4083,33 +4154,33 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-473
-474
-475
-476
-477
-478
-479
-480
-481
-482
-483
-484
-485
-486
-487
-488
-489
-490
 491
 492
 493
 494
 495
-496</pre>
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 473</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 491</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_systemd_timer'>to_systemd_timer</span>
   <span class='id identifier rubyid_timer'>timer</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -4178,24 +4249,6 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
 457
 458
 459
@@ -4207,10 +4260,28 @@ also return the related instance variable when no argument is provided.</p>
 465
 466
 467
-468</pre>
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 457</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_systemd_unit'>to_systemd_unit</span>
   <span class='id identifier rubyid_unit'>unit</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -4302,17 +4373,17 @@ also return the related instance variable when no argument is provided.</p>
       <pre class="lines">
 
 
-94
 95
 96
 97
 98
 99
 100
-101</pre>
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'service.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'service.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_working_dir'>working_dir</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_path'>path</span>
