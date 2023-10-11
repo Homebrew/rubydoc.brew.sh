@@ -439,12 +439,12 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'context.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'context.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_debug?'>debug?</span>
   <span class='const'><span class='object_link'><a href="" title="Context (module)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current'><span class='object_link'><a href="#current-class_method" title="Context.current (method)">current</a></span></span><span class='period'>.</span><span class='id identifier rubyid_debug?'>debug?</span>
@@ -497,12 +497,12 @@
       <pre class="lines">
 
 
-53
-54
-55</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'context.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'context.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_quiet?'>quiet?</span>
   <span class='const'><span class='object_link'><a href="" title="Context (module)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current'><span class='object_link'><a href="#current-class_method" title="Context.current (method)">current</a></span></span><span class='period'>.</span><span class='id identifier rubyid_quiet?'>quiet?</span>
@@ -555,12 +555,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'context.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'context.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbose?'>verbose?</span>
   <span class='const'><span class='object_link'><a href="" title="Context (module)">Context</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current'><span class='object_link'><a href="#current-class_method" title="Context.current (method)">current</a></span></span><span class='period'>.</span><span class='id identifier rubyid_verbose?'>verbose?</span>
@@ -600,12 +600,6 @@
       <pre class="lines">
 
 
-61
-62
-63
-64
-65
-66
 67
 68
 69
@@ -614,10 +608,18 @@
 72
 73
 74
-75</pre>
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'context.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'context.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_with_context'>with_context</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_context'>old_context</span> <span class='op'>=</span> <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span>
@@ -630,9 +632,11 @@
 
   <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_new_context'>new_context</span>
 
-  <span class='kw'>yield</span>
-<span class='kw'>ensure</span>
-  <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_old_context'>old_context</span>
+  <span class='kw'>begin</span>
+    <span class='kw'>yield</span>
+  <span class='kw'>ensure</span>
+    <span class='const'>Thread</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_old_context'>old_context</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

@@ -420,7 +420,7 @@
         <span class='name'>print_stdout</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>, <tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>false</tt>)</em>
@@ -433,7 +433,7 @@
         <span class='name'>print_stderr</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>, <tt><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
@@ -528,16 +528,6 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
 91
 92
 93
@@ -567,10 +557,27 @@
 117
 118
 119
-120</pre>
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'system_command.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'system_command.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_executable'>executable</span><span class='comma'>,</span>
@@ -592,7 +599,14 @@
   <span class='ivar'>@executable</span> <span class='op'>=</span> <span class='id identifier rubyid_executable'>executable</span>
   <span class='ivar'>@args</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span>
 
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sudo_as_root cannot be set if sudo is false</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_sudo'>sudo</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_sudo_as_root'>sudo_as_root</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`sudo_as_root` cannot be set if sudo is false</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_sudo'>sudo</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_sudo_as_root'>sudo_as_root</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_print_stdout'>print_stdout</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_print_stdout'>print_stdout</span> <span class='op'>!=</span> <span class='symbol'>:debug</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`print_stdout` is not a valid symbol</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_print_stderr'>print_stderr</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_print_stderr'>print_stderr</span> <span class='op'>!=</span> <span class='symbol'>:debug</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`print_stderr` is not a valid symbol</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 
   <span class='ivar'>@sudo</span> <span class='op'>=</span> <span class='id identifier rubyid_sudo'>sudo</span>
   <span class='ivar'>@sudo_as_root</span> <span class='op'>=</span> <span class='id identifier rubyid_sudo_as_root'>sudo_as_root</span>
@@ -763,12 +777,12 @@
       <pre class="lines">
 
 
-123
-124
-125</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'system_command.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'system_command.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_command'>command</span>
   <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_command_prefix'>command_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_executable'>executable</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_expanded_args'>expanded_args</span><span class='rbracket'>]</span>
@@ -840,7 +854,17 @@
 58
 59
 60
-61</pre>
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'system_command.rb', line 42</span>
@@ -853,10 +877,20 @@
   <span class='id identifier rubyid_each_output_line'>each_output_line</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_line'>line</span><span class='op'>|</span>
     <span class='kw'>case</span> <span class='id identifier rubyid_type'>type</span>
     <span class='kw'>when</span> <span class='symbol'>:stdout</span>
-      <span class='gvar'>$stdout</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_print_stdout?'>print_stdout?</span>
+      <span class='kw'>case</span> <span class='ivar'>@print_stdout</span>
+      <span class='kw'>when</span> <span class='kw'>true</span>
+        <span class='gvar'>$stdout</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='symbol'>:debug</span>
+        <span class='gvar'>$stderr</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_debug?'>debug?</span>
+      <span class='kw'>end</span>
       <span class='ivar'>@output</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:stdout</span><span class='comma'>,</span> <span class='id identifier rubyid_line'>line</span><span class='rbracket'>]</span>
     <span class='kw'>when</span> <span class='symbol'>:stderr</span>
-      <span class='gvar'>$stderr</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_print_stderr?'>print_stderr?</span>
+      <span class='kw'>case</span> <span class='ivar'>@print_stderr</span>
+      <span class='kw'>when</span> <span class='kw'>true</span>
+        <span class='gvar'>$stderr</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span>
+      <span class='kw'>when</span> <span class='symbol'>:debug</span>
+        <span class='gvar'>$stderr</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_redact_secrets'>redact_secrets</span><span class='lparen'>(</span><span class='id identifier rubyid_line'>line</span><span class='comma'>,</span> <span class='ivar'>@secrets</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_debug?'>debug?</span>
+      <span class='kw'>end</span>
       <span class='ivar'>@output</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span><span class='symbol'>:stderr</span><span class='comma'>,</span> <span class='id identifier rubyid_line'>line</span><span class='rbracket'>]</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
