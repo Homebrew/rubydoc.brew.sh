@@ -1520,22 +1520,22 @@
       <pre class="lines">
 
 
-162
-163
-164
-165
-166
-167
 168
 169
 170
 171
 172
 173
-174</pre>
+174
+175
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_head_branch'>audit_head_branch</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@online</span>
@@ -1684,7 +1684,13 @@
 157
 158
 159
-160</pre>
+160
+161
+162
+163
+164
+165
+166</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 120</span>
@@ -1721,7 +1727,13 @@
         <span class='id identifier rubyid_problem'>problem</span> <span class='id identifier rubyid_http_content_problem'>http_content_problem</span>
       <span class='kw'>end</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../GitDownloadStrategy.html" title="GitDownloadStrategy (class)">GitDownloadStrategy</a></span></span>
-      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a valid git URL</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_remote_exists?'><span class='object_link'><a href="../Utils/Git.html#remote_exists%3F-class_method" title="Utils::Git.remote_exists? (method)">remote_exists?</a></span></span> <span class='id identifier rubyid_url'>url</span>
+      <span class='id identifier rubyid_attempts'>attempts</span> <span class='op'>=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_remote_exists'>remote_exists</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>false</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+      <span class='kw'>while</span> <span class='op'>!</span><span class='id identifier rubyid_remote_exists'>remote_exists</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_attempts'>attempts</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_curl_retries'>curl_retries</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+        <span class='id identifier rubyid_remote_exists'>remote_exists</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_remote_exists?'><span class='object_link'><a href="../Utils/Git.html#remote_exists%3F-class_method" title="Utils::Git.remote_exists? (method)">remote_exists?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_attempts'>attempts</span> <span class='op'>+=</span> <span class='int'>1</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The URL </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a valid git URL</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_remote_exists'>remote_exists</span>
     <span class='kw'>elsif</span> <span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>&lt;=</span> <span class='const'><span class='object_link'><a href="../SubversionDownloadStrategy.html" title="SubversionDownloadStrategy (class)">SubversionDownloadStrategy</a></span></span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_subversion_handles_most_https_certificates?'>subversion_handles_most_https_certificates?</span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Svn.html" title="Utils::Svn (module)">Svn</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../Utils/Svn.html#available%3F-class_method" title="Utils::Svn.available? (method)">available?</a></span></span>
@@ -1834,12 +1846,12 @@
       <pre class="lines">
 
 
-176
-177
-178</pre>
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'resource_auditor.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_problem'>problem</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='ivar'>@problems</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_text'>text</span>
