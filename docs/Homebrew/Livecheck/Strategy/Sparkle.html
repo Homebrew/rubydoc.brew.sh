@@ -393,7 +393,6 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::S
       <pre class="lines">
 
 
-183
 184
 185
 186
@@ -410,10 +409,11 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::S
 197
 198
 199
-200</pre>
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/sparkle.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/sparkle.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_versions'>find_versions</span><span class='lparen'>(</span><span class='label'>url:</span><span class='comma'>,</span> <span class='label'>regex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid__unused'>_unused</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_regex'>regex</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -568,12 +568,14 @@ for <span class='object_link'><a href="" title="Homebrew::Livecheck::Strategy::S
 129
 130
 131
-132</pre>
+132
+133</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'livecheck/strategy/sparkle.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_items_from_content'>items_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rexml/document</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_xml'>xml</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Xml.html" title="Homebrew::Livecheck::Strategy::Xml (class)">Xml</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse_xml'><span class='object_link'><a href="Xml.html#parse_xml-class_method" title="Homebrew::Livecheck::Strategy::Xml.parse_xml (method)">parse_xml</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_xml'>xml</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
@@ -816,7 +818,6 @@ the block to handle matching.</p>
       <pre class="lines">
 
 
-148
 149
 150
 151
@@ -836,10 +837,11 @@ the block to handle matching.</p>
 165
 166
 167
-168</pre>
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/strategy/sparkle.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'livecheck/strategy/sparkle.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_versions_from_content'>versions_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='id identifier rubyid_items_from_content'>items_from_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_item'>item</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_pub_date'>pub_date</span><span class='comma'>,</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_bundle_version'>bundle_version</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
