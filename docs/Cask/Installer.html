@@ -2531,12 +2531,12 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_missing_cask_and_formula_dependencies'>missing_cask_and_formula_dependencies</span>
   <span class='id identifier rubyid_cask_and_formula_dependencies'>cask_and_formula_dependencies</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='op'>|</span>
-    <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:installed?</span><span class='rparen'>)</span>
+    <span class='kw'>case</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Formula.html" title="Formula (class)">Formula</a></span></span>
+      <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_any_version_installed?'>any_version_installed?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_optlinked?'>optlinked?</span>
+    <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask::Cask (class)">Cask</a></span></span>
+      <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_installed'>installed</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:optlinked?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_cask_or_formula'>cask_or_formula</span><span class='period'>.</span><span class='id identifier rubyid_optlinked?'>optlinked?</span> <span class='op'>:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
