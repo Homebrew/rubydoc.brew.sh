@@ -1849,24 +1849,24 @@ optionals and recommends based on what the dependent has asked for</p>
   <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_any_installed_version'>any_installed_version</span>
-    <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed_version'>installed_version</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span>
 
-    <span class='comment'># Tabs prior to 4.1.18 did not have revision or pkg_version fields.
-</span>    <span class='comment'># As a result, we have to be more conversative when we do not have
-</span>    <span class='comment'># a minimum revision from the tab and assume that if the formula has a
-</span>    <span class='comment'># the same version and a non-zero revision that it needs upgraded.
-</span>    <span class='kw'>if</span> <span class='id identifier rubyid_minimum_revision'>minimum_revision</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-      <span class='id identifier rubyid_minimum_pkg_version'>minimum_pkg_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PkgVersion.html" title="PkgVersion (class)">PkgVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PkgVersion.html#initialize-instance_method" title="PkgVersion#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_minimum_version'>minimum_version</span><span class='comma'>,</span> <span class='id identifier rubyid_minimum_revision'>minimum_revision</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_minimum_pkg_version'>minimum_pkg_version</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_installed_version'>installed_version</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>==</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span>
-      <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_revision'>revision</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_installed_version'>installed_version</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span>
-    <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_any_installed_version'>any_installed_version</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_installed_version'>installed_version</span>
+
+  <span class='comment'># Tabs prior to 4.1.18 did not have revision or pkg_version fields.
+</span>  <span class='comment'># As a result, we have to be more conversative when we do not have
+</span>  <span class='comment'># a minimum revision from the tab and assume that if the formula has a
+</span>  <span class='comment'># the same version and a non-zero revision that it needs upgraded.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_minimum_revision'>minimum_revision</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_minimum_pkg_version'>minimum_pkg_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="PkgVersion.html" title="PkgVersion (class)">PkgVersion</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="PkgVersion.html#initialize-instance_method" title="PkgVersion#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_minimum_version'>minimum_version</span><span class='comma'>,</span> <span class='id identifier rubyid_minimum_revision'>minimum_revision</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_installed_version'>installed_version</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_minimum_pkg_version'>minimum_pkg_version</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_installed_version'>installed_version</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>==</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span>
+    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_revision'>revision</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_latest_version_installed?'>latest_version_installed?</span>
+    <span class='id identifier rubyid_installed_version'>installed_version</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_minimum_version'>minimum_version</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
