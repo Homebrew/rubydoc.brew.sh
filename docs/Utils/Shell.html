@@ -106,6 +106,7 @@
   <span class='label'>fish:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.config/fish/config.fish</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>ksh:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.kshrc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>mksh:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.kshrc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>rc:</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.rcrc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>sh:</span>   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.profile</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>tcsh:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.tcshrc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>zsh:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~/.zshrc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -415,21 +416,21 @@
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
 112
-113</pre>
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csh_quote'>csh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='comment'># ruby&#39;s implementation of shell_escape
@@ -537,7 +538,9 @@
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/shell.rb', line 36</span>
@@ -551,6 +554,8 @@
 </span>    <span class='comment'># a single quote can be included in a single-quoted string via \&#39;
 </span>    <span class='comment'># and a literal \ can be included via \\
 </span>    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>set -gx </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'> \&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:rc</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>=(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='symbol'>:csh</span><span class='comma'>,</span> <span class='symbol'>:tcsh</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>setenv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_csh_quote'>csh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
@@ -630,7 +635,7 @@ return <code>nil</code> if there’s no match.</p>
 </span>  <span class='id identifier rubyid_shell_name'>shell_name</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='comment'># handle possible version suffix like `zsh-5.2`
 </span>  <span class='id identifier rubyid_shell_name'>shell_name</span><span class='period'>.</span><span class='id identifier rubyid_sub!'>sub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>-.*\z</span><span class='regexp_end'>/m</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_shell_name'>shell_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='kw'>if</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>bash</span><span class='words_sep'> </span><span class='tstring_content'>csh</span><span class='words_sep'> </span><span class='tstring_content'>fish</span><span class='words_sep'> </span><span class='tstring_content'>ksh</span><span class='words_sep'> </span><span class='tstring_content'>mksh</span><span class='words_sep'> </span><span class='tstring_content'>sh</span><span class='words_sep'> </span><span class='tstring_content'>tcsh</span><span class='words_sep'> </span><span class='tstring_content'>zsh</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_shell_name'>shell_name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_shell_name'>shell_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='kw'>if</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>bash</span><span class='words_sep'> </span><span class='tstring_content'>csh</span><span class='words_sep'> </span><span class='tstring_content'>fish</span><span class='words_sep'> </span><span class='tstring_content'>ksh</span><span class='words_sep'> </span><span class='tstring_content'>mksh</span><span class='words_sep'> </span><span class='tstring_content'>rc</span><span class='words_sep'> </span><span class='tstring_content'>sh</span><span class='words_sep'> </span><span class='tstring_content'>tcsh</span><span class='words_sep'> </span><span class='tstring_content'>zsh</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_shell_name'>shell_name</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -866,24 +871,28 @@ return <code>nil</code> if there’s no match.</p>
       <pre class="lines">
 
 
-77
-78
-79
-80
-81
-82
-83
 84
 85
-86</pre>
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_path_in_profile'>prepend_path_in_profile</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_preferred'>preferred</span>
   <span class='kw'>when</span> <span class='symbol'>:bash</span><span class='comma'>,</span> <span class='symbol'>:ksh</span><span class='comma'>,</span> <span class='symbol'>:mksh</span><span class='comma'>,</span> <span class='symbol'>:sh</span><span class='comma'>,</span> <span class='symbol'>:zsh</span><span class='comma'>,</span> <span class='kw'>nil</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;export PATH=\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>:$PATH\&quot;&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:rc</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;path=(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> $path)&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='symbol'>:csh</span><span class='comma'>,</span> <span class='symbol'>:tcsh</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;setenv PATH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_csh_quote'>csh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>:$PATH&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='symbol'>:fish</span>
@@ -933,8 +942,6 @@ return <code>nil</code> if there’s no match.</p>
       <pre class="lines">
 
 
-52
-53
 54
 55
 56
@@ -943,16 +950,24 @@ return <code>nil</code> if there’s no match.</p>
 59
 60
 61
-62</pre>
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_profile'>profile</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_preferred'>preferred</span>
   <span class='kw'>when</span> <span class='symbol'>:bash</span>
     <span class='id identifier rubyid_bash_profile'>bash_profile</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='embexpr_end'>}</span><span class='tstring_content'>/.bash_profile</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>return</span> <span class='id identifier rubyid_bash_profile'>bash_profile</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='id identifier rubyid_bash_profile'>bash_profile</span>
+  <span class='kw'>when</span> <span class='symbol'>:rc</span>
+    <span class='id identifier rubyid_rc_profile'>rc_profile</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_home'>home</span><span class='embexpr_end'>}</span><span class='tstring_content'>/.rcrc</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_rc_profile'>rc_profile</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='id identifier rubyid_rc_profile'>rc_profile</span>
   <span class='kw'>when</span> <span class='symbol'>:zsh</span>
     <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ZDOTDIR</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>/.zshrc</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ZDOTDIR</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
   <span class='kw'>end</span>
@@ -1028,24 +1043,28 @@ return <code>nil</code> if there’s no match.</p>
       <pre class="lines">
 
 
-65
-66
-67
-68
-69
 70
 71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_variable_in_profile'>set_variable_in_profile</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_preferred'>preferred</span>
   <span class='kw'>when</span> <span class='symbol'>:bash</span><span class='comma'>,</span> <span class='symbol'>:ksh</span><span class='comma'>,</span> <span class='symbol'>:sh</span><span class='comma'>,</span> <span class='symbol'>:zsh</span><span class='comma'>,</span> <span class='kw'>nil</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;export </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variable'>variable</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>when</span> <span class='symbol'>:rc</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variable'>variable</span><span class='embexpr_end'>}</span><span class='tstring_content'>=(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>)&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='symbol'>:csh</span><span class='comma'>,</span> <span class='symbol'>:tcsh</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echo &#39;setenv </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variable'>variable</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_csh_quote'>csh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39; &gt;&gt; </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_profile'>profile</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>when</span> <span class='symbol'>:fish</span>
@@ -1110,20 +1129,20 @@ return <code>nil</code> if there’s no match.</p>
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'utils/shell.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sh_quote'>sh_quote</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='comment'># ruby&#39;s implementation of shell_escape

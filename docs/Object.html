@@ -91,7 +91,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>macos_version.rb</dd>
+    <dd>extend/blank.rb<span class="defines">,<br />
+  macos_version.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -113,6 +115,83 @@
 
 
 
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#blank%3F-instance_method" title="#blank? (instance method)">#<strong>blank?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>An object is blank if it’s false, empty, or a whitespace string.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#presence-instance_method" title="#presence (instance method)">#<strong>presence</strong>  &#x21d2; T.self_type<sup>?</sup> </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the receiver if it’s present otherwise returns +nil+.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#present%3F-instance_method" title="#present? (instance method)">#<strong>present?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>An object is present if it’s not blank.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
 
   
   
@@ -120,11 +199,216 @@
   
   
   
-  <h2>Method Summary</h2>
+  
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="MacOSVersionErrorCompat.html" title="MacOSVersionErrorCompat (module)">MacOSVersionErrorCompat</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="MacOSVersionErrorCompat.html#const_missing-instance_method" title="MacOSVersionErrorCompat#const_missing (method)">const_missing</a></span></p>
 
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="blank?-instance_method">
+  
+    #<strong>blank?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>An object is blank if it’s false, empty, or a whitespace string.
+For example, +nil+, ‘’, ‘   ‘, [], {}, and +false+ are all blank.</p>
+
+<p>This simplifies</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>!address</td>
+      <td> </td>
+      <td>address.empty?</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>to</p>
+
+<p>address.blank?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='op'>!</span><span class='op'>!</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>:</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="presence-instance_method">
+  
+    #<strong>presence</strong>  &#x21d2; <tt><span class='object_link'>T</span>.self_type</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the receiver if it’s present otherwise returns +nil+.
+<tt>object.presence</tt> is equivalent to</p>
+
+<p>object.present? ? object : nil</p>
+
+<p>For example, something like</p>
+
+<p>state   = params[:state]   if params[:state].present?
+  country = params[:country] if params[:country].present?
+  region  = state || country || ‘US’</p>
+
+<p>becomes</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>region = params[:state].presence</td>
+      <td> </td>
+      <td>params[:country].presence</td>
+      <td> </td>
+      <td>‘US’</td>
+    </tr>
+  </tbody>
+</table>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>T</span>.self_type</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_presence'>presence</span>
+  <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_present?'>present?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="present?-instance_method">
+  
+    #<strong>present?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>An object is present if it’s not blank.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_present?'>present?</span>
+  <span class='op'>!</span><span class='id identifier rubyid_blank?'>blank?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
