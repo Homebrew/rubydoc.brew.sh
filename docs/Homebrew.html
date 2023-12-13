@@ -31721,9 +31721,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-22
-23
-24
 25
 26
 27
@@ -31733,10 +31730,13 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 31
 32
 33
-34</pre>
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/pin.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'cmd/pin.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pin'>pin</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_pin_args'>pin_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
@@ -31803,7 +31803,10 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 17
 18
 19
-20</pre>
+20
+21
+22
+23</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/pin.rb', line 11</span>
@@ -31813,6 +31816,9 @@ for IRB and have already been parsed by the CLI::Parser.</p>
     <span class='id identifier rubyid_description'>description</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>      Pin the specified &lt;formula&gt;, preventing them from being upgraded when
 </span><span class='tstring_content'>      issuing the `brew upgrade` &lt;formula&gt; command. See also `unpin`.
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>      Note: Other packages which depend on newer versions of a pinned formula
+</span><span class='tstring_content'>      might not install or run correctly.
 </span><span class='heredoc_end'>    EOS
 </span>
     <span class='id identifier rubyid_named_args'>named_args</span> <span class='symbol'>:installed_formula</span><span class='comma'>,</span> <span class='label'>min:</span> <span class='int'>1</span>
@@ -44449,7 +44455,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-126
 127
 128
 129
@@ -44465,13 +44470,20 @@ corresponding to all the original commit messages combined.</p>
 139
 140
 141
-142</pre>
+142
+143
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade'>upgrade</span>
   <span class='id identifier rubyid_args'>args</span> <span class='op'>=</span> <span class='id identifier rubyid_upgrade_args'>upgrade_args</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span>
+
+  <span class='comment'># Deprecated since this is now the default behavior.
+</span>  <span class='id identifier rubyid_odeprecated'>odeprecated</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew upgrade --ignore-pinned`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_ignore_pinned?'>ignore_pinned?</span>
 
   <span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_casks'>casks</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_resolved_formulae_to_casks'>to_resolved_formulae_to_casks</span>
   <span class='comment'># If one or more formulae are specified, but no casks were
@@ -44636,7 +44648,8 @@ corresponding to all the original commit messages combined.</p>
 120
 121
 122
-123</pre>
+123
+124</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 17</span>
@@ -44689,6 +44702,7 @@ corresponding to all the original commit messages combined.</p>
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='lbracket'>[</span><span class='symbol'>:switch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--ignore-pinned</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Set a successful exit status even if pinned formulae are not upgraded.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='label'>hidden:</span>      <span class='kw'>true</span><span class='comma'>,</span>
       <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
       <span class='lbracket'>[</span><span class='symbol'>:switch</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--keep-tmp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span>
         <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Retain the temporary files created during installation.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -44817,13 +44831,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-250
-251
-252
-253
-254
-255
-256
 257
 258
 259
@@ -44834,10 +44841,17 @@ corresponding to all the original commit messages combined.</p>
 264
 265
 266
-267</pre>
+267
+268
+269
+270
+271
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 250</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
@@ -44926,10 +44940,6 @@ corresponding to all the original commit messages combined.</p>
       <pre class="lines">
 
 
-145
-146
-147
-148
 149
 150
 151
@@ -45028,10 +45038,17 @@ corresponding to all the original commit messages combined.</p>
 244
 245
 246
-247</pre>
+247
+248
+249
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_formulae'>upgrade_outdated_formulae</span><span class='lparen'>(</span><span class='id identifier rubyid_formulae'>formulae</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_cask?'>cask?</span>
@@ -45082,8 +45099,11 @@ corresponding to all the original commit messages combined.</p>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_ignore_pinned?'>ignore_pinned?</span>
-    <span class='id identifier rubyid_ofail'>ofail</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not upgrading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> pinned </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'><span class='object_link'><a href="Utils.html#pluralize-class_method" title="Utils.pluralize (method)">pluralize</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+    <span class='const'><span class='object_link'><a href="Kernel.html" title="Kernel (module)">Kernel</a></span></span><span class='period'>.</span><span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_formulae'>formulae</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>?</span> <span class='symbol'>:ofail</span> <span class='op'>:</span> <span class='symbol'>:opoo</span><span class='comma'>,</span> <span class='comment'># only fail when pinned formulae are named explicitly
+</span>      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not upgrading </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='embexpr_end'>}</span><span class='tstring_content'> pinned </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'><span class='object_link'><a href="Utils.html#pluralize-class_method" title="Utils.pluralize (method)">pluralize</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>package</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='rparen'>)</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_pinned'>pinned</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_specified_name'>full_specified_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_pkg_version'>pkg_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='op'>*</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
