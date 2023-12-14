@@ -495,12 +495,12 @@
       <pre class="lines">
 
 
-137
-138
-139</pre>
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid__base'>_base</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not include `OnSystem` directly. Instead, include `OnSystem::MacOSAndLinux` or `OnSystem::MacOSOnly`</span><span class='tstring_end'>&quot;</span></span>
@@ -709,7 +709,10 @@
 70
 71
 72
-73</pre>
+73
+74
+75
+76</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 52</span>
@@ -732,8 +735,11 @@
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='symbol'>:on_arch_conditional</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='label'>arm:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>intel:</span> <span class='kw'>nil</span><span class='op'>|</span>
     <span class='ivar'>@on_system_blocks_exist</span> <span class='op'>=</span> <span class='kw'>true</span>
 
-    <span class='kw'>return</span> <span class='id identifier rubyid_arm'>arm</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch_condition_met?'><span class='object_link'><a href="#arch_condition_met%3F-class_method" title="OnSystem.arch_condition_met? (method)">arch_condition_met?</a></span></span> <span class='symbol'>:arm</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_intel'>intel</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch_condition_met?'><span class='object_link'><a href="#arch_condition_met%3F-class_method" title="OnSystem.arch_condition_met? (method)">arch_condition_met?</a></span></span> <span class='symbol'>:intel</span>
+    <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch_condition_met?'><span class='object_link'><a href="#arch_condition_met%3F-class_method" title="OnSystem.arch_condition_met? (method)">arch_condition_met?</a></span></span> <span class='symbol'>:arm</span>
+      <span class='id identifier rubyid_arm'>arm</span>
+    <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arch_condition_met?'><span class='object_link'><a href="#arch_condition_met%3F-class_method" title="OnSystem.arch_condition_met? (method)">arch_condition_met?</a></span></span> <span class='symbol'>:intel</span>
+      <span class='id identifier rubyid_intel'>intel</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -781,9 +787,6 @@
       <pre class="lines">
 
 
-76
-77
-78
 79
 80
 81
@@ -821,10 +824,16 @@
 113
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_base_os_methods'>setup_base_os_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="#BASE_OS_OPTIONS-constant" title="OnSystem::BASE_OS_OPTIONS (constant)">BASE_OS_OPTIONS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_base_os'>base_os</span><span class='op'>|</span>
@@ -863,8 +872,11 @@
   <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='symbol'>:on_system_conditional</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='label'>macos:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>linux:</span> <span class='kw'>nil</span><span class='op'>|</span>
     <span class='ivar'>@on_system_blocks_exist</span> <span class='op'>=</span> <span class='kw'>true</span>
 
-    <span class='kw'>return</span> <span class='id identifier rubyid_macos'>macos</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_os_condition_met?'><span class='object_link'><a href="#os_condition_met%3F-class_method" title="OnSystem.os_condition_met? (method)">os_condition_met?</a></span></span><span class='lparen'>(</span><span class='symbol'>:macos</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_macos'>macos</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_linux'>linux</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_os_condition_met?'><span class='object_link'><a href="#os_condition_met%3F-class_method" title="OnSystem.os_condition_met? (method)">os_condition_met?</a></span></span><span class='lparen'>(</span><span class='symbol'>:linux</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_linux'>linux</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_os_condition_met?'><span class='object_link'><a href="#os_condition_met%3F-class_method" title="OnSystem.os_condition_met? (method)">os_condition_met?</a></span></span><span class='lparen'>(</span><span class='symbol'>:macos</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_macos'>macos</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+      <span class='id identifier rubyid_macos'>macos</span>
+    <span class='kw'>elsif</span> <span class='const'><span class='object_link'><a href="" title="OnSystem (module)">OnSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_os_condition_met?'><span class='object_link'><a href="#os_condition_met%3F-class_method" title="OnSystem.os_condition_met? (method)">os_condition_met?</a></span></span><span class='lparen'>(</span><span class='symbol'>:linux</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_linux'>linux</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+      <span class='id identifier rubyid_linux'>linux</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -912,12 +924,6 @@
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
 125
 126
 127
@@ -927,10 +933,16 @@
 131
 132
 133
-134</pre>
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'extend/on_system.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_macos_methods'>setup_macos_methods</span><span class='lparen'>(</span><span class='id identifier rubyid_base'>base</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="MacOSVersion.html" title="MacOSVersion (class)">MacOSVersion</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="MacOSVersion.html#SYMBOLS-constant" title="MacOSVersion::SYMBOLS (constant)">SYMBOLS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_os_name'>os_name</span><span class='op'>|</span>

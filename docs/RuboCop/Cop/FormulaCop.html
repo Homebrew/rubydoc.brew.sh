@@ -284,7 +284,7 @@
   
   <span class="private note title">private</span>
   
-    <span class="summary_desc"><div class='inline'><p>Returns nil if does not depend on dependency_name.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns if the formula depends on dependency_name.</p>
 </div></span>
   
 </li>
@@ -550,15 +550,15 @@
       <pre class="lines">
 
 
-148
-149
 150
 151
 152
-153</pre>
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_comments'>audit_comments</span>
   <span class='id identifier rubyid_processed_source'>processed_source</span><span class='period'>.</span><span class='id identifier rubyid_comments'>comments</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_comment_node'>comment_node</span><span class='op'>|</span>
@@ -790,14 +790,14 @@
       <pre class="lines">
 
 
-119
-120
 121
 122
-123</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_caveats_strings'>caveats_strings</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -825,7 +825,7 @@
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-<p>Returns nil if does not depend on dependency_name.</p>
+<p>Returns if the formula depends on dependency_name.</p>
 
 
   </div>
@@ -882,22 +882,26 @@
 73
 74
 75
-76</pre>
+76
+77
+78</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_depends_on?'>depends_on?</span><span class='lparen'>(</span><span class='id identifier rubyid_dependency_name'>dependency_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_types'>types</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='ivar'>@body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='id identifier rubyid_types'>types</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:any</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   <span class='id identifier rubyid_dependency_nodes'>dependency_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='ivar'>@body</span><span class='comma'>,</span> <span class='symbol'>:depends_on</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='id identifier rubyid_dependency_nodes'>dependency_nodes</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span>
     <span class='id identifier rubyid_types'>types</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span> <span class='id identifier rubyid_depends_on_name_type?'>depends_on_name_type?</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='comma'>,</span> <span class='id identifier rubyid_dependency_name'>dependency_name</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='ivar'>@offensive_node</span> <span class='op'>=</span> <span class='id identifier rubyid_dependency_nodes'>dependency_nodes</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span>
+
+  <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -947,8 +951,6 @@
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
@@ -967,10 +969,12 @@
 97
 98
 99
-100</pre>
+100
+101
+102</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_depends_on_name_type?'>depends_on_name_type?</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:required</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_name_match'>name_match</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_name'>name</span> <span class='comment'># Match only by type when name is nil
@@ -1028,14 +1032,14 @@
       <pre class="lines">
 
 
-161
-162
 163
 164
-165</pre>
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 163</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_tap'>formula_tap</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='lparen'>(</span><span class='id identifier rubyid_match_obj'>match_obj</span> <span class='op'>=</span> <span class='ivar'>@file_path</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>/(homebrew-\w+)/</span><span class='regexp_end'>}</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1077,8 +1081,6 @@
       <pre class="lines">
 
 
-126
-127
 128
 129
 130
@@ -1096,10 +1098,12 @@
 142
 143
 144
-145</pre>
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_checksum_node'>get_checksum_node</span><span class='lparen'>(</span><span class='id identifier rubyid_call'>call</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lparen'>(</span><span class='id identifier rubyid_call'>call</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>||</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lparen'>(</span><span class='id identifier rubyid_call'>call</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1215,8 +1219,6 @@
       <pre class="lines">
 
 
-168
-169
 170
 171
 172
@@ -1236,10 +1238,12 @@
 186
 187
 188
-189</pre>
+189
+190
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_style_exceptions_dir'>style_exceptions_dir</span>
   <span class='id identifier rubyid_file_directory'>file_directory</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='ivar'>@file_path</span><span class='rparen'>)</span>
@@ -1312,8 +1316,6 @@ Defaults to the current formula being checked.</p>
       <pre class="lines">
 
 
-193
-194
 195
 196
 197
@@ -1333,10 +1335,12 @@ Defaults to the current formula being checked.</p>
 211
 212
 213
-214</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 195</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tap_style_exception?'>tap_style_exception?</span><span class='lparen'>(</span><span class='id identifier rubyid_list'>list</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='ivar'>@tap_style_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_formula_tap'>formula_tap</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -1408,12 +1412,12 @@ Defaults to the current formula being checked.</p>
       <pre class="lines">
 
 
-156
-157
-158</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'rubocops/extend/formula_cop.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_versioned_formula?'>versioned_formula?</span>
   <span class='ivar'>@formula_name</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
