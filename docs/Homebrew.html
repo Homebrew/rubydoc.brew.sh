@@ -25810,14 +25810,7 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 337
 338
 339
-340
-341
-342
-343
-344
-345
-346
-347</pre>
+340</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/gems.rb', line 220</span>
@@ -25841,15 +25834,8 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 
   <span class='id identifier rubyid_install_bundler!'>install_bundler!</span>
 
-  <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_user_gem_groups'>user_gem_groups</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_valid_gem_groups'>valid_gem_groups</span>
-  <span class='kw'>if</span> <span class='const'>RUBY_PLATFORM</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-darwin23</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sorbet is not currently supported under system Ruby on macOS Sonoma.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>typecheck</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>typecheck</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-
   <span class='comment'># Combine the passed groups with the ones stored in settings
-</span>  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>|=</span> <span class='id identifier rubyid_valid_user_gem_groups'>valid_user_gem_groups</span>
+</span>  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>|=</span> <span class='lparen'>(</span><span class='id identifier rubyid_user_gem_groups'>user_gem_groups</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_valid_gem_groups'>valid_gem_groups</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span>
 
   <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUNDLE_GEMFILE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_gemfile'>gemfile</span>
@@ -39108,8 +39094,7 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 256
 257
 258
-259
-260</pre>
+259</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 204</span>
@@ -39121,7 +39106,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
     </span><span class='tstring_content'>HOMEBREW_CACHE</span><span class='words_sep'>
     </span><span class='tstring_content'>HOMEBREW_LOGS</span><span class='words_sep'>
     </span><span class='tstring_content'>HOMEBREW_TEMP</span><span class='words_sep'>
-    </span><span class='tstring_content'>HOMEBREW_RUBY3</span><span class='words_sep'>
   </span><span class='tstring_end'>]</span></span>
   <span class='id identifier rubyid_allowed_test_env'>allowed_test_env</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_USE_RUBY_FROM_PATH</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_developer?'>developer?</span>
   <span class='const'><span class='object_link'><a href="" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html#ENVS-constant" title="Homebrew::EnvConfig::ENVS (constant)">ENVS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_env'>env</span><span class='op'>|</span>
@@ -42128,7 +42112,12 @@ corresponding to all the original commit messages combined.</p>
 100
 101
 102
-103</pre>
+103
+104
+105
+106
+107
+108</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/typecheck.rb', line 39</span>
@@ -42143,14 +42132,9 @@ corresponding to all the original commit messages combined.</p>
   <span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='period'>.</span><span class='id identifier rubyid_cd'>cd</span> <span class='kw'>do</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_update'>update</span>
       <span class='id identifier rubyid_excluded_gems'>excluded_gems</span> <span class='op'>=</span> <span class='lbracket'>[</span>
-        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>did_you_mean</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># RBI file is already provided by Sorbet
-</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># RBI file is already provided by Sorbet
-</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet-static-and-runtime</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># Unnecessary RBI - remove this entry with Tapioca 0.8
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># RBI file is already provided by Sorbet
 </span>      <span class='rbracket'>]</span>
-      <span class='id identifier rubyid_typed_overrides'>typed_overrides</span> <span class='op'>=</span> <span class='lbracket'>[</span>
-        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>msgpack:false</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='comment'># Investigate removing this with Tapioca 0.8
-</span>      <span class='rbracket'>]</span>
-      <span class='id identifier rubyid_tapioca_args'>tapioca_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--exclude</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_excluded_gems'>excluded_gems</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--typed-overrides</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_typed_overrides'>typed_overrides</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_tapioca_args'>tapioca_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--exclude</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_excluded_gems'>excluded_gems</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--pre</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet/tapioca/prerequire.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
       <span class='id identifier rubyid_tapioca_args'>tapioca_args</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--all</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_update_all?'>update_all?</span>
 
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Updating homegrown RBI files...</span><span class='tstring_end'>&quot;</span></span>
@@ -42160,13 +42144,23 @@ corresponding to all the original commit messages combined.</p>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Updating Tapioca RBI files...</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tapioca</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gem</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_tapioca_args'>tapioca_args</span>
       <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>parlour</span><span class='tstring_end'>&quot;</span></span>
+
       <span class='id identifier rubyid_safe_system'>safe_system</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RUBYLIB</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="top-level-namespace.html#HOMEBREW_LIBRARY_PATH-constant" title="HOMEBREW_LIBRARY_PATH (constant)">HOMEBREW_LIBRARY_PATH</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>/sorbet/hidden_definitions_hacks</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>srb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rbi</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hidden-definitions</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tapioca</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>todo</span><span class='tstring_end'>&quot;</span></span>
+      <span class='comment'># HACK: we&#39;ll phase out hidden-definitions soon
+</span>      <span class='id identifier rubyid_tmp_file'>tmp_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet/rbi/hidden-definitions/hidden.rbi.tmp</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_orig_file'>orig_file</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet/rbi/hidden-definitions/hidden.rbi</span><span class='tstring_end'>&quot;</span></span>
+      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_file'>tmp_file</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_out_file'>out_file</span><span class='op'>|</span>
+        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='id identifier rubyid_orig_file'>orig_file</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_line'>line</span><span class='op'>|</span>
+          <span class='id identifier rubyid_out_file'>out_file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_line'>line</span> <span class='kw'>unless</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>def self.new(*args, **arg, &amp;blk); end</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_rename'>rename</span><span class='lparen'>(</span><span class='id identifier rubyid_tmp_file'>tmp_file</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_file'>orig_file</span><span class='rparen'>)</span>
 
       <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_suggest_typed?'>suggest_typed?</span>
         <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Bumping Sorbet `typed` sigils...</span><span class='tstring_end'>&quot;</span></span>
-        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spoom</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bump</span><span class='tstring_end'>&quot;</span></span>
+        <span class='comment'># --sorbet needed because of https://github.com/Shopify/spoom/issues/488
+</span>        <span class='id identifier rubyid_safe_system'>safe_system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spoom</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bump</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--dry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--sorbet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_bin_path'>bin_path</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sorbet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>srb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> tc</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
 
       <span class='kw'>return</span>
