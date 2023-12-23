@@ -830,12 +830,12 @@
       <pre class="lines">
 
 
-252
-253
-254</pre>
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_prefix?'>default_prefix?</span>
   <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/Applications/Xcode.app/Contents/Developer</span><span class='tstring_end'>&quot;</span></span>
@@ -913,7 +913,17 @@
 212
 213
 214
-215</pre>
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 190</span>
@@ -923,22 +933,32 @@
 </span>  <span class='comment'># if return is used in the middle, which we do many times in here.
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='op'>!</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'>MacOS</span><span class='op'>::</span><span class='const'>CLT</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
 
-  <span class='words_beg'>%W[</span><span class='words_sep'>
-    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>/usr/bin/xcodebuild</span><span class='words_sep'>
-    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xcodebuild</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='words_sep'>
-  </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_executable?'>executable?</span> <span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span>
+  <span class='kw'>if</span> <span class='const'>MacOS</span><span class='op'>::</span><span class='const'>Xcode</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+    <span class='comment'># Fast path that will probably almost always work unless `xcode-select -p` is misconfigured
+</span>    <span class='id identifier rubyid_version_plist'>version_plist</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>version.plist</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_version_plist'>version_plist</span><span class='period'>.</span><span class='id identifier rubyid_file?'>file?</span>
+      <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>Plist</span><span class='period'>.</span><span class='id identifier rubyid_parse_xml'>parse_xml</span><span class='lparen'>(</span><span class='id identifier rubyid_version_plist'>version_plist</span><span class='comma'>,</span> <span class='label'>marshal:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CFBundleShortVersionString</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span>
+      <span class='kw'>return</span> <span class='id identifier rubyid_version'>version</span> <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span>
+    <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-version</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
+    <span class='words_beg'>%W[</span><span class='words_sep'>
+      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>/usr/bin/xcodebuild</span><span class='words_sep'>
+      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>xcodebuild</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='words_sep'>
+    </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span><span class='op'>|</span>
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_executable?'>executable?</span> <span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span>
 
-    <span class='id identifier rubyid_xcode_version'>xcode_version</span> <span class='op'>=</span> <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Xcode (\d+(\.\d+)*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_xcode_version'>xcode_version</span> <span class='kw'>if</span> <span class='id identifier rubyid_xcode_version'>xcode_version</span>
+      <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen_read'><span class='object_link'><a href="../../Utils.html#popen_read-class_method" title="Utils.popen_read (method)">popen_read</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_xcodebuild_path'>xcodebuild_path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-version</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='gvar'>$CHILD_STATUS</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
 
-    <span class='comment'># Xcode 2.x&#39;s xcodebuild has a different version string
-</span>    <span class='kw'>case</span> <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>DevToolsCore-(\d+\.\d)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>798.0</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.5</span><span class='tstring_end'>&quot;</span></span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>515.0</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.0</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_xcode_version'>xcode_version</span> <span class='op'>=</span> <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>Xcode (\d+(\.\d+)*)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='kw'>return</span> <span class='id identifier rubyid_xcode_version'>xcode_version</span> <span class='kw'>if</span> <span class='id identifier rubyid_xcode_version'>xcode_version</span>
+
+      <span class='comment'># Xcode 2.x&#39;s xcodebuild has a different version string
+</span>      <span class='kw'>case</span> <span class='id identifier rubyid_xcodebuild_output'>xcodebuild_output</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>DevToolsCore-(\d+\.\d)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='rbracket'>]</span>
+      <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>798.0</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.5</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>515.0</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>then</span> <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2.0</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
@@ -992,16 +1012,6 @@
       <pre class="lines">
 
 
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
 228
 229
 230
@@ -1023,10 +1033,20 @@
 246
 247
 248
-249</pre>
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 218</span>
+      <pre class="code"><span class="info file"># File 'os/mac/xcode.rb', line 228</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_detect_version_from_clang_version'>detect_version_from_clang_version</span>
   <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='const'>DevelopmentTools</span><span class='period'>.</span><span class='id identifier rubyid_clang_version'>clang_version</span>
