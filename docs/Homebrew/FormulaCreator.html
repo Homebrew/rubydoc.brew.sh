@@ -910,9 +910,9 @@
 </span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;--build&quot;, &quot;build&quot;
 </span><span class='tstring_content'>        system &quot;cmake&quot;, &quot;--install&quot;, &quot;build&quot;
 </span><span class='tstring_content'>    &lt;% elsif @mode == :autotools %&gt;
-</span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
+</span><span class='tstring_content'>        # Remove unrecognized options if they cause configure to fail
 </span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
-</span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
+</span><span class='tstring_content'>        system &quot;./configure&quot;, &quot;--disable-silent-rules&quot;, *std_configure_args
 </span><span class='tstring_content'>        system &quot;make&quot;, &quot;install&quot; # if this fails, try separate make/make install steps
 </span><span class='tstring_content'>    &lt;% elsif @mode == :crystal %&gt;
 </span><span class='tstring_content'>        system &quot;shards&quot;, &quot;build&quot;, &quot;--release&quot;
@@ -957,9 +957,9 @@
 </span><span class='tstring_content'>    &lt;% elsif @mode == :rust %&gt;
 </span><span class='tstring_content'>        system &quot;cargo&quot;, &quot;install&quot;, *std_cargo_args
 </span><span class='tstring_content'>    &lt;% else %&gt;
-</span><span class='tstring_content'>        # Remove unrecognized options if warned by configure
+</span><span class='tstring_content'>        # Remove unrecognized options if they cause configure to fail
 </span><span class='tstring_content'>        # https://rubydoc.brew.sh/Formula.html#std_configure_args-instance_method
-</span><span class='tstring_content'>        system &quot;./configure&quot;, *std_configure_args, &quot;--disable-silent-rules&quot;
+</span><span class='tstring_content'>        system &quot;./configure&quot;, &quot;--disable-silent-rules&quot;, *std_configure_args
 </span><span class='tstring_content'>        # system &quot;cmake&quot;, &quot;-S&quot;, &quot;.&quot;, &quot;-B&quot;, &quot;build&quot;, *std_cmake_args
 </span><span class='tstring_content'>    &lt;% end %&gt;
 </span><span class='tstring_content'>      end
