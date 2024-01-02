@@ -739,17 +739,19 @@
 133
 134
 135
-136</pre>
+136
+137</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'api.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_merge_variations'>merge_variations</span><span class='lparen'>(</span><span class='id identifier rubyid_json'>json</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_json'>json</span> <span class='kw'>unless</span> <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>variations</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_bottle_tag'>bottle_tag</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Bottles.html" title="Utils::Bottles (module)">Bottles</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Bottles/Tag.html" title="Utils::Bottles::Tag (class)">Tag</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Utils/Bottles/Tag.html#initialize-instance_method" title="Utils::Bottles::Tag#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>system:</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current_os'><span class='object_link'><a href="SimulateSystem.html#current_os-class_method" title="Homebrew::SimulateSystem.current_os (method)">current_os</a></span></span><span class='comma'>,</span>
                                          <span class='label'>arch:</span>   <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_current_arch'><span class='object_link'><a href="SimulateSystem.html#current_arch-class_method" title="Homebrew::SimulateSystem.current_arch (method)">current_arch</a></span></span><span class='rparen'>)</span>
 
-  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_variations'>variations</span> <span class='op'>=</span> <span class='id identifier rubyid_json'>json</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>variations</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
-     <span class='lparen'>(</span><span class='id identifier rubyid_variation'>variation</span> <span class='op'>=</span> <span class='id identifier rubyid_variations'>variations</span><span class='lbracket'>[</span><span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_variation'>variation</span> <span class='op'>=</span> <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>variations</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_bottle_tag'>bottle_tag</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_variation'>variation</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -818,7 +820,6 @@
       <pre class="lines">
 
 
-176
 177
 178
 179
@@ -826,10 +827,11 @@
 181
 182
 183
-184</pre>
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'api.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'api.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_tap_from_source_download'>tap_from_source_download</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_source_relative_path'>source_relative_path</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_relative_path_from'>relative_path_from</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Homebrew::API (module)">API</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="#HOMEBREW_CACHE_API_SOURCE-constant" title="Homebrew::API::HOMEBREW_CACHE_API_SOURCE (constant)">HOMEBREW_CACHE_API_SOURCE</a></span></span><span class='rparen'>)</span>
@@ -925,7 +927,6 @@
       <pre class="lines">
 
 
-139
 140
 141
 142
@@ -933,10 +934,11 @@
 144
 145
 146
-147</pre>
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'api.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'api.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_write_names_file'>write_names_file</span><span class='lparen'>(</span><span class='id identifier rubyid_names'>names</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='label'>regenerate:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names_path'>names_path</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#HOMEBREW_CACHE_API-constant" title="Homebrew::API::HOMEBREW_CACHE_API (constant)">HOMEBREW_CACHE_API</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'>_names.txt</span><span class='tstring_end'>&quot;</span></span>
