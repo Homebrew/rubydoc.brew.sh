@@ -113,10 +113,12 @@
 <p>This cop checks if redundant components are present and for other component errors.</p>
 
 <ul>
-  <li><code>url|checksum|mirror</code> should be inside <code>stable</code> block</li>
+  <li><code>url|checksum|mirror|version</code> should be inside <code>stable</code> block</li>
   <li><code>head</code> and <code>head do</code> should not be simultaneously present</li>
   <li><code>bottle :unneeded</code>/<code>:disable</code> and <code>bottle do</code> should not be simultaneously present</li>
   <li><code>stable do</code> should not be present without a <code>head</code> spec</li>
+  <li><code>stable do</code> should not be present with only <code>url|checksum|mirror|version</code></li>
+  <li><code>head do</code> should not be present with only <code>url</code></li>
 </ul>
 
 
@@ -193,6 +195,26 @@
 </div>
         </dt>
         <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`stable do` should not be present without a `head` spec</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="STABLE_BLOCK_METHODS-constant" class="">STABLE_BLOCK_METHODS =
+          <div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This constant is part of a private API.</strong>
+  This constant may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this constant if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:url</span><span class='comma'>,</span> <span class='symbol'>:sha256</span><span class='comma'>,</span> <span class='symbol'>:mirror</span><span class='comma'>,</span> <span class='symbol'>:version</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
     </dl>
   
@@ -303,9 +325,6 @@
       <pre class="lines">
 
 
-22
-23
-24
 25
 26
 27
@@ -336,10 +355,28 @@
 52
 53
 54
-55</pre>
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'rubocops/components_redundancy.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'rubocops/components_redundancy.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_audit_formula'>audit_formula</span><span class='lparen'>(</span><span class='id identifier rubyid__node'>_node</span><span class='comma'>,</span> <span class='id identifier rubyid__class_node'>_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid__parent_class_node'>_parent_class_node</span><span class='comma'>,</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -359,8 +396,23 @@
 
   <span class='id identifier rubyid_stable_block'>stable_block</span> <span class='op'>=</span> <span class='id identifier rubyid_find_block'>find_block</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:stable</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_stable_block'>stable_block</span>
-    <span class='lbracket'>[</span><span class='symbol'>:url</span><span class='comma'>,</span> <span class='symbol'>:sha256</span><span class='comma'>,</span> <span class='symbol'>:mirror</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method_name'>method_name</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="#STABLE_BLOCK_METHODS-constant" title="RuboCop::Cop::FormulaAudit::ComponentsRedundancy::STABLE_BLOCK_METHODS (constant)">STABLE_BLOCK_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method_name'>method_name</span><span class='op'>|</span>
       <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_name'>method_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>` should be put inside `stable` block</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_method_called?'>method_called?</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>unless</span> <span class='id identifier rubyid_stable_block'>stable_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_child_nodes'>child_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_stable_block'>stable_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_begin_type?'>begin_type?</span> <span class='op'>?</span> <span class='id identifier rubyid_stable_block'>stable_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_child_nodes'>child_nodes</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_stable_block'>stable_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_child_nodes'>child_nodes</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_send_type?'>send_type?</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="#STABLE_BLOCK_METHODS-constant" title="RuboCop::Cop::FormulaAudit::ComponentsRedundancy::STABLE_BLOCK_METHODS (constant)">STABLE_BLOCK_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+        <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`stable do` should not be present with only </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#STABLE_BLOCK_METHODS-constant" title="RuboCop::Cop::FormulaAudit::ComponentsRedundancy::STABLE_BLOCK_METHODS (constant)">STABLE_BLOCK_METHODS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_head_block'>head_block</span> <span class='op'>=</span> <span class='id identifier rubyid_find_block'>find_block</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:head</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_head_block'>head_block</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_head_block'>head_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_child_nodes'>child_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_head_block'>head_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_begin_type?'>begin_type?</span> <span class='op'>?</span> <span class='id identifier rubyid_head_block'>head_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_child_nodes'>child_nodes</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_head_block'>head_block</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_child_nodes'>child_nodes</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_send_type?'>send_type?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_n'>n</span><span class='period'>.</span><span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>==</span> <span class='symbol'>:url</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`head do` should not be present with only `url`</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
