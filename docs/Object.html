@@ -92,7 +92,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>extend/blank.rb<span class="defines">,<br />
-  macos_version.rb</span>
+  macos_version.rb,<br /> extend/object/deep_dup.rb,<br /> extend/object/duplicable.rb</span>
 </dd>
   </dl>
   
@@ -100,7 +100,24 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p><code>LazyObject</code> does not work for exceptions when used in <code>rescue</code> statements.</p>
+    <p>–
+Most objects are cloneable, but not all. For example you can’t dup methods:</p>
+
+<p>method(:puts).dup # =&gt; TypeError: allocator undefined for Method</p>
+
+<p>Classes may signal their instances are not duplicable removing +dup+/+clone+
+or raising exceptions from them. So, to dup an arbitrary object you normally
+use an optimistic approach and are ready to catch an exception, say:</p>
+
+<p>arbitrary_object.dup rescue object</p>
+
+<p>Rails dups objects in a few critical spots where they are not that arbitrary.
+That rescue is very expensive (like 40 times slower than a predicate), and it
+is often triggered.</p>
+
+<p>That’s why we hardcode the following cases and check duplicable? instead of
+using that rescue idiom.
+++</p>
 
 
   </div>
@@ -140,6 +157,50 @@
   
   
     <span class="summary_desc"><div class='inline'><p>An object is blank if it’s false, empty, or a whitespace string.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deep_dup-instance_method" title="#deep_dup (instance method)">#<strong>deep_dup</strong>  &#x21d2; T.self_type </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a deep copy of object if it’s duplicable.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#duplicable%3F-instance_method" title="#duplicable? (instance method)">#<strong>duplicable?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Can you safely dup this object?.</p>
 </div></span>
   
 </li>
@@ -274,6 +335,119 @@ For example, +nil+, ‘’, ‘   ‘, [], {}, and +false+ are all blank.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='op'>!</span><span class='op'>!</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>:</span> <span class='kw'>false</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="deep_dup-instance_method">
+  
+    #<strong>deep_dup</strong>  &#x21d2; <tt><span class='object_link'>T</span>.self_type</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a deep copy of object if it’s duplicable. If it’s
+not duplicable, returns +self+.</p>
+
+<p>object = Object.new
+  dup    = object.deep_dup
+  dup.instance_variable_set(:@a, 1)</p>
+
+<p>object.instance_variable_defined?(:@a) # =&gt; false
+  dup.instance_variable_defined?(:@a)    # =&gt; true</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>T</span>.self_type</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/object/deep_dup.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deep_dup'>deep_dup</span>
+  <span class='id identifier rubyid_duplicable?'>duplicable?</span> <span class='op'>?</span> <span class='id identifier rubyid_dup'>dup</span> <span class='op'>:</span> <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="duplicable?-instance_method">
+  
+    #<strong>duplicable?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Can you safely dup this object?</p>
+
+<p>False for method objects;
+true otherwise.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/object/duplicable.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_duplicable?'>duplicable?</span> <span class='op'>=</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
