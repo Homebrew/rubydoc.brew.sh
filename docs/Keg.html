@@ -92,6 +92,11 @@
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="SystemCommand/Mixin.html" title="SystemCommand::Mixin (module)">SystemCommand::Mixin</a></span></dd>
+  </dl>
+  
   
 
   
@@ -99,8 +104,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>extend/os/mac/keg.rb<span class="defines">,<br />
-  extend/os/linux/keg.rb,<br /> extend/os/mac/keg_relocate.rb,<br /> extend/os/linux/keg_relocate.rb,<br /> keg.rb,<br /> os/mac/keg.rb,<br /> keg_relocate.rb</span>
+    <dd>extend/os/linux/keg.rb<span class="defines">,<br />
+  extend/os/mac/keg.rb,<br /> extend/os/mac/keg_relocate.rb,<br /> extend/os/linux/keg_relocate.rb,<br /> keg.rb,<br /> os/mac/keg.rb,<br /> keg_relocate.rb</span>
 </dd>
   </dl>
   
@@ -2171,7 +2176,18 @@ directories in the prefix, never symlinks.</p>
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Cachable.html" title="Cachable (module)">Cachable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="Cachable.html#cache-instance_method" title="Cachable#cache (method)">cache</a></span>, <span class='object_link'><a href="Cachable.html#clear_cache-instance_method" title="Cachable#clear_cache (method)">clear_cache</a></span></p>
 
-  <div id="constructor_details" class="method_details_list">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SystemCommand/Mixin.html" title="SystemCommand::Mixin (module)">SystemCommand::Mixin</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">#system_command</a></span>, <span class='object_link'><a href="SystemCommand/Mixin.html#system_command!-instance_method" title="SystemCommand::Mixin#system_command! (method)">#system_command!</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -2864,12 +2880,12 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-25
-26
-27</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_binary_executable_or_library_files'>binary_executable_or_library_files</span>
   <span class='id identifier rubyid_mach_o_files'>mach_o_files</span>
@@ -3285,10 +3301,6 @@ directories in the prefix, never symlinks.</p>
       <pre class="lines">
 
 
-29
-30
-31
-32
 33
 34
 35
@@ -3326,16 +3338,20 @@ directories in the prefix, never symlinks.</p>
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_codesign_patched_binary'>codesign_patched_binary</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>MacOS</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span> <span class='op'>&lt;</span> <span class='symbol'>:big_sur</span>
 
   <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Hardware.html" title="Hardware (module)">Hardware</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Hardware/CPU.html" title="Hardware::CPU (class)">CPU</a></span></span><span class='period'>.</span><span class='id identifier rubyid_arm?'><span class='object_link'><a href="Hardware/CPU.html#arm%3F-class_method" title="Hardware::CPU.arm? (method)">arm?</a></span></span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--verify</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--verify</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_stderr'>stderr</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>invalid signature</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -3359,7 +3375,7 @@ directories in the prefix, never symlinks.</p>
 
     <span class='comment'># Try signing again
 </span>    <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Codesigning (2nd try) </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--sign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--force</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--preserve-metadata=entitlements,requirements,flags,runtime</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='id identifier rubyid_file'>file</span>
@@ -3481,14 +3497,14 @@ reproducible bottles.</p>
       <pre class="lines">
 
 
-114
-115
-116
-117
-118</pre>
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_consistent_reproducible_symlink_permissions!'>consistent_reproducible_symlink_permissions!</span>
   <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
@@ -5273,10 +5289,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-72
-73
-74
-75
 76
 77
 78
@@ -5292,13 +5304,17 @@ expensive recursive search if possible.</p>
 88
 89
 90
-91</pre>
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_codesign_writable_files'>prepare_codesign_writable_files</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>codesign</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--display</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--file-list</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span>
   <span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
@@ -5352,10 +5368,6 @@ expensive recursive search if possible.</p>
       <pre class="lines">
 
 
-95
-96
-97
-98
 99
 100
 101
@@ -5365,16 +5377,20 @@ expensive recursive search if possible.</p>
 105
 106
 107
-108</pre>
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'extend/os/mac/keg.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepare_debug_symbols'>prepare_debug_symbols</span>
   <span class='id identifier rubyid_binary_executable_or_library_files'>binary_executable_or_library_files</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
     <span class='id identifier rubyid_odebug'>odebug</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Extracting symbols </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file'>file</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 
-    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'><span class='object_link'><a href="SystemCommand/Mixin.html#system_command-instance_method" title="SystemCommand::Mixin#system_command (method)">system_command</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dsymutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_system_command'>system_command</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dsymutil</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>args:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_file'>file</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_success?'>success?</span>
 
     <span class='comment'># If it fails again, error out
