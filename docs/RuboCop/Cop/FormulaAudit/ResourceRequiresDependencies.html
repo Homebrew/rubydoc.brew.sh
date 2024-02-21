@@ -110,7 +110,7 @@
   This class may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this class if possible, as it may be removed or changed without warning.
 </p>
-<p>This cop audits Python formulae that include the “lxml” resource
+<p>This cop audits Python formulae that include certain resources
 to ensure that they also have the correct <code>uses_from_macos</code>
 dependencies.</p>
 
@@ -240,7 +240,25 @@ dependencies.</p>
 25
 26
 27
-28</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'rubocops/resource_requires_dependencies.rb', line 15</span>
@@ -249,15 +267,33 @@ dependencies.</p>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_body_node'>body_node</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
   <span class='id identifier rubyid_resource_nodes'>resource_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:resource</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_lxml'>lxml</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_nodes'>resource_nodes</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_str_content'>str_content</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lxml</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lxml'>lxml</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_resource_nodes'>resource_nodes</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_uses_from_macos_nodes'>uses_from_macos_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:uses_from_macos</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_dependencies'>dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_uses_from_macos_nodes'>uses_from_macos_nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_str_content'>str_content</span> <span class='rbrace'>}</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libxml2</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dependencies'>dependencies</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libxslt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='qwords_beg'>%w[</span><span class='tstring_content'>lxml</span><span class='words_sep'> </span><span class='tstring_content'>pyyaml</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_resource_name'>resource_name</span><span class='op'>|</span>
+    <span class='id identifier rubyid_found'>found</span> <span class='op'>=</span> <span class='id identifier rubyid_resource_nodes'>resource_nodes</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='op'>&amp;.</span><span class='id identifier rubyid_first'>first</span><span class='op'>&amp;.</span><span class='id identifier rubyid_str_content'>str_content</span> <span class='op'>==</span> <span class='id identifier rubyid_resource_name'>resource_name</span> <span class='rbrace'>}</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_found'>found</span>
 
-  <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_lxml'>lxml</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Add `uses_from_macos` lines above for `\&quot;libxml2\&quot;` and `\&quot;libxslt\&quot;`.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_uses_from_macos_nodes'>uses_from_macos_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:uses_from_macos</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_uses_from_macos'>uses_from_macos</span> <span class='op'>=</span> <span class='id identifier rubyid_uses_from_macos_nodes'>uses_from_macos_nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_str_content'>str_content</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_depends_on_nodes'>depends_on_nodes</span> <span class='op'>=</span> <span class='id identifier rubyid_find_every_method_call_by_name'>find_every_method_call_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_body_node'>body_node</span><span class='comma'>,</span> <span class='symbol'>:depends_on</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_depends_on'>depends_on</span> <span class='op'>=</span> <span class='id identifier rubyid_depends_on_nodes'>depends_on_nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span> <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_str_content'>str_content</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_required_deps'>required_deps</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_resource_name'>resource_name</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lxml</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_kind'>kind</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>uses_from_macos</span><span class='tstring_end'>&quot;</span></span>
+      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libxml2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libxslt</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pyyaml</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_kind'>kind</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>depends_on</span><span class='tstring_end'>&quot;</span></span>
+      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libyaml</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_required_deps'>required_deps</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span> <span class='id identifier rubyid_uses_from_macos'>uses_from_macos</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_depends_on'>depends_on</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_dep'>dep</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_offending_node'>offending_node</span><span class='lparen'>(</span><span class='id identifier rubyid_found'>found</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_problem'>problem</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Add `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_kind'>kind</span><span class='embexpr_end'>}</span><span class='tstring_content'>` lines above for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_required_deps'>required_deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_req'>req</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`\&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_req'>req</span><span class='embexpr_end'>}</span><span class='tstring_content'>\&quot;`</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> and </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
