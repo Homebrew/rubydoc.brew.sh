@@ -836,6 +836,7 @@
       <pre class="lines">
 
 
+337
 338
 339
 340
@@ -882,11 +883,10 @@
 381
 382
 383
-384
-385</pre>
+384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 337</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_binary_arches'>check_binary_arches</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -971,6 +971,7 @@
       <pre class="lines">
 
 
+297
 298
 299
 300
@@ -1008,11 +1009,10 @@
 332
 333
 334
-335
-336</pre>
+335</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_cpuid_instruction'>check_cpuid_instruction</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='comment'># Checking for `cpuid` only makes sense on Intel:
@@ -1978,6 +1978,7 @@
       <pre class="lines">
 
 
+242
 243
 244
 245
@@ -2010,11 +2011,10 @@
 272
 273
 274
-275
-276</pre>
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 243</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_plist'>check_plist</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_plist'>plist</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2174,8 +2174,7 @@
 214
 215
 216
-217
-218</pre>
+217</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 184</span>
@@ -2187,20 +2186,19 @@
                    <span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:directory?</span><span class='rparen'>)</span>
                    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:basename</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_pythons'>pythons</span> <span class='op'>=</span> <span class='id identifier rubyid_lib_subdirs'>lib_subdirs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+  <span class='id identifier rubyid_pythons'>pythons</span> <span class='op'>=</span> <span class='id identifier rubyid_lib_subdirs'>lib_subdirs</span><span class='period'>.</span><span class='id identifier rubyid_filter_map'>filter_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
     <span class='id identifier rubyid_match'>match</span> <span class='op'>=</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_match'>match</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^python(\d+\.\d+)$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_captures'>captures</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
     <span class='id identifier rubyid_match'>match</span><span class='period'>.</span><span class='id identifier rubyid_captures'>captures</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
-  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_pythons'>pythons</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_python_deps'>python_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
                     <span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^python(@.*)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
-                    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d+\.\d+</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-                    <span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
+                    <span class='period'>.</span><span class='id identifier rubyid_filter_map'>filter_map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d+\.\d+</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_python_deps'>python_deps</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_pythons'>pythons</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_python_deps'>python_deps</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_v'>v</span> <span class='rbrace'>}</span>
@@ -2250,6 +2248,7 @@
       <pre class="lines">
 
 
+277
 278
 279
 280
@@ -2259,11 +2258,10 @@
 284
 285
 286
-287
-288</pre>
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_python_symlinks'>check_python_symlinks</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_keg_only'>keg_only</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_keg_only'>keg_only</span>
@@ -2311,16 +2309,16 @@
       <pre class="lines">
 
 
+289
 290
 291
 292
 293
 294
-295
-296</pre>
+295</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 290</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_service_command'>check_service_command</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
@@ -2428,6 +2426,7 @@
       <pre class="lines">
 
 
+219
 220
 221
 222
@@ -2448,11 +2447,10 @@
 237
 238
 239
-240
-241</pre>
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'formula_cellar_checks.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_shim_references'>check_shim_references</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_prefix'>prefix</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
