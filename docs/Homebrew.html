@@ -10255,20 +10255,20 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-470
-471
-472
-473
-474
-475
-476
-477
-478
-479
-480</pre>
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 470</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 484</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alias_update_pair'>alias_update_pair</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_formula_version'>new_formula_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_versioned_alias'>versioned_alias</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.*@\d+(\.\d+)?$</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -13075,7 +13075,21 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 170
 171
 172
-173</pre>
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 67</span>
@@ -13104,6 +13118,20 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This cask is not in a tap!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This cask&#39;s tap is not a Git repository!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
+
+  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_TEST_BOT_AUTOBUMP</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span>
+     <span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_core_cask_tap?'>core_cask_tap?</span> <span class='op'>&amp;&amp;</span>
+     <span class='lparen'>(</span><span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>Tap</span><span class='op'>::</span><span class='const'>HOMEBREW_TAP_AUTOBUMP_FILE</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span><span class='period'>.</span><span class='id identifier rubyid_readlines'>readlines</span><span class='lparen'>(</span><span class='label'>chomp:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Whoops, the </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='embexpr_end'>}</span><span class='tstring_content'> cask has its version update
+</span><span class='tstring_content'>      pull requests automatically opened by BrewTestBot!
+</span><span class='tstring_content'>      We&#39;d still love your contributions, though, so try another one
+</span><span class='tstring_content'>      that&#39;s not in the autobump list:
+</span><span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_url'><span class='object_link'><a href="Formatter.html#url-class_method" title="Formatter.url (method)">url</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote'>remote</span><span class='embexpr_end'>}</span><span class='tstring_content'>/blob/master/.github/autobump.txt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_new_version'>new_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Homebrew/BumpVersionParser.html" title="Homebrew::BumpVersionParser (class)">BumpVersionParser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Homebrew/BumpVersionParser.html#initialize-instance_method" title="Homebrew::BumpVersionParser#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>general:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='comma'>,</span>
@@ -13670,7 +13698,21 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 380
 381
 382
-383</pre>
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 92</span>
@@ -13697,6 +13739,20 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This formula is deprecated and does not build!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_deprecation_reason'>deprecation_reason</span> <span class='op'>==</span> <span class='symbol'>:does_not_build</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This formula is not in a tap!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This formula&#39;s tap is not a Git repository!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_git?'>git?</span>
+
+  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_TEST_BOT_AUTOBUMP</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span>
+     <span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_core_tap?'>core_tap?</span> <span class='op'>&amp;&amp;</span>
+     <span class='lparen'>(</span><span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='op'>/</span><span class='const'>Tap</span><span class='op'>::</span><span class='const'>HOMEBREW_TAP_AUTOBUMP_FILE</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='op'>&amp;&amp;</span>
+     <span class='id identifier rubyid_autobump_file_path'>autobump_file_path</span><span class='period'>.</span><span class='id identifier rubyid_readlines'>readlines</span><span class='lparen'>(</span><span class='label'>chomp:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_odie'>odie</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
+<span class='tstring_content'>      Whoops, the </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> formula has its version update
+</span><span class='tstring_content'>      pull requests automatically opened by BrewTestBot!
+</span><span class='tstring_content'>      We&#39;d still love your contributions, though, so try another one
+</span><span class='tstring_content'>      that&#39;s not in the autobump list:
+</span><span class='tstring_content'>        </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_url'><span class='object_link'><a href="Formatter.html#url-class_method" title="Formatter.url (method)">url</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote'>remote</span><span class='embexpr_end'>}</span><span class='tstring_content'>/blob/master/.github/autobump.txt</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='heredoc_end'>    EOS
+</span>  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_formula_spec'>formula_spec</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_stable'>stable</span>
   <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_formula'>formula</span><span class='embexpr_end'>}</span><span class='tstring_content'>: no stable specification found!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_formula_spec'>formula_spec</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -15366,17 +15422,17 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-461
-462
-463
-464
-465
-466
-467
-468</pre>
+475
+476
+477
+478
+479
+480
+481
+482</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 461</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 475</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_closed_pull_requests'>check_closed_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span><span class='rparen'>)</span>
   <span class='comment'># if we haven&#39;t already found open requests, try for an exact match across closed requests
@@ -15406,21 +15462,21 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-398
-399
-400
-401
-402
-403
-404
-405
-406
-407
-408
-409</pre>
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 398</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 412</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_for_mirrors'>check_for_mirrors</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_old_mirrors'>old_mirrors</span><span class='comma'>,</span> <span class='id identifier rubyid_new_mirrors'>new_mirrors</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_mirrors'>new_mirrors</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>||</span> <span class='id identifier rubyid_old_mirrors'>old_mirrors</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -15488,20 +15544,20 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-439
-440
-441
-442
-443
-444
-445
-446
-447
-448
-449</pre>
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_new_version'>check_new_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>version:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>url:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>tag:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -15534,15 +15590,15 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-432
-433
-434
-435
-436
-437</pre>
+446
+447
+448
+449
+450
+451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_open_pull_requests'>check_open_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="GitHub.html" title="GitHub (module)">GitHub</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check_for_duplicate_pull_requests'><span class='object_link'><a href="GitHub.html#check_for_duplicate_pull_requests-class_method" title="GitHub.check_for_duplicate_pull_requests (method)">check_for_duplicate_pull_requests</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span><span class='comma'>,</span>
@@ -15617,20 +15673,6 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
 263
 264
 265
@@ -15640,10 +15682,24 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 269
 270
 271
-272</pre>
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_pull_requests'>check_pull_requests</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='label'>args:</span><span class='comma'>,</span> <span class='label'>new_version:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tap_remote_repo'>tap_remote_repo</span> <span class='op'>=</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_full_name'>full_name</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_remote_repo'>remote_repo</span>
@@ -15689,18 +15745,18 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
-451
-452
-453
-454
-455
-456
-457
-458
-459</pre>
+465
+466
+467
+468
+469
+470
+471
+472
+473</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 465</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_throttle'>check_throttle</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_throttled_rate'>throttled_rate</span> <span class='op'>=</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_audit_exceptions'>audit_exceptions</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:throttled_formulae</span><span class='comma'>,</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -18851,21 +18907,21 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-385
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396</pre>
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 399</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_determine_mirror'>determine_mirror</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_url'>url</span>
@@ -21178,18 +21234,18 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-411
-412
-413
-414
-415
-416
-417
-418
-419</pre>
+425
+426
+427
+428
+429
+430
+431
+432
+433</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 411</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 425</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fetch_resource_and_forced_version'>fetch_resource_and_forced_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_specs'>specs</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_resource'>resource</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Resource.html" title="Resource (class)">Resource</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Resource.html#initialize-instance_method" title="Resource#initialize (method)">new</a></span></span>
@@ -21673,19 +21729,19 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-421
-422
-423
-424
-425
-426
-427
-428
-429
-430</pre>
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 421</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 435</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_version'>formula_version</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_contents'>contents</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_spec'>spec</span> <span class='op'>=</span> <span class='symbol'>:stable</span>
@@ -36732,20 +36788,6 @@ for IRB and have already been parsed by the CLI::Parser.</p>
       <pre class="lines">
 
 
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
 206
 207
 208
@@ -36786,10 +36828,24 @@ for IRB and have already been parsed by the CLI::Parser.</p>
 243
 244
 245
-246</pre>
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_version_and_checksum'>replace_version_and_checksum</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_new_hash'>new_hash</span><span class='comma'>,</span> <span class='id identifier rubyid_new_version'>new_version</span><span class='comma'>,</span> <span class='id identifier rubyid_replacement_pairs'>replacement_pairs</span><span class='rparen'>)</span>
   <span class='comment'># When blocks are absent, arch is not relevant. For consistency, we simulate the arm architecture.
@@ -38103,20 +38159,6 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-482
-483
-484
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494
-495
 496
 497
 498
@@ -38133,10 +38175,24 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
 509
 510
 511
-512</pre>
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 482</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-formula-pr.rb', line 496</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_audit'>run_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='comma'>,</span> <span class='id identifier rubyid_alias_rename'>alias_rename</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_audit_args'>audit_args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--formula</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -38300,30 +38356,30 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
 289
 290
 291
 292
 293
 294
-295</pre>
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 275</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_audit'>run_cask_audit</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -38413,30 +38469,30 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
 312
 313
 314
 315
 316
 317
-318</pre>
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 312</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run_cask_style'>run_cask_style</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_old_contents'>old_contents</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dry_run?'>dry_run?</span>
@@ -39725,16 +39781,16 @@ Potentially rewords this commit using <span class='object_link'><a href="#determ
       <pre class="lines">
 
 
-176
-177
-178
-179
-180
-181
-182</pre>
+190
+191
+192
+193
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'dev-cmd/bump-cask-pr.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shortened_version'>shortened_version</span><span class='lparen'>(</span><span class='id identifier rubyid_version'>version</span><span class='comma'>,</span> <span class='label'>cask:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span> <span class='op'>==</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_before_comma'>before_comma</span>
