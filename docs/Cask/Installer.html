@@ -1926,8 +1926,8 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Store cask download path in cask to prevent multiple downloads in a row when checking if it&#39;s outdated
-</span>  <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span> <span class='op'>||=</span> <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='comma'>,</span> <span class='label'>verify_download_integrity:</span> <span class='ivar'>@verify_download_integrity</span><span class='comma'>,</span>
-                                      <span class='label'>timeout:</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
+</span>  <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span> <span class='op'>||=</span> <span class='id identifier rubyid_downloader'>downloader</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='label'>quiet:</span><span class='comma'>,</span> <span class='label'>verify_download_integrity:</span> <span class='ivar'>@verify_download_integrity</span><span class='comma'>,</span>
+                                      <span class='label'>timeout:</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2062,21 +2062,21 @@
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_nested_container'>nested_container</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_container'>container</span><span class='op'>&amp;.</span><span class='id identifier rubyid_nested'>nested</span><span class='rparen'>)</span>
     <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_mktmpdir'>mktmpdir</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask-installer</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_TEMP-constant" title="HOMEBREW_TEMP (constant)">HOMEBREW_TEMP</a></span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='op'>|</span>
       <span class='id identifier rubyid_tmpdir'>tmpdir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='comma'>,</span> <span class='label'>basename:</span> <span class='id identifier rubyid_basename'>basename</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_extract'>extract</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='comma'>,</span> <span class='label'>basename:</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
 
       <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_chmod_R'>chmod_R</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>+rw</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='op'>/</span><span class='id identifier rubyid_nested_container'>nested_container</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span>
 
       <span class='const'><span class='object_link'><a href="../UnpackStrategy.html" title="UnpackStrategy (module)">UnpackStrategy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_detect'><span class='object_link'><a href="../UnpackStrategy.html#detect-class_method" title="UnpackStrategy.detect (method)">detect</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='op'>/</span><span class='id identifier rubyid_nested_container'>nested_container</span><span class='comma'>,</span> <span class='label'>merge_xattrs:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-                    <span class='period'>.</span><span class='id identifier rubyid_extract_nestedly'>extract_nestedly</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
+                    <span class='period'>.</span><span class='id identifier rubyid_extract_nestedly'>extract_nestedly</span><span class='lparen'>(</span><span class='label'>to:</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_extract_nestedly'>extract_nestedly</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='comma'>,</span> <span class='label'>basename:</span> <span class='id identifier rubyid_basename'>basename</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_extract_nestedly'>extract_nestedly</span><span class='lparen'>(</span><span class='label'>to:</span><span class='comma'>,</span> <span class='label'>basename:</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_quarantine?'>quarantine?</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Quarantine.html" title="Cask::Quarantine (module)">Quarantine</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="Quarantine.html#available%3F-class_method" title="Cask::Quarantine.available? (method)">available?</a></span></span>
 
-  <span class='const'><span class='object_link'><a href="Quarantine.html" title="Cask::Quarantine (module)">Quarantine</a></span></span><span class='period'>.</span><span class='id identifier rubyid_propagate'><span class='object_link'><a href="Quarantine.html#propagate-class_method" title="Cask::Quarantine.propagate (method)">propagate</a></span></span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Quarantine.html" title="Cask::Quarantine (module)">Quarantine</a></span></span><span class='period'>.</span><span class='id identifier rubyid_propagate'><span class='object_link'><a href="Quarantine.html#propagate-class_method" title="Cask::Quarantine.propagate (method)">propagate</a></span></span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_primary_container'>primary_container</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2165,7 +2165,7 @@
   <span class='id identifier rubyid_verify_has_sha'>verify_has_sha</span> <span class='kw'>if</span> <span class='id identifier rubyid_require_sha?'>require_sha?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_force?'>force?</span>
   <span class='id identifier rubyid_check_requirements'>check_requirements</span>
 
-  <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='label'>quiet:</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='comma'>,</span> <span class='label'>timeout:</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='label'>quiet:</span><span class='comma'>,</span> <span class='label'>timeout:</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_satisfy_cask_and_formula_dependencies'>satisfy_cask_and_formula_dependencies</span>
 <span class='kw'>end</span></pre>
@@ -2370,7 +2370,7 @@
 
   <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_default_config'>default_config</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_old_config'>old_config</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_install_artifacts'>install_artifacts</span><span class='lparen'>(</span><span class='label'>predecessor:</span> <span class='id identifier rubyid_predecessor'>predecessor</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_install_artifacts'>install_artifacts</span><span class='lparen'>(</span><span class='label'>predecessor:</span><span class='rparen'>)</span>
 
   <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_tap'>tap</span> <span class='op'>=</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_should_report_analytics?'>should_report_analytics?</span>
     <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/Analytics.html" title="Utils::Analytics (module)">Analytics</a></span></span><span class='period'>.</span><span class='id identifier rubyid_report_package_event'><span class='object_link'><a href="../Utils/Analytics.html#report_package_event-class_method" title="Utils::Analytics.report_package_event (method)">report_package_event</a></span></span><span class='lparen'>(</span><span class='symbol'>:cask_install</span><span class='comma'>,</span> <span class='label'>package_name:</span> <span class='ivar'>@cask</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='label'>tap_name:</span> <span class='id identifier rubyid_tap'>tap</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
@@ -2495,7 +2495,7 @@
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Artifact.html" title="Cask::Artifact (module)">Artifact</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Artifact/Binary.html" title="Cask::Artifact::Binary (class)">Binary</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_binaries?'>binaries?</span>
 
     <span class='id identifier rubyid_artifact'>artifact</span><span class='period'>.</span><span class='id identifier rubyid_install_phase'>install_phase</span><span class='lparen'>(</span>
-      <span class='label'>command:</span> <span class='ivar'>@command</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>adopt:</span> <span class='id identifier rubyid_adopt?'>adopt?</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span> <span class='label'>predecessor:</span> <span class='id identifier rubyid_predecessor'>predecessor</span><span class='comma'>,</span>
+      <span class='label'>command:</span> <span class='ivar'>@command</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span> <span class='label'>adopt:</span> <span class='id identifier rubyid_adopt?'>adopt?</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span> <span class='label'>predecessor:</span><span class='comma'>,</span>
     <span class='rparen'>)</span>
     <span class='id identifier rubyid_already_installed_artifacts'>already_installed_artifacts</span><span class='period'>.</span><span class='id identifier rubyid_unshift'>unshift</span><span class='lparen'>(</span><span class='id identifier rubyid_artifact'>artifact</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -3087,7 +3087,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_revert_upgrade'>revert_upgrade</span><span class='lparen'>(</span><span class='label'>predecessor:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Reverting upgrade for Cask </span><span class='embexpr_beg'>#{</span><span class='ivar'>@cask</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_restore_backup'>restore_backup</span>
-  <span class='id identifier rubyid_install_artifacts'>install_artifacts</span><span class='lparen'>(</span><span class='label'>predecessor:</span> <span class='id identifier rubyid_predecessor'>predecessor</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_install_artifacts'>install_artifacts</span><span class='lparen'>(</span><span class='label'>predecessor:</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3489,7 +3489,7 @@
       <pre class="code"><span class="info file"># File 'cask/installer.rb', line 424</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_start_upgrade'>start_upgrade</span><span class='lparen'>(</span><span class='label'>successor:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>successor:</span> <span class='id identifier rubyid_successor'>successor</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>successor:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_backup'>backup</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3626,7 +3626,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstall'>uninstall</span><span class='lparen'>(</span><span class='label'>successor:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_load_installed_caskfile!'>load_installed_caskfile!</span>
   <span class='id identifier rubyid_oh1'>oh1</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Uninstalling Cask </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Formatter.html" title="Formatter (module)">Formatter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_identifier'><span class='object_link'><a href="../Formatter.html#identifier-class_method" title="Formatter.identifier (method)">identifier</a></span></span><span class='lparen'>(</span><span class='ivar'>@cask</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>clear:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>successor:</span> <span class='id identifier rubyid_successor'>successor</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_uninstall_artifacts'>uninstall_artifacts</span><span class='lparen'>(</span><span class='label'>clear:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>successor:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_reinstall?'>reinstall?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_upgrade?'>upgrade?</span>
     <span class='id identifier rubyid_remove_download_sha'>remove_download_sha</span>
     <span class='id identifier rubyid_remove_config_file'>remove_config_file</span>
@@ -3749,7 +3749,7 @@
         <span class='label'>verbose:</span>   <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span>
         <span class='label'>skip:</span>      <span class='id identifier rubyid_clear'>clear</span><span class='comma'>,</span>
         <span class='label'>force:</span>     <span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span>
-        <span class='label'>successor:</span> <span class='id identifier rubyid_successor'>successor</span><span class='comma'>,</span>
+        <span class='label'>successor:</span><span class='comma'>,</span>
         <span class='label'>upgrade:</span>   <span class='id identifier rubyid_upgrade?'>upgrade?</span><span class='comma'>,</span>
         <span class='label'>reinstall:</span> <span class='id identifier rubyid_reinstall?'>reinstall?</span><span class='comma'>,</span>
       <span class='rparen'>)</span>
@@ -3763,7 +3763,7 @@
       <span class='label'>verbose:</span>   <span class='id identifier rubyid_verbose?'>verbose?</span><span class='comma'>,</span>
       <span class='label'>skip:</span>      <span class='id identifier rubyid_clear'>clear</span><span class='comma'>,</span>
       <span class='label'>force:</span>     <span class='id identifier rubyid_force?'>force?</span><span class='comma'>,</span>
-      <span class='label'>successor:</span> <span class='id identifier rubyid_successor'>successor</span><span class='comma'>,</span>
+      <span class='label'>successor:</span><span class='comma'>,</span>
     <span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
