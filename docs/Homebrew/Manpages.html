@@ -78,7 +78,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>manpages.rb</dd>
+    <dd>manpages.rb<span class="defines">,<br />
+  manpages/parser/ronn.rb,<br /> manpages/converter/roff.rb,<br /> manpages/converter/kramdown.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -101,6 +103,8 @@
 </div><h2>Defined Under Namespace</h2>
 <p class="children">
   
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Manpages/Converter.html" title="Homebrew::Manpages::Converter (module)">Converter</a></span>, <span class='object_link'><a href="Manpages/Parser.html" title="Homebrew::Manpages::Parser (module)">Parser</a></span>
     
   
     
@@ -172,28 +176,6 @@
   <span class="summary_signature">
     
       <a href="#cmd_parser_manpage_lines-class_method" title="cmd_parser_manpage_lines (class method)">.<strong>cmd_parser_manpage_lines</strong>(cmd_parser)  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#convert_man_page-class_method" title="convert_man_page (class method)">.<strong>convert_man_page</strong>(markup, target)  &#x21d2; Object </a>
     
     
   </span>
@@ -409,28 +391,6 @@
 </li>
 
       
-        
-<li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#target_path_to_format-class_method" title="target_path_to_format (class method)">.<strong>target_path_to_format</strong>(target)  &#x21d2; Object </a>
-    
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
     </ul>
   
 
@@ -470,18 +430,6 @@
       <pre class="lines">
 
 
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
 50
 51
 52
@@ -493,10 +441,22 @@
 58
 59
 60
-61</pre>
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build_man_page'>build_man_page</span><span class='lparen'>(</span><span class='label'>quiet:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_template'>template</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#SOURCE_PATH-constant" title="SOURCE_PATH (constant)">SOURCE_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew.1.md.erb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
@@ -557,33 +517,35 @@
       <pre class="lines">
 
 
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181</pre>
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cmd_comment_manpage_lines'>cmd_comment_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_comment_lines'>comment_lines</span> <span class='op'>=</span> <span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^#:</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
@@ -603,8 +565,10 @@
 </span>    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>--(debug|help|quiet|verbose) </span><span class='regexp_end'>/</span></span><span class='rparen'>)</span>
 
     <span class='comment'># Format one option or a comma-separated pair of short and long options.
-</span>    <span class='id identifier rubyid_lines'>lines</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ +(-+[a-z-]+), (-+[a-z-]+) +</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* `\\1`, `\\2`:\n  </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ +(-+[a-z-]+) +</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>* `\\1`:\n  </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ +(-+[a-z-]+), (-+[a-z-]+) +(.*)$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`\\1`, `\\2`\n\n: \\3\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_line'>line</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^ +(-+[a-z-]+) +(.*)$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`\\1`\n\n: \\2\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_lines'>lines</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_line'>line</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_lines'>lines</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_lines'>lines</span>
@@ -644,25 +608,25 @@
       <pre class="lines">
 
 
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156</pre>
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cmd_parser_manpage_lines'>cmd_parser_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_format_usage_banner'>format_usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='period'>.</span><span class='id identifier rubyid_usage_banner_text'>usage_banner_text</span><span class='rparen'>)</span><span class='rbracket'>]</span>
@@ -679,131 +643,6 @@
     <span class='id identifier rubyid_generate_option_doc'>generate_option_doc</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_lines'>lines</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="convert_man_page-class_method">
-  
-    .<strong>convert_man_page</strong>(markup, target)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
-  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 68</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_convert_man_page'>convert_man_page</span><span class='lparen'>(</span><span class='id identifier rubyid_markup'>markup</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_manual'>manual</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_organisation'>organisation</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Homebrew</span><span class='tstring_end'>&quot;</span></span>
-
-  <span class='comment'># Set the manpage date to the existing one if we&#39;re updating.
-</span>  <span class='comment'># This avoids the only change being e.g. a new date.
-</span>  <span class='id identifier rubyid_date'>date</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.1</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span>
-    <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&quot;(\d{1,2})&quot; &quot;([A-Z][a-z]+) (\d{4})&quot; &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organisation'>organisation</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot; &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_manual'>manual</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='regexp_end'>/</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
-    <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_last_match'>last_match</span><span class='lparen'>(</span><span class='int'>1</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_last_match'>last_match</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_last_match'>last_match</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
-    <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_today'>today</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_date'>date</span> <span class='op'>=</span> <span class='id identifier rubyid_date'>date</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%Y-%m-%d</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_shared_args'>shared_args</span> <span class='op'>=</span> <span class='words_beg'>%W[</span><span class='words_sep'>
-    </span><span class='tstring_content'>--pipe</span><span class='words_sep'>
-    </span><span class='tstring_content'>--organization=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_organisation'>organisation</span><span class='embexpr_end'>}</span><span class='words_sep'>
-    </span><span class='tstring_content'>--manual=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='words_sep'>
-    </span><span class='tstring_content'>--date=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_date'>date</span><span class='embexpr_end'>}</span><span class='words_sep'>
-  </span><span class='tstring_end'>]</span></span>
-
-  <span class='id identifier rubyid_format_flag'>format_flag</span><span class='comma'>,</span> <span class='id identifier rubyid_format_desc'>format_desc</span> <span class='op'>=</span> <span class='id identifier rubyid_target_path_to_format'>target_path_to_format</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_format_desc'>format_desc</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='const'><span class='object_link'><a href="../Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_popen'><span class='object_link'><a href="../Utils.html#popen-class_method" title="Utils.popen (method)">popen</a></span></span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ronn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_format_flag'>format_flag</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_shared_args'>shared_args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rb+</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ronn'>ronn</span><span class='op'>|</span>
-    <span class='id identifier rubyid_ronn'>ronn</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_markup'>markup</span>
-    <span class='id identifier rubyid_ronn'>ronn</span><span class='period'>.</span><span class='id identifier rubyid_close_write'>close_write</span>
-    <span class='id identifier rubyid_ronn_output'>ronn_output</span> <span class='op'>=</span> <span class='id identifier rubyid_ronn'>ronn</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span>
-    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Got no output from ronn!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_ronn_output'>ronn_output</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='id identifier rubyid_ronn_output'>ronn_output</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_format_flag'>format_flag</span>
-    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--markdown</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_ronn_output'>ronn_output</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>&lt;var&gt;(.*?)&lt;/var&gt;</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*`\\1`*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\n\n\n+</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(- `[^`]+`):</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># drop trailing colons from definition lists
-</span>                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;=\n\n)([\[`].+):\n</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1\n&lt;br&gt;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># replace colons with &lt;br&gt; on subcommands
-</span>    <span class='kw'>when</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--roff</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_ronn_output'>ronn_output</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>&lt;code&gt;(.*?)&lt;/code&gt;</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\fB\\1\\fR</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>%r{</span><span class='tstring_content'>&lt;var&gt;(.*?)&lt;/var&gt;</span><span class='regexp_end'>}</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\fI\\1\\fR</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-                 <span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(^\[?\\fB.+): </span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1\n    </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_atomic_write'>atomic_write</span> <span class='id identifier rubyid_ronn_output'>ronn_output</span>
-  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -853,27 +692,27 @@
       <pre class="lines">
 
 
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213</pre>
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_env_vars_manpage'>env_vars_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="EnvConfig.html#ENVS-constant" title="Homebrew::EnvConfig::ENVS (constant)">ENVS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
-    <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>- `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>`:\n  &lt;br&gt;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:description</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_env'>env</span><span class='embexpr_end'>}</span><span class='tstring_content'>`\n\n: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:description</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:default_text</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_default'>default</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>`.</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_entry'>entry</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n  *Default:* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_default'>default</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_default'>default</span>
+    <span class='id identifier rubyid_entry'>entry</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\n    *Default:* </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_default'>default</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_default'>default</span>
 
     <span class='id identifier rubyid_entry'>entry</span>
   <span class='kw'>end</span>
@@ -914,12 +753,12 @@
       <pre class="lines">
 
 
-215
-216
-217</pre>
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 178</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_opt'>format_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span><span class='rparen'>)</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_opt'>opt</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -959,16 +798,18 @@
       <pre class="lines">
 
 
-227
-228
-229</pre>
+192
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_format_usage_banner'>format_usage_banner</span><span class='lparen'>(</span><span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_usage_banner'>usage_banner</span><span class='op'>&amp;.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(#: *\* )?</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>### </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+              <span class='op'>&amp;.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;!`)\[([^\[\]]*)\](?!`)</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\[\\1\\]</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># escape [] character (except those in code spans)
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1004,28 +845,30 @@
       <pre class="lines">
 
 
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139</pre>
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_cmd_manpages'>generate_cmd_manpages</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_paths'>cmd_paths</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_man_page_lines'>man_page_lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1038,8 +881,10 @@
 
       <span class='id identifier rubyid_cmd_parser_manpage_lines'>cmd_parser_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_parser'>cmd_parser</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_cmd_comment_manpage_lines'>cmd_comment_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_cmd_comment_manpage_lines'>cmd_comment_manpage_lines</span><span class='lparen'>(</span><span class='id identifier rubyid_cmd_path'>cmd_path</span><span class='rparen'>)</span><span class='op'>&amp;.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='kw'>end</span>
+    <span class='comment'># Convert subcommands to definition lists
+</span>    <span class='id identifier rubyid_cmd_man_page_lines'>cmd_man_page_lines</span><span class='op'>&amp;.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>(?&lt;=\n\n)([\\?\[`].+):\n</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\\1\n\n: </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_man_page_lines'>man_page_lines</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_cmd_man_page_lines'>cmd_man_page_lines</span>
   <span class='kw'>end</span>
@@ -1081,22 +926,26 @@
       <pre class="lines">
 
 
-219
-220
-221
-222
-223
-224
-225</pre>
+182
+183
+184
+185
+186
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_generate_option_doc'>generate_option_doc</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='comma'>,</span> <span class='id identifier rubyid_long'>long</span><span class='comma'>,</span> <span class='id identifier rubyid_desc'>desc</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_comma'>comma</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_long'>long</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
-<span class='tstring_content'>    * </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_format_opt'>format_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_comma'>comma</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_format_opt'>format_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_long'>long</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>:
-</span><span class='tstring_content'>      </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_desc'>desc</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+<span class='tstring_content'>    </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_format_opt'>format_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_short'>short</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_comma'>comma</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_format_opt'>format_opt</span><span class='lparen'>(</span><span class='id identifier rubyid_long'>long</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>
+</span><span class='tstring_content'>    : </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_desc'>desc</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+</span><span class='tstring_content'>
 </span><span class='heredoc_end'>  EOS
 </span><span class='kw'>end</span></pre>
     </td>
@@ -1147,17 +996,17 @@
       <pre class="lines">
 
 
-184
-185
-186
-187
-188
-189
-190
-191</pre>
+147
+148
+149
+150
+151
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_global_cask_options_manpage'>global_cask_options_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>These options are applicable to the `install`, `reinstall`, and `upgrade` </span><span class='tstring_end'>&quot;</span></span> \
@@ -1215,16 +1064,16 @@
       <pre class="lines">
 
 
-194
-195
-196
-197
-198
-199
-200</pre>
+157
+158
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_global_options_manpage'>global_options_manpage</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>These options are applicable across multiple subcommands.\n</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1268,23 +1117,39 @@
       <pre class="lines">
 
 
-30
-31
-32
-33
 34
 35
-36</pre>
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_regenerate_man_pages'>regenerate_man_pages</span><span class='lparen'>(</span><span class='label'>quiet:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='period'>.</span><span class='id identifier rubyid_install_bundler_gems!'><span class='object_link'><a href="../Homebrew.html#install_bundler_gems!-class_method" title="Homebrew.install_bundler_gems! (method)">install_bundler_gems!</a></span></span><span class='lparen'>(</span><span class='label'>groups:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>man</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_markup'>markup</span> <span class='op'>=</span> <span class='id identifier rubyid_build_man_page'>build_man_page</span><span class='lparen'>(</span><span class='label'>quiet:</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_convert_man_page'>convert_man_page</span><span class='lparen'>(</span><span class='id identifier rubyid_markup'>markup</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#TARGET_DOC_PATH-constant" title="TARGET_DOC_PATH (constant)">TARGET_DOC_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Manpage.md</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_convert_man_page'>convert_man_page</span><span class='lparen'>(</span><span class='id identifier rubyid_markup'>markup</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../top-level-namespace.html#TARGET_MAN_PATH-constant" title="TARGET_MAN_PATH (constant)">TARGET_MAN_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Manpages/Parser.html" title="Homebrew::Manpages::Parser (module)">Parser</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Manpages/Parser/Ronn.html" title="Homebrew::Manpages::Parser::Ronn (class)">Ronn</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_markup'>markup</span><span class='rparen'>)</span>
+  <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_warnings'>warnings</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_roff'>roff</span><span class='comma'>,</span> <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Manpages/Converter.html" title="Homebrew::Manpages::Converter (module)">Converter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Manpages/Converter/Kramdown.html" title="Homebrew::Manpages::Converter::Kramdown (class)">Kramdown</a></span></span><span class='period'>.</span><span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='rparen'>)</span>
+  <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_warnings'>warnings</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../File.html" title="File (class)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#TARGET_DOC_PATH-constant" title="TARGET_DOC_PATH (constant)">TARGET_DOC_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Manpage.md</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_roff'>roff</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_roff'>roff</span><span class='comma'>,</span> <span class='id identifier rubyid_warnings'>warnings</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Manpages/Converter.html" title="Homebrew::Manpages::Converter (module)">Converter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Manpages/Converter/Roff.html" title="Homebrew::Manpages::Converter::Roff (class)">Roff</a></span></span><span class='period'>.</span><span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_root'><span class='object_link'><a href="../top-level-namespace.html" title="Top Level Namespace (root)">root</a></span></span><span class='rparen'>)</span>
+  <span class='gvar'>$stderr</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_warnings'>warnings</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../File.html" title="File (class)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../top-level-namespace.html#TARGET_MAN_PATH-constant" title="TARGET_MAN_PATH (constant)">TARGET_MAN_PATH</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brew.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_roff'>roff</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1321,72 +1186,17 @@
       <pre class="lines">
 
 
-63
-64
-65
-66</pre>
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'manpages.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_sort_key_for_path'>sort_key_for_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='comment'># Options after regular commands (`~` comes after `z` in ASCII table).
 </span>  <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.(rb|sh)$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^--</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>~~</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="target_path_to_format-class_method">
-  
-    .<strong>target_path_to_format</strong>(target)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
-  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
-</p>
-
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-112
-113
-114
-115
-116
-117
-118
-119</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'manpages.rb', line 112</span>
-
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_target_path_to_format'>target_path_to_format</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span>
-  <span class='kw'>case</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.md$</span><span class='regexp_end'>/</span></span>    <span class='kw'>then</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--markdown</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>markdown</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.\d$</span><span class='regexp_end'>/</span></span>    <span class='kw'>then</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--roff</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>man page</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_odie'>odie</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed to infer output format from &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
