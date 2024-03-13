@@ -699,17 +699,17 @@
       <pre class="lines">
 
 
-192
-193
 194
 195
 196
 197
 198
-199</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'build.rb', line 192</span>
+      <pre class="code"><span class="info file"># File 'build.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_detect_stdlibs'>detect_stdlibs</span>
   <span class='id identifier rubyid_keg'>keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Keg.html#initialize-instance_method" title="Keg#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='rparen'>)</span>
@@ -921,8 +921,6 @@
       <pre class="lines">
 
 
-201
-202
 203
 204
 205
@@ -934,10 +932,12 @@
 211
 212
 213
-214</pre>
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'build.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'build.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fixopt'>fixopt</span><span class='lparen'>(</span><span class='id identifier rubyid_formula'>formula</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_linked_keg'>linked_keg</span><span class='period'>.</span><span class='id identifier rubyid_symlink?'>symlink?</span>
@@ -1111,7 +1111,9 @@
 187
 188
 189
-190</pre>
+190
+191
+192</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'build.rb', line 67</span>
@@ -1191,12 +1193,14 @@
       <span class='id identifier rubyid_with_env'>with_env</span><span class='lparen'>(</span>
         <span class='comment'># For head builds, HOMEBREW_FORMULA_PREFIX should include the commit,
 </span>        <span class='comment'># which is not known until after the formula has been staged.
-</span>        <span class='label'>HOMEBREW_FORMULA_PREFIX:</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span>
+</span>        <span class='label'>HOMEBREW_FORMULA_PREFIX:</span>    <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span>
+        <span class='comment'># https://reproducible-builds.org/docs/build-path/
+</span>        <span class='label'>HOMEBREW_FORMULA_BUILDPATH:</span> <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_buildpath'>buildpath</span><span class='comma'>,</span>
         <span class='comment'># https://reproducible-builds.org/docs/source-date-epoch/
-</span>        <span class='label'>SOURCE_DATE_EPOCH:</span>       <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+</span>        <span class='label'>SOURCE_DATE_EPOCH:</span>          <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_source_modified_time'>source_modified_time</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
         <span class='comment'># Avoid make getting confused about timestamps.
 </span>        <span class='comment'># https://github.com/Homebrew/homebrew-core/pull/87470
-</span>        <span class='label'>TZ:</span>                      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UTC0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+</span>        <span class='label'>TZ:</span>                         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UTC0</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
       <span class='rparen'>)</span> <span class='kw'>do</span>
         <span class='id identifier rubyid_formula'>formula</span><span class='period'>.</span><span class='id identifier rubyid_patch'>patch</span>
 
