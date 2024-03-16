@@ -392,6 +392,28 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#paginate_graphql-class_method" title="paginate_graphql (class method)">.<strong>paginate_graphql</strong>(query, variables: nil, &amp;_block)  &#x21d2; void </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#paginate_rest-class_method" title="paginate_rest (class method)">.<strong>paginate_rest</strong>(url, additional_query_params: nil, per_page: 100)  &#x21d2; Object </a>
     
     
@@ -1061,6 +1083,112 @@ but only if that password looks like a GitHub Personal Access Token.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="paginate_graphql-class_method">
+  
+    .<strong>paginate_graphql</strong>(query, variables: nil, &amp;_block)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+<p class="note returns_void">This method returns an undefined value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>query</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>variables</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Hash.html" title="Hash (class)">Hash</a></span>{<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span> =&gt; <span class='object_link'>T</span>.untyped}</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>_block</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'>T</span>.proc.params(data: T::Hash[<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>, <span class='object_link'>T</span>.untyped]).returns(T::Hash[<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>, <span class='object_link'>T</span>.untyped])</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'utils/github/api.rb', line 328</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_paginate_graphql'>paginate_graphql</span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>variables:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid__block'>_block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_graphql'><span class='object_link'><a href="#open_graphql-class_method" title="GitHub::API.open_graphql (method)">open_graphql</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>variables:</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_has_next_page'>has_next_page</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>true</span><span class='comma'>,</span> <span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_variables'>variables</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='kw'>while</span> <span class='id identifier rubyid_has_next_page'>has_next_page</span>
+    <span class='id identifier rubyid_page_info'>page_info</span> <span class='op'>=</span> <span class='kw'>yield</span> <span class='id identifier rubyid_result'>result</span>
+    <span class='id identifier rubyid_has_next_page'>has_next_page</span> <span class='op'>=</span> <span class='id identifier rubyid_page_info'>page_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hasNextPage</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_has_next_page'>has_next_page</span>
+      <span class='id identifier rubyid_variables'>variables</span><span class='lbracket'>[</span><span class='symbol'>:after</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_page_info'>page_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>endCursor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="GitHub::API (module)">API</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open_graphql'><span class='object_link'><a href="#open_graphql-class_method" title="GitHub::API.open_graphql (method)">open_graphql</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_query'>query</span><span class='comma'>,</span> <span class='label'>variables:</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="paginate_rest-class_method">
   
     .<strong>paginate_rest</strong>(url, additional_query_params: nil, per_page: 100)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
@@ -1165,28 +1293,6 @@ but only if that password looks like a GitHub Personal Access Token.</p>
       <pre class="lines">
 
 
-321
-322
-323
-324
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
-342
 343
 344
 345
@@ -1204,10 +1310,32 @@ but only if that password looks like a GitHub Personal Access Token.</p>
 357
 358
 359
-360</pre>
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/github/api.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'utils/github/api.rb', line 343</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_raise_error'>raise_error</span><span class='lparen'>(</span><span class='id identifier rubyid_output'>output</span><span class='comma'>,</span> <span class='id identifier rubyid_errors'>errors</span><span class='comma'>,</span> <span class='id identifier rubyid_http_code'>http_code</span><span class='comma'>,</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span> <span class='id identifier rubyid_scopes'>scopes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='kw'>begin</span>
