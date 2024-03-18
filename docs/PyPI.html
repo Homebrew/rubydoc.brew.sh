@@ -272,14 +272,14 @@
       <pre class="lines">
 
 
-388
-389
-390
-391
-392</pre>
+399
+400
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 388</span>
+      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 399</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_python_package'>normalize_python_package</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='comment'># This normalization is defined in the PyPA packaging specifications;
@@ -321,17 +321,6 @@
       <pre class="lines">
 
 
-394
-395
-396
-397
-398
-399
-400
-401
-402
-403
-404
 405
 406
 407
@@ -339,10 +328,21 @@
 409
 410
 411
-412</pre>
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 394</span>
+      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 405</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pip_report'>pip_report</span><span class='lparen'>(</span><span class='id identifier rubyid_packages'>packages</span><span class='comma'>,</span> <span class='label'>python_name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>python</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>print_stderr:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_packages'>packages</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -398,19 +398,19 @@
       <pre class="lines">
 
 
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423</pre>
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 425</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pip_report_to_packages'>pip_report_to_packages</span><span class='lparen'>(</span><span class='id identifier rubyid_report'>report</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
@@ -890,7 +890,18 @@
 383
 384
 385
-386</pre>
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/pypi.rb', line 209</span>
@@ -1059,7 +1070,18 @@ end
     <span class='id identifier rubyid_new_resource_blocks'>new_resource_blocks</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  def install</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='comment'># Replace existing resource blocks with new resource blocks
-</span>    <span class='id identifier rubyid_inreplace_regex'>inreplace_regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>  (resource .* do\s+url .*\s+sha256 .*\s+ end\s*)+</span><span class='regexp_end'>/</span></span>
+</span>    <span class='id identifier rubyid_inreplace_regex'>inreplace_regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>
+      \ \ (
+      resource\ .*\ do\s+
+        url\ .*\s+
+        sha256\ .*\s+
+        ((\#.*\s+)*
+        patch\ (.*\ )?do\s+
+          url\ .*\s+
+          sha256\ .*\s+
+        end\s+)*
+      end\s+)+
+    </span><span class='regexp_end'>/x</span></span>
     <span class='id identifier rubyid_new_resource_blocks'>new_resource_blocks</span> <span class='op'>+=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>  </span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 
