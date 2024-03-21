@@ -379,6 +379,28 @@ behavior. Example <code>livecheck</code> blocks can be found in the
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#throttle-instance_method" title="#throttle (instance method)">#<strong>throttle</strong>(rate = T.unsafe(nil))  &#x21d2; Integer<sup>?</sup> </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the <code>@throttle</code> instance variable to the provided <code>Integer</code> or returns the <code>@throttle</code> instance variable when no argument is provided.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#to_hash-instance_method" title="#to_hash (instance method)">#<strong>to_hash</strong>  &#x21d2; Hash{String =&gt; T.untyped} </a>
     
     
@@ -498,7 +520,8 @@ behavior. Example <code>livecheck</code> blocks can be found in the
 30
 31
 32
-33</pre>
+33
+34</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'livecheck.rb', line 23</span>
@@ -512,6 +535,7 @@ behavior. Example <code>livecheck</code> blocks can be found in the
   <span class='ivar'>@skip_msg</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@strategy</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@strategy_block</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='ivar'>@throttle</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@url</span> <span class='op'>=</span> <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -620,12 +644,12 @@ behavior. Example <code>livecheck</code> blocks can be found in the
       <pre class="lines">
 
 
-136
 137
-138</pre>
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strategy_block'>strategy_block</span>
   <span class='ivar'>@strategy_block</span>
@@ -786,17 +810,17 @@ is provided. Inherited livecheck values from the referenced cask
       <pre class="lines">
 
 
-45
 46
 47
 48
 49
 50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask'>cask</span><span class='lparen'>(</span><span class='id identifier rubyid_cask_name'>cask_name</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_cask_name'>cask_name</span>
@@ -869,17 +893,17 @@ formula (e.g. regex) can be overridden in the livecheck block.</p>
       <pre class="lines">
 
 
-64
 65
 66
 67
 68
 69
 70
-71</pre>
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula'>formula</span><span class='lparen'>(</span><span class='id identifier rubyid_formula_name'>formula_name</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_formula_name'>formula_name</span>
@@ -950,17 +974,17 @@ formula (e.g. regex) can be overridden in the livecheck block.</p>
       <pre class="lines">
 
 
-81
 82
 83
 84
 85
 86
 87
-88</pre>
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_regex'>regex</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_pattern'>pattern</span>
@@ -1034,14 +1058,14 @@ maintained”).</p>
       <pre class="lines">
 
 
-101
 102
 103
 104
-105</pre>
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip'>skip</span><span class='lparen'>(</span><span class='id identifier rubyid_skip_msg'>skip_msg</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='ivar'>@skip_msg</span> <span class='op'>=</span> <span class='id identifier rubyid_skip_msg'>skip_msg</span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_msg'>skip_msg</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="String.html" title="String (class)">String</a></span></span><span class='rparen'>)</span>
@@ -1091,12 +1115,12 @@ maintained”).</p>
       <pre class="lines">
 
 
-109
 110
-111</pre>
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip?'>skip?</span>
   <span class='ivar'>@skip</span>
@@ -1175,7 +1199,6 @@ file name.</p>
       <pre class="lines">
 
 
-124
 125
 126
 127
@@ -1184,10 +1207,11 @@ file name.</p>
 130
 131
 132
-133</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='lparen'>(</span><span class='id identifier rubyid_symbol'>symbol</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@strategy_block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
@@ -1197,6 +1221,87 @@ file name.</p>
     <span class='ivar'>@strategy</span>
   <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="Symbol.html" title="Symbol (class)">Symbol</a></span></span>
     <span class='ivar'>@strategy</span> <span class='op'>=</span> <span class='id identifier rubyid_symbol'>symbol</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="throttle-instance_method">
+  
+    #<strong>throttle</strong>(rate = T.unsafe(nil))  &#x21d2; <tt>Integer</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets the <code>@throttle</code> instance variable to the provided <code>Integer</code> or returns
+the <code>@throttle</code> instance variable when no argument is provided.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rate</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>T.unsafe(nil)</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+147
+148
+149
+150
+151
+152
+153
+154</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 147</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_throttle'>throttle</span><span class='lparen'>(</span><span class='id identifier rubyid_rate'>rate</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_rate'>rate</span>
+  <span class='kw'>when</span> <span class='kw'>nil</span>
+    <span class='ivar'>@throttle</span>
+  <span class='kw'>when</span> <span class='const'>Integer</span>
+    <span class='ivar'>@throttle</span> <span class='op'>=</span> <span class='id identifier rubyid_rate'>rate</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1242,20 +1347,21 @@ file name.</p>
       <pre class="lines">
 
 
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176</pre>
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='lbrace'>{</span>
@@ -1265,6 +1371,7 @@ file name.</p>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skip</span><span class='tstring_end'>&quot;</span></span>     <span class='op'>=&gt;</span> <span class='ivar'>@skip</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skip_msg</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@skip_msg</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strategy</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@strategy</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>throttle</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@throttle</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>url</span><span class='tstring_end'>&quot;</span></span>      <span class='op'>=&gt;</span> <span class='ivar'>@url</span><span class='comma'>,</span>
   <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
@@ -1331,19 +1438,19 @@ formula/cask/resource (e.g. <code>:stable</code>, <code>:homepage</code>, <code>
       <pre class="lines">
 
 
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157</pre>
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'livecheck.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_url'>url</span>
