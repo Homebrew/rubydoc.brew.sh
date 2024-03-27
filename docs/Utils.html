@@ -1791,7 +1791,10 @@ Adds a prefix of the count value if <code>include_count</code> is set to true.</
 101
 102
 103
-104</pre>
+104
+105
+106
+107</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'utils/fork.rb', line 32</span>
@@ -1809,6 +1812,9 @@ Adds a prefix of the count value if <code>include_count</code> is set to true.</
         <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
         <span class='id identifier rubyid_read'>read</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
         <span class='id identifier rubyid_write'>write</span><span class='period'>.</span><span class='id identifier rubyid_fcntl'>fcntl</span><span class='lparen'>(</span><span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>F_SETFD</span><span class='comma'>,</span> <span class='const'>Fcntl</span><span class='op'>::</span><span class='const'>FD_CLOEXEC</span><span class='rparen'>)</span>
+
+        <span class='const'>Process</span><span class='op'>::</span><span class='const'>UID</span><span class='period'>.</span><span class='id identifier rubyid_change_privilege'>change_privilege</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span> <span class='op'>!=</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span>
+
         <span class='kw'>yield</span>
       <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span> <span class='comment'># rubocop:disable Lint/RescueException
 </span>        <span class='id identifier rubyid_error_hash'>error_hash</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
