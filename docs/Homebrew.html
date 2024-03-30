@@ -10797,7 +10797,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
   <span class='id identifier rubyid_heads'>heads</span><span class='comma'>,</span> <span class='id identifier rubyid_versioned'>versioned</span> <span class='op'>=</span> <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_partition'>partition</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='period'>.</span><span class='id identifier rubyid_head?'>head?</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_kegs'>kegs</span> <span class='op'>=</span> <span class='lbracket'>[</span>
     <span class='op'>*</span><span class='id identifier rubyid_heads'>heads</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='op'>-</span><span class='const'><span class='object_link'><a href="Tab.html" title="Tab (class)">Tab</a></span></span><span class='period'>.</span><span class='id identifier rubyid_for_keg'><span class='object_link'><a href="Tab.html#for_keg-class_method" title="Tab.for_keg (method)">for_keg</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_time'>time</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='op'>*</span><span class='id identifier rubyid_versioned'>versioned</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:version</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='op'>*</span><span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sort'><span class='object_link'><a href="Keg.html#sort-class_method" title="Keg.sort (method)">sort</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_versioned'>versioned</span><span class='rparen'>)</span><span class='comma'>,</span>
   <span class='rbracket'>]</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_kegs'>kegs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not installed</span><span class='tstring_end'>&quot;</span></span>
@@ -20944,6 +20944,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
       <pre class="lines">
 
 
+260
 261
 262
 263
@@ -20960,11 +20961,10 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 274
 275
 276
-277
-278</pre>
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 261</span>
+      <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_outdated_casks'>upgrade_outdated_casks</span><span class='lparen'>(</span><span class='id identifier rubyid_casks'>casks</span><span class='comma'>,</span> <span class='label'>args:</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_formula?'>formula?</span>
@@ -21158,8 +21158,7 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
 254
 255
 256
-257
-258</pre>
+257</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/upgrade.rb', line 152</span>
@@ -21190,12 +21189,11 @@ After updating this, run <code>brew vendor-gems --update=--bundler</code>.</p>
     <span class='kw'>end</span>
 
     <span class='id identifier rubyid_not_outdated'>not_outdated</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-      <span class='id identifier rubyid_versions'>versions</span> <span class='op'>=</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_installed_kegs'>installed_kegs</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:version</span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_versions'>versions</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='id identifier rubyid_latest_keg'>latest_keg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Keg.html" title="Keg (class)">Keg</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sort'><span class='object_link'><a href="Keg.html#sort-class_method" title="Keg.sort (method)">sort</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_installed_kegs'>installed_kegs</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_latest_keg'>latest_keg</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
         <span class='id identifier rubyid_ofail'>ofail</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_specified_name'>full_specified_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> not installed</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>else</span>
-        <span class='id identifier rubyid_version'>version</span> <span class='op'>=</span> <span class='id identifier rubyid_versions'>versions</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
-        <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_specified_name'>full_specified_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> already installed</span><span class='tstring_end'>&quot;</span></span>
+        <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_full_specified_name'>full_specified_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_latest_keg'>latest_keg</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='embexpr_end'>}</span><span class='tstring_content'> already installed</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
