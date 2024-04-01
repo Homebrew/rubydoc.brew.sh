@@ -164,6 +164,7 @@ check for various formula/cask/resource conditions where a check should be skipp
   <span class='symbol'>:cask_discontinued</span><span class='comma'>,</span>
   <span class='symbol'>:cask_deprecated</span><span class='comma'>,</span>
   <span class='symbol'>:cask_disabled</span><span class='comma'>,</span>
+  <span class='symbol'>:cask_extract_plist</span><span class='comma'>,</span>
   <span class='symbol'>:cask_version_latest</span><span class='comma'>,</span>
   <span class='symbol'>:cask_url_unversioned</span><span class='comma'>,</span>
 <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
@@ -256,6 +257,28 @@ check for various formula/cask/resource conditions where a check should be skipp
   <span class="summary_signature">
     
       <a href="#cask_discontinued-class_method" title="cask_discontinued (class method)">.<strong>cask_discontinued</strong>(cask, livecheckable, full_name: false, verbose: false)  &#x21d2; Hash </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cask_extract_plist-class_method" title="cask_extract_plist (class method)">.<strong>cask_extract_plist</strong>(cask, _livecheckable, full_name: false, verbose: false, extract_plist: false)  &#x21d2; Hash </a>
     
     
   </span>
@@ -453,7 +476,7 @@ check for various formula/cask/resource conditions where a check should be skipp
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#referenced_skip_information-class_method" title="referenced_skip_information (class method)">.<strong>referenced_skip_information</strong>(livecheck_package_or_resource, original_package_or_resource_name, full_name: false, verbose: false)  &#x21d2; Hash<sup>?</sup> </a>
+      <a href="#referenced_skip_information-class_method" title="referenced_skip_information (class method)">.<strong>referenced_skip_information</strong>(livecheck_package_or_resource, original_package_or_resource_name, full_name: false, verbose: false, extract_plist: true)  &#x21d2; Hash<sup>?</sup> </a>
     
     
   </span>
@@ -475,7 +498,7 @@ check for various formula/cask/resource conditions where a check should be skipp
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#skip_information-class_method" title="skip_information (class method)">.<strong>skip_information</strong>(package_or_resource, full_name: false, verbose: false)  &#x21d2; Hash </a>
+      <a href="#skip_information-class_method" title="skip_information (class method)">.<strong>skip_information</strong>(package_or_resource, full_name: false, verbose: false, extract_plist: true)  &#x21d2; Hash </a>
     
     
   </span>
@@ -856,6 +879,145 @@ check for various formula/cask/resource conditions where a check should be skipp
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="cask_extract_plist-class_method">
+  
+    .<strong>cask_extract_plist</strong>(cask, _livecheckable, full_name: false, verbose: false, extract_plist: false)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cask</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask::Cask</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>_livecheckable</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>full_name</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>verbose</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>extract_plist</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cask_extract_plist'>cask_extract_plist</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid__livecheckable'>_livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>extract_plist:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_extract_plist'>extract_plist</span> <span class='op'>||</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_livecheck'>livecheck</span><span class='period'>.</span><span class='id identifier rubyid_strategy'>strategy</span> <span class='op'>!=</span> <span class='symbol'>:extract_plist</span>
+
+  <span class='const'><span class='object_link'><a href="../Livecheck.html" title="Homebrew::Livecheck (module)">Livecheck</a></span></span><span class='period'>.</span><span class='id identifier rubyid_status_hash'><span class='object_link'><a href="../Livecheck.html#status_hash-class_method" title="Homebrew::Livecheck.status_hash (method)">status_hash</a></span></span><span class='lparen'>(</span>
+    <span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>skipped</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Use `--extract-plist` to enable checking multiple casks with ExtractPlist strategy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>full_name:</span><span class='comma'>,</span>
+    <span class='label'>verbose:</span><span class='comma'>,</span>
+  <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="cask_url_unversioned-class_method">
   
     .<strong>cask_url_unversioned</strong>(cask, livecheckable, full_name: false, verbose: false)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt> 
@@ -950,14 +1112,14 @@ check for various formula/cask/resource conditions where a check should be skipp
       <pre class="lines">
 
 
-176
-177
-178
-179
-180</pre>
+197
+198
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 197</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_url_unversioned'>cask_url_unversioned</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='op'>&amp;.</span><span class='id identifier rubyid_unversioned?'>unversioned?</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span>
@@ -1064,14 +1226,14 @@ check for various formula/cask/resource conditions where a check should be skipp
       <pre class="lines">
 
 
-162
-163
-164
-165
-166</pre>
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_version_latest'>cask_version_latest</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='comma'>,</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cask'>cask</span><span class='period'>.</span><span class='id identifier rubyid_version'>version</span><span class='op'>&amp;.</span><span class='id identifier rubyid_latest?'>latest?</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span>
@@ -1756,32 +1918,32 @@ check for various formula/cask/resource conditions where a check should be skipp
       <pre class="lines">
 
 
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311</pre>
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 289</span>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 320</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_print_skip_information'>print_skip_information</span><span class='lparen'>(</span><span class='id identifier rubyid_skip_hash'>skip_hash</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_skip_hash'>skip_hash</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></span><span class='rparen'>)</span>
@@ -1814,7 +1976,7 @@ check for various formula/cask/resource conditions where a check should be skipp
       <div class="method_details ">
   <h3 class="signature " id="referenced_skip_information-class_method">
   
-    .<strong>referenced_skip_information</strong>(livecheck_package_or_resource, original_package_or_resource_name, full_name: false, verbose: false)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt><sup>?</sup> 
+    .<strong>referenced_skip_information</strong>(livecheck_package_or_resource, original_package_or_resource_name, full_name: false, verbose: false, extract_plist: true)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt><sup>?</sup> 
   
 
   
@@ -1887,6 +2049,19 @@ errors.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>extract_plist</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -1909,35 +2084,6 @@ errors.</p>
       <pre class="lines">
 
 
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
 278
 279
 280
@@ -1945,21 +2091,54 @@ errors.</p>
 282
 283
 284
-285</pre>
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 249</span>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_referenced_skip_information'>referenced_skip_information</span><span class='lparen'>(</span>
   <span class='id identifier rubyid_livecheck_package_or_resource'>livecheck_package_or_resource</span><span class='comma'>,</span>
   <span class='id identifier rubyid_original_package_or_resource_name'>original_package_or_resource_name</span><span class='comma'>,</span>
   <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span>
-  <span class='label'>verbose:</span> <span class='kw'>false</span>
+  <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>extract_plist:</span> <span class='kw'>true</span>
 <span class='rparen'>)</span>
   <span class='id identifier rubyid_skip_info'>skip_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Homebrew::Livecheck::SkipConditions (module)">SkipConditions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_skip_information'><span class='object_link'><a href="#skip_information-class_method" title="Homebrew::Livecheck::SkipConditions.skip_information (method)">skip_information</a></span></span><span class='lparen'>(</span>
     <span class='id identifier rubyid_livecheck_package_or_resource'>livecheck_package_or_resource</span><span class='comma'>,</span>
     <span class='label'>full_name:</span><span class='comma'>,</span>
     <span class='label'>verbose:</span><span class='comma'>,</span>
+    <span class='label'>extract_plist:</span><span class='comma'>,</span>
   <span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_info'>skip_info</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
@@ -1995,7 +2174,7 @@ errors.</p>
       <div class="method_details ">
   <h3 class="signature " id="skip_information-class_method">
   
-    .<strong>skip_information</strong>(package_or_resource, full_name: false, verbose: false)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt> 
+    .<strong>skip_information</strong>(package_or_resource, full_name: false, verbose: false, extract_plist: true)  &#x21d2; <tt><span class='object_link'><a href="../../Hash.html" title="Hash (class)">Hash</a></span></tt> 
   
 
   
@@ -2056,6 +2235,19 @@ error <code>messages</code>.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>extract_plist</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Returns:</p>
@@ -2078,31 +2270,36 @@ error <code>messages</code>.</p>
       <pre class="lines">
 
 
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230
-231
-232
-233
-234
-235</pre>
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'livecheck/skip_conditions.rb', line 239</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_skip_information'>skip_information</span><span class='lparen'>(</span><span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_skip_information'>skip_information</span><span class='lparen'>(</span><span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='comma'>,</span> <span class='label'>full_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>extract_plist:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_livecheckable'>livecheckable</span> <span class='op'>=</span> <span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='period'>.</span><span class='id identifier rubyid_livecheckable?'>livecheckable?</span>
 
   <span class='id identifier rubyid_checks'>checks</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_package_or_resource'>package_or_resource</span>
@@ -2116,7 +2313,12 @@ error <code>messages</code>.</p>
   <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_checks'>checks</span>
 
   <span class='id identifier rubyid_checks'>checks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method_name'>method_name</span><span class='op'>|</span>
-    <span class='id identifier rubyid_skip_hash'>skip_hash</span> <span class='op'>=</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='comma'>,</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_skip_hash'>skip_hash</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_method_name'>method_name</span>
+    <span class='kw'>when</span> <span class='symbol'>:cask_extract_plist</span>
+      <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='comma'>,</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='comma'>,</span> <span class='label'>extract_plist:</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_package_or_resource'>package_or_resource</span><span class='comma'>,</span> <span class='id identifier rubyid_livecheckable'>livecheckable</span><span class='comma'>,</span> <span class='label'>full_name:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_skip_hash'>skip_hash</span> <span class='kw'>if</span> <span class='id identifier rubyid_skip_hash'>skip_hash</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
   <span class='kw'>end</span>
 
