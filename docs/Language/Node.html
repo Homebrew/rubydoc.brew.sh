@@ -168,7 +168,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pack_for_installation-class_method" title="pack_for_installation (class method)">.<strong>pack_for_installation</strong>  &#x21d2; Object </a>
+      <a href="#pack_for_installation-class_method" title="pack_for_installation (class method)">.<strong>pack_for_installation</strong>  &#x21d2; String </a>
     
     
   </span>
@@ -190,7 +190,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#setup_npm_environment-class_method" title="setup_npm_environment (class method)">.<strong>setup_npm_environment</strong>  &#x21d2; Object </a>
+      <a href="#setup_npm_environment-class_method" title="setup_npm_environment (class method)">.<strong>setup_npm_environment</strong>  &#x21d2; void </a>
     
     
   </span>
@@ -212,7 +212,7 @@
 <li class="public ">
   <span class="summary_signature">
     
-      <a href="#std_npm_install_args-class_method" title="std_npm_install_args (class method)">.<strong>std_npm_install_args</strong>(libexec)  &#x21d2; Object </a>
+      <a href="#std_npm_install_args-class_method" title="std_npm_install_args (class method)">.<strong>std_npm_install_args</strong>(libexec)  &#x21d2; Array&lt;String&gt; </a>
     
     
   </span>
@@ -277,18 +277,18 @@
       <pre class="lines">
 
 
-80
-81
-82
 83
 84
 85
 86
 87
-88</pre>
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'language/node.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'language/node.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_local_npm_install_args'>local_npm_install_args</span>
   <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
@@ -360,7 +360,7 @@
       <div class="method_details ">
   <h3 class="signature " id="pack_for_installation-class_method">
   
-    .<strong>pack_for_installation</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+    .<strong>pack_for_installation</strong>  &#x21d2; <tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt> 
   
 
   
@@ -375,6 +375,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -382,7 +395,6 @@
       <pre class="lines">
 
 
-14
 15
 16
 17
@@ -405,10 +417,11 @@
 34
 35
 36
-37</pre>
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'language/node.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'language/node.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pack_for_installation'>pack_for_installation</span>
   <span class='comment'># Homebrew assumes the buildpath/testpath will always be disposable
@@ -442,7 +455,7 @@
       <div class="method_details ">
   <h3 class="signature " id="setup_npm_environment-class_method">
   
-    .<strong>setup_npm_environment</strong>  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+    .<strong>setup_npm_environment</strong>  &#x21d2; <tt>void</tt> 
   
 
   
@@ -450,7 +463,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p class="note returns_void">This method returns an undefined value.</p>
 
 
   </div>
@@ -464,8 +477,6 @@
       <pre class="lines">
 
 
-39
-40
 41
 42
 43
@@ -476,16 +487,18 @@
 48
 49
 50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'language/node.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'language/node.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
   <span class='comment'># guard that this is only run once
 </span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@env_set</span>
 
-  <span class='ivar'>@env_set</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='ivar'>@env_set</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_let'>let</span><span class='lparen'>(</span><span class='kw'>true</span><span class='comma'>,</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_nilable'>nilable</span><span class='lparen'>(</span><span class='const'>T</span><span class='op'>::</span><span class='const'>Boolean</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='comment'># explicitly use our npm and node-gyp executables instead of the user
 </span>  <span class='comment'># managed ones in HOMEBREW_PREFIX/lib/node_modules which might be broken
 </span>  <span class='kw'>begin</span>
@@ -502,7 +515,7 @@
       <div class="method_details ">
   <h3 class="signature " id="std_npm_install_args-class_method">
   
-    .<strong>std_npm_install_args</strong>(libexec)  &#x21d2; <tt><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></tt> 
+    .<strong>std_npm_install_args</strong>(libexec)  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt> 
   
 
   
@@ -516,7 +529,35 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>libexec</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Pathname.html" title="Pathname (class)">Pathname</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../String.html" title="String (class)">String</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -524,9 +565,6 @@
       <pre class="lines">
 
 
-53
-54
-55
 56
 57
 58
@@ -548,10 +586,13 @@
 74
 75
 76
-77</pre>
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'language/node.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'language/node.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_std_npm_install_args'>std_npm_install_args</span><span class='lparen'>(</span><span class='id identifier rubyid_libexec'>libexec</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_setup_npm_environment'>setup_npm_environment</span>
