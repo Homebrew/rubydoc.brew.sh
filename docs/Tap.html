@@ -2541,7 +2541,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span>
   <span class='id identifier rubyid_cache'>cache</span><span class='lbracket'>[</span><span class='symbol'>:installed</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-    <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:subdirs</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:from_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="#TAP_DIRECTORY-constant" title="Tap::TAP_DIRECTORY (constant)">TAP_DIRECTORY</a></span></span><span class='period'>.</span><span class='id identifier rubyid_subdirs'>subdirs</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:subdirs</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_from_path'>from_path</span><span class='lparen'>(</span><span class='id identifier rubyid__1'>_1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -3174,7 +3174,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_files'>cask_files</span>
   <span class='ivar'>@cask_files</span> <span class='op'>||=</span> <span class='kw'>if</span> <span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-    <span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:ruby_file?</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_cask_dir'>cask_dir</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_ruby_file?'>ruby_file?</span><span class='lparen'>(</span><span class='id identifier rubyid__1'>_1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -3291,7 +3291,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="code"><span class="info file"># File 'tap.rb', line 720</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_tokens'>cask_tokens</span>
-  <span class='ivar'>@cask_tokens</span> <span class='op'>||=</span> <span class='id identifier rubyid_cask_files'>cask_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:formula_file_to_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@cask_tokens</span> <span class='op'>||=</span> <span class='id identifier rubyid_cask_files'>cask_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_formula_file_to_name'>formula_file_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid__1'>_1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4011,7 +4011,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
 </span>      <span class='id identifier rubyid_formula_dir'>formula_dir</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_formula_dir'>formula_dir</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span>
-    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:formula_file?</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_formula_file?'>formula_file?</span><span class='lparen'>(</span><span class='id identifier rubyid__1'>_1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
@@ -4067,7 +4067,7 @@ this <span class='object_link'><a href="" title="Tap (class)">Tap</a></span>’s
       <pre class="code"><span class="info file"># File 'tap.rb', line 703</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_formula_names'>formula_names</span>
-  <span class='ivar'>@formula_names</span> <span class='op'>||=</span> <span class='id identifier rubyid_formula_files'>formula_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='symbol'>:formula_file_to_name</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@formula_names</span> <span class='op'>||=</span> <span class='id identifier rubyid_formula_files'>formula_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_formula_file_to_name'>formula_file_to_name</span><span class='lparen'>(</span><span class='id identifier rubyid__1'>_1</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
