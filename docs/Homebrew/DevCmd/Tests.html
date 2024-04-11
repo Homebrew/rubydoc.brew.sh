@@ -327,7 +327,11 @@
 157
 158
 159
-160</pre>
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'dev-cmd/tests.rb', line 44</span>
@@ -434,6 +438,10 @@
       <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BUILDPULSE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span>
       <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Running tests with BuildPulse-friendly settings</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>end</span>
+
+    <span class='comment'># Workaround for:
+</span>    <span class='comment'># ruby: no -r allowed while running setuid (SecurityError)
+</span>    <span class='const'>Process</span><span class='op'>::</span><span class='const'>UID</span><span class='period'>.</span><span class='id identifier rubyid_change_privilege'>change_privilege</span><span class='lparen'>(</span><span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_euid'>euid</span> <span class='op'>!=</span> <span class='const'>Process</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_parallel'>parallel</span>
       <span class='id identifier rubyid_system'>system</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bundle</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>parallel_rspec</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_parallel_args'>parallel_args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_bundle_args'>bundle_args</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_files'>files</span>
