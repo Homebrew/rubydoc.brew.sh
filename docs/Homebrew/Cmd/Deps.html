@@ -215,6 +215,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../../UsageError.html" title="UsageError (class)">UsageError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -222,10 +235,6 @@
       <pre class="lines">
 
 
-84
-85
-86
-87
 88
 89
 90
@@ -302,34 +311,90 @@
 161
 162
 163
-164</pre>
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'cmd/deps.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'cmd/deps.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew deps --os=all` is not supported</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../UsageError.html" title="UsageError (class)">UsageError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew deps --arch=all` is not supported</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>all</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_os'>os</span><span class='comma'>,</span> <span class='id identifier rubyid_arch'>arch</span> <span class='op'>=</span> <span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_must'>must</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os_arch_combinations'>os_arch_combinations</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_all'>all</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span>
 
   <span class='const'><span class='object_link'><a href="../../Formulary.html" title="Formulary (module)">Formulary</a></span></span><span class='period'>.</span><span class='id identifier rubyid_enable_factory_cache!'><span class='object_link'><a href="../../Formulary.html#enable_factory_cache!-class_method" title="Formulary.enable_factory_cache! (method)">enable_factory_cache!</a></span></span>
 
-  <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_direct?'>direct?</span>
-  <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>||</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../SimulateSystem.html" title="Homebrew::SimulateSystem (class)">SimulateSystem</a></span></span><span class='period'>.</span><span class='id identifier rubyid_with'><span class='object_link'><a href="../SimulateSystem.html#with-class_method" title="Homebrew::SimulateSystem.with (method)">with</a></span></span><span class='lparen'>(</span><span class='label'>os:</span><span class='comma'>,</span> <span class='label'>arch:</span><span class='rparen'>)</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_direct?'>direct?</span>
+    <span class='id identifier rubyid_installed'>installed</span> <span class='op'>=</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span> <span class='op'>||</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:any_version_installed?</span><span class='rparen'>)</span>
 
-  <span class='ivar'>@use_runtime_dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tree?'>tree?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_build?'>include_build?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_test?'>include_test?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_optional?'>include_optional?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_skip_recommended?'>skip_recommended?</span> <span class='op'>&amp;&amp;</span>
-                              <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_missing?'>missing?</span>
+    <span class='ivar'>@use_runtime_dependencies</span> <span class='op'>=</span> <span class='id identifier rubyid_installed'>installed</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_recursive'>recursive</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tree?'>tree?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_build?'>include_build?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_test?'>include_test?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_include_optional?'>include_optional?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_skip_recommended?'>skip_recommended?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_missing?'>missing?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>&amp;&amp;</span>
+                                <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_arch'>arch</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tree?'>tree?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span>
-    <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-      <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
-      <span class='kw'>case</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_tree?'>tree?</span> <span class='op'>||</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span>
+      <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+        <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+        <span class='kw'>case</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span>
+        <span class='kw'>when</span> <span class='symbol'>:formula</span>
+          <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='rparen'>)</span>
+        <span class='kw'>when</span> <span class='symbol'>:cask</span>
+          <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../../Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../../Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../FormulaUnspecifiedError.html" title="FormulaUnspecifiedError (class)">FormulaUnspecifiedError</a></span></span>
+      <span class='kw'>end</span>
+
+      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span>
+        <span class='id identifier rubyid_dot_code'>dot_code</span> <span class='op'>=</span> <span class='id identifier rubyid_dot_code'>dot_code</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dot?'>dot?</span>
+          <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_dot_code'>dot_code</span>
+        <span class='kw'>else</span>
+          <span class='id identifier rubyid_exec_browser'>exec_browser</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://dreampuf.github.io/GraphvizOnline/#</span><span class='embexpr_beg'>#{</span><span class='const'>ERB</span><span class='op'>::</span><span class='const'>Util</span><span class='period'>.</span><span class='id identifier rubyid_url_encode'>url_encode</span><span class='lparen'>(</span><span class='id identifier rubyid_dot_code'>dot_code</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+        <span class='kw'>return</span>
+      <span class='kw'>end</span>
+
+      <span class='id identifier rubyid_puts_deps_tree'>puts_deps_tree</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
+      <span class='kw'>return</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
+      <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span>
+                  <span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lparen'>(</span><span class='label'>eval_all:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="../../Cask/Cask.html#all-class_method" title="Cask::Cask.all (method)">all</a></span></span><span class='lparen'>(</span><span class='label'>eval_all:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
+      <span class='kw'>return</span>
+    <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_for_each?'>for_each?</span>
+      <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
+      <span class='kw'>return</span>
+    <span class='kw'>end</span>
+
+    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../FormulaUnspecifiedError.html" title="FormulaUnspecifiedError (class)">FormulaUnspecifiedError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
+
+      <span class='id identifier rubyid_sorted_dependents_formulae_and_casks'>sorted_dependents_formulae_and_casks</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span>
       <span class='kw'>when</span> <span class='symbol'>:formula</span>
         <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='rparen'>)</span>
       <span class='kw'>when</span> <span class='symbol'>:cask</span>
@@ -337,56 +402,20 @@
       <span class='kw'>else</span>
         <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../../Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='rparen'>)</span>
       <span class='kw'>end</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../FormulaUnspecifiedError.html" title="FormulaUnspecifiedError (class)">FormulaUnspecifiedError</a></span></span>
-    <span class='kw'>end</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_graph?'>graph?</span>
-      <span class='id identifier rubyid_dot_code'>dot_code</span> <span class='op'>=</span> <span class='id identifier rubyid_dot_code'>dot_code</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_dot?'>dot?</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_dot_code'>dot_code</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_exec_browser'>exec_browser</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>https://dreampuf.github.io/GraphvizOnline/#</span><span class='embexpr_beg'>#{</span><span class='const'>ERB</span><span class='op'>::</span><span class='const'>Util</span><span class='period'>.</span><span class='id identifier rubyid_url_encode'>url_encode</span><span class='lparen'>(</span><span class='id identifier rubyid_dot_code'>dot_code</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>end</span>
+      <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents_formulae_and_casks'>sorted_dependents_formulae_and_casks</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
       <span class='kw'>return</span>
     <span class='kw'>end</span>
 
-    <span class='id identifier rubyid_puts_deps_tree'>puts_deps_tree</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_all'>all</span>
-    <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span>
-                <span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='lparen'>(</span><span class='label'>eval_all:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Cask.html" title="Cask::Cask (class)">Cask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'><span class='object_link'><a href="../../Cask/Cask.html#all-class_method" title="Cask::Cask.all (method)">all</a></span></span><span class='lparen'>(</span><span class='label'>eval_all:</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_eval_all?'>eval_all?</span><span class='rparen'>)</span><span class='comma'>,</span>
-              <span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
-  <span class='kw'>elsif</span> <span class='op'>!</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_for_each?'>for_each?</span>
-    <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
+    <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_check_head_spec'>check_head_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span>
+
+    <span class='id identifier rubyid_all_deps'>all_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_deps_for_dependents'>deps_for_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_union?'>union?</span> <span class='op'>?</span> <span class='symbol'>:|</span> <span class='op'>:</span> <span class='symbol'>:&amp;</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_condense_requirements'>condense_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_all_deps'>all_deps</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_dep_display_name'>dep_display_name</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_uniq!'>uniq!</span>
+    <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_topological?'>topological?</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_all_deps'>all_deps</span>
   <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_no_named?'>no_named?</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../FormulaUnspecifiedError.html" title="FormulaUnspecifiedError (class)">FormulaUnspecifiedError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_installed?'>installed?</span>
-
-    <span class='id identifier rubyid_sorted_dependents_formulae_and_casks'>sorted_dependents_formulae_and_casks</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_only_formula_or_cask'>only_formula_or_cask</span>
-    <span class='kw'>when</span> <span class='symbol'>:formula</span>
-      <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span><span class='rparen'>)</span>
-    <span class='kw'>when</span> <span class='symbol'>:cask</span>
-      <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../../Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='rparen'>)</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_sorted_dependents'>sorted_dependents</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'>installed</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="../../Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="../../Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='id identifier rubyid_puts_deps'>puts_deps</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted_dependents_formulae_and_casks'>sorted_dependents_formulae_and_casks</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='rparen'>)</span>
-    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_dependents'>dependents</span> <span class='op'>=</span> <span class='id identifier rubyid_dependents'>dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_named'>named</span><span class='period'>.</span><span class='id identifier rubyid_to_formulae_and_casks'>to_formulae_and_casks</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_check_head_spec'>check_head_spec</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_HEAD?'>HEAD?</span>
-
-  <span class='id identifier rubyid_all_deps'>all_deps</span> <span class='op'>=</span> <span class='id identifier rubyid_deps_for_dependents'>deps_for_dependents</span><span class='lparen'>(</span><span class='id identifier rubyid_dependents'>dependents</span><span class='comma'>,</span> <span class='label'>recursive:</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_union?'>union?</span> <span class='op'>?</span> <span class='symbol'>:|</span> <span class='op'>:</span> <span class='symbol'>:&amp;</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_condense_requirements'>condense_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_all_deps'>all_deps</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_map!'>map!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_dep_display_name'>dep_display_name</span><span class='lparen'>(</span><span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_uniq!'>uniq!</span>
-  <span class='id identifier rubyid_all_deps'>all_deps</span><span class='period'>.</span><span class='id identifier rubyid_sort!'>sort!</span> <span class='kw'>unless</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_topological?'>topological?</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_all_deps'>all_deps</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
