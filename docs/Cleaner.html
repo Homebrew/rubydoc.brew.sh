@@ -348,7 +348,8 @@ By default:</p>
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cleaner.rb', line 25</span>
@@ -356,27 +357,28 @@ By default:</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_clean'>clean</span>
   <span class='const'><span class='object_link'><a href="ObserverPathnameExtension.html" title="ObserverPathnameExtension (module)">ObserverPathnameExtension</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset_counts!'><span class='object_link'><a href="ObserverPathnameExtension.html#reset_counts!-class_method" title="ObserverPathnameExtension.reset_counts! (method)">reset_counts!</a></span></span>
 
-  <span class='comment'># Many formulae include &#39;lib/charset.alias&#39;, but it is not strictly needed
-</span>  <span class='comment'># and will conflict if more than one formula provides it
+  <span class='comment'># Many formulae include `lib/charset.alias`, but it is not strictly needed
+</span>  <span class='comment'># and will conflict if more than one formula provides it.
 </span>  <span class='id identifier rubyid_observe_file_removal'>observe_file_removal</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>charset.alias</span><span class='tstring_end'>&quot;</span></span>
 
   <span class='lbracket'>[</span><span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_bin'>bin</span><span class='comma'>,</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_sbin'>sbin</span><span class='comma'>,</span> <span class='ivar'>@formula</span><span class='period'>.</span><span class='id identifier rubyid_lib'>lib</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='id identifier rubyid_clean_dir'>clean_dir</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_dir'>dir</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span> <span class='rbrace'>}</span>
 
-  <span class='comment'># Get rid of any info &#39;dir&#39; files, so they don&#39;t conflict at the link stage
+  <span class='comment'># Get rid of any info `dir` files, so they don&#39;t conflict at the link stage.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># The &#39;dir&#39; files come in at least 3 locations:
+</span>  <span class='comment'># The `dir` files come in at least 3 locations:
 </span>  <span class='comment'>#
-</span>  <span class='comment'># 1. &#39;info/dir&#39;
-</span>  <span class='comment'># 2. &#39;info/#{name}/dir&#39;
-</span>  <span class='comment'># 3. &#39;info/#{arch}/dir&#39;
+</span>  <span class='comment'># 1. `info/dir`
+</span>  <span class='comment'># 2. `info/#{name}/dir`
+</span>  <span class='comment'># 3. `info/#{arch}/dir`
 </span>  <span class='comment'>#
-</span>  <span class='comment'># Of these 3 only &#39;info/#{name}/dir&#39; is safe to keep since the rest will
+</span>  <span class='comment'># Of these 3 only `info/#{name}/dir` is safe to keep since the rest will
 </span>  <span class='comment'># conflict with other formulae because they use a shared location.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># See [cleaner: recursively delete info `dir`s by gromgit · Pull Request
-</span>  <span class='comment'># #11597][1], [emacs 28.1 bottle does not contain `dir` file · Issue
-</span>  <span class='comment'># #100190][2], and [Keep `info/#{f.name}/dir` files in cleaner by
-</span>  <span class='comment'># timvisher][3] for more info.
+</span>  <span class='comment'># See
+</span>  <span class='comment'># [cleaner: recursively delete info `dir`s][1],
+</span>  <span class='comment'># [emacs 28.1 bottle does not contain `dir` file][2] and
+</span>  <span class='comment'># [Keep `info/#{f.name}/dir` files in cleaner][3]
+</span>  <span class='comment'># for more info.
 </span>  <span class='comment'>#
 </span>  <span class='comment'># [1]: https://github.com/Homebrew/brew/pull/11597
 </span>  <span class='comment'># [2]: https://github.com/Homebrew/homebrew-core/issues/100190

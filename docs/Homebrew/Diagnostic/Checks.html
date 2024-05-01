@@ -2979,9 +2979,9 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid_locale_variables'>locale_variables</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_grep'>grep</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(?:LC_\S+|LANG|LANGUAGE)\Z</span><span class='regexp_end'>/</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
 
   <span class='id identifier rubyid_add_info'>add_info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask Environment Variables:</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lparen'>(</span><span class='lparen'>(</span><span class='id identifier rubyid_locale_variables'>locale_variables</span> <span class='op'>+</span> <span class='id identifier rubyid_environment_variables'>environment_variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_var'>var</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'><span class='object_link'><a href="../../EnvMethods.html#key%3F-instance_method" title="EnvMethods#key? (method)">key?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>%Q(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_var'>var</span><span class='embexpr_end'>}</span><span class='tstring_content'>=&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../EnvMethods.html#fetch-instance_method" title="EnvMethods#fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>)</span></span>
+    <span class='id identifier rubyid_var'>var</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>%Q(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_var'>var</span><span class='embexpr_end'>}</span><span class='tstring_content'>=&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;</span><span class='tstring_end'>)</span></span>
     <span class='id identifier rubyid_user_tilde'>user_tilde</span><span class='lparen'>(</span><span class='id identifier rubyid_var'>var</span><span class='rparen'>)</span>
   <span class='kw'>end</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -4476,7 +4476,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Git could not be found in your PATH.
-</span><span class='tstring_content'>    Homebrew uses Git for several internal functions, and some formulae use Git
+</span><span class='tstring_content'>    Homebrew uses Git for several internal functions and some formulae use Git
 </span><span class='tstring_content'>    checkouts instead of stable tarballs. You may want to install Git:
 </span><span class='tstring_content'>      brew install git
 </span><span class='heredoc_end'>  EOS
@@ -4567,7 +4567,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='kw'>else</span>
     <span class='id identifier rubyid_inject_file_list'>inject_file_list</span> <span class='ivar'>@found</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>      libiconv files detected at a system prefix other than /usr.
-</span><span class='tstring_content'>      Homebrew doesn&#39;t provide a libiconv formula, and expects to link against
+</span><span class='tstring_content'>      Homebrew doesn&#39;t provide a libiconv formula and expects to link against
 </span><span class='tstring_content'>      the system version in /usr. libiconv in other prefixes can cause
 </span><span class='tstring_content'>      compile or link failure, especially if compiled with improper
 </span><span class='tstring_content'>      architectures. macOS itself never installs anything to /usr/local so
@@ -5090,7 +5090,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.dylib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Unbrewed dylibs were found in /usr/local/lib.
 </span><span class='tstring_content'>    If you didn&#39;t put them there on purpose they could cause problems when
-</span><span class='tstring_content'>    building Homebrew formulae, and may need to be deleted.
+</span><span class='tstring_content'>    building Homebrew formulae and may need to be deleted.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Unexpected dylibs:
 </span><span class='heredoc_end'>  EOS
@@ -5164,7 +5164,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/include</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**/*.h</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Unbrewed header files were found in /usr/local/include.
 </span><span class='tstring_content'>    If you didn&#39;t put them there on purpose they could cause problems when
-</span><span class='tstring_content'>    building Homebrew formulae, and may need to be deleted.
+</span><span class='tstring_content'>    building Homebrew formulae and may need to be deleted.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Unexpected header files:
 </span><span class='heredoc_end'>  EOS
@@ -5242,7 +5242,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.la</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Unbrewed &#39;.la&#39; files were found in /usr/local/lib.
 </span><span class='tstring_content'>    If you didn&#39;t put them there on purpose they could cause problems when
-</span><span class='tstring_content'>    building Homebrew formulae, and may need to be deleted.
+</span><span class='tstring_content'>    building Homebrew formulae and may need to be deleted.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Unexpected &#39;.la&#39; files:
 </span><span class='heredoc_end'>  EOS
@@ -5318,7 +5318,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/lib/pkgconfig</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.pc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Unbrewed &#39;.pc&#39; files were found in /usr/local/lib/pkgconfig.
 </span><span class='tstring_content'>    If you didn&#39;t put them there on purpose they could cause problems when
-</span><span class='tstring_content'>    building Homebrew formulae, and may need to be deleted.
+</span><span class='tstring_content'>    building Homebrew formulae and may need to be deleted.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Unexpected &#39;.pc&#39; files:
 </span><span class='heredoc_end'>  EOS
@@ -5404,7 +5404,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
   <span class='id identifier rubyid___check_stray_files'>__check_stray_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*.a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_allow_list'>allow_list</span><span class='comma'>,</span> <span class='heredoc_beg'>&lt;&lt;~EOS</span>
 <span class='tstring_content'>    Unbrewed static libraries were found in /usr/local/lib.
 </span><span class='tstring_content'>    If you didn&#39;t put them there on purpose they could cause problems when
-</span><span class='tstring_content'>    building Homebrew formulae, and may need to be deleted.
+</span><span class='tstring_content'>    building Homebrew formulae and may need to be deleted.
 </span><span class='tstring_content'>
 </span><span class='tstring_content'>    Unexpected static libraries:
 </span><span class='heredoc_end'>  EOS
@@ -6287,7 +6287,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="code"><span class="info file"># File 'diagnostic.rb', line 474</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_git_version'>check_git_version</span>
-  <span class='id identifier rubyid_minimum_version'>minimum_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../EnvMethods.html#fetch-instance_method" title="EnvMethods#fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MINIMUM_GIT_VERSION</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_minimum_version'>minimum_version</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MINIMUM_GIT_VERSION</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_available?'><span class='object_link'><a href="../../Utils/Git.html#available%3F-class_method" title="Utils::Git.available? (method)">available?</a></span></span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/Git.html" title="Utils::Git (module)">Git</a></span></span><span class='period'>.</span><span class='id identifier rubyid_version'><span class='object_link'><a href="../../Utils/Git.html#version-class_method" title="Utils::Git.version (method)">version</a></span></span><span class='rparen'>)</span> <span class='op'>&gt;=</span> <span class='const'><span class='object_link'><a href="../../Version.html" title="Version (class)">Version</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Version.html#initialize-instance_method" title="Version#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_minimum_version'>minimum_version</span><span class='rparen'>)</span>
 
@@ -7064,7 +7064,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="code"><span class="info file"># File 'diagnostic.rb', line 605</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_tmpdir'>check_tmpdir</span>
-  <span class='id identifier rubyid_tmpdir'>tmpdir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../EnvMethods.html#fetch-instance_method" title="EnvMethods#fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TMPDIR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tmpdir'>tmpdir</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TMPDIR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../File.html" title="File (class)">File</a></span></span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span><span class='lparen'>(</span><span class='id identifier rubyid_tmpdir'>tmpdir</span><span class='rparen'>)</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -7958,7 +7958,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="code"><span class="info file"># File 'extend/os/linux/diagnostic.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_xdg_data_dirs'>check_xdg_data_dirs</span>
-  <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../EnvMethods.html#fetch-instance_method" title="EnvMethods#fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XDG_DATA_DIRS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>XDG_DATA_DIRS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>||</span> <span class='id identifier rubyid_xdg_data_dirs'>xdg_data_dirs</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>share</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
   <span class='heredoc_beg'>&lt;&lt;~EOS</span>
@@ -8011,7 +8011,7 @@ This diagnostic was introduced to check for this and recommend a full reinstall.
       <pre class="code"><span class="info file"># File 'diagnostic.rb', line 1045</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_current_user'>current_user</span>
-  <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'><span class='object_link'><a href="../../EnvMethods.html#fetch-instance_method" title="EnvMethods#fetch (method)">fetch</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>USER</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$(whoami)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>USER</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$(whoami)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

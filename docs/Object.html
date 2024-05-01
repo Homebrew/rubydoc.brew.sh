@@ -98,31 +98,13 @@
   
 </div>
 
-<h2>Overview</h2><div class="docstring">
+<div class="docstring">
   <div class="discussion">
     <p class="note private">
   <strong>This class is part of a private API.</strong>
   This class may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this class if possible, as it may be removed or changed without warning.
 </p>
-<p>--
-Most objects are cloneable, but not all. For example you can&#39;t dup methods:</p>
-
-<p>method(:puts).dup # =&gt; TypeError: allocator undefined for Method</p>
-
-<p>Classes may signal their instances are not duplicable removing +dup+/+clone+
-or raising exceptions from them. So, to dup an arbitrary object you normally
-use an optimistic approach and are ready to catch an exception, say:</p>
-
-<p>arbitrary_object.dup rescue object</p>
-
-<p>Rails dups objects in a few critical spots where they are not that arbitrary.
-That rescue is very expensive (like 40 times slower than a predicate), and it
-is often triggered.</p>
-
-<p>That&#39;s why we hardcode the following cases and check duplicable? instead of
-using that rescue idiom.
-++</p>
 
 
   </div>
@@ -227,7 +209,7 @@ using that rescue idiom.
   
   <span class="private note title">private</span>
   
-    <span class="summary_desc"><div class='inline'><p>Returns the receiver if it&#39;s present otherwise returns +nil+.</p>
+    <span class="summary_desc"><div class='inline'><p>Returns the receiver if it&#39;s present, otherwise returns <code>nil</code>.</p>
 </div></span>
   
 </li>
@@ -302,16 +284,19 @@ using that rescue idiom.
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-<p>An object is blank if it&#39;s false, empty, or a whitespace string.
-For example, +nil+, &#39;&#39;, &#39;   &#39;, [], {}, and +false+ are all blank.</p>
+<p>An object is blank if it&#39;s false, empty, or a whitespace string.</p>
 
-<p>This simplifies</p>
+<p>For example, <code>nil</code>, <code>&#39;&#39;</code>, <code>&#39;   &#39;</code>, <code>[]</code>, <code>{}</code> and <code>false</code> are all blank.</p>
 
-<p>!address || address.empty?</p>
+<h3 id="example">Example</h3>
 
-<p>to</p>
+<pre class="code ruby"><code class="ruby"><span class='op'>!</span><span class='id identifier rubyid_address'>address</span> <span class='op'>||</span> <span class='id identifier rubyid_address'>address</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+</code></pre>
 
-<p>address.blank?</p>
+<p>can be simplified to</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_address'>address</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+</code></pre>
 
 
   </div>
@@ -338,12 +323,12 @@ For example, +nil+, &#39;&#39;, &#39;   &#39;, [], {}, and +false+ are all blank
       <pre class="lines">
 
 
-16
-17
-18</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_blank?'>blank?</span>
   <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:empty?</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='op'>!</span><span class='op'>!</span><span class='const'>T</span><span class='period'>.</span><span class='id identifier rubyid_unsafe'>unsafe</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>:</span> <span class='kw'>false</span>
@@ -465,10 +450,10 @@ true otherwise.</p>
       <pre class="lines">
 
 
-28</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/object/duplicable.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'extend/object/duplicable.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_duplicable?'>duplicable?</span> <span class='op'>=</span> <span class='kw'>true</span></pre>
     </td>
@@ -492,20 +477,21 @@ true otherwise.</p>
   This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
   Third parties should avoid using this method if possible, as it may be removed or changed without warning.
 </p>
-<p>Returns the receiver if it&#39;s present otherwise returns +nil+.
-<tt>object.presence</tt> is equivalent to</p>
+<p>Returns the receiver if it&#39;s present, otherwise returns <code>nil</code>.</p>
 
-<p>object.present? ? object : nil</p>
+<p><code>object.presence</code> is equivalent to <code>object.present? ? object : nil</code>.</p>
 
-<p>For example, something like</p>
+<h3 id="example">Example</h3>
 
-<p>state   = params[:state]   if params[:state].present?
-  country = params[:country] if params[:country].present?
-  region  = state || country || &#39;US&#39;</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_state'>state</span>   <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:state</span><span class='rbracket'>]</span>   <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:state</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+<span class='id identifier rubyid_country'>country</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:country</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:country</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+<span class='id identifier rubyid_region'>region</span>  <span class='op'>=</span> <span class='id identifier rubyid_state'>state</span> <span class='op'>||</span> <span class='id identifier rubyid_country'>country</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>US</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
-<p>becomes</p>
+<p>can be simplified to</p>
 
-<p>region = params[:state].presence || params[:country].presence || &#39;US&#39;</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_region'>region</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:state</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:country</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>US</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 
   </div>
@@ -532,12 +518,12 @@ true otherwise.</p>
       <pre class="lines">
 
 
-39
-40
-41</pre>
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_presence'>presence</span>
   <span class='kw'>self</span> <span class='kw'>if</span> <span class='id identifier rubyid_present?'>present?</span>
@@ -590,10 +576,10 @@ true otherwise.</p>
       <pre class="lines">
 
 
-22</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'extend/blank.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_present?'>present?</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_blank?'>blank?</span></pre>
     </td>

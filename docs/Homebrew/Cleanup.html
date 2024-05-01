@@ -2273,7 +2273,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_cache_files'>cache_files</span>
   <span class='id identifier rubyid_files'>files</span> <span class='op'>=</span> <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>?</span> <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_cask_files'>cask_files</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cask</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_api_source_files'>api_source_files</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>api-source</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*/*/*/*/*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># org/repo/git_head/type/file.rb
+  <span class='id identifier rubyid_api_source_files'>api_source_files</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>api-source</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>*/*/*/*/*</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='comment'># `&lt;org&gt;/&lt;repo&gt;/&lt;git_head&gt;/&lt;type&gt;/&lt;token&gt;.rb`
 </span>  <span class='id identifier rubyid_gh_actions_artifacts'>gh_actions_artifacts</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gh-actions-artifact</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span> <span class='op'>?</span> <span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='op'>/</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>gh-actions-artifact</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span> <span class='lbrace'>{</span> <span class='label'>path:</span><span class='comma'>,</span> <span class='label'>type:</span> <span class='kw'>nil</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span> <span class='op'>+</span>
@@ -3255,8 +3255,8 @@
   <span class='const'><span class='object_link'><a href="../top-level-namespace.html#HOMEBREW_PREFIX-constant" title="HOMEBREW_PREFIX (constant)">HOMEBREW_PREFIX</a></span></span><span class='period'>.</span><span class='id identifier rubyid_glob'>glob</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib/python*/site-packages</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_site_packages'>site_packages</span><span class='op'>|</span>
     <span class='id identifier rubyid_site_packages'>site_packages</span><span class='period'>.</span><span class='id identifier rubyid_each_child'>each_child</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_child'>child</span><span class='op'>|</span>
       <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_child'>child</span><span class='period'>.</span><span class='id identifier rubyid_directory?'>directory?</span>
-      <span class='comment'># TODO: Work out a sensible way to clean up pip&#39;s, setuptools&#39;, and wheel&#39;s
-</span>      <span class='comment'>#       {dist,site}-info directories. Alternatively, consider always removing
+      <span class='comment'># TODO: Work out a sensible way to clean up `pip`&#39;s, `setuptools`&#39; and `wheel`&#39;s
+</span>      <span class='comment'>#       `{dist,site}-info` directories. Alternatively, consider always removing
 </span>      <span class='comment'>#       all `-info` directories, because we may not be making use of them.
 </span>      <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_child'>child</span><span class='period'>.</span><span class='id identifier rubyid_basename'>basename</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_end_with?'>end_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>-info</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 
@@ -3430,10 +3430,10 @@
       <pre class="lines">
 
 
-389</pre>
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 389</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 377</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dry_run?'>dry_run?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -3483,10 +3483,10 @@
       <pre class="lines">
 
 
-395</pre>
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 395</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 383</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prune?'>prune?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -3760,10 +3760,10 @@
       <pre class="lines">
 
 
-392</pre>
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 392</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/parlour.rbi', line 380</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scrub?'>scrub?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
