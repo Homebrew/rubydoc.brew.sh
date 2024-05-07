@@ -9,7 +9,7 @@ desc "Generate documentation with YARD"
 task :yard do
   sh "find", DOCS_DIR, "-mindepth", "1", "!", "-name", "_config.yml", "!", "-name", "CNAME", "-delete"
   cd "brew/Library/Homebrew" do
-    sh "bundle", "exec", "yard", "doc", "--plugin", "sorbet", "--output", DOCS_DIR
+    sh "bundle", "exec", "yard", "doc", "--output", DOCS_DIR
   end
 end
 
