@@ -463,90 +463,26 @@
 803
 804
 805
-806
-807
-808
-809
-810
-811
-812
-813
-814
-815
-816
-817
-818
-819
-820
-821
-822
-823
-824
-825
-826
-827
-828
-829
-830
-831
-832
-833
-834
-835
-836
-837
-838</pre>
+806</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cmd/update-report.rb', line 756</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='label'>auto_update:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_report_all'>report_all</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_UPDATE_REPORT_ALL_FORMULAE</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_report_all'>report_all</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_install_from_api?'><span class='object_link'><a href="Homebrew/EnvConfig.html#no_install_from_api%3F-class_method" title="Homebrew::EnvConfig.no_install_from_api? (method)">no_install_from_api?</a></span></span>
-    <span class='id identifier rubyid_odisabled'>odisabled</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`HOMEBREW_UPDATE_REPORT_ALL_FORMULAE`</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_opoo'>opoo</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>This will not report all formulae because Homebrew cannot get this data from the API.</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_report_all'>report_all</span> <span class='op'>=</span> <span class='kw'>false</span>
-  <span class='kw'>end</span>
-
   <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="Homebrew.html" title="Homebrew (module)">Homebrew</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Homebrew/EnvConfig.html" title="Homebrew::EnvConfig (module)">EnvConfig</a></span></span><span class='period'>.</span><span class='id identifier rubyid_no_update_report_new?'><span class='object_link'><a href="Homebrew/EnvConfig.html#no_update_report_new%3F-class_method" title="Homebrew::EnvConfig.no_update_report_new? (method)">no_update_report_new?</a></span></span>
     <span class='id identifier rubyid_dump_new_formula_report'>dump_new_formula_report</span>
     <span class='id identifier rubyid_dump_new_cask_report'>dump_new_cask_report</span>
   <span class='kw'>end</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_report_all'>report_all</span>
-    <span class='id identifier rubyid_dump_renamed_formula_report'>dump_renamed_formula_report</span>
-    <span class='id identifier rubyid_dump_renamed_cask_report'>dump_renamed_cask_report</span>
+  <span class='id identifier rubyid_dump_deleted_formula_report'>dump_deleted_formula_report</span>
+  <span class='id identifier rubyid_dump_deleted_cask_report'>dump_deleted_cask_report</span>
+
+  <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="Formula.html#installed-class_method" title="Formula.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_outdated_casks'>outdated_casks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:token</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_auto_update'>auto_update</span>
+    <span class='id identifier rubyid_output_dump_formula_or_cask_report'>output_dump_formula_or_cask_report</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Outdated Formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span>
+    <span class='id identifier rubyid_output_dump_formula_or_cask_report'>output_dump_formula_or_cask_report</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Outdated Casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_outdated_casks'>outdated_casks</span>
   <span class='kw'>end</span>
-
-  <span class='id identifier rubyid_dump_deleted_formula_report'>dump_deleted_formula_report</span><span class='lparen'>(</span><span class='id identifier rubyid_report_all'>report_all</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_dump_deleted_cask_report'>dump_deleted_cask_report</span><span class='lparen'>(</span><span class='id identifier rubyid_report_all'>report_all</span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_outdated_casks'>outdated_casks</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_report_all'>report_all</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_auto_update'>auto_update</span>
-      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_changed_formulae'>changed_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_select_formula_or_cask'>select_formula_or_cask</span><span class='lparen'>(</span><span class='symbol'>:M</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_changed_formulae'>changed_formulae</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
-        <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modified Formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-             <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modified </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'><span class='object_link'><a href="Utils.html#pluralize-class_method" title="Utils.pluralize (method)">pluralize</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>formula</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_changed_formulae'>changed_formulae</span><span class='comma'>,</span> <span class='label'>plural:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>include_count:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>end</span>
-
-      <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_changed_casks'>changed_casks</span> <span class='op'>=</span> <span class='id identifier rubyid_select_formula_or_cask'>select_formula_or_cask</span><span class='lparen'>(</span><span class='symbol'>:MC</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_changed_casks'>changed_casks</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
-        <span class='id identifier rubyid_ohai'>ohai</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modified Casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Modified </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="Utils.html" title="Utils (module)">Utils</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pluralize'><span class='object_link'><a href="Utils.html#pluralize-class_method" title="Utils.pluralize (method)">pluralize</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cask</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_changed_casks'>changed_casks</span><span class='comma'>,</span> <span class='label'>include_count:</span> <span class='kw'>true</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span>
-      <span class='kw'>end</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_dump_modified_formula_report'>dump_modified_formula_report</span>
-      <span class='id identifier rubyid_dump_modified_cask_report'>dump_modified_cask_report</span>
-    <span class='kw'>end</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Formula.html" title="Formula (class)">Formula</a></span></span><span class='period'>.</span><span class='id identifier rubyid_installed'><span class='object_link'><a href="Formula.html#installed-class_method" title="Formula.installed (method)">installed</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:name</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_outdated_casks'>outdated_casks</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Cask.html" title="Cask (module)">Cask</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cask/Caskroom.html" title="Cask::Caskroom (module)">Caskroom</a></span></span><span class='period'>.</span><span class='id identifier rubyid_casks'><span class='object_link'><a href="Cask/Caskroom.html#casks-class_method" title="Cask::Caskroom.casks (method)">casks</a></span></span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:outdated?</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:token</span><span class='rparen'>)</span>
-    <span class='kw'>unless</span> <span class='id identifier rubyid_auto_update'>auto_update</span>
-      <span class='id identifier rubyid_output_dump_formula_or_cask_report'>output_dump_formula_or_cask_report</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Outdated Formulae</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span>
-      <span class='id identifier rubyid_output_dump_formula_or_cask_report'>output_dump_formula_or_cask_report</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Outdated Casks</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_outdated_casks'>outdated_casks</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
-
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_outdated_casks'>outdated_casks</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span> <span class='op'>=</span> <span class='id identifier rubyid_outdated_formulae'>outdated_formulae</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
