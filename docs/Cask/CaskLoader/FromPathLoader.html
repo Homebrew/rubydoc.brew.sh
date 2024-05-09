@@ -683,7 +683,9 @@
 136
 137
 138
-139</pre>
+139
+140
+141</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'cask/cask_loader.rb', line 120</span>
@@ -696,7 +698,9 @@
   <span class='ivar'>@content</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='label'>encoding:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UTF-8</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span>
 
-  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FromAPILoader.html#initialize-instance_method" title="Cask::CaskLoader::FromAPILoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='label'>from_json:</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@content</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='label'>config:</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_extname'>extname</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="FromAPILoader.html" title="Cask::CaskLoader::FromAPILoader (class)">FromAPILoader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FromAPILoader.html#initialize-instance_method" title="Cask::CaskLoader::FromAPILoader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='label'>from_json:</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@content</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>path:</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='label'>config:</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_tap'>tap</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cask'>cask</span><span class='op'>|</span>
