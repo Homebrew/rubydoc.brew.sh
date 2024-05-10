@@ -17,6 +17,13 @@ bundle install
 bundle exec jekyll serve --source docs
 ```
 
+To regenerate the RubyDoc on each request to <http://localhost:8808>, run:
+
+```bash
+cd `brew --repo`/Library/Homebrew
+yard server --reload
+```
+
 ## License
 
 Code is under the [BSD 2-clause "Simplified" License](LICENSE.txt).
