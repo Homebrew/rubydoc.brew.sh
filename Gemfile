@@ -7,4 +7,5 @@ gem "yard-sorbet"
 
 group :test do
   gem "rake"
+  gem "webrick"
 end
