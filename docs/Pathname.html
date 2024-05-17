@@ -100,7 +100,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>extend/pathname.rb<span class="defines">,<br />
-  extend/os/mac/extend/pathname.rb,<br /> extend/os/linux/extend/pathname.rb,<br /> extend/os/mac/extend/pathname.rbi,<br /> extend/os/linux/extend/pathname.rbi</span>
+  extend/os/mac/extend/pathname.rb,<br /> extend/os/linux/extend/pathname.rb,<br /> extend/pathname/rmtree.rb,<br /> extend/os/mac/extend/pathname.rbi,<br /> extend/os/linux/extend/pathname.rbi</span>
 </dd>
   </dl>
   
@@ -579,6 +579,28 @@
   <span class="private note title">private</span>
   
     <span class="summary_desc"><div class='inline'><p>I don&#39;t trust the children.length == 0 check particularly, not to mention it is slow to enumerate the whole directory just to see if it is empty, instead rely on good ol&#39; libc and the filesystem.</p>
+</div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rmtree-instance_method" title="#rmtree (instance method)">#<strong>rmtree</strong>(noop: nil, verbose: nil, secure: nil)  &#x21d2; Object </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+    <span class="summary_desc"><div class='inline'><p>Like regular <code>rmtree</code>, except it never ignores errors.</p>
 </div></span>
   
 </li>
@@ -2321,6 +2343,52 @@ instead rely on good ol&#39; libc and the filesystem</p>
   <span class='kw'>end</span>
 <span class='kw'>rescue</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EACCES</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>ENOENT</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EBUSY</span><span class='comma'>,</span> <span class='const'>Errno</span><span class='op'>::</span><span class='const'>EPERM</span>
   <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rmtree-instance_method">
+  
+    #<strong>rmtree</strong>(noop: nil, verbose: nil, secure: nil)  &#x21d2; <tt><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Like regular <code>rmtree</code>, except it never ignores errors.</p>
+
+<p>This was the default behaviour in Ruby 3.1 and earlier.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'extend/pathname/rmtree.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rmtree'>rmtree</span><span class='lparen'>(</span><span class='label'>noop:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>verbose:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>secure:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='comment'># odeprecated &quot;rmtree&quot;, &quot;FileUtils#rm_r&quot;
+</span>  <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_rm_r'>rm_r</span><span class='lparen'>(</span><span class='ivar'>@path</span><span class='comma'>,</span> <span class='label'>noop:</span><span class='comma'>,</span> <span class='label'>verbose:</span><span class='comma'>,</span> <span class='label'>secure:</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
