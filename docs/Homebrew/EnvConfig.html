@@ -166,12 +166,6 @@
                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trying any other/default URLs.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='label'>HOMEBREW_AUTOREMOVE:</span>                       <span class='lbrace'>{</span>
-    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, calls to `brew cleanup` and `brew uninstall` will automatically </span><span class='tstring_end'>&quot;</span></span> \
-                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>remove unused formula dependents and if `HOMEBREW_NO_INSTALL_CLEANUP` is not set, </span><span class='tstring_end'>&quot;</span></span> \
-                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`brew cleanup` will start running `brew autoremove` periodically.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-    <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
-  <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_AUTO_UPDATE_SECS:</span>                 <span class='lbrace'>{</span>
     <span class='label'>description:</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Run `brew update` once every `HOMEBREW_AUTO_UPDATE_SECS` seconds before some commands, </span><span class='tstring_end'>&quot;</span></span> \
                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e.g. `brew install`, `brew upgrade` and `brew tap`. Alternatively, </span><span class='tstring_end'>&quot;</span></span> \
@@ -428,6 +422,11 @@
   <span class='label'>HOMEBREW_NO_ANALYTICS:</span>                     <span class='lbrace'>{</span>
     <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, do not send analytics. Google Analytics were destroyed. </span><span class='tstring_end'>&quot;</span></span> \
                  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>For more information, see: &lt;https://docs.brew.sh/Analytics&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>HOMEBREW_NO_AUTOREMOVE:</span>                    <span class='lbrace'>{</span>
+    <span class='label'>description:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>If set, calls to `brew cleanup` and `brew uninstall` will not automatically </span><span class='tstring_end'>&quot;</span></span> \
+                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>remove unused formula dependents.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
     <span class='label'>boolean:</span>     <span class='kw'>true</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>HOMEBREW_NO_AUTO_UPDATE:</span>                   <span class='lbrace'>{</span>
@@ -2107,6 +2106,27 @@
 <li class="public ">
   <span class="summary_signature">
     
+      <a href="#no_autoremove%3F-class_method" title="no_autoremove? (class method)">.<strong>no_autoremove?</strong>  &#x21d2; Boolean </a>
+    
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        
+<li class="public ">
+  <span class="summary_signature">
+    
       <a href="#no_bootsnap%3F-class_method" title="no_bootsnap? (class method)">.<strong>no_bootsnap?</strong>  &#x21d2; Boolean </a>
     
     
@@ -3187,12 +3207,12 @@
       <pre class="lines">
 
 
+556
 557
-558
-559</pre>
+558</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 557</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 556</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_automatically_set_no_install_from_api?'>automatically_set_no_install_from_api?</span>
   <span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_AUTOMATICALLY_SET_NO_INSTALL_FROM_API</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -3774,12 +3794,12 @@
       <pre class="lines">
 
 
+526
 527
-528
-529</pre>
+528</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 527</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 526</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts'>cask_opts</span>
   <span class='const'>Shellwords</span><span class='period'>.</span><span class='id identifier rubyid_shellsplit'>shellsplit</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_CASK_OPTS</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3831,17 +3851,17 @@
       <pre class="lines">
 
 
+531
 532
 533
 534
 535
 536
 537
-538
-539</pre>
+538</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 532</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 531</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_binaries?'>cask_opts_binaries?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -3898,17 +3918,17 @@
       <pre class="lines">
 
 
+541
 542
 543
 544
 545
 546
 547
-548
-549</pre>
+548</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 542</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 541</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_quarantine?'>cask_opts_quarantine?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_reverse_each'>reverse_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_opt'>opt</span><span class='op'>|</span>
@@ -3965,12 +3985,12 @@
       <pre class="lines">
 
 
+551
 552
-553
-554</pre>
+553</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 552</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 551</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cask_opts_require_sha?'>cask_opts_require_sha?</span>
   <span class='id identifier rubyid_cask_opts'>cask_opts</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>--require-sha</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -4896,16 +4916,16 @@
       <pre class="lines">
 
 
+478
 479
 480
 481
 482
 483
-484
-485</pre>
+484</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 479</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 478</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_env_method_name'>env_method_name</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_method_name'>method_name</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -6393,6 +6413,7 @@
       <pre class="lines">
 
 
+515
 516
 517
 518
@@ -6400,11 +6421,10 @@
 520
 521
 522
-523
-524</pre>
+523</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'env_config.rb', line 516</span>
+      <pre class="code"><span class="info file"># File 'env_config.rb', line 515</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_make_jobs'>make_jobs</span>
   <span class='id identifier rubyid_jobs'>jobs</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../ENV.html" title="ENV (class)">ENV</a></span></span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>HOMEBREW_MAKE_JOBS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -6527,9 +6547,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="no_bootsnap?-class_method">
+  <h3 class="signature " id="no_autoremove?-class_method">
   
-    .<strong>no_bootsnap?</strong>  &#x21d2; <tt>Boolean</tt> 
+    .<strong>no_autoremove?</strong>  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -6572,6 +6592,59 @@
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 200</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_no_autoremove?'>no_autoremove?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="no_bootsnap?-class_method">
+  
+    .<strong>no_bootsnap?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  This method may only be used in the <a href="https://github.com/Homebrew/brew">Homebrew/brew</a> repository.
+  Third parties should avoid using this method if possible, as it may be removed or changed without warning.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+203</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_bootsnap?'>no_bootsnap?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6621,10 +6694,10 @@
       <pre class="lines">
 
 
-203</pre>
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 203</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_cleanup_formulae'>no_cleanup_formulae</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6674,10 +6747,10 @@
       <pre class="lines">
 
 
-206</pre>
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 206</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_color?'>no_color?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6727,10 +6800,10 @@
       <pre class="lines">
 
 
-209</pre>
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 209</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_emoji?'>no_emoji?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6780,10 +6853,10 @@
       <pre class="lines">
 
 
-212</pre>
+215</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 212</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_env_hints?'>no_env_hints?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6833,10 +6906,10 @@
       <pre class="lines">
 
 
-215</pre>
+218</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 215</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_github_api?'>no_github_api?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6886,10 +6959,10 @@
       <pre class="lines">
 
 
-218</pre>
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 218</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 221</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_insecure_redirect?'>no_insecure_redirect?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6939,10 +7012,10 @@
       <pre class="lines">
 
 
-221</pre>
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 221</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_install_cleanup?'>no_install_cleanup?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -6992,10 +7065,10 @@
       <pre class="lines">
 
 
-224</pre>
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 224</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_install_from_api?'>no_install_from_api?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7045,10 +7118,10 @@
       <pre class="lines">
 
 
-227</pre>
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 227</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_install_upgrade?'>no_install_upgrade?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7098,10 +7171,10 @@
       <pre class="lines">
 
 
-230</pre>
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 230</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 233</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_installed_dependents_check?'>no_installed_dependents_check?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7151,10 +7224,10 @@
       <pre class="lines">
 
 
-233</pre>
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 233</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_proxy'>no_proxy</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7204,10 +7277,10 @@
       <pre class="lines">
 
 
-236</pre>
+239</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 236</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 239</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_no_update_report_new?'>no_update_report_new?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7257,10 +7330,10 @@
       <pre class="lines">
 
 
-239</pre>
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 239</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pip_index_url'>pip_index_url</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7310,10 +7383,10 @@
       <pre class="lines">
 
 
-242</pre>
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 242</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pry?'>pry?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7363,10 +7436,10 @@
       <pre class="lines">
 
 
-245</pre>
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 245</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 248</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_simulate_macos_on_linux?'>simulate_macos_on_linux?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7416,10 +7489,10 @@
       <pre class="lines">
 
 
-248</pre>
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 248</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_skip_or_later_bottles?'>skip_or_later_bottles?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7469,10 +7542,10 @@
       <pre class="lines">
 
 
-251</pre>
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 251</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sorbet_runtime?'>sorbet_runtime?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7522,10 +7595,10 @@
       <pre class="lines">
 
 
-254</pre>
+257</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 254</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 257</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ssh_config_path'>ssh_config_path</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7575,10 +7648,10 @@
       <pre class="lines">
 
 
-257</pre>
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 257</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 260</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sudo_askpass'>sudo_askpass</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7628,10 +7701,10 @@
       <pre class="lines">
 
 
-260</pre>
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 260</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 263</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sudo_through_sudo_user?'>sudo_through_sudo_user?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7681,10 +7754,10 @@
       <pre class="lines">
 
 
-263</pre>
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 263</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_svn'>svn</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7734,10 +7807,10 @@
       <pre class="lines">
 
 
-266</pre>
+269</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 266</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_system_env_takes_priority?'>system_env_takes_priority?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7787,10 +7860,10 @@
       <pre class="lines">
 
 
-269</pre>
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 269</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_temp'>temp</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7840,10 +7913,10 @@
       <pre class="lines">
 
 
-272</pre>
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 272</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 275</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_to_tag?'>update_to_tag?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7893,10 +7966,10 @@
       <pre class="lines">
 
 
-275</pre>
+278</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 275</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upgrade_greedy?'>upgrade_greedy?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7946,10 +8019,10 @@
       <pre class="lines">
 
 
-278</pre>
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 278</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 281</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbose?'>verbose?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -7999,10 +8072,10 @@
       <pre class="lines">
 
 
-281</pre>
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 281</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 284</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verbose_using_dots?'>verbose_using_dots?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
@@ -8052,10 +8125,10 @@
       <pre class="lines">
 
 
-284</pre>
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 284</span>
+      <pre class="code"><span class="info file"># File 'sorbet/rbi/dsl/homebrew/env_config.rbi', line 287</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_verify_attestations?'>verify_attestations?</span><span class='semicolon'>;</span> <span class='kw'>end</span></pre>
     </td>
