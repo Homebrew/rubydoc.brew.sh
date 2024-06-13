@@ -8,12 +8,14 @@ A [GitHub Action](https://github.com/Homebrew/rubydoc.brew.sh/blob/master/.githu
 
 Open <https://rubydoc.brew.sh> in your web browser.
 
-To instead run Homebrew RubyDoc locally, run:
+To instead run Homebrew RubyDoc locally at <http://localhost:4000>, run:
 
 ```bash
 git clone https://github.com/Homebrew/rubydoc.brew.sh
 cd rubydoc.brew.sh
 bundle install
+ln -s $(brew --repo) brew
+bundle exec rake yard
 bundle exec jekyll serve --source docs
 ```
 
