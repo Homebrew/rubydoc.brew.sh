@@ -2,23 +2,24 @@ name: Scheduled regeneration
 
 on:
   push:
-    paths:
-      - .github/workflows/scheduled.yml
+    branches:
+      - master
+  pull_request:
   schedule:
     # Once every hour
     - cron: "30 * * * *"
+  workflow_dispatch:
 
 concurrency:
-  group: scheduled
+  group: scheduled-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
-
-permissions:
-  contents: write
 
 jobs:
   generate:
     if: startsWith( github.repository, 'Homebrew/' )
-    runs-on: ubuntu-22.04
+    name: Generate and build documentation site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
@@ -33,26 +34,68 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@ff740bc00a01b3a50fffc55a1071b1060eeae9dc # v1.180.0
         with:
-          ruby-version: "3.1"
           bundler-cache: true
-
-      - name: Configure Git user
-        uses: Homebrew/actions/git-user-config@master
-        with:
-          username: BrewTestBot
 
       - name: Generate site
         run: |
           ln -s $(brew --repo) brew
           bundle exec rake yard build
 
-      - name: Commit changes
-        run: |
-          git reset origin/master
-          git add docs
-          if ! git diff --no-patch --exit-code HEAD -- docs; then
-            git commit -m "docs: updates from Homebrew/brew" docs
-          fi
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+  
+  deploy:
+    needs: generate
+    if: ${{ github.ref_name == 'master' }}
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      deploy_url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
-      - name: Push commits
-        uses: Homebrew/actions/git-try-push@master
+  deploy-issue:
+    name: Open/close deploy issue
+    needs: [generate, deploy]
+    if: ${{ always() && github.ref_name == 'master' }}
+    env:
+      GH_TOKEN: ${{ secrets.HOMEBREW_GITHUB_PUBLIC_REPO_TOKEN }}
+      REPO: ${{ github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Find existing deploy failure issue
+        run: |
+          EXISTING_ISSUE=$(gh issue list --repo "$REPO" --author BrewTestBot --label 'deploy failure' | awk '{print $1}')
+          echo "EXISTING_ISSUE=$EXISTING_ISSUE" >> $GITHUB_ENV
+          echo "WORKFLOW_URL=https://github.com/Homebrew/rubydoc.brew.sh/actions/runs/$RUN_ID" >> $GITHUB_ENV
+        env:
+          RUN_ID: ${{ github.run_id }}
+
+      - name: Report deploy failure
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: |
+          ISSUE_TITLE="rubydoc.brew.sh deployment failed!"
+          ISSUE_BODY="The most recent [rubydoc.brew.sh deployment failed]($WORKFLOW_URL)."
+          if [ -n "$EXISTING_ISSUE" ]; then
+            gh issue edit "$EXISTING_ISSUE" --repo "$REPO" --body "$(echo -e "$ISSUE_BODY")"
+          else
+            gh issue create --repo "$REPO" --title "$ISSUE_TITLE" --label "deploy failure" --body "$(echo -e "$ISSUE_BODY")"
+          fi
+      
+      - name: Report deploy success
+        if: ${{ needs.deploy.result == 'success' }}
+        run: |
+          COMMENT_BODY="The most recent [rubydoc.brew.sh deployment succeeded]($WORKFLOW_URL). Closing issue."
+          if [ -n "$EXISTING_ISSUE" ]; then
+            gh issue comment "$EXISTING_ISSUE" --repo "$REPO" --body "$(echo -e "$COMMENT_BODY")"
+            gh issue close "$EXISTING_ISSUE" --repo "$REPO"
+          fi
