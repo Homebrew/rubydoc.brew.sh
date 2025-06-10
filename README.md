@@ -2,7 +2,7 @@
 
 [Homebrew RubyDoc](https://rubydoc.brew.sh) is an online Ruby documentation browser for [Homebrew/brew](https://github.com/Homebrew/brew).
 
-A [GitHub Action](https://github.com/Homebrew/rubydoc.brew.sh/blob/master/.github/workflows/scheduled.yml) is run periodically, which deploys the site to GitHub Pages.
+A [GitHub Action](https://github.com/Homebrew/rubydoc.brew.sh/blob/main/.github/workflows/scheduled.yml) is run periodically, which deploys the site to GitHub Pages.
 
 ## Usage
 
