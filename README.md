@@ -16,7 +16,7 @@ cd rubydoc.brew.sh
 bundle install
 ln -s $(brew --repo) brew
 bundle exec rake yard
-bundle exec jekyll serve --source docs
+bundle exec jekyll serve
 ```
 
 To regenerate the RubyDoc on each request to <http://localhost:8808>, run:
