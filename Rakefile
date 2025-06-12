@@ -1,13 +1,12 @@
 require "rake"
 require "rake/clean"
 
-DOCS_DIR = "#{__dir__}/docs"
+DOCS_DIR = "#{__dir__}"
 
 task default: :yard
 
 desc "Generate documentation with YARD"
 task :yard do
-  sh "find", DOCS_DIR, "-mindepth", "1", "!", "-name", "_config.yml", "!", "-name", "CNAME", "-delete"
   cd "brew/Library/Homebrew" do
     sh "bundle", "exec", "yard", "doc", "--output", DOCS_DIR
   end
