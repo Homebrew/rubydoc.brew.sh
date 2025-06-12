@@ -2,7 +2,7 @@
 
 [Homebrew RubyDoc](https://rubydoc.brew.sh) is an online Ruby documentation browser for [Homebrew/brew](https://github.com/Homebrew/brew).
 
-A [GitHub Action](https://github.com/Homebrew/rubydoc.brew.sh/blob/main/.github/workflows/scheduled.yml) is run periodically, which deploys the site to GitHub Pages.
+A [GitHub Action](https://github.com/Homebrew/rubydoc.brew.sh/blob/main/.github/workflows/scheduled.yml) is run periodically which generates documentation using [YARD](https://yardoc.org/) and deploys the site to GitHub Pages.
 
 ## Usage
 
@@ -22,7 +22,7 @@ bundle exec jekyll serve
 To regenerate the RubyDoc on each request to <http://localhost:8808>, run:
 
 ```bash
-cd `brew --repo`/Library/Homebrew
+cd $(brew --repo)/Library/Homebrew
 yard server --reload
 ```
 
